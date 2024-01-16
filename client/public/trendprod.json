@@ -1,0 +1,43 @@
+ [
+    {
+      "id": 1,
+      "itemName": "Elegant Wedding Dress",
+      "brandName": "Bridal Couture",
+      "rating": 4.8,
+      "image": "https://ibb.co/48MCcQR",
+      "availableSizes": ["S", "M", "L", "XL"]
+    },
+    {
+      "id": 2,
+      "itemName": "Celebration Cake",
+      "brandName": "Sweet Delights Bakery",
+      "rating": 4.5,
+      "image": "https://ibb.co/3NZRsn0",
+      "availableSizes": ["8-inch", "10-inch", "12-inch"]
+    },
+    {
+      "id": 3,
+      "itemName": "Corporate Leather Briefcase",
+      "brandName": "Elite Accessories",
+      "rating": 4.9,
+      "image": "https://ibb.co/V3XGfYJ",
+      "availableSizes": ["One Size"]
+    },
+    {
+      "id": 4,
+      "itemName": "Professional Business Suit",
+      "brandName": "Corporate Styles",
+      "rating": 4.7,
+      "image": "https://ibb.co/H2Zh77q",
+      "availableSizes": ["S", "M", "L", "XL"]
+    },
+    {
+      "id": 5,
+      "itemName": " Bluetooth Speaker",
+      "brandName": "AudioPro",
+      "rating": 4.6,
+      "image": "https://ibb.co/K6jF5g3",
+      "availableSizes": ["One Size"]
+    }
+  ]
+
