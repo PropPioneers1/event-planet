@@ -9,9 +9,14 @@ const Home = () => {
       <div>
         <h2 className="text-center font-bold mt-10 mb-5 text-3xl underline">Our trending products</h2>
         <div>
-          <p className="text-center mb-10 p-8"> Hello Human! We are providing your essential products 
-            for your events on our website. Feel free to visit our shop and buy 
-            the best products at reasonable prices.</p>
+        <p className="text-center mb-10 p-8">
+  Hello Human! We're here to make your special moments even more memorable.
+  Explore our curated collection of essential products for various events and
+  find the perfect items to elevate your experiences. Whether it's a wedding,
+  celebration, or a professional gathering, our diverse range of high-quality
+  products awaits you. Visit our shop now and discover a world of elegance and
+  functionality at your fingertips.
+</p>
         </div>
         <Trendingproducts></Trendingproducts>
       </div>
