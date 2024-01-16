@@ -1,3 +1,4 @@
+import WhyChoose from "./HomeComponenets/WhyChooseEventPlanet/WhyChoose";
 import Trendingproducts from "./HomeComponenets/trending/Trendingproducts";
 
 const Home = () => {
@@ -7,6 +8,8 @@ const Home = () => {
       {/* trending products pritom*/}
       <Trendingproducts></Trendingproducts>
       {/* ------------------------------- */}
+      {/* Why choose event planet arif */}
+      <WhyChoose></WhyChoose>
     </div>
   );
 };
