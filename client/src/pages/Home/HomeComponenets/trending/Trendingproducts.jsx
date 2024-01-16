@@ -5,7 +5,7 @@ const Trendingproducts = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch('/trendprod.json')  // Assuming trendprod.json is in the public folder
+    fetch('/trendprod.json') 
       .then((res) => res.json())
       .then((dat) => setData(dat));
   }, []);
