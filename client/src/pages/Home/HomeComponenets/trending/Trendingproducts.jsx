@@ -16,16 +16,16 @@ const Trendingproducts = () => {
   return (
    <div className='flex '>
     
-<div className=' w-72'>
+<div className=' w-96 bg-blue-1 '>
 <Lottie animationData={lcottievb}></Lottie>
 </div>
   {/* <img className=' h-72  w-96 rounded-badge' src={shop} alt="" /> */}
-     <div className='slider '>
+     <div className='slider'>
       <div className='slide-track gap-10'>
         {data.map((item, index) => (
           <div key={index} className='slide relative card
           h-96  bg-transparent '>
-            <img className='px-4 h-24' src={item.image} alt="" />
+            <img className=' px-8 h-24' src={item.image} alt="" />
             <div className=' h-96 card-body  '>
               <h2 className='card-title w-54'>{item.itemName}</h2>
               <h2 className='font-bold w-54'> ${item.price}</h2>

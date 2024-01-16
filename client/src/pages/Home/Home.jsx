@@ -17,8 +17,8 @@ const Home = () => {
       </div>
 
       {/* Button at the end */}
-      <div className="text-center">
-        <button className="btn btn-wide mt-4">Visit Our Shop <FaShopify /></button>
+      <div className="text-center mb-10">
+        <button className="btn btn-wide mt-4 bg-blue-300">Visit Our Shop <FaShopify /></button>
       </div>
     </div>
   );
