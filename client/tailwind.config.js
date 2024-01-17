@@ -7,7 +7,7 @@ export default {
         title: "Lora, serif",
       },
 
-      backgroundColor: {
+      colors: {
         natural: "#EEEEEE",
         primary: "#3F72AF",
         secondary: "#222831",

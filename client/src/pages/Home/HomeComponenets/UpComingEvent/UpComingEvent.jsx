@@ -1,9 +1,20 @@
+import { useEffect } from "react";
 import Container from "../../../../components/ui/Container";
-
+import './upcoming.css'
+import { useState } from "react";
+import SingleCard from "./SingleCard";
 const UpComingEvent = () => {
-  const image = "https://i.ibb.co/QFrKPX3/birthday.jpg";
+ 
+  const [cards,setCards] = useState([])
+  useEffect(()=>{
+    fetch('./upcomingevent.json')
+    .then(res=>res.json())
+    .then(data=>{
+      setCards(data)
+    })
+  },[])
   return (
-    <div className="">
+    <div>
       <div className="bg-natural">
         <Container>
           {/* count down time */}
@@ -54,115 +65,12 @@ const UpComingEvent = () => {
       </div>
 
       {/* up coming event card maping */}
-      <Container>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          <div className="relative group bg-slate-400 p-4 rounded overflow-hidden">
-            <img className="rounded relative w-full" src={image} alt="Event" />
-            <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300">
-                <button className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white bg-gradient-to-r from-cyan-500 to-blue-600 p-4 rounded">Booked now</button>
-            </div>
-            {/* Show price at the top */}
-            <div className="absolute top-7 right-7 bg-opacity-60 rounded text-white font-bold p-2 bg-primary">
-              Price $500 USD
-            </div>
-
-            <div className="">
-              <div className=" text-white p-4">
-                <div className="text-slate-300 my-2">
-                  <p>date || time</p>
-                </div>
-                <p className="text-white">event name</p>
-                <p className="text-white">description</p>
-                <a href="" className="text-white hover:underline">
-                  Learn More
-                </a>
-              </div>
-            </div>
-          </div>
-          {/*  */}
-
-
-
-
-          <div className="relative group bg-slate-400 p-4 rounded overflow-hidden">
-            <img className="rounded relative w-full" src={image} alt="Event" />
-            <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300">
-                <button className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white bg-gradient-to-r from-cyan-500 to-blue-600 p-4 rounded">Booked now</button>
-            </div>
-            {/* Show price at the top */}
-            <div className="absolute top-7 right-7 bg-opacity-60 rounded text-white font-bold p-2 bg-primary">
-              Price $500 USD
-            </div>
-
-            <div className="">
-              <div className=" text-white p-4">
-                <div className="text-slate-300 my-2">
-                  <p>date || time</p>
-                </div>
-                <p className="text-white">event name</p>
-                <p className="text-white">description</p>
-                <a href="" className="text-white hover:underline">
-                  Learn More
-                </a>
-              </div>
-            </div>
-          </div>
-
-
-          <div className="relative group bg-slate-400 p-4 rounded overflow-hidden">
-            <img className="rounded relative w-full" src={image} alt="Event" />
-            <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300">
-                <button className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white bg-gradient-to-r from-cyan-500 to-blue-600 p-4 rounded">Booked now</button>
-            </div>
-            {/* Show price at the top */}
-            <div className="absolute top-7 right-7 bg-opacity-60 rounded text-white font-bold p-2 bg-primary">
-              Price $500 USD
-            </div>
-
-            <div className="">
-              <div className=" text-white p-4">
-                <div className="text-slate-300 my-2">
-                  <p>date || time</p>
-                </div>
-                <p className="text-white">event name</p>
-                <p className="text-white">description</p>
-                <a href="" className="text-white hover:underline">
-                  Learn More
-                </a>
-              </div>
-            </div>
-          </div>
-
-
-
-          <div className="relative group bg-slate-400 p-4 rounded overflow-hidden">
-            <img className="rounded relative w-full" src={image} alt="Event" />
-            <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-300">
-                <button className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white bg-gradient-to-r from-cyan-500 to-blue-600 p-4 rounded">Booked now</button>
-            </div>
-            {/* Show price at the top */}
-            <div className="absolute top-7 right-7 bg-opacity-60 rounded text-white font-bold p-2 bg-primary">
-              Price $500 USD
-            </div>
-
-            <div className="">
-              <div className=" text-white p-4">
-                <div className="text-slate-300 my-2">
-                  <p>date || time</p>
-                </div>
-                <p className="text-white">event name</p>
-                <p className="text-white">description</p>
-                <a href="" className="text-white hover:underline">
-                  Learn More
-                </a>
-              </div>
-            </div>
-          </div>
-
-
-        </div>
-        
-      </Container>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      {
+        cards && cards.map(card=><SingleCard key={card.id} card={card}></SingleCard>)
+      }
+      </div>
+      
     </div>
   );
 };
