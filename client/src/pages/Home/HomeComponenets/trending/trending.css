@@ -92,7 +92,7 @@ img:hover {
 
 .slider::before,
 .slider::after {
-  background: linear-gradient(to right, rgb(146, 194, 210) 0%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(to right, rgb(250, 248, 249) 0%, rgba(255, 255, 255, 0) 100%);
   content: "";
   height: 100%;
   position: absolute;
@@ -113,7 +113,7 @@ img:hover {
 
 .slider::before,
 .slider::after {
-  background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+  /* background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%); */
   content: "";
   height: 100%;
   position: absolute;

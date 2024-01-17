@@ -36,12 +36,12 @@ const Trendingproducts = () => {
       
      <div className='flex '>
     
-    <div className=' w-96'>
-    <Lottie animationData={lcottievb}></Lottie>
+    <div >
+    <Lottie className='w-[500px] ' animationData={lcottievb}></Lottie>
     
     </div>
       {/* <img className=' h-72  w-96 rounded-badge' src={shop} alt="" /> */}
-         <div className='slider'>
+         <div className='slider rounded-r-2xl rounded-l-3xl'>
           
           <div className='slide-track gap-10'>
             {data.map((item, index) => (
