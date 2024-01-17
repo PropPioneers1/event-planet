@@ -18,7 +18,7 @@ const UpComingEvent = () => {
       <div className="bg-natural">
         <Container>
           {/* count down time */}
-          <div className="flex justify-between items-center">
+          <div className="flex flex-wrap justify-between items-center px-4 md:px-8 lg:px-16">
             <div>
               <p className="bg-gradient-to-r from-cyan-500 to-blue-600 inline-block text-white px-1 rounded">
                 Next
