@@ -16,3 +16,17 @@
     left: 0;
     z-index: 1;
 }
+span{
+color: wheat;
+
+}
+.input-style {
+    border: 1px solid #EEEEEE;
+    opacity: 60px;
+    color: white;
+    background-color: transparent;
+    border-radius: 4px;
+}
+.input-style:hover{
+    box-shadow: 2px 2px 5px 2px #f53f7c46;
+}
