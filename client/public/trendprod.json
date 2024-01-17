@@ -1,43 +1,74 @@
- [
-    {
-      "id": 1,
-      "itemName": "Elegant Wedding Dress",
-      "brandName": "Bridal Couture",
-      "rating": 4.8,
-      "image": "https://ibb.co/48MCcQR",
-      "availableSizes": ["S", "M", "L", "XL"]
-    },
-    {
-      "id": 2,
-      "itemName": "Celebration Cake",
-      "brandName": "Sweet Delights Bakery",
-      "rating": 4.5,
-      "image": "https://ibb.co/3NZRsn0",
-      "availableSizes": ["8-inch", "10-inch", "12-inch"]
-    },
-    {
-      "id": 3,
-      "itemName": "Corporate Leather Briefcase",
-      "brandName": "Elite Accessories",
-      "rating": 4.9,
-      "image": "https://ibb.co/V3XGfYJ",
-      "availableSizes": ["One Size"]
-    },
-    {
-      "id": 4,
-      "itemName": "Professional Business Suit",
-      "brandName": "Corporate Styles",
-      "rating": 4.7,
-      "image": "https://ibb.co/H2Zh77q",
-      "availableSizes": ["S", "M", "L", "XL"]
-    },
-    {
-      "id": 5,
-      "itemName": " Bluetooth Speaker",
-      "brandName": "AudioPro",
-      "rating": 4.6,
-      "image": "https://ibb.co/K6jF5g3",
-      "availableSizes": ["One Size"]
-    }
-  ]
-
+[
+  {
+    "id": 1,
+    "itemName": "Elegant Wedding Dress",
+    "brandName": "Bridal Couture",
+    "price": 3349.99,
+    "rating": 4.8,
+    "image": "https://i.ibb.co/48MCcQR/image1.jpg",
+    "availableSizes": ["S", "M", "L", "XL"]
+  },
+  {
+    "id": 2,
+    "itemName": "Celebration Cake",
+    "brandName": "Sweet Delights Bakery",
+    "price": 9.99,
+    "rating": 4.5,
+    "image": "https://i.ibb.co/3NZRsn0/image2.jpg",
+    "availableSizes": ["8-inch", "10-inch", "12-inch"]
+  },
+  {
+    "id": 3,
+    "itemName": "Corporate Leather Briefcase",
+    "brandName": "Elite Accessories",
+    "price": 100.99,
+    "rating": 4.9,
+    "image": "https://i.ibb.co/V3XGfYJ/image3.jpg",
+    "availableSizes": ["One Size"]
+  },
+  {
+    "id": 4,
+    "itemName": "Professional Business Suit",
+    "brandName": "Corporate Styles",
+    "price": 39.99,
+    "rating": 4.7,
+    "image": "https://i.ibb.co/H2Zh77q/image4.jpg",
+    "availableSizes": ["S", "M", "L", "XL"]
+  },
+  {
+    "id": 5,
+    "itemName": "Bluetooth Speaker",
+    "brandName": "AudioPro",
+    "price": 200,
+    "rating": 4.6,
+    "image": "https://i.ibb.co/K6jF5g3/image5.jpg",
+    "availableSizes": ["One Size"]
+  },
+  {
+    "id": 6,
+    "itemName": "Flower Bouquet",
+    "brandName": "Blossom Blooms",
+    "rating": 4.9,
+    "price": 39.99,
+    "image": "https://i.ibb.co/WGGbDBD/flower.jpg",
+    "availableSizes": ["Standard", "Premium", "Deluxe"]
+  },
+  {
+    "id": 7,
+    "itemName": "Gourmet Coffee Set",
+    "brandName": "Bean Delights",
+    "rating": 4.3,
+    "price": 29.99,
+    "image": "https://i.ibb.co/n1gb1qK/coffee.jpg",
+    "availableSizes": ["250g", "500g"]
+  },
+  {
+    "id": 11,
+    "itemName": "Professional DSLR Camera",
+    "brandName": "PhotoPro",
+    "rating": 4.7,
+    "price": 799.99,
+    "image": "https://i.ibb.co/ZWHW6zT/camera.jpg",
+    "availableSizes": ["Standard", "Premium"]
+  }
+]
