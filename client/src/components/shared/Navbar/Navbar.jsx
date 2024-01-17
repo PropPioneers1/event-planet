@@ -97,7 +97,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="bg-[#222831] sticky top-0">
+    <div className="bg-[#222831] sticky top-0 z-20">
       {/* Container */}
       <Container>
         <div className="flex justify-between items-center text-[#EEEEEE] py-5 ">
