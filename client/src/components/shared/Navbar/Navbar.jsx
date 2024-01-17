@@ -115,7 +115,7 @@ const Navbar = () => {
               <li className="font-semibold hover:text-[#3F72AF]">Sign in</li>
             </NavLink>
             <div className="w-[1px] h-[15px] bg-[#EEEEEE]"></div>
-            <NavLink to="/">
+            <NavLink to="/sign-up">
               <li className="font-semibold hover:text-[#3F72AF]">Sign up</li>
             </NavLink>
           </ul>
