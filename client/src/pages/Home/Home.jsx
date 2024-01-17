@@ -10,13 +10,11 @@ const Home = () => {
       <h2>Home</h2>
       {/* trending products pritom*/}
       <Trendingproducts></Trendingproducts>
-      {/* hot deals and footer by rifat */}
       {/* why choose by arif */}
       <WhyChoose></WhyChoose>
+      {/* hot deals and footer by rifat */}
       <HotDeals></HotDeals>
       <Footer></Footer>
-      {/* Why choose event planet arif */}
-      
     </div>
   );
 };

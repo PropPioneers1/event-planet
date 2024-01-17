@@ -7,7 +7,7 @@ const WhyChoose = () => {
     const [items, setItems] = useState([]);
 
     useEffect(() => {
-        axios.get("./whyChoose.json")
+        axios.get("./whyChoose.json") 
             .then(res => {
                 console.log(res.data)
                 setItems(res.data)
