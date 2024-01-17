@@ -6,10 +6,9 @@ export default {
       fontFamily: {
         title: "Lora, serif",
       },
-
-      backgroundColor: {
-        natural: "#EEEEEE",
-        primary: "#3F72AF",
+      colors: {
+        neutral: "#EEEEEE",
+        primary: "#F53F7B",
         secondary: "#222831",
       },
     },
