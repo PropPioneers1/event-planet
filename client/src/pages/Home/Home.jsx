@@ -1,30 +1,26 @@
 import Trendingproducts from "./HomeComponenets/trending/Trendingproducts";
-import { FaShopify } from "react-icons/fa";
+import WhyChoose from "./HomeComponenets/WhyChooseEventPlanet/WhyChoose";
+import HotDeals from "./HomeComponenets/HotDeals/HotDeals";
+import Footer from "../../components/shared/Footer";
+
 
 const Home = () => {
   return (
     <div>
-
-      {/* Trending products section */}
-      <div>
-        <h2 className="text-center font-bold mt-10 mb-5 text-3xl underline">Our trending products</h2>
-        <div>
-        <p className="text-center mb-10 p-8">
-  Hello Human! We're here to make your special moments even more memorable.
-  Explore our curated collection of essential products for various events and
-  find the perfect items to elevate your experiences. Whether it's a wedding,
-  celebration, or a professional gathering, our diverse range of high-quality
-  products awaits you. Visit our shop now and discover a world of elegance and
-  functionality at your fingertips.
-</p>
-        </div>
+      <h2>Home</h2>
+        {/* Trending products section */}
+        <div >
+       
         <Trendingproducts></Trendingproducts>
       </div>
+ 
+       {/* hot deals and footer by rifat */}
+      <HotDeals></HotDeals>
 
-      {/* Button at the end */}
-      <div className="text-center mb-10">
-        <button className="btn btn-wide mt-4 bg-blue-300">Visit Our Shop <FaShopify /></button>
-      </div>
+      <WhyChoose></WhyChoose>
+      {/* hot deals and footer by rifat */}
+      
+      <Footer></Footer>
     </div>
   );
 };
