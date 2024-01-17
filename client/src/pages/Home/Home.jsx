@@ -1,3 +1,5 @@
+
+import UpComingEvent from "./HomeComponenets/UpComingEvent/UpComingEvent";
 import HomeBanner from "./HomeComponenets/HomeBanner/HomeBanner";
 import Trendingproducts from "./HomeComponenets/trending/Trendingproducts";
 import WhyChoose from "./HomeComponenets/WhyChooseEventPlanet/WhyChoose";
@@ -7,6 +9,9 @@ import Footer from "../../components/shared/Footer";
 const Home = () => {
   return (
     <div>
+      <h2>Home</h2>
+      {/* UpComming event anik */}
+      <UpComingEvent></UpComingEvent>
       {/* made by BRCShakil */}
       <HomeBanner />
       {/* trending products pritom*/}
