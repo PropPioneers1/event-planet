@@ -4,7 +4,7 @@ import { FaShopify } from "react-icons/fa";
 const Home = () => {
   return (
     <div>
-      <h2>Home</h2>
+
       {/* Trending products section */}
       <div>
         <h2 className="text-center font-bold mt-10 mb-5 text-3xl underline">Our trending products</h2>

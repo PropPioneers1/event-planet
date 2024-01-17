@@ -16,8 +16,9 @@ const Trendingproducts = () => {
   return (
    <div className='flex '>
     
-<div className=' w-96 bg-blue-1 '>
+<div className=' w-96'>
 <Lottie animationData={lcottievb}></Lottie>
+
 </div>
   {/* <img className=' h-72  w-96 rounded-badge' src={shop} alt="" /> */}
      <div className='slider'>
