@@ -6,7 +6,7 @@ const HotDeals = () => {
             <div  className="mt-10  flex-wrap gap-4 items-center justify-center lg:flex">
         {/* first card */}
         <div className="ml-12 lg:mr-0">
-          <div data-aos="flip-right" class="relative flex w-full max-w-[20rem] text-black flex-col rounded-xl bg-gradient-to-tr from-white to-pink-400 bg-clip-border p-8  shadow-md shadow-pink-500/40">
+          <div data-aos="flip-right" class="relative flex w-full max-w-[20rem] text-black flex-col rounded-xl bg-gradient-to-tr from-white to-blue-400 bg-clip-border p-8  shadow-md shadow-pink-500/40">
             <div class="relative m-0 mb-8 overflow-hidden rounded-none border-b border-white/10 bg-transparent bg-clip-border pb-8 text-center text-gray-700 shadow-none">
               <p class="block font-sans text-sm font-normal uppercase leading-normal text-black antialiased">
                 standard
@@ -144,7 +144,7 @@ const HotDeals = () => {
         {/* second card */}
 
         <div className="ml-12 lg:mr-0">
-        <div data-aos="flip-right" class="relative flex w-full max-w-[20rem] flex-col rounded-xl bg-gradient-to-tr from-white to-pink-400 bg-clip-border p-8 text-black shadow-md shadow-pink-500/40">
+        <div data-aos="flip-right" class="relative flex w-full max-w-[20rem] flex-col rounded-xl bg-gradient-to-tr from-white to-blue-400 bg-clip-border p-8 text-black shadow-md shadow-pink-500/40">
           <div class="relative m-0 mb-8 overflow-hidden rounded-none border-b border-white/10 bg-transparent bg-clip-border pb-8 text-center text-gray-700 shadow-none">
             <p class="block font-sans text-sm font-normal uppercase leading-normal text-black antialiased">
               Pro
@@ -280,7 +280,7 @@ const HotDeals = () => {
         </div>
         </div>
         <div className="ml-12 lg:mr-0">
-          <div data-aos="flip-right" class="relative flex w-full max-w-[20rem] flex-col rounded-xl bg-gradient-to-tr from-white to-pink-400 bg-clip-border p-8 text-black shadow-md shadow-pink-500/40">
+          <div data-aos="flip-right" class="relative flex w-full max-w-[20rem] flex-col rounded-xl bg-gradient-to-tr from-white to-blue-400 bg-clip-border p-8 text-black shadow-md shadow-pink-500/40">
             <div class="relative m-0 mb-8 overflow-hidden rounded-none border-b border-white/10 bg-transparent bg-clip-border pb-8 text-center text-gray-700 shadow-none">
               <p class="block font-sans text-sm font-normal uppercase leading-normal text-black antialiased">
                 Pro Plus
