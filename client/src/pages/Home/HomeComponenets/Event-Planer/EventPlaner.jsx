@@ -21,7 +21,7 @@ const EventPlaner = () => {
       </div>
 
       <div className="w-full lg:w-3/4 gap-5 mb-5  mt-10 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3  mx-auto">
-        {eventPlaner?.map((event) => (
+        {eventPlaner?.map((event, idx) => (
           <div className="text-center border mt-5 mb-3 p-5 border-[#F53F7B] border-2  rounded-lg space-y-1 p-5">
             <div className="mt-[-60px]">
               <img

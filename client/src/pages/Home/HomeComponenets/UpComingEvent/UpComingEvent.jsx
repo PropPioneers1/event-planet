@@ -15,7 +15,7 @@ const UpComingEvent = () => {
   },[])
   return (
     <div>
-      <div className="bg-natural">
+      <div className="bg-neutral py-4">
         <Container>
           {/* count down time */}
           <div className="flex flex-wrap justify-between items-center px-4 md:px-8 lg:px-16">

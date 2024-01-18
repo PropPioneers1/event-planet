@@ -1,126 +1,160 @@
 import { Link, NavLink } from "react-router-dom";
 import Container from "../../ui/Container";
+import { FaSortDown } from "react-icons/fa6";
+import { SlMenu } from "react-icons/sl";
+import { IoCloseOutline } from "react-icons/io5";
 import { useState } from "react";
 
 const Navbar = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMenuTrue, setIsMenuTrue] = useState(false);
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
+  const categories = [
+    "Education",
+    "Business",
+    "Travel",
+    "Conference",
+    "Food Festival",
+    "Sports Event",
+  ];
+
+  const locations = [
+    "Sylhet",
+    "Mymensingh",
+    "Rangpur",
+    "Rajshahi",
+    "Khulna",
+    "Dhaka",
+    "Chattogram",
+    "Barishal",
+  ];
 
   const navLinks = (
     <>
       <NavLink to="/">
-        <li className="font-semibold hover:text-[#3F72AF]">Home</li>
+        <li className="font-semibold hover:text-accent py-2 lg:py-5">Home</li>
       </NavLink>
       <NavLink to="/">
-        <li className="font-semibold hover:text-[#3F72AF]">Event</li>
+        <li className="font-semibold hover:text-accent py-2 lg:py-5">Event</li>
       </NavLink>
       <NavLink to="/">
-        <li
-          className="relative hover:text-[#3F72AF]"
-          onMouseEnter={toggleDropdown}
-          onMouseLeave={toggleDropdown}
-        >
-          <span className="font-semibold ">Categories</span>
-          {/* Drop down */}
-          {/* <ul
-            className={`absolute lg:w-40 bg-[#EEEEEE]
+        <li className="relative group hover:text-accent py-2 lg:py-5">
+          <span className="font-semibold flex  items-center gap-1">
+            Categories <FaSortDown />
+          </span>
+          {/* Drop down menu*/}
+          <ul
+            className={`absolute hidden group-hover:block lg:w-40 bg-[#EEEEEE]
             text-[#222831] text-sm
-             -left-7 top-12 space-y-3 transition-all duration-1000 p-4 
-              ${isDropdownOpen ? "h-auto opacity-100 block" : "h-0 opacity-0"}`}
+            lg:left-0 lg:top-16 left-20 top-10 z-10 space-y-3 transition-all duration-1000 p-4 shadow-md`}
           >
-            <li className="hover:text-[#3F72AF]">
-              <a>Education</a>
-            </li>
-            <li className="hover:text-[#3F72AF]">
-              <a>Business</a>
-            </li>
-            <li className="hover:text-[#3F72AF]">
-              <a>Travel</a>
-            </li>
-            <li className="hover:text-[#3F72AF]">
-              <a>Conference</a>
-            </li>
-            <li className="hover:text-[#3F72AF]">
-              <a>Food Festival</a>
-            </li>
-            <li className="hover:text-[#3F72AF]">
-              <a>Sports Event</a>
-            </li>
-          </ul> */}
+            {categories?.map((category, idx) => (
+              <li key={idx} className="hover:text-accent">
+                {category}
+              </li>
+            ))}
+          </ul>
         </li>
       </NavLink>
       <NavLink to="/">
-        <li
-          className="font-semibold hover:text-[#3F72AF] relative"
-          onMouseEnter={toggleDropdown}
-          onMouseLeave={toggleDropdown}
-        >
-          <span className="font-semibold">Location</span>
-          {/* Dropdown */}
-          {/* <ul
-            className={`absolute lg:w-40 bg-[#EEEEEE]
+        <li className="relative group py-2  lg:py-5 hover:text-accent">
+          <span className="font-semibold flex  items-center gap-1">
+            Location <FaSortDown />
+          </span>
+          {/* Drop down menu*/}
+          <ul
+            className={`absolute hidden transition-all duration-300 ease-out group-hover:block lg:w-40 bg-[#EEEEEE]
             text-[#222831] text-sm
-             -left-7 top-12 space-y-3 transition-all duration-1000 p-4 
-              ${isDropdownOpen ? "h-auto opacity-100 block" : "h-0 opacity-0"}`}
+            lg:left-0 lg:top-16 left-20 top-10 z-10  space-y-3 p-4 shadow-md overflow-y-auto`}
           >
-            <li className="hover:text-[#3F72AF]">
-              <a>Education</a>
-            </li>
-            <li className="hover:text-[#3F72AF]">
-              <a>Business</a>
-            </li>
-            <li className="hover:text-[#3F72AF]">
-              <a>Travel</a>
-            </li>
-            <li className="hover:text-[#3F72AF]">
-              <a>Conference</a>
-            </li>
-            <li className="hover:text-[#3F72AF]">
-              <a>Food Festival</a>
-            </li>
-            <li className="hover:text-[#3F72AF]">
-              <a>Sports Event</a>
-            </li>
-          </ul> */}
+            {locations?.map((location, idx) => (
+              <li key={idx} className="hover:text-accent">
+                {location}
+              </li>
+            ))}
+          </ul>
         </li>
       </NavLink>
       <NavLink to="/">
-        <li className="font-semibold hover:text-[#3F72AF]">Blog</li>
+        <li className="font-semibold hover:text-accent py-2 lg:py-5">Blog</li>
       </NavLink>
       <NavLink to="/">
-        <li className="font-semibold hover:text-[#3F72AF]">Shop</li>
+        <li className="font-semibold hover:text-accent py-2 lg:py-5">Shop</li>
+      </NavLink>
+    </>
+  );
+
+  const authLinks = (
+    <>
+      <NavLink to="/">
+        <button
+          className="font-semibold border-2 border-accent
+         rounded-md py-2 px-4 transition-all duration-500 ease-out hover:bg-accent"
+        >
+          Sign in
+        </button>
+      </NavLink>
+      <div className="w-[1px] h-[15px] bg-[#EEEEEE] hidden lg:block "></div>
+      <NavLink to="/sign-up">
+        <button
+          className="font-semibold border-2 border-accent
+         rounded-md py-2 px-4 transition-all duration-500 ease-out hover:bg-accent"
+        >
+          Sign up
+        </button>
       </NavLink>
     </>
   );
 
   return (
-    <div className="bg-[#222831] sticky top-0 z-20">
-      {/* Container */}
-      <Container>
-        <div className="flex justify-between items-center text-[#EEEEEE] py-5 ">
-          {/* Logo */}
-          <Link to="/" className="text-2xl font-bold hover:text-[#3F72AF] ">
-            Event Planet
-          </Link>
+    <div className="">
+      <div
+        className="bg-neutral lg:bg-secondary bg-opacity-100 
+      fixed top-0 z-50  w-full py-4 lg:py-0
+      shadow-2xl
+      "
+      >
+        {/* Container */}
+        <Container>
+          <div className="flex justify-between items-center text-secondary lg:text-neutral">
+            {/* Logo */}
+            <div>
+              <Link to="/" className="text-2xl font-bold  ">
+                Event Planet
+              </Link>
+            </div>
 
-          {/* navlinks */}
-          <ul className="md:flex item-center gap-5 hidden">{navLinks}</ul>
+            {/* navLinks for medium and large device */}
+            <ul className="lg:flex item-center gap-5 hidden text-lg">
+              {navLinks}
+            </ul>
+            {/* sign in && sign up ||  account for medium and large device*/}
+            <ul className="hidden lg:flex items-center gap-5 ">{authLinks}</ul>
 
-          {/* sign in && sign up ||  account*/}
-          <ul className="flex items-center gap-5">
-            <NavLink to="/">
-              <li className="font-semibold hover:text-[#3F72AF]">Sign in</li>
-            </NavLink>
-            <div className="w-[1px] h-[15px] bg-[#EEEEEE]"></div>
-            <NavLink to="/">
-              <li className="font-semibold hover:text-[#3F72AF]">Sign up</li>
-            </NavLink>
-          </ul>
+            <div className="block lg:hidden">
+              <SlMenu
+                onClick={() => setIsMenuTrue(true)}
+                className={`text-2xl font-bold cursor-pointer hover:text-accent 
+                transition-all duration-300 ${isMenuTrue ? "hidden" : "block"}`}
+              />
+              <IoCloseOutline
+                onClick={() => setIsMenuTrue(false)}
+                className={`text-3xl  cursor-pointer hover:text-accent 
+                transition-all duration-300 ${isMenuTrue ? "block" : "hidden"}`}
+              />
+            </div>
+          </div>
+        </Container>
+        <div
+          className={`overflow-y-auto block lg:hidden transition-all bg-neutral duration-500 
+             text-secondary w-full ${
+               isMenuTrue ? "opacity-100 max-h-screen" : "opacity-0 max-h-0"
+             } px-4 `}
+        >
+          {/* navLinks for mobile devices */}
+          <ul className="pt-5">{navLinks}</ul>
+          <ul className="pb-5 flex flex-col gap-3">{authLinks}</ul>
         </div>
-      </Container>
+      </div>
     </div>
   );
 };

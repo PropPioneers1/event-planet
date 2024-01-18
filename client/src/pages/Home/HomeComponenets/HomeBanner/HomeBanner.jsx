@@ -10,9 +10,9 @@ const HomeBanner = () => {
       }}
     >
       <Container>
-        <div className="font-title space-y-6 lg:space-y-8 py-10 md:py-14 lg:py-20">
+        <div className="font-title space-y-6 lg:space-y-8 py-16 lg:py-20">
           {/* Title and Subtitle for banner */}
-          <div className="text-left lg:text-center">
+          <div className="text-left lg:text-center pt-10 lg:pt-0">
             <h1
               className="text-neutral text-3xl md:text-4xl
              lg:text-5xl font-semibold pb-2 md:pb-4"
