@@ -111,7 +111,7 @@ const Navbar = () => {
 
           {/* sign in && sign up ||  account*/}
           <ul className="flex items-center gap-5">
-            <NavLink to="/">
+            <NavLink to="/sign-in">
               <li className="font-semibold hover:text-[#3F72AF]">Sign in</li>
             </NavLink>
             <div className="w-[1px] h-[15px] bg-[#EEEEEE]"></div>
