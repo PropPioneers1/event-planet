@@ -37,7 +37,8 @@ const Trendingproducts = () => {
      <div className='flex '>
     
     <div >
-    <Lottie className='lg:w-[500px] md:w-96 hidden md:block
+    <Lottie className=' md:w-[350px] 
+    hidden md:block  mt-20
     ' animationData={lcottievb}></Lottie>
     
     </div>
