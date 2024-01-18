@@ -10,12 +10,10 @@ import Testmonial from "./HomeComponenets/Testmonial/Testmonial";
 const Home = () => {
 	return (
 		<div>
-			<h2>Home</h2>
-
-			{/* UpComming event anik */}
-			<UpComingEvent></UpComingEvent>
 			{/* made by BRCShakil */}
 			<HomeBanner />
+			{/* UpComming event anik */}
+			<UpComingEvent></UpComingEvent>
 			{/* trending products pritom*/}
 			<Trendingproducts></Trendingproducts>
 			{/* why choose by arif */}

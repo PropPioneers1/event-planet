@@ -17,7 +17,7 @@ const TestMonial = () => {
 	return (
 		<div
 			id="my-id"
-			className=" min-h-[70vh] bg-blend-darken  items-center bg-fixed"
+			className=" min-h-[70vh] bg-blend-darken py-8 items-center bg-fixed"
 			style={{
 				backgroundImage: "url(https://i.ibb.co/NL2K7QS/image.jpg)",
 			}}
