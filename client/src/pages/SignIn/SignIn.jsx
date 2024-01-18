@@ -11,6 +11,8 @@ const SignIn = () => {
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
+    const result = {name,email,password}
+    console.log(result)
   };
   return (
     <div className="signUp-bg">
