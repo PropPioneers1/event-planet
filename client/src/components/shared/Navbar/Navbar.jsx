@@ -144,6 +144,7 @@ const Navbar = () => {
             </div>
           </div>
         </Container>
+
         <div
           className={`overflow-y-auto block lg:hidden transition-all bg-neutral duration-500 
              text-secondary w-full ${
