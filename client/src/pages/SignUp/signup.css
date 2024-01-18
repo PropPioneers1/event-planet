@@ -1,32 +1,30 @@
 .signUp-bg{
-    position: relative;
     background-image: url('https://i.ibb.co/fq6DWhd/Wedding.jpg');
+    background-color: #00000093;
+    background-blend-mode: overlay;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center; 
     background-attachment: fixed;
-    height: 100vh;
+    min-height: 100vh;
 }
-.overlay{
-    background-color: rgba(0, 0, 0, 0.7);
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-}
-span{
-color: wheat;
-
-}
+/* default input style */
 .input-style {
-    border: 1px solid #EEEEEE;
-    opacity: 60px;
-    color: white;
     background-color: transparent;
+    border: 2px solid rgba(150, 149, 149, 0.719);
+    transition: background-color 0.3s ease, border 0.3s ease;
+    color: white;
     border-radius: 4px;
-}
-.input-style:hover{
-    box-shadow: 2px 2px 5px 2px #f53f7c46;
-}
+  }
+  .border-none{
+    border: none !important;
+  }
+  /* when not focus on input */
+  .input-style:not(:focus):not(:placeholder-shown) {
+    border: 2px solid #b1afaf;
+  }
+  /* when focus on input style */
+  .input-style:focus {
+    background-color: #ffffff28;  
+  }
+  
