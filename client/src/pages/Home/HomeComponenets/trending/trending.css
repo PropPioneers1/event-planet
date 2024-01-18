@@ -81,12 +81,12 @@ img:hover {
   perspective: 100px;
 }
 
-img {
+.trendingimg{
   width: 100%;
   transition: transform 1s;
 }
 
-img:hover {
+.trendingimg:hover {
   transform: translateZ(20px);
 }
 

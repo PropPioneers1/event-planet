@@ -37,7 +37,8 @@ const Trendingproducts = () => {
      <div className='flex '>
     
     <div >
-    <Lottie className='w-[500px] ' animationData={lcottievb}></Lottie>
+    <Lottie className='lg:w-[500px] md:w-96 hidden md:block
+    ' animationData={lcottievb}></Lottie>
     
     </div>
       {/* <img className=' h-72  w-96 rounded-badge' src={shop} alt="" /> */}
@@ -47,7 +48,7 @@ const Trendingproducts = () => {
             {data.map((item, index) => (
               <div key={index} className='slide relative card
               h-96  bg-transparent '>
-                <img className=' px-8 h-24' src={item.image} alt="" />
+                <img className='trendingimg px-8 h-24' src={item.image} alt="" />
                 <div className=' h-96 card-body  '>
                   <h2 className='card-title w-54'>{item.itemName}</h2>
                   <h2 className='font-bold w-54'> ${item.price}</h2>
@@ -68,20 +69,7 @@ const Trendingproducts = () => {
        </div>
   
 
-       {/* <div className="text-center mb-10  p-10">
-       
-               <button className="c-button 
-                c-button--gooey  btn w-72 h-20 font-bold
-                 text-cyan-700 p-y-8 text-xl rounded-2xl"> 
-                Shop Now 
-                <FaShopify />
-  <div className="c-button__blobs">
-  <div></div>
-  <div></div>
-  <div></div>
-  </div>
-</button>
-      </div> */}
+  
  
 <Buttonall> Shop Now <FaShopify></FaShopify> </Buttonall>
   </div>
