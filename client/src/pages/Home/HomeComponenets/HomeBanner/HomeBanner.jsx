@@ -4,7 +4,7 @@ import Container from "../../../../components/ui/Container";
 const HomeBanner = () => {
   return (
     <div
-      className="min-h-screen grid place-items-center bg-contain bg-no-repeat bg-[#0000009a] bg-blend-overlay "
+      className="min-h-screen grid place-items-center bg-cover bg-no-repeat bg-[#0000009a] bg-blend-overlay "
       style={{
         backgroundImage: `url(${bannerBg})`,
       }}
@@ -110,13 +110,13 @@ const HomeBanner = () => {
             </h3>
             {/* buttons container */}
             <div className="flex flex-wrap gap-2 justify-start md:justify-center">
-              <button className="bg-[#b3b3b352] px-4 py-1 text-[15px] rounded-full">
+              <button className="bg-[#b3b3b352] hover:bg-[#cecece71] transition-all duration-300 ease-out px-4 py-1 text-[15px] rounded-full">
                 Upcoming Events
               </button>
-              <button className="bg-[#b3b3b352] px-4 py-1 text-[15px] rounded-full">
+              <button className="bg-[#b3b3b352] hover:bg-[#cecece71] transition-all duration-300 ease-out px-4 py-1 text-[15px] rounded-full">
                 Featured Events
               </button>
-              <button className="bg-[#b3b3b352] px-4 py-1 text-[15px] rounded-full">
+              <button className="bg-[#b3b3b352] hover:bg-[#cecece71] transition-all duration-300 ease-out px-4 py-1 text-[15px] rounded-full">
                 All Events
               </button>
             </div>
