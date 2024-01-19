@@ -3,6 +3,7 @@ import { SiSpinrilla } from "react-icons/si";
 import "../SignUp/signup.css";
 import Container from "../../components/ui/Container";
 import { Link } from "react-router-dom";
+import '../../pages/Home/HomeComponenets/UpComingEvent/upcoming.scss'
 const SignIn = () => {
   const loading = false;
   const handleSubmit = async (event) => {
@@ -11,6 +12,8 @@ const SignIn = () => {
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
+    const result = {name,email,password}
+    console.log(result)
   };
   return (
     <div className="signUp-bg">
@@ -30,14 +33,14 @@ const SignIn = () => {
               </p>
               <div className="flex flex-col md:flex-row gap-6 pt-5">
                 <Link to='/sign-up'>
-                <button className="bg-secondary text-white py-2 px-4 mb-2 md:mb-0 md:mr-2 w-full">
+                <button className="button">
                   SIGN UP
                 </button>
                 </Link>
-                <button className="bg-secondary text-white py-2 px-4 mb-2 md:mb-0 md:mr-2">
+                <button className="button">
                   SIGNUP WITH GOOGLE
                 </button>
-                <button className="bg-secondary text-white py-2 px-4">
+                <button className="button">
                   SIGNUP WITH FACEBOOK
                 </button>
               </div>
@@ -107,12 +110,12 @@ const SignIn = () => {
                 <div>
                   <button
                     type="submit"
-                    className="bg-secondary w-full rounded-md py-3 text-white"
+                    className="button w-full"
                   >
                     {loading ? (
                       <SiSpinrilla className="animate-spin m-auto" />
                     ) : (
-                      "Continue"
+                      "SIGN IN"
                     )}
                   </button>
                 </div>
