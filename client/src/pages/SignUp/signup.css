@@ -18,9 +18,7 @@
     z-index: 1;
 }
 .signUp-bg span{
-color: wheat;
-
-    min-height: 100vh;
+  color: wheat;
 }
 /* default input style */
 .input-style {
