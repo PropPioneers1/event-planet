@@ -85,7 +85,7 @@ const Navbar = () => {
 
   const authLinks = (
     <>
-      <NavLink to="/">
+      <NavLink to="/sign-in">
         <button
           className="font-semibold border-2 border-accent
          rounded-md py-2 px-4 transition-all duration-500 ease-out hover:bg-accent"

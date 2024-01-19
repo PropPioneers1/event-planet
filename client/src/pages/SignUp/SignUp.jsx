@@ -5,6 +5,7 @@ import { SiSpinrilla } from "react-icons/si";
 import "./signup.css";
 import Container from "../../components/ui/Container";
 import { Link } from "react-router-dom";
+import '../Home/HomeComponenets/UpComingEvent/upcoming.scss'
 const SignUp = () => {
   const loading = false;
   const handleSubmit = async (event) => {
@@ -34,14 +35,14 @@ const SignUp = () => {
               </p>
               <div className="flex flex-col md:flex-row gap-6 pt-5">
                 <Link to='/sign-in'>
-                <button className="bg-secondary text-white py-2 px-4 mb-2 md:mb-0 md:mr-2">
+                <button className="button">
                  SIGN IN
                 </button>
                 </Link>
-                <button className="bg-secondary text-white py-2 px-4 mb-2 md:mb-0 md:mr-2">
+                <button className="button">
                   SIGNUP WITH GOOGLE
                 </button>
-                <button className="bg-secondary text-white py-2 px-4">
+                <button className="button">
                   SIGNUP WITH FACEBOOK
                 </button>
               </div>
@@ -121,12 +122,12 @@ const SignUp = () => {
                 <div>
                   <button
                     type="submit"
-                    className="bg-secondary w-full rounded-md py-3 text-white"
+                    className="button w-full"
                   >
                     {loading ? (
                       <SiSpinrilla className="animate-spin m-auto" />
                     ) : (
-                      "Continue"
+                      "SIGN UP"
                     )}
                   </button>
                 </div>
