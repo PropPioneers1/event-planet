@@ -1,9 +1,8 @@
 import { useEffect } from "react";
 import Container from "../../../../components/ui/Container";
-import './upcoming.css'
+import './upcoming.scss'
 import { useState } from "react";
 import SingleCard from "./SingleCard";
-import Buttonall from "../../../../components/ui/ButtonAll/Buttonall";
 const UpComingEvent = () => {
  
   const [cards,setCards] = useState([])
@@ -21,7 +20,7 @@ const UpComingEvent = () => {
           {/* count down time */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 place-items-center gap-3">
             <div>
-              <p className="bg-gradient-to-r from-cyan-500 to-blue-600 inline-block text-white px-1 rounded">
+              <p className="bg-gradient-to-r from-[#3F72AF] to-[#F53F7B] inline-block text-white px-1 rounded">
                 Next
               </p>
               <h3 className="font-medium text-lg">UPCOMING EVENT</h3>
@@ -32,37 +31,36 @@ const UpComingEvent = () => {
             </div>
             <div className="flex gap-3 md:gap-6 text-center justify-end items-center">
               <div>
-                <div className="bg-primary rounded-sm text-neutral-300 font-medium px-4 py-3">
+                <div className="bg-accent rounded-sm text-neutral-300 font-medium px-4 py-3">
                   90
                 </div>
                 <h3>Days</h3>
               </div>
               <div>
-                <div className="bg-primary rounded-sm text-neutral-300 font-medium px-4 py-3">
+                <div className="bg-accent rounded-sm text-neutral-300 font-medium px-4 py-3">
                   12
                 </div>
                 <h3>Hrs</h3>
               </div>
               <div>
-                <div className="bg-primary rounded-sm text-neutral-300 font-medium px-4 py-3">
+                <div className="bg-accent rounded-sm text-neutral-300 font-medium px-4 py-3">
                   10
                 </div>
                 <h3>Mins</h3>
               </div>
               <div>
-                <div className="bg-primary rounded-sm text-neutral-300 font-medium px-4 py-3">
+                <div className="bg-accent rounded-sm text-neutral-300 font-medium px-4 py-3">
                   40
                 </div>
                 <h3>Secs</h3>
               </div>
             </div>
-            <div>
-              {/* <button className="btn bg-gradient-to-r from-cyan-500 to-blue-600 p-2 rounded text-white font-medium">
+            <div className="">
+              {/* <button className="bg-gradient-to-r from-[#F53F7B] to-[#3F72AF]  p-2 rounded text-white font-medium">
                 All Upcoming Event
               </button> */}
-              <Buttonall>Upcoming Event</Buttonall>
+            <button className="button">Up Coming Event</button>
             </div>
-
           </div>
         </Container>
       </div>

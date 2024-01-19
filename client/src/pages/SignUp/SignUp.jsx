@@ -13,9 +13,11 @@ const SignUp = () => {
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
+    const result = {name,email,password}
+    console.log(result)
   };
   return (
-    <div className="signUp-bg">
+    <div className="signUp-bg py-[80px] md:pt-[50px] lg:pt-[68px]">
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-5 ld:gap-20 gap-12 min-h-screen place-items-center">
             {/* Left Section */}
