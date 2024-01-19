@@ -33,32 +33,32 @@ const Trendingproducts = () => {
             functionality at your fingertips.
           </p>
         </div>
-      </Container>
-
-      <div className="flex ">
-        <div className=" w-96">
-          <Lottie animationData={lcottievb}></Lottie>
-        </div>
-        {/* <img className=' h-72  w-96 rounded-badge' src={shop} alt="" /> */}
-        <div className="slider">
-          <div className="slide-track gap-10">
+        </Container>
+      
+     <div className='flex '>
+    
+    <div >
+    <Lottie className=' md:w-[350px] 
+    hidden md:block  mt-20
+    ' animationData={lcottievb}></Lottie>
+    
+    </div>
+      {/* <img className=' h-72  w-96 rounded-badge' src={shop} alt="" /> */}
+         <div className='slider rounded-r-2xl rounded-l-3xl'>
+          
+          <div className='slide-track gap-10'>
             {data.map((item, index) => (
-              <div
-                key={index}
-                className="slide relative card
-              h-96  bg-transparent "
-              >
-                <img className=" px-8 h-24" src={item.image} alt="" />
-                <div className=" h-96 card-body  ">
-                  <h2 className="card-title w-54">{item.itemName}</h2>
-                  <h2 className="font-bold w-54"> ${item.price}</h2>
-
-                  <div className="flex gap-3">
-                    <h3 className="">{item.brandName}</h3>
-                    <p className="flex items-center font-bold text-blue-950 gap-2">
-                      <IoStar></IoStar> {item.rating}
-                    </p>
-                  </div>
+              <div key={index} className='slide relative card
+              h-96  bg-transparent '>
+                <img className='trendingimg px-8 h-24' src={item.image} alt="" />
+                <div className=' h-96 card-body  '>
+                  <h2 className='card-title w-54'>{item.itemName}</h2>
+                  <h2 className='font-bold w-54'> ${item.price}</h2>
+    
+                 <div className='flex gap-3'>
+                   <h3 className=''>{item.brandName}</h3>
+                 <p className='flex items-center font-bold text-blue-950 gap-2'><IoStar></IoStar> {item.rating}</p>
+                 </div>
                 </div>
               </div>
             ))}
@@ -66,26 +66,14 @@ const Trendingproducts = () => {
         </div>
       </div>
 
-      {/* <div className="text-center mb-10  p-10">
-       
-               <button className="c-button 
-                c-button--gooey  btn w-72 h-20 font-bold
-                 text-cyan-700 p-y-8 text-xl rounded-2xl"> 
-                Shop Now 
-                <FaShopify />
-  <div className="c-button__blobs">
-  <div></div>
-  <div></div>
-  <div></div>
+  
+ 
+<Buttonall> Shop Now <FaShopify></FaShopify> </Buttonall>
   </div>
-</button>
-      </div> */}
 
-      <Buttonall>
-        {" "}
-        Shop Now <FaShopify></FaShopify>{" "}
-      </Buttonall>
-    </div>
+
+    
+    
   );
 };
 

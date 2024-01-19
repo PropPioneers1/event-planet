@@ -5,6 +5,7 @@ import WhyChoose from "./HomeComponenets/WhyChooseEventPlanet/WhyChoose";
 import HotDeals from "./HomeComponenets/HotDeals/HotDeals";
 import Footer from "../../components/shared/Footer";
 import EventPlaner from "./HomeComponenets/Event-Planer/EventPlaner";
+import TestMonial from "./HomeComponenets/Testmonial/Testmonial";
 
 const Home = () => {
   return (
@@ -18,7 +19,9 @@ const Home = () => {
       {/* why choose by arif */}
       <WhyChoose></WhyChoose>
       {/* hot deals and footer by rifat */}
-      <HotDeals></HotDeals>
+      {/* Testmonial Section */}
+      <TestMonial></TestMonial>
+      {/* <HotDeals></HotDeals> */}
       {/* Our Event Planer */}
       <EventPlaner></EventPlaner>
       {/* made by Rifat */}

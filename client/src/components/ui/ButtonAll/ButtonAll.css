@@ -8,7 +8,7 @@
 }
 
 .c-button--gooey {
-
+  border-radius:0%;
   text-transform: uppercase;
   letter-spacing: 2px;
   border: 4px solid #F53F7B;
@@ -33,7 +33,8 @@
   background-color: #F53F7B;
   width: 34%;
   height: 100%;
-  border-radius: 100%;
+  border-radius:100%;
+
   position: absolute;
   transform: scale(1.4) translateY(125%) translateZ(0);
   transition: all 700ms ease;
@@ -55,6 +56,8 @@
 
 .c-button--gooey:hover {
   color: #fff;
+  border: 4px solid #F53F7B;
+  
 }
 
 .c-button--gooey:hover .c-button__blobs div {

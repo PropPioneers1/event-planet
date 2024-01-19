@@ -134,7 +134,9 @@ const SignUp = () => {
               </form>
             </div>
           </div>
-        </Container>
+
+          {/* Right Section */}
+      </Container>
     </div>
   );
 };

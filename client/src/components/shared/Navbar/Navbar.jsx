@@ -30,13 +30,13 @@ const Navbar = () => {
 
   const navLinks = (
     <>
-      <NavLink to="/">
+      <NavLink onClick={() => setIsMenuTrue(false)} to="/">
         <li className="font-semibold hover:text-accent py-2 lg:py-5">Home</li>
       </NavLink>
-      <NavLink to="/">
+      <NavLink onClick={() => setIsMenuTrue(false)} to="/">
         <li className="font-semibold hover:text-accent py-2 lg:py-5">Event</li>
       </NavLink>
-      <NavLink to="/">
+      <NavLink onClick={() => setIsMenuTrue(false)} to="/">
         <li className="relative group hover:text-accent py-2 lg:py-5">
           <span className="font-semibold flex  items-center gap-1">
             Categories <FaSortDown />
@@ -55,7 +55,7 @@ const Navbar = () => {
           </ul>
         </li>
       </NavLink>
-      <NavLink to="/">
+      <NavLink onClick={() => setIsMenuTrue(false)} to="/">
         <li className="relative group py-2  lg:py-5 hover:text-accent">
           <span className="font-semibold flex  items-center gap-1">
             Location <FaSortDown />
@@ -74,10 +74,10 @@ const Navbar = () => {
           </ul>
         </li>
       </NavLink>
-      <NavLink to="/">
+      <NavLink onClick={() => setIsMenuTrue(false)} to="/">
         <li className="font-semibold hover:text-accent py-2 lg:py-5">Blog</li>
       </NavLink>
-      <NavLink to="/">
+      <NavLink onClick={() => setIsMenuTrue(false)} to="/">
         <li className="font-semibold hover:text-accent py-2 lg:py-5">Shop</li>
       </NavLink>
     </>
@@ -85,7 +85,7 @@ const Navbar = () => {
 
   const authLinks = (
     <>
-      <NavLink to="/sign-in">
+      <NavLink onClick={() => setIsMenuTrue(false)} to="/sign-in">
         <button
           className="font-semibold border-2 border-accent
          rounded-md py-2 px-4 transition-all duration-500 ease-out hover:bg-accent"
@@ -94,7 +94,7 @@ const Navbar = () => {
         </button>
       </NavLink>
       <div className="w-[1px] h-[15px] bg-[#EEEEEE] hidden lg:block "></div>
-      <NavLink to="/sign-up">
+      <NavLink onClick={() => setIsMenuTrue(false)} to="/sign-up">
         <button
           className="font-semibold border-2 border-accent
          rounded-md py-2 px-4 transition-all duration-500 ease-out hover:bg-accent"
