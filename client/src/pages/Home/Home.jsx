@@ -2,11 +2,10 @@ import UpComingEvent from "./HomeComponenets/UpComingEvent/UpComingEvent";
 import HomeBanner from "./HomeComponenets/HomeBanner/HomeBanner";
 import Trendingproducts from "./HomeComponenets/trending/Trendingproducts";
 import WhyChoose from "./HomeComponenets/WhyChooseEventPlanet/WhyChoose";
-import HotDeals from "./HomeComponenets/HotDeals/HotDeals";
+// import HotDeals from "./HomeComponenets/HotDeals/HotDeals";
 import Footer from "../../components/shared/Footer";
 import EventPlaner from "./HomeComponenets/Event-Planer/EventPlaner";
 import TestMonial from "./HomeComponenets/Testmonial/Testmonial";
-import TestPlaner from "./HomeComponenets/Event-Planer/TestPlaner";
 
 const Home = () => {
 	return (
@@ -27,7 +26,6 @@ const Home = () => {
 			<EventPlaner></EventPlaner>
 			{/* made by Rifat */}
 			<Footer></Footer>
-			<TestPlaner></TestPlaner>
 		</div>
 	);
 };
