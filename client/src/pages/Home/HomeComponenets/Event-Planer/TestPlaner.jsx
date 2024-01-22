@@ -40,7 +40,7 @@ const TestPlaner = () => {
 								<h1 className="font-title text-3xl mb-3 font-medium text-center">
 									Welcome Here
 								</h1>
-								<p className="break-all font-title ">
+								<p className="break-all h-[240px] font-title ">
 									{event?.description}
 								</p>
 
