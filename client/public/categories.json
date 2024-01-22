@@ -1,0 +1,26 @@
+[
+    {
+      "title": "Education",
+      "image": "education_image_url.jpg"
+    },
+    {
+      "title": "Business",
+      "image": "business_image_url.jpg"
+    },
+    {
+      "title": "Travel",
+      "image": "travel_image_url.jpg"
+    },
+    {
+      "title": "Conference",
+      "image": "conference_image_url.jpg"
+    },
+    {
+      "title": "Food Festival",
+      "image": "food_festival_image_url.jpg"
+    },
+    {
+      "title": "Sports Event",
+      "image": "sports_event_image_url.jpg"
+    }
+  ]
