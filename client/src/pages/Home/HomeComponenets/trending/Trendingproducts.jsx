@@ -48,7 +48,7 @@ const Trendingproducts = () => {
           
           <div className='slide-track gap-5 '>
             {data.concat(data).map((item, index)=> (
-              <div key={index} className='slide relative bg-slate-200
+              <div key={index} className='slide relative 
               card 
               h-72 bg-transparent '>
                   {/* <p className='flex items-center font-bold text-blue-950 gap-2'><IoStar></IoStar> {item.rating}</p> */}
