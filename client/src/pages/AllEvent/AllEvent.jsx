@@ -9,10 +9,11 @@ import "./AllEvent.css";
 
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import EventCard from "./EventCard";
+import Container from "../../components/ui/Container";
 const AllEvent = () => {
 	return (
 		<div>
-			<div>
+			<Container>
 				<Swiper
 					spaceBetween={30}
 					centeredSlides={true}
@@ -25,7 +26,7 @@ const AllEvent = () => {
 					}}
 					navigation={true}
 					modules={[Autoplay, Pagination, Navigation]}
-					className="mySwiper  swiper-container"
+					className="mySwiper mySwiper2 swiper-container"
 				>
 					<SwiperSlide>
 						<img
@@ -65,7 +66,7 @@ const AllEvent = () => {
 						/>
 					</SwiperSlide>
 				</Swiper>
-			</div>
+			</Container>
 
 			<div>
 				<EventCard></EventCard>
