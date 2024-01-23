@@ -4,10 +4,16 @@ import { FaSortDown } from "react-icons/fa6";
 import { SlMenu } from "react-icons/sl";
 import { IoCloseOutline } from "react-icons/io5";
 import { useState } from "react";
+import useAuth from "../../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
+  const {user,logOut} = useAuth();
+  const handleSignOut = async () => {
+    await logOut()
+    toast.success('Sign Out Successfully')
+  }
   const [isMenuTrue, setIsMenuTrue] = useState(false);
-
   const categories = [
     "Education",
     "Business",
@@ -85,7 +91,9 @@ const Navbar = () => {
 
   const authLinks = (
     <>
-      <NavLink onClick={() => setIsMenuTrue(false)} to="/sign-in">
+      {
+        user? <><button onClick={handleSignOut} className="font-semibold border-2 border-accent
+        rounded-md py-2 px-4 transition-all duration-500 ease-out hover:bg-accent">Sign Out</button></> :<><NavLink onClick={() => setIsMenuTrue(false)} to="/sign-in">
         <button
           className="font-semibold border-2 border-accent
          rounded-md py-2 px-4 transition-all duration-500 ease-out hover:bg-accent"
@@ -101,7 +109,8 @@ const Navbar = () => {
         >
           Sign up
         </button>
-      </NavLink>
+      </NavLink></>
+      }
     </>
   );
 

@@ -1,20 +1,41 @@
 
-import { SiSpinrilla } from "react-icons/si";
+import { TbLoaderQuarter } from "react-icons/tb";
 import "../SignUp/signup.css";
 import Container from "../../components/ui/Container";
 import { Link } from "react-router-dom";
 import '../../pages/Home/HomeComponenets/UpComingEvent/upcoming.scss'
+import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 const SignIn = () => {
-  const loading = false;
+
+  const {loading,signIn,signInGoogle} = useAuth();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
-    const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-    const result = {name,email,password}
-    console.log(result)
+    const termsAndConditionCheck = form.termsAndCondition.checked;
+
+    if(!termsAndConditionCheck){
+      return toast.error('Please agree to the terms and conditions.');
+    }
+    
+    try{
+      await signIn(email,password)
+      toast.success('Successfully Sign In')
+    }
+    catch(err){
+      toast.error(err?.message)
+    }
+
   };
+  const handleSignIn = async () => {
+    try{
+      await signInGoogle()
+    toast.success('Sign In Successfully')
+    }
+    catch(err){toast.error(err?.message)}
+  }
   return (
     <div className="signUp-bg">
         <Container>
@@ -37,7 +58,7 @@ const SignIn = () => {
                   SIGN UP
                 </button>
                 </Link>
-                <button className="button">
+                <button className="button" onClick={handleSignIn}>
                   SIGNUP WITH GOOGLE
                 </button>
                 <button className="button">
@@ -59,15 +80,6 @@ const SignIn = () => {
               >
                 {/* Form Inputs */}
                 <div className="space-y-5">
-                  <div>
-                    <input
-                      type="text"
-                      name="name"
-                      id="name"
-                      placeholder="Enter Your Name Here"
-                      className="w-full px-3 py-2 input-style transition-all duration-300"
-                    />
-                  </div>
                   <div>
                     <input
                       type="email"
@@ -92,6 +104,7 @@ const SignIn = () => {
                   <div className="flex items-center">
                     <input
                       type="checkbox"
+                      name="termsAndCondition"
                       className="text-xl hover:cursor-pointer"
                     />
                     <span className="ml-2 text-white">
@@ -113,7 +126,7 @@ const SignIn = () => {
                     className="button w-full"
                   >
                     {loading ? (
-                      <SiSpinrilla className="animate-spin m-auto" />
+                      <TbLoaderQuarter size={20} className="animate-spin m-auto" />
                     ) : (
                       "SIGN IN"
                     )}
