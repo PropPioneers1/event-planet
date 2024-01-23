@@ -19,7 +19,7 @@ const Trendingproducts = () => {
   }, []);
 
   return (
-    <div className="shadow-bg bg-blue-200 mt-10">
+    <div className="shadow-bg bg-slate-400 mt-10">
       <Container>
         <h2 className="text-3xl font-bold text-center pt-10">
           Trending Products
@@ -50,7 +50,7 @@ const Trendingproducts = () => {
             {data.concat(data).map((item, index)=> (
               <div key={index} className='slide relative 
               card 
-              h-72 bg-transparent '>
+              h-[17rem] bg-transparent '>
                   {/* <p className='flex items-center font-bold text-blue-950 gap-2'><IoStar></IoStar> {item.rating}</p> */}
 
         
@@ -70,11 +70,12 @@ const Trendingproducts = () => {
 {/* 
 <Link className='trendingimg  w-96  ' to='/'>
                 <img className='h-20 w-44 mx-auto ' src={item.image} alt="" /></Link> */}
-                <div className=' h-44 w-56 '>
-                  <h2 className=' text-slate-700  text-xl  border bottom-2 border-slate-300  text-wrap font-bold mt-4 ' >{item.itemName}</h2>
-                  <h2 className='font-bold  border bottom-2 border-slate-300  text-slate-500 '>Price : <span className="text-pink-500 font-bold text-xl">${item.price}</span></h2>
-                  <h3 className='text-slate-600  border bottom-2 border-slate-300 '> Brand : {item.brandName}</h3>
-                  <div className="flex gap-2 border bottom-2 border-slate-300  ">
+                <div className=' h-44 w-56 my-auto'>
+                  <h2 className=' text-slate-700 text-lg
+                  text-start my-auto border-slate-300  text-ellipsis font-bold mt-4 ' >{item.itemName}</h2>
+                  <h2 className='font-bold  border-slate-300  text-slate-500 '>Price : <span className="text-pink-500 font-bold text-xl">${item.price}</span></h2>
+                  <h3 className='text-slate-600  border-slate-300 '> Brand : {item.brandName}</h3>
+                  <div className="flex gap-2 pb-4 border-slate-300  ">
             <p className="text-start  text-slate-700"> Rating :</p>
           <div className="rating rating-sm mt-1 ">
                   {Array.from({ length: 5 }, (_, i) => (
