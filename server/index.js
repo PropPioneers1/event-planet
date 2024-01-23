@@ -5,6 +5,8 @@ const cors = require('cors');
 require('dotenv').config()
 const port = process.env.PORT || 5000;
 const app = express();
+const eventHandler=require('./eventHandler/eventHandler')
+
 // middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -20,6 +22,11 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}
 .catch((error) => {
   console.error('Error connecting to MongoDB:', error);
 });
+
+
+// routes
+app.use('/event',eventHandler)
+
 
 
 // Eroor handler 

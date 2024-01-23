@@ -77,7 +77,7 @@ const Navbar = () => {
       <NavLink onClick={() => setIsMenuTrue(false)} to="/">
         <li className="font-semibold hover:text-accent py-2 lg:py-5">Blog</li>
       </NavLink>
-      <NavLink onClick={() => setIsMenuTrue(false)} to="/">
+      <NavLink onClick={() => setIsMenuTrue(false)} to="/shopping">
         <li className="font-semibold hover:text-accent py-2 lg:py-5">Shop</li>
       </NavLink>
     </>
