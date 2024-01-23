@@ -6,25 +6,25 @@ import SignUp from "../pages/SignUp/SignUp";
 import SignIn from "../pages/SignIn/SignIn";
 
 const Router = createBrowserRouter([
-  {
-    path: "/",
-    element: <MainLayout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "sign-up",
-        element: <SignUp></SignUp>,
-      },
-      {
-        path: "sign-in",
-        element: <SignIn></SignIn>,
-      },
-    ],
-  },
+	{
+		path: "/",
+		element: <MainLayout />,
+		errorElement: <ErrorPage />,
+		children: [
+			{
+				path: "/",
+				element: <Home />,
+			},
+			{
+				path: "sign-up",
+				element: <SignUp></SignUp>,
+			},
+			{
+				path: "sign-in",
+				element: <SignIn></SignIn>,
+			},
+		],
+	},
 ]);
 
 export default Router;
