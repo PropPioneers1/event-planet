@@ -21,8 +21,8 @@ const CreateBlog = () => {
     }
 
     return (
-        <div className=" flex justify-center items-center">
-            <div className="w-[700px] border p-4">
+        <div className=" min-h-screen flex justify-center items-center bg-neutral">
+            <div className="w-[500px] border p-4 bg-white">
                 <h2 className="text-3xl font-bold text-center border-b py-2">Create Blog</h2>
                 <div className="avatar flex items-center gap-2 py-2">
                     <div className="w-12 rounded-full">
@@ -30,19 +30,44 @@ const CreateBlog = () => {
                     </div>
                     <p className="text-xl">John Smith</p>
                 </div>
-                <form onSubmit={handleBlog} className="w-full h-full ">
-                    <input type="text" name='description' placeholder="What's on your mind, John?" className="input px-0 w-full mb-6" />
-                    <div className="w-full min-h-[300px] flex items-center justify-center">
-                        <label htmlFor="image-file" className="min-h-64 w-full border p-8 text-center rounded-2xl">
-                            <input onChange={uploadImage} name='imageFile' className="hidden" type="file" id="image-file" />
-                            <div className="flex flex-col items-center ">
-                                <img src={imagePreview ? imagePreview : "https://i.ibb.co/chQCG2h/upload-icon.png"} alt="" />
-                                <p className={imagePreview? "hidden" : "block"}>Drag and Drop or click here to upload image</p>
+                <form onSubmit={handleBlog} >
+                    <input
+                        type="text"
+                        name='description'
+                        placeholder="What's on your mind, John?"
+                        className="input px-0 w-full mb-6 focus:outline-none focus:border-none" />
+                    <div
+                        className="w-full min-h-[150px] flex items-center justify-center">
+                        <label
+                            htmlFor="image-file"
+                            className="min-h-40 w-full border text-center rounded-2xl">
+                            <input
+                                onChange={uploadImage}
+                                name='imageFile'
+                                className="hidden"
+                                type="file" id="image-file" />
+                            <div className="flex flex-col items-center justify-center h-64"
+                                style={{ backgroundImage: `url("${imagePreview}")`, backgroundSize: "cover", backgroundPosition: "center" }} >
+                                {
+                                    !imagePreview &&
+                                    <img
+                                        src="https://i.ibb.co/chQCG2h/upload-icon.png" alt="Image Preview"
+                                        className='object-fill h-[100px] w-[100px]'
+                                    />
+                                }
+                                <p
+                                    className={imagePreview ? "hidden" : "block"}>
+                                    Drag and Drop or click here to upload image
+                                </p>
                             </div>
                         </label>
                     </div>
                     <div className='flex  justify-center'>
-                        <button type='submit' className='btn w-full bg-primary text-white mt-6'> Post</button>
+                        <button
+                            type='submit'
+                            className='btn w-full bg-primary text-white mt-6'>
+                            Post
+                        </button>
                     </div>
                 </form>
             </div>

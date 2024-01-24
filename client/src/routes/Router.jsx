@@ -10,6 +10,8 @@ import PaymentHistory from "../pages/Dashboard/Payment/PaymentHistory";
 import AddProduct from "../pages/Dashboard/AddProduct/AddProduct";
 import CreateBlog from "../pages/Dashboard/CreateBlog/CreateBlog";
 import CreateTheme from "../pages/Dashboard/CreateTheme/CreateTheme";
+import Shopping from "../pages/Shopping/Shopping";
+
 
 import SelectWay from "../pages/CreateEvent/Chooseway.jsx/SelectWay";
 import CreateDesForm from "../pages/CreateEvent/AddEvent/CreateDesForm";
@@ -25,6 +27,7 @@ const Router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
+
       {
         path: "sign-up",
         element: <SignUp></SignUp>,
@@ -36,7 +39,11 @@ const Router = createBrowserRouter([
       {
         path: 'select-way',
         element: <SelectWay></SelectWay>
-
+      }
+      ,
+      {
+        path: "shopping",
+        element: <Shopping></Shopping>
       },
       {
         path: 'create-form',
@@ -48,9 +55,10 @@ const Router = createBrowserRouter([
         path: "event",
         element: <AllEvent></AllEvent>,
       }
-
     ],
   },
+
+
   {
     path: "/dashboard",
     element: <Dashboard></Dashboard>,
@@ -79,7 +87,12 @@ const Router = createBrowserRouter([
 
     ]
   }
-]);
+])
+
+
+
 
 
 export default Router;
+
+

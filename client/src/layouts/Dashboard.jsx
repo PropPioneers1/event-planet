@@ -113,7 +113,7 @@ const Dashboard = () => {
                             </ul>
                         </div>
                     </div>
-                    <div className="w-full p-10">
+                    <div className="w-full">
                         <Outlet></Outlet>
                     </div>
                 </div>
