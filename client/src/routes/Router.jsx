@@ -4,32 +4,46 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home/Home";
 import SignUp from "../pages/SignUp/SignUp";
 import SignIn from "../pages/SignIn/SignIn";
-import AllEvent from "../pages/AllEvent/AllEvent";
+
+import SelectWay from "../pages/CreateEvent/Chooseway.jsx/SelectWay";
+import CreateDesForm from "../pages/CreateEvent/AddEvent/CreateDesForm";
 
 const Router = createBrowserRouter([
-	{
-		path: "/",
-		element: <MainLayout />,
-		errorElement: <ErrorPage />,
-		children: [
-			{
-				path: "/",
-				element: <Home />,
-			},
-			{
-				path: "sign-up",
-				element: <SignUp></SignUp>,
-			},
-			{
-				path: "sign-in",
-				element: <SignIn></SignIn>,
-			},
-			{
+  {
+    path: "/",
+    element: <MainLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "sign-up",
+        element: <SignUp></SignUp>,
+      },
+      {
+        path: "sign-in",
+        element: <SignIn></SignIn>,
+      },
+      {
+        path:'select-way',
+        element:<SelectWay></SelectWay>
+
+      },
+      {
+        path:'create-form',
+        element:<CreateDesForm></CreateDesForm>
+
+      },
+       
+     	{
 				path: "event",
 				element: <AllEvent></AllEvent>,
-			},
-		],
-	},
-]);
+			}
+  
+    ],
+  },
+
 
 export default Router;
