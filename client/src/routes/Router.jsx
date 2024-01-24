@@ -4,6 +4,7 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home/Home";
 import SignUp from "../pages/SignUp/SignUp";
 import SignIn from "../pages/SignIn/SignIn";
+
 import SelectWay from "../pages/CreateEvent/Chooseway.jsx/SelectWay";
 import CreateDesForm from "../pages/CreateEvent/AddEvent/CreateDesForm";
 
@@ -34,9 +35,15 @@ const Router = createBrowserRouter([
         path:'create-form',
         element:<CreateDesForm></CreateDesForm>
 
-      }
+      },
+       
+     	{
+				path: "event",
+				element: <AllEvent></AllEvent>,
+			}
+  
     ],
   },
-]);
+
 
 export default Router;

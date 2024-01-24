@@ -4,8 +4,9 @@ import Trendingproducts from "./HomeComponenets/trending/Trendingproducts";
 import WhyChoose from "./HomeComponenets/WhyChooseEventPlanet/WhyChoose";
 // import HotDeals from "./HomeComponenets/HotDeals/HotDeals";
 import Footer from "../../components/shared/Footer";
-import EventPlaner from "./HomeComponenets/Event-Planer/EventPlaner";
+
 import TestMonial from "./HomeComponenets/Testmonial/Testmonial";
+import TestPlaner from "./HomeComponenets/Event-Planer/TestPlaner";
 import Categories from "./HomeComponenets/Categories/Categories";
 
 const Home = () => {
@@ -26,7 +27,7 @@ const Home = () => {
 			<TestMonial></TestMonial>
 			{/* <HotDeals></HotDeals> */}
 			{/* Our Event Planer */}
-			<EventPlaner></EventPlaner>
+			<TestPlaner></TestPlaner>
 			{/* made by Rifat */}
 			<Footer></Footer>
 		</div>
