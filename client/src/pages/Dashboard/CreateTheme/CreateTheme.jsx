@@ -3,7 +3,7 @@
 const CreateTheme = () => {
     return (
         <div>
-            <h2 className="text-2xl font-bold text-center">Create Blog</h2>
+            <h2 className="text-2xl font-bold text-center">Create Theme</h2>
         </div>
     );
 };

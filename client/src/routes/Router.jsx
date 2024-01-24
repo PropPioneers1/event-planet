@@ -11,6 +11,10 @@ import AddProduct from "../pages/Dashboard/AddProduct/AddProduct";
 import CreateBlog from "../pages/Dashboard/CreateBlog/CreateBlog";
 import CreateTheme from "../pages/Dashboard/CreateTheme/CreateTheme";
 
+import SelectWay from "../pages/CreateEvent/Chooseway.jsx/SelectWay";
+import CreateDesForm from "../pages/CreateEvent/AddEvent/CreateDesForm";
+import AllEvent from "../pages/AllEvent/AllEvent";
+
 const Router = createBrowserRouter([
   {
     path: "/",
@@ -29,6 +33,22 @@ const Router = createBrowserRouter([
         path: "sign-in",
         element: <SignIn></SignIn>,
       },
+      {
+        path: 'select-way',
+        element: <SelectWay></SelectWay>
+
+      },
+      {
+        path: 'create-form',
+        element: <CreateDesForm></CreateDesForm>
+
+      },
+
+      {
+        path: "event",
+        element: <AllEvent></AllEvent>,
+      }
+
     ],
   },
   {
@@ -60,5 +80,6 @@ const Router = createBrowserRouter([
     ]
   }
 ]);
+
 
 export default Router;
