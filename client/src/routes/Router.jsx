@@ -5,6 +5,11 @@ import Home from "../pages/Home/Home";
 import SignUp from "../pages/SignUp/SignUp";
 import SignIn from "../pages/SignIn/SignIn";
 import Dashboard from "../layouts/Dashboard";
+import Profile from "../pages/Dashboard/Profile/Profile";
+import PaymentHistory from "../pages/Dashboard/Payment/PaymentHistory";
+import AddProduct from "../pages/Dashboard/AddProduct/AddProduct";
+import CreateBlog from "../pages/Dashboard/CreateBlog/CreateBlog";
+import CreateTheme from "../pages/Dashboard/CreateTheme/CreateTheme";
 
 const Router = createBrowserRouter([
   {
@@ -27,10 +32,31 @@ const Router = createBrowserRouter([
     ],
   },
   {
-    path:"/dashboard",
-    element:<Dashboard></Dashboard>,
-    children:[
-      
+    path: "/dashboard",
+    element: <Dashboard></Dashboard>,
+    children: [
+      {
+        path: "profile",
+        element: <Profile></Profile>
+      },
+      {
+        path: "add-product",
+        element: <AddProduct></AddProduct>
+      },
+      {
+        path: "create-theme",
+        element: <CreateTheme></CreateTheme>
+      },
+
+      {
+        path: "create-blog",
+        element: <CreateBlog></CreateBlog>
+      },
+      {
+        path: "payment-history",
+        element: <PaymentHistory></PaymentHistory>
+      },
+
     ]
   }
 ]);
