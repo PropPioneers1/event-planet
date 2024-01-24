@@ -50,7 +50,7 @@ const EventCard = () => {
 						))}
 				</div>
 				{/* Pagination code Here */}
-				<div className="text-center py-10">
+				<div className="text-center py-5">
 					<button
 						className="btn btn-sm bg-primary text-white"
 						onClick={handlePrevPage}
@@ -70,6 +70,10 @@ const EventCard = () => {
 										? "1px solid #000"
 										: "none",
 							}}
+							className={
+								currentPage == page &&
+								"btn bg-primary btn-sm text-white border-none"
+							}
 						>
 							{page + 1}
 						</button>
