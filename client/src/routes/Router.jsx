@@ -4,27 +4,32 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home/Home";
 import SignUp from "../pages/SignUp/SignUp";
 import SignIn from "../pages/SignIn/SignIn";
+import AllEvent from "../pages/AllEvent/AllEvent";
 
 const Router = createBrowserRouter([
-  {
-    path: "/",
-    element: <MainLayout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "sign-up",
-        element: <SignUp></SignUp>,
-      },
-      {
-        path: "sign-in",
-        element: <SignIn></SignIn>,
-      },
-    ],
-  },
+	{
+		path: "/",
+		element: <MainLayout />,
+		errorElement: <ErrorPage />,
+		children: [
+			{
+				path: "/",
+				element: <Home />,
+			},
+			{
+				path: "sign-up",
+				element: <SignUp></SignUp>,
+			},
+			{
+				path: "sign-in",
+				element: <SignIn></SignIn>,
+			},
+			{
+				path: "event",
+				element: <AllEvent></AllEvent>,
+			},
+		],
+	},
 ]);
 
 export default Router;
