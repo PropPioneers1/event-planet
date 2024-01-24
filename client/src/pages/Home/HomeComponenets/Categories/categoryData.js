@@ -1,8 +1,8 @@
 import { IoBookOutline } from "react-icons/io5";
 import { BsBagDash } from "react-icons/bs";
-import { HiOutlineMicrophone } from "react-icons/hi";
-import { SlLocationPin } from "react-icons/sl";
-import { MdOutlineSportsMartialArts } from "react-icons/md";
+import { GiAmpleDress } from "react-icons/gi";
+import { MdSportsEsports } from "react-icons/md";
+import { GiThink } from "react-icons/gi";
 import { MdOutlineFoodBank } from "react-icons/md";
 
 export const categories = [
@@ -15,20 +15,20 @@ export const categories = [
     icon: BsBagDash,
   },
   {
-    label: 'Travel',
-    icon: SlLocationPin,
+    label: 'Sport',
+    icon: MdSportsEsports,
   },
   {
-    label: 'Conference',
-    icon: HiOutlineMicrophone,
+    label: 'Fasion',
+    icon: GiAmpleDress,
   },
   {
     label: 'Food Festival',
     icon: MdOutlineFoodBank ,
   },
   {
-    label: 'Sports Event',
-    icon: MdOutlineSportsMartialArts,
+    label: 'Innovation Showcase',
+    icon: GiThink,
   },
   
 ]

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Container from "../../components/ui/Container";
-import SectionTitle from "../../components/ui/SectionTitle/SectionTitle";
 import axios from "axios";
 import Blog from "./BlogsComponents/Blog";
 
@@ -18,13 +17,12 @@ const Blogs = () => {
   console.log(categories);
   return (
     <div className="py-20">
-      <SectionTitle title="Blogs" />
       <Container>
         <div className="grid grid-cols-4 gap-5">
           <div className="col-span-1 border">
-            <h2 className="font-lora text-2xl font-bold">Blogs</h2>
+            <h2 className="font-lora text-3xl font-bold pb-5">Blogs</h2>
             <div>
-              <div className="grid grid-cols-2">
+              <div className="grid grid-cols-1">
                 {categories?.map((category, idx) => (
                   <div key={idx} className="py-1">
                     <button className="border px-5 py-2">{category}</button>
@@ -33,7 +31,7 @@ const Blogs = () => {
               </div>
             </div>
           </div>
-          <div className="col-span-2 border">
+          <div className="col-span-2 border ">
             <form>
               <input type="Search blogs..." />
               <button>Search</button>

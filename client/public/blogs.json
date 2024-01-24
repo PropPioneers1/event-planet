@@ -1,7 +1,7 @@
 [
   {
-    "category": "Cultural Exploration",
-    "blogImg": "https://example.com/blog-image1.jpg",
+    "category": "Festival",
+    "blogImg": "https://i.ibb.co/wppR2Nt/science.jpg",
     "title": "Traditional Festivals Around the World",
     "post": "Explore the vibrant tapestry of traditional festivals celebrated in different cultures globally. From the colorful Holi festival in India to the lively Carnival in Brazil, discover the joyous celebrations that bring communities together.",
     "tags": ["festivals", "traditions", "celebrations"],
@@ -72,8 +72,8 @@
     }
   },
   {
-    "category": "Culinary Delights",
-    "blogImg": "https://example.com/blog-image3.jpg",
+    "category": "Fashion",
+    "blogImg": "https://i.ibb.co/hgkmGhs/education.jpg",
     "title": "Culinary Delights of Different Cultures",
     "post": "Embark on a gastronomic journey and savor the unique flavors of various cuisines from around the globe. From spicy street food in Thailand to exquisite pastries in France, experience the diverse world of culinary delights.",
     "tags": ["food", "culinary", "gastronomy"],
@@ -102,8 +102,8 @@
     }
   },
   {
-    "category": "Art and Creativity",
-    "blogImg": "https://example.com/blog-image2.jpg",
+    "category": "Education",
+    "blogImg": "https://i.ibb.co/Mc2Yt0y/travel.jpg",
     "title": "Art Across Continents",
     "post": "Embark on a creative journey exploring the diverse forms of art that represent the rich cultural heritage of different regions. From classical paintings to modern street art, witness the expressions of human creativity across continents.",
     "tags": ["art", "creativity", "heritage"],
@@ -139,8 +139,8 @@
     }
   },
   {
-    "category": "Melodic Journeys",
-    "blogImg": "https://example.com/blog-image5.jpg",
+    "category": "Business",
+    "blogImg": "https://i.ibb.co/zHdRyhK/business.jpg",
     "title": "Traditional Music Across Cultures",
     "post": "Immerse yourself in the melodious tunes of traditional music from various corners of the world. From the rhythmic beats of African drums to the soothing melodies of Asian instruments, experience the rich tapestry of global music traditions.",
     "tags": ["music", "traditions", "melody"],
@@ -183,8 +183,8 @@
     }
   },
   {
-    "category": "Historical Wonders",
-    "blogImg": "https://example.com/blog-image4.jpg",
+    "category": "Sport",
+    "blogImg": "https://i.ibb.co/QX6cHhj/wedding.jpg",
     "title": "Historical Landmarks: A Cultural Odyssey",
     "post": "Take a captivating stroll through time and explore the historical landmarks that stand as testaments to different civilizations. From the majestic pyramids",
     "tags": ["history", "landmarks", "architecture"],
@@ -234,8 +234,8 @@
     }
   },
   {
-    "category": "Architectural Marvels",
-    "blogImg": "https://example.com/blog-image6.jpg",
+    "category": "Innovation Showcase",
+    "blogImg": "https://i.ibb.co/TcvL3PQ/wedding-2-0.jpg",
     "title": "Modern Skyscrapers: A Global Phenomenon",
     "post": "Dive into the awe-inspiring world of modern skyscrapers that dominate city skylines across the globe. From the towering Burj Khalifa in Dubai to the innovative structures in New York, witness the architectural marvels shaping our urban landscapes.",
     "tags": ["architecture", "skyscrapers", "urban"],
