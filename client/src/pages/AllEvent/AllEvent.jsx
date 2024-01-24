@@ -70,7 +70,6 @@ const AllEvent = () => {
 
 			<div>
 				<EventCard></EventCard>
-				<EventCard></EventCard>
 			</div>
 		</div>
 	);
