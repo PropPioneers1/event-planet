@@ -21,19 +21,21 @@ const Shopping = () => {
         </h2>
         <ShoppingBanner></ShoppingBanner>
         <div className="divider"></div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
           {shoppingCart?.map((cart, idx) => (
             <div key={idx}>
-              <div className="card h-full lg:card-side bg-base-100 shadow-xl  p-4 h-[500px] border-4 border-blue-500">
+              <div className="card h-full lg:card-side bg-base-100 shadow-xl w-full  p-4 h-[500px] border-4 border-blue-500">
                 <figure>
                   <img src={cart.img} alt="Album" />
                 </figure>
-                <div className="card-body">
+                <div className="card-body ">
                   <h2 className="font-bold">{cart.title}</h2>
+                  <p>Hey this is new product</p>
+                  <div className="badge badge-primary badge-outline text-lg">$ {cart.newPrice}</div>
                   <div className="rating text-center">
                    <span className="mr-1 font-bold">4</span> <FaStar></FaStar>
                   </div>
-                  <div className="card-actions justify-end">
+                  <div className="card-actions justify-center">
                     <button className="btn btn-sm bg-gradient-to-r from-green-100 to-violet-300">
                       Details<FaEye></FaEye>
                     </button>
