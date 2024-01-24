@@ -17,10 +17,10 @@
 
 	/* Responsive adjustments */
 	@media (max-width: 768px) {
-		height: 300px;
+		height: 400px;
 	}
 
 	@media (max-width: 576px) {
-		height: 200px;
+		height: 300px;
 	}
 }
