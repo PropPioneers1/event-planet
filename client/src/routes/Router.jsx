@@ -4,6 +4,7 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home/Home";
 import SignUp from "../pages/SignUp/SignUp";
 import SignIn from "../pages/SignIn/SignIn";
+import AllEvent from '../pages/AllEvent/AllEvent';
 import SelectWay from "../pages/CreateEvent/Chooseway.jsx/SelectWay";
 import CreateDesForm from "../pages/CreateEvent/AddEvent/CreateDesForm";
 
@@ -26,7 +27,7 @@ const Router = createBrowserRouter([
         element: <SignIn></SignIn>,
       },
       {
-        path:'select-way',
+        path:'select-way/:lebel',
         element:<SelectWay></SelectWay>
 
       },
@@ -34,9 +35,14 @@ const Router = createBrowserRouter([
         path:'create-form',
         element:<CreateDesForm></CreateDesForm>
 
-      }
+      },
+      {
+        path: "event", 
+        element: <AllEvent />,
+      },
+  
     ],
   },
-]);
+])
 
 export default Router;
