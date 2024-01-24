@@ -24,7 +24,7 @@ const Shopping = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
           {shoppingCart?.map((cart, idx) => (
             <div key={idx}>
-              <div className="card h-full lg:card-side bg-base-100 shadow-xl w-full  p-4 h-[500px] border-4 border-blue-500">
+              <div className="card sm:h-full lg:card-side bg-base-100 shadow-xl w-full  p-4 h-[500px] border-4 border-blue-500">
                 <figure>
                   <img src={cart.img} alt="Album" />
                 </figure>
