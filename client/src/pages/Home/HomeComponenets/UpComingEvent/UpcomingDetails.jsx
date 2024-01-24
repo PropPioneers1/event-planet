@@ -2,15 +2,25 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaCartPlus } from "react-icons/fa";
+import { FaCircleArrowRight } from "react-icons/fa6";
 import Container from "../../../../components/ui/Container";
+import { FacebookIcon, FacebookShareButton } from "react-share";
 
 
 const UpcomingDetails = () => {
+  const shareUrl = 'https://www.facebook.com/'
   const img = 'https://i.ibb.co/fq6DWhd/Wedding.jpg'
     const {id} = useParams()
     const [loading,setLoading] = useState(false)
     const [cards,setCards] = useState({})
-    console.log(cards)
+    const [count,setCount] = useState(0)
+    const decrement = () => {
+      setCount(count - 1)
+    }
+    const increment = () => {
+      setCount(count + 1)
+    }
+
   useEffect(()=>{
     setLoading(true)
     fetch('../../../../../public/upcomingevent.json')
@@ -27,7 +37,8 @@ const UpcomingDetails = () => {
           <div className="pt-[100px]">
             {/* upcoming details: */}
             <div>
-              <div className="grid grid-cols-1 md:grid-cols-6 lg:gap-20 gap-12 place-items-center">
+              <div className="grid grid-cols-1 md:grid-cols-6 lg:gap-16 gap-12 ">
+                {/* left side */}
                 <div className="md:col-span-4 col-span-1">
                 <div className="left-side">
                   <div><h2 className=" text-5xl mb-5">{cards?.eventName}</h2></div>
@@ -104,11 +115,16 @@ const UpcomingDetails = () => {
                     <div className="bg-white h-[250px] text-black p-3">
                     <div className="mb-8 text-center">
                       <h2 className="mb-4">Adult</h2>
-                    <span className="bg-slate-300 p-3"> - </span><span className="bg-slate-300 p-3">2</span><span className="bg-slate-300 p-3">+</span>
+                    <span onClick={decrement} className="bg-slate-300 p-3"> - </span>
+                    <span className="bg-slate-300 p-3">{count}</span>
+                    <span onClick={increment} className="bg-slate-300 p-3">+</span>
                     </div>
+                    
                     <div className=" text-center">
                       <h2 className="mb-4">Child</h2>
-                    <span className="bg-slate-300 p-3"> - </span><span className="bg-slate-300 p-3">2</span><span className="bg-slate-300 p-3">+</span>
+                    <span onClick={decrement } className="bg-slate-300 p-3"> - </span>
+                    <span className="bg-slate-300 p-3">{count}</span>
+                    <span onClick={increment } className="bg-slate-300 p-3">+</span>
                     </div>
                       </div>
                     </div>
@@ -159,7 +175,90 @@ const UpcomingDetails = () => {
                   
                 </div>
                 </div>
-                <div className="md:col-span-2 col-span-1">right side</div>
+                {/* right side */}
+                <div className="md:col-span-2 col-span-1 mt-16">
+                <div className="bg-neutral p-3">
+                  <div>
+                    <h2 className="border-b border-b-gray-300 pb-2"><span className="font-semibold">Total Seats:</span> 500 <span className="font-semibold">(500 left)</span></h2>
+                    <div className="flex items-center gap-4">
+                      <div>
+                        <FaLocationDot></FaLocationDot>
+                      </div>
+                      <div>
+                        <span>By: </span> <span className="text-primary">Global Startup EcoSystem </span>
+                      </div>
+                    </div>
+                    <div className="p-4 border-b-gray-600">
+                    <div className="flex items-center gap-3 mb-2">
+                    <div>
+                        <FaCircleArrowRight className=" text-primary"></FaCircleArrowRight>
+                    </div>
+                     <div>India</div>
+                    </div>
+                    <div className="flex items-center gap-3 mb-2">
+                    <div>
+                        <FaCircleArrowRight className=" text-primary"></FaCircleArrowRight>
+                    </div>
+                     <div>India</div>
+                    </div>
+                    <div className="flex items-center gap-3 mb-2">
+                    <div>
+                        <FaCircleArrowRight className=" text-primary"></FaCircleArrowRight>
+                    </div>
+                     <div>India</div>
+                    </div>
+                    <div className="flex items-center gap-3 mb-2">
+                    <div>
+                        <FaCircleArrowRight className=" text-primary"></FaCircleArrowRight>
+                    </div>
+                     <div>India</div>
+                    </div>
+                    <div className="flex items-center gap-3 pb-2 ">
+                    <div>
+                        <FaCircleArrowRight className=" text-primary"></FaCircleArrowRight>
+                    </div>
+                     <div>India</div>
+                    </div>
+                    </div>
+                    {/* event shedule */}
+                    <div className=" border border-b-slate-700 pb-3">
+                      <h2 className=" font-semibold border border-t-slate-700 pt-3">Event Shedule Details</h2>
+                      <div className="p-3">
+                      <div className="flex items-center gap-3">
+                        <FaCartPlus></FaCartPlus>
+                        <p>March 12 2023 - March 14 2024</p>
+                      </div>
+                      </div>
+                    </div>
+                    {/* Share this event */}
+                    <div className=" border border-b-slate-700 pb-3">
+                      <h2 className=" font-semibold border pt-3">Social Share Event</h2>
+                      <div className="p-3">
+                      <div className="flex items-center gap-3">
+                        <FacebookShareButton url={shareUrl}>
+                          <FacebookIcon size={40}></FacebookIcon>
+                        </FacebookShareButton>
+                        <FacebookShareButton url={shareUrl}>
+                          <FacebookIcon size={40}></FacebookIcon>
+                        </FacebookShareButton>
+                        <FacebookShareButton url={shareUrl}>
+                          <FacebookIcon size={40}></FacebookIcon>
+                        </FacebookShareButton>
+                        <FacebookShareButton url={shareUrl}>
+                          <FacebookIcon size={40}></FacebookIcon>
+                        </FacebookShareButton>
+                        <FacebookShareButton url={shareUrl}>
+                          <FacebookIcon size={40}></FacebookIcon>
+                        </FacebookShareButton>
+                      </div>
+                      </div>
+                    </div>
+                    {/* add calander  */}
+                    <div className="bg-primary p-4 text-center mt-4 font-medium text-white">Add Calender</div>
+                  </div>
+
+                </div>
+                </div>
               </div>
             </div>
         </div>
