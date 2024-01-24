@@ -69,6 +69,25 @@ const Navbar = () => {
 						className={`absolute hidden transition-all duration-300 ease-out group-hover:block lg:w-40 bg-[#EEEEEE]
             text-[#222831] text-sm
             lg:left-0 lg:top-16 left-20 top-10 z-10  space-y-3 p-4 shadow-md overflow-y-auto`}
+<<<<<<< HEAD
+          >
+            {locations?.map((location, idx) => (
+              <li key={idx} className="hover:text-accent">
+                {location}
+              </li>
+            ))}
+          </ul>
+        </li>
+      </NavLink>
+      <NavLink onClick={() => setIsMenuTrue(false)} to="/">
+        <li className="font-semibold hover:text-accent py-2 lg:py-5">Blog</li>
+      </NavLink>
+      <NavLink onClick={() => setIsMenuTrue(false)} to="/shopping">
+        <li className="font-semibold hover:text-accent py-2 lg:py-5">Shop</li>
+      </NavLink>
+    </>
+  );
+=======
 					>
 						{locations?.map((location, idx) => (
 							<li key={idx} className="hover:text-accent">
@@ -90,6 +109,7 @@ const Navbar = () => {
 			</NavLink>
 		</>
 	);
+>>>>>>> 77c7403aec98844ad32038d3954a324a99ab312f
 
 	const authLinks = (
 		<>
