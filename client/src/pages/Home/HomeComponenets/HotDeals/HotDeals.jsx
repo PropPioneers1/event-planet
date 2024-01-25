@@ -13,8 +13,8 @@ const HotDeals = ({ onCardSelect }) => {
 
     return (
         <div>
-            <div  className="mt-10 space-y-6 grid grid-cols-1 md:grid-cols-2 gap-4
-             items-center justify-center align-middle lg:flex">
+            <div  className="mt-10  grid grid-cols-1 md:grid-cols-2 gap-4
+             items-center justify-center align-middle ">
         {/* first card */}
         <div className="ml-12 lg:mr-0">
           <div data-aos="flip-right" className="relative flex w-full max-w-[20rem] text-black flex-col rounded-xl bg-gradient-to-tr from-white to-blue-400 bg-clip-border p-8  shadow-md shadow-pink-500/40">

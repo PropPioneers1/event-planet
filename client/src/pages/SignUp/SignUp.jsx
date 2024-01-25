@@ -6,17 +6,42 @@ import "./signup.css";
 import Container from "../../components/ui/Container";
 import { Link } from "react-router-dom";
 import '../Home/HomeComponenets/UpComingEvent/upcoming.scss'
+import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 const SignUp = () => {
-  const loading = false;
+  const {createUser,signInGoogle,loading} = useAuth()
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
-    const result = {name,email,password}
-    console.log(result)
+    const termsAndConditionCheck =form.termsAndConditions.checked;
+
+    if(!termsAndConditionCheck){
+      return toast.error('Please agree to the terms and conditions.');
+    }
+    try{
+      // sign in user
+      await createUser(email,password)
+      toast.success('Signup successful!')
+
+    }
+    catch(err){
+      toast.error(err?.message)
+    }
   };
+
+  // handle google sign up
+  const handleGoogleSignUp = async() => {
+    try{
+    await signInGoogle()
+    toast.success('Successfully Sign Up')
+    }
+    catch(err){
+      toast.error(err?.message)
+    }
+  }
   return (
     <div className="signUp-bg py-[80px] md:pt-[50px] lg:pt-[68px]">
         <Container>
@@ -39,7 +64,7 @@ const SignUp = () => {
                  SIGN IN
                 </button>
                 </Link>
-                <button className="button">
+                <button onClick={handleGoogleSignUp} className="button">
                   SIGNUP WITH GOOGLE
                 </button>
                 <button className="button">
@@ -72,16 +97,6 @@ const SignUp = () => {
                   </div>
                   <div>
                     <input
-                      required
-                      type="file"
-                      id="image"
-                      name="image"
-                      accept="image/*"
-                      className="text-white border-none"
-                    />
-                  </div>
-                  <div>
-                    <input
                       type="email"
                       name="email"
                       id="email"
@@ -97,12 +112,13 @@ const SignUp = () => {
                       autoComplete="new-password"
                       id="password"
                       required
-                      placeholder="*******"
+                      placeholder="Enter Your Password"
                       className="w-full px-3 py-2 input-style  transition-all duration-300"
                     />
                   </div>
                   <div className="flex items-center">
                     <input
+                      name="termsAndConditions"
                       type="checkbox"
                       className="text-xl hover:cursor-pointer"
                     />

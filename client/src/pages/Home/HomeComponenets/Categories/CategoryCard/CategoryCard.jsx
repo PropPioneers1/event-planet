@@ -48,7 +48,7 @@ const CategoryCard = ({ label, icon: Icon, idx }) => {
 						{label}
 					</h1>
 					<div className="flex justify-center">
-						<Link to={`/details/${label}`}>
+						<Link to={`/select-way/${label}`}>
 							<button className="btn modal-button font-title">
 								Create Event
 							</button>
@@ -65,7 +65,7 @@ const CategoryCard = ({ label, icon: Icon, idx }) => {
 
 CategoryCard.propTypes = {
 	label: PropTypes.string,
-	icon: PropTypes.string,
+	icon: PropTypes.func,
 	idx: PropTypes.number,
 };
 

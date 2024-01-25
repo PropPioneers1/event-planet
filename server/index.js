@@ -54,9 +54,10 @@ app.use((req, res, next) => {
 // developer code error handler (customized)
 app.use((err, req, res, next) => {
   try {
-    res.status(500).send("There is error in your code ");
+    res.status(500).send(`There is an error in your code: ${err.message}`);
   } catch (error) {
-    res.status(500).send("server error", err.message);
+    // Handle any errors that might occur during the response send process in  try 
+    res.status(500).send('Internal server error');
   }
 });
 
