@@ -6,6 +6,7 @@ require("dotenv").config();
 const port = process.env.PORT || 5000;
 const app = express();
 const eventHandler=require('./eventHandler/eventHandler')
+const QnaHandler=require('./QnaHandler/QnaHandler')
 
 // middleware
 app.use(cors());
@@ -16,7 +17,7 @@ app.use(bodyParser.json());
 // Mongodb connection
 mongoose
   .connect(
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}
+    `mongodb+srv://EventPlanet:2LxqUuIzAi3v6496
 @proppioneers.pzy67in.mongodb.net/Event-Planet`
   )
   .then(() => {
@@ -26,17 +27,13 @@ mongoose
     console.error("Error connecting to MongoDB:", error);
   });
 
-<<<<<<< HEAD
 
 // routes
 app.use('/event',eventHandler)
-
+app.use('/qna',QnaHandler)
 
 
 // Eroor handler 
-=======
-// Eroor handler
->>>>>>> 77c7403aec98844ad32038d3954a324a99ab312f
 
 // _________________________________________________
 // incorrect url error
