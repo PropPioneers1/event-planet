@@ -23,7 +23,7 @@ const UpComingEvent = () => {
               <p className="bg-gradient-to-r from-[#3F72AF] to-[#F53F7B] inline-block text-white px-1 rounded">
                 Next
               </p>
-              <h3 className="font-medium text-lg">UPCOMING EVENT</h3>
+              <h3 className="font-semibold text-lg mt-[5px]">UPCOMING EVENT</h3>
             </div>
             <div>
               <h3 className="font-medium text-lg">Monday Event</h3>

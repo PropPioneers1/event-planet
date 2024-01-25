@@ -65,7 +65,7 @@ const CategoryCard = ({ label, icon: Icon, idx }) => {
 
 CategoryCard.propTypes = {
 	label: PropTypes.string,
-	icon: PropTypes.string,
+	icon: PropTypes.func,
 	idx: PropTypes.number,
 };
 

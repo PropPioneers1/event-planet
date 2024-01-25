@@ -4,6 +4,7 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home/Home";
 import SignUp from "../pages/SignUp/SignUp";
 import SignIn from "../pages/SignIn/SignIn";
+import UpcomingDetails from "../pages/Home/HomeComponenets/UpComingEvent/UpcomingDetails";
 import AllEvent from '../pages/AllEvent/AllEvent';
 import Dashboard from "../layouts/Dashboard";
 import Profile from "../pages/Dashboard/Profile/Profile";
@@ -34,6 +35,10 @@ const Router = createBrowserRouter([
       {
         path: "sign-in",
         element: <SignIn></SignIn>,
+      },
+      {
+        path: "upcomingDetails/:id",
+        element:<UpcomingDetails></UpcomingDetails>,
       },
       {
         path:'select-way/:lebel',
