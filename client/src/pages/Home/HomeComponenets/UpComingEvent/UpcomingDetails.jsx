@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaCartPlus } from "react-icons/fa";
 import { FaCircleArrowRight } from "react-icons/fa6";
+import { MdSettingsVoice } from "react-icons/md";
 import Container from "../../../../components/ui/Container";
 import { FacebookIcon, FacebookShareButton } from "react-share";
 
@@ -253,6 +254,17 @@ const UpcomingDetails = () => {
                       </div>
                       </div>
                     </div>
+                    {/* Event Speakers */}
+                      <div>
+                        <div className="flex items-center mt-4 mb-2 gap-3">
+                        <MdSettingsVoice></MdSettingsVoice>
+                        <h2 className="font-semibold">Event Speaker:</h2>
+                        </div>
+                        <div className="flex items-center flex-col">
+                          <img src={img} className="rounded-full w-24 h-24" alt="" />
+                          <h2 className="font-medium mt-3">Arijit Singh</h2>
+                        </div>
+                      </div>
                     {/* add calander  */}
                     <div className="bg-primary p-4 text-center mt-4 font-medium text-white">Add Calender</div>
                   </div>
