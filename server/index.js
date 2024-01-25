@@ -5,8 +5,7 @@ const cors = require("cors");
 require("dotenv").config();
 const port = process.env.PORT || 5000;
 const app = express();
-
-
+const QnaHandler=require('./QnaHandler/QnaHandler')
 const eventHandler=require('./eventHandler/eventHandler')
 const shopHandler=require('./shopHandler/shopHandler')
 
@@ -22,7 +21,7 @@ app.use(bodyParser.json());
 // Mongodb connection
 mongoose
   .connect(
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}
+    `mongodb+srv://EventPlanet:2LxqUuIzAi3v6496
 @proppioneers.pzy67in.mongodb.net/Event-Planet`
   )
   .then(() => {
@@ -35,9 +34,12 @@ mongoose
 
 
 
+
 // routes
 app.use('/event',eventHandler)
 app.use('/shop',shopHandler)
+
+app.use('/qna',QnaHandler)
 
 
 

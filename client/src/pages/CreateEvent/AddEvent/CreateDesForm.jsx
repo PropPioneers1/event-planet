@@ -1,4 +1,6 @@
 import { useState } from 'react';
+
+import { useNavigate } from 'react-router-dom';
 import HotDeals from '../../Home/HomeComponenets/HotDeals/HotDeals';
 import './CreatDes.css';
 import axios from 'axios';
@@ -7,6 +9,7 @@ import toast, { Toaster } from 'react-hot-toast';
 // import { } from "react-icons/fa";
 import { FaArrowLeft, FaArrowRight, FaSeedling } from 'react-icons/fa6';
 const CreateDesForm = () => {
+  const navigate =useNavigate()
   const [organizationName, setOrganizationName] = useState('');
   const [audienceSize, setAudienceSize] = useState('');
   const [useHotDeals, setUseHotDeals] = useState('');
@@ -45,16 +48,18 @@ const CreateDesForm = () => {
           numberOfGuests,
           guestNames,
           guestProfessions,
+          status:'pending'
         };
 
-        try {
-          axios.post('YOUR_BACKEND_ENDPOINT', formData);
-          // alert('Form submitted successfully!');
-          toast.success('Your Response sent successfully')
-        } catch (error) {
-          console.error('Error submitting form:', error);
-          alert('Error submitting form. Please try again.');
-        }
+        axios.post('http://localhost:5000/qna', formData)
+  .then(() => {
+    toast.success('Your Response sent successfully');
+    navigate("/");
+  })
+  .catch((error) => {
+    console.error('Error submitting form:', error);
+    toast.error('Error submitting form. Please try again.');
+  });
       } else {
         setCurrentQuestion(currentQuestion + 1);
       }
