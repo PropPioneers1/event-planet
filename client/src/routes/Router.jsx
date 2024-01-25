@@ -9,6 +9,7 @@ import Shopping from "../pages/Shopping/Shopping";
 
 import SelectWay from "../pages/CreateEvent/Chooseway.jsx/SelectWay";
 import CreateDesForm from "../pages/CreateEvent/AddEvent/CreateDesForm";
+import AllEvent from "../pages/AllEvent/AllEvent";
 
 const Router = createBrowserRouter([
   {
@@ -30,17 +31,10 @@ const Router = createBrowserRouter([
         element: <SignIn></SignIn>,
       },
       {
-<<<<<<< HEAD
         path:"shopping",
         element:<Shopping></Shopping>
-      }
-      
-      
-    ],
-  },
-  
-]);
-=======
+      },
+      {
         path:'select-way',
         element:<SelectWay></SelectWay>
 
@@ -50,15 +44,14 @@ const Router = createBrowserRouter([
         element:<CreateDesForm></CreateDesForm>
 
       },
-       
-     	{
+      {
 				path: "event",
 				element: <AllEvent></AllEvent>,
 			}
-  
     ],
   },
-
->>>>>>> 77c7403aec98844ad32038d3954a324a99ab312f
+  
+]);  
+      
 
 export default Router;

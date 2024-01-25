@@ -1,8 +1,8 @@
 const express=require('express');
-const mongoose=require('mongoose')
+const mongoose=require('mongoose');
 const router=express.Router();
-const eventSchema=require('../schemas/eventSchema');
-const eventModel=mongoose.model('Event',eventSchema);
+const shopSchema=require('../schemas/shopSchema');
+const shopModel=mongoose.model('Shop',shopSchema);
 
 // Get all the todo
 router.get("/", async (req, res) => {
@@ -44,4 +44,6 @@ router.delete("/:id", async (req, res) => {
   // Implement your logic here
 });
 
-module.exports = router;
+
+
+module.exports=router;
