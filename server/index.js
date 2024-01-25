@@ -5,14 +5,18 @@ const cors = require("cors");
 require("dotenv").config();
 const port = process.env.PORT || 5000;
 const app = express();
-// const eventHandler=require('./eventHandler/eventHandler')
 const QnaHandler=require('./QnaHandler/QnaHandler')
+const eventHandler=require('./eventHandler/eventHandler')
+const shopHandler=require('./shopHandler/shopHandler')
+
 
 // middleware
 app.use(cors());
 app.use(bodyParser.json());
 
 // console.log(object);
+
+
 
 // Mongodb connection
 mongoose
@@ -28,9 +32,18 @@ mongoose
   });
 
 
+
+
+
 // routes
-// app.use('/event',eventHandler)
+app.use('/event',eventHandler)
+app.use('/shop',shopHandler)
+
 app.use('/qna',QnaHandler)
+
+
+
+
 
 
 // Eroor handler 
