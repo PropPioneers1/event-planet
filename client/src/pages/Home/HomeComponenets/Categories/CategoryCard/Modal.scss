@@ -1,0 +1,42 @@
+.modal-button {
+	padding: 10px 12px;
+	border-radius: 3px;
+	color: #fff;
+	font-weight: 500;
+	text-transform: uppercase;
+	// font-size: 1rem;
+	letter-spacing: 0.1rem;
+	transition: all 0.3s;
+	position: relative;
+	overflow: hidden;
+	z-index: 1;
+	&:after {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: #3f72af;
+		border-radius: 3px;
+		z-index: -2;
+	}
+	&:before {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 0%;
+		height: 100%;
+		background-color: darken(#f53f7b, 20%);
+		transition: all 0.3s;
+		border-radius: 3px;
+		z-index: -1;
+	}
+	&:hover {
+		color: #fff;
+		&:before {
+			width: 100%;
+		}
+	}
+}

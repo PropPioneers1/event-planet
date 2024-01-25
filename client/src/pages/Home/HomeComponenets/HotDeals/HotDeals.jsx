@@ -1,9 +1,20 @@
-import React from 'react';
 
-const HotDeals = () => {
+
+import React, { useState } from 'react';
+
+const HotDeals = ({ onCardSelect }) => {
+  const [selectedCard, setSelectedCard] = useState(null);
+
+  const handleSelect = (cardId) => {
+    setSelectedCard(cardId);
+    onCardSelect(cardId); 
+    console.log(`Selected card ID: ${cardId}`);
+  };
+
     return (
         <div>
-            <div  className="mt-10 space-y-6 flex-wrap gap-4 items-center justify-center lg:flex">
+            <div  className="mt-10  grid grid-cols-1 md:grid-cols-2 gap-4
+             items-center justify-center align-middle ">
         {/* first card */}
         <div className="ml-12 lg:mr-0">
           <div data-aos="flip-right" className="relative flex w-full max-w-[20rem] text-black flex-col rounded-xl bg-gradient-to-tr from-white to-blue-400 bg-clip-border p-8  shadow-md shadow-pink-500/40">
@@ -24,14 +35,13 @@ const HotDeals = () => {
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
-                      stroke-width="2"
+   
                       stroke="currentColor"
                       aria-hidden="true"
                       className="h-3 w-3"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                     
                         d="M4.5 12.75l6 6 9-13.5"
                       ></path>
                     </svg>
@@ -46,14 +56,13 @@ const HotDeals = () => {
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
-                      stroke-width="2"
+             
                       stroke="currentColor"
                       aria-hidden="true"
                       className="h-3 w-3"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                   
                         d="M4.5 12.75l6 6 9-13.5"
                       ></path>
                     </svg>
@@ -68,14 +77,13 @@ const HotDeals = () => {
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
-                      stroke-width="2"
+               
                       stroke="currentColor"
                       aria-hidden="true"
                       className="h-3 w-3"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                   
                         d="M4.5 12.75l6 6 9-13.5"
                       ></path>
                     </svg>
@@ -90,14 +98,13 @@ const HotDeals = () => {
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
-                      stroke-width="2"
+        
                       stroke="currentColor"
                       aria-hidden="true"
                       className="h-3 w-3"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                   
                         d="M4.5 12.75l6 6 9-13.5"
                       ></path>
                     </svg>
@@ -112,14 +119,13 @@ const HotDeals = () => {
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
-                      stroke-width="2"
+             
                       stroke="currentColor"
                       aria-hidden="true"
                       className="h-3 w-3"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        
                         d="M4.5 12.75l6 6 9-13.5"
                       ></path>
                     </svg>
@@ -131,12 +137,13 @@ const HotDeals = () => {
               </ul>
             </div>
             <div className="mt-12 p-0">
-              <button
+            <button
+                onClick={() => handleSelect('standard')}
                 className="block w-full select-none rounded-lg bg-white py-3.5 px-7 text-center align-middle font-sans text-sm font-bold uppercase text-pink-500 shadow-md shadow-blue-gray-500/10 transition-all hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-gray-500/20 focus:scale-[1.02] focus:opacity-[0.85] focus:shadow-none active:scale-100 active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                 type="button"
                 data-ripple-dark="true"
               >
-                Buy Now
+                {selectedCard === 'standard' ? 'Selected' : 'Select'}
               </button>
             </div>
           </div>
@@ -162,14 +169,13 @@ const HotDeals = () => {
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke-width="2"
+     
                     stroke="currentColor"
                     aria-hidden="true"
                     className="h-3 w-3"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      
                       d="M4.5 12.75l6 6 9-13.5"
                     ></path>
                   </svg>
@@ -184,14 +190,13 @@ const HotDeals = () => {
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke-width="2"
+                
                     stroke="currentColor"
                     aria-hidden="true"
                     className="h-3 w-3"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                 
                       d="M4.5 12.75l6 6 9-13.5"
                     ></path>
                   </svg>
@@ -206,14 +211,13 @@ const HotDeals = () => {
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke-width="2"
+     
                     stroke="currentColor"
                     aria-hidden="true"
                     className="h-3 w-3"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                 
                       d="M4.5 12.75l6 6 9-13.5"
                     ></path>
                   </svg>
@@ -228,14 +232,13 @@ const HotDeals = () => {
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke-width="2"
+                 
                     stroke="currentColor"
                     aria-hidden="true"
                     className="h-3 w-3"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                  
                       d="M4.5 12.75l6 6 9-13.5"
                     ></path>
                   </svg>
@@ -250,14 +253,13 @@ const HotDeals = () => {
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke-width="2"
+                 
                     stroke="currentColor"
                     aria-hidden="true"
                     className="h-3 w-3"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      
                       d="M4.5 12.75l6 6 9-13.5"
                     ></path>
                   </svg>
@@ -269,13 +271,14 @@ const HotDeals = () => {
             </ul>
           </div>
           <div className="mt-12 p-0">
-            <button
-              className="block w-full select-none rounded-lg bg-white py-3.5 px-7 text-center align-middle font-sans text-sm font-bold uppercase text-pink-500 shadow-md shadow-blue-gray-500/10 transition-all hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-gray-500/20 focus:scale-[1.02] focus:opacity-[0.85] focus:shadow-none active:scale-100 active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-              type="button"
-              data-ripple-dark="true"
-            >
-              Buy Now
-            </button>
+          <button
+                onClick={() => handleSelect('pro')}
+                className="block w-full select-none rounded-lg bg-white py-3.5 px-7 text-center align-middle font-sans text-sm font-bold uppercase text-pink-500 shadow-md shadow-blue-gray-500/10 transition-all hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-gray-500/20 focus:scale-[1.02] focus:opacity-[0.85] focus:shadow-none active:scale-100 active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
+                data-ripple-dark="true"
+              >
+                {selectedCard === 'pro' ? 'Selected' : 'Select'}
+              </button>
           </div>
         </div>
         </div>
@@ -298,14 +301,13 @@ const HotDeals = () => {
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
-                      stroke-width="2"
+             
                       stroke="currentColor"
                       aria-hidden="true"
                       className="h-3 w-3"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        
                         d="M4.5 12.75l6 6 9-13.5"
                       ></path>
                     </svg>
@@ -320,14 +322,13 @@ const HotDeals = () => {
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
-                      stroke-width="2"
+                  
                       stroke="currentColor"
                       aria-hidden="true"
                       className="h-3 w-3"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                     
                         d="M4.5 12.75l6 6 9-13.5"
                       ></path>
                     </svg>
@@ -342,14 +343,13 @@ const HotDeals = () => {
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
-                      stroke-width="2"
+                    
                       stroke="currentColor"
                       aria-hidden="true"
                       className="h-3 w-3"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                    
                         d="M4.5 12.75l6 6 9-13.5"
                       ></path>
                     </svg>
@@ -364,14 +364,13 @@ const HotDeals = () => {
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
-                      stroke-width="2"
+                    
                       stroke="currentColor"
                       aria-hidden="true"
                       className="h-3 w-3"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                       
                         d="M4.5 12.75l6 6 9-13.5"
                       ></path>
                     </svg>
@@ -386,14 +385,13 @@ const HotDeals = () => {
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
-                      stroke-width="2"
+             
                       stroke="currentColor"
                       aria-hidden="true"
                       className="h-3 w-3"
                     >
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                       
                         d="M4.5 12.75l6 6 9-13.5"
                       ></path>
                     </svg>
@@ -405,12 +403,13 @@ const HotDeals = () => {
               </ul>
             </div>
             <div className="mt-12 p-0">
-              <button
+            <button
+                onClick={() => handleSelect('proPlus')}
                 className="block w-full select-none rounded-lg bg-white py-3.5 px-7 text-center align-middle font-sans text-sm font-bold uppercase text-pink-500 shadow-md shadow-blue-gray-500/10 transition-all hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-gray-500/20 focus:scale-[1.02] focus:opacity-[0.85] focus:shadow-none active:scale-100 active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                 type="button"
                 data-ripple-dark="true"
               >
-                Buy Now
+                {selectedCard === 'proPlus' ? 'Selected' : 'Select'}
               </button>
             </div>
           </div>

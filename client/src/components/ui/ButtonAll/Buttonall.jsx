@@ -4,11 +4,11 @@ import './ButtonAll.css';
 const Buttonall = ({ children }) => {
   return (
     <div>
-       <div className="text-center mb-10  p-10">
+       <div className="text-end mb-10  p-10">
        
        <button className="c-button 
-        c-button--gooey  btn w-72 h-20 font-bold
-         text-primary p-y-8 text-xl  "> 
+        c-button--gooey  btn  h-12 font-bold
+         text-primary  text-xl  "> 
         {children}
         
 <div className="c-button__blobs">

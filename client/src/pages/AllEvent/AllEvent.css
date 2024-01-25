@@ -1,0 +1,26 @@
+.mySwiper2 {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.mySwiper2 img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	background-color: black;
+	background-blend-mode: overlay;
+}
+
+.swiper-container {
+	height: 400px;
+
+	/* Responsive adjustments */
+	@media (max-width: 768px) {
+		height: 400px;
+	}
+
+	@media (max-width: 576px) {
+		height: 300px;
+	}
+}
