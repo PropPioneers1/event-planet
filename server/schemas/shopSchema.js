@@ -1,7 +1,5 @@
 const mongoose=require('mongoose');
 
-
-
 const shopSchema=mongoose.Schema({
     image:{
         type:String,

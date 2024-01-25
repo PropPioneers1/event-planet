@@ -6,8 +6,9 @@ require("dotenv").config();
 const port = process.env.PORT || 5000;
 const app = express();
 
-const shopHandle=require('./shopHandler/shopHandler')
 
+const eventHandler=require('./eventHandler/eventHandler')
+const shopHandler=require('./shopHandler/shopHandler')
 
 
 // middleware
@@ -35,8 +36,8 @@ mongoose
 
 
 // routes
-app.use('/shop',shopHandle)
-
+app.use('/event',eventHandler)
+app.use('/shop',shopHandler)
 
 
 
@@ -58,6 +59,7 @@ app.use((err, req, res, next) => {
     res.status(500).send("server error", err.message);
   }
 });
+
 // _________________________________________
 
 app.listen(port, () => {
