@@ -5,9 +5,7 @@ const QnaSchema=require ('../schemas/QnaSchema')
 
 const Qna =new mongoose.model("Qna",QnaSchema)
 
-router.get('/', async (req, res) => {
 
-});
 
 
 
