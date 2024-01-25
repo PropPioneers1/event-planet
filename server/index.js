@@ -5,13 +5,19 @@ const cors = require("cors");
 require("dotenv").config();
 const port = process.env.PORT || 5000;
 const app = express();
+
+
 const eventHandler=require('./eventHandler/eventHandler')
+const shopHandler=require('./shopHandler/shopHandler')
+
 
 // middleware
 app.use(cors());
 app.use(bodyParser.json());
 
 // console.log(object);
+
+
 
 // Mongodb connection
 mongoose
@@ -26,17 +32,19 @@ mongoose
     console.error("Error connecting to MongoDB:", error);
   });
 
-<<<<<<< HEAD
+
+
 
 // routes
 app.use('/event',eventHandler)
+app.use('/shop',shopHandler)
+
+
+
 
 
 
 // Eroor handler 
-=======
-// Eroor handler
->>>>>>> 77c7403aec98844ad32038d3954a324a99ab312f
 
 // _________________________________________________
 // incorrect url error
