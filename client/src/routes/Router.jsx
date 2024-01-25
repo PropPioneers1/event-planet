@@ -4,6 +4,8 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home/Home";
 import SignUp from "../pages/SignUp/SignUp";
 import SignIn from "../pages/SignIn/SignIn";
+import UpcomingDetails from "../pages/Home/HomeComponenets/UpComingEvent/UpcomingDetails";
+import AllEvent from "../pages/AllEvent/AllEvent";
 import Dashboard from "../layouts/Dashboard";
 import Profile from "../pages/Dashboard/Profile/Profile";
 import PaymentHistory from "../pages/Dashboard/Payment/PaymentHistory";
@@ -11,10 +13,9 @@ import AddProduct from "../pages/Dashboard/AddProduct/AddProduct";
 import CreateBlog from "../pages/Dashboard/CreateBlog/CreateBlog";
 import CreateTheme from "../pages/Dashboard/CreateTheme/CreateTheme";
 import Shopping from "../pages/Shopping/Shopping";
-
 import SelectWay from "../pages/CreateEvent/Chooseway.jsx/SelectWay";
 import CreateDesForm from "../pages/CreateEvent/AddEvent/CreateDesForm";
-import AllEvent from "../pages/AllEvent/AllEvent";
+import UpdateProfile from "../pages/UpdateProfile/UpdateProfile";
 
 const Router = createBrowserRouter([
 	{
@@ -36,7 +37,11 @@ const Router = createBrowserRouter([
 				element: <SignIn></SignIn>,
 			},
 			{
-				path: "select-way",
+				path: "upcomingDetails/:id",
+				element: <UpcomingDetails></UpcomingDetails>,
+			},
+			{
+				path: "select-way/:lebel",
 				element: <SelectWay></SelectWay>,
 			},
 			{
@@ -51,6 +56,10 @@ const Router = createBrowserRouter([
 			{
 				path: "event",
 				element: <AllEvent></AllEvent>,
+			},
+			{
+				path: "editProfile",
+				element: <UpdateProfile></UpdateProfile>,
 			},
 		],
 	},
