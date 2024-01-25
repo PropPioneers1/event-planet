@@ -1,5 +1,6 @@
 [
   {
+    "_id": 121,
     "category": "Festival",
     "blogImg": "https://i.ibb.co/wppR2Nt/science.jpg",
     "title": "Traditional Festivals Around the World",
@@ -12,6 +13,7 @@
         "commentId": 1,
         "username": "festiveExplorer",
         "name": "Elena Festival",
+        "userImage": "https://i.ibb.co/dWYXNrQ/imran.jpg",
         "comment": "I love learning about cultural celebrations!",
         "timestamp": "2024-01-23T15:20:10Z"
       },
@@ -19,6 +21,7 @@
         "commentId": 2,
         "username": "worldTraveler",
         "name": "Alex Wanderer",
+        "userImage": "https://i.ibb.co/02PnxHW/imon.png",
         "comment": "Amazing pictures! I wish I could experience these festivals.",
         "timestamp": "2024-01-23T16:45:30Z"
       },
@@ -26,6 +29,7 @@
         "commentId": 3,
         "username": "worldTraveler",
         "name": "Alex Wanderer",
+        "userImage": "https://i.ibb.co/4VGDgP4/shahid.jpg",
         "comment": "Amazing pictures! I wish I could experience these festivals.",
         "timestamp": "2024-01-23T16:45:30Z"
       },
@@ -33,6 +37,7 @@
         "commentId": 4,
         "username": "worldTraveler",
         "name": "Alex Wanderer",
+        "userImage": "https://i.ibb.co/dBpxXCr/fiver-profile.jpg",
         "comment": "Amazing pictures! I wish I could experience these festivals.",
         "timestamp": "2024-01-23T16:45:30Z"
       },
@@ -40,6 +45,7 @@
         "commentId": 5,
         "username": "worldTraveler",
         "name": "Alex Wanderer",
+        "userImage": "https://i.ibb.co/5czHnZh/samad.png",
         "comment": "Amazing pictures! I wish I could experience these festivals.",
         "timestamp": "2024-01-23T16:45:30Z"
       },
@@ -47,6 +53,7 @@
         "commentId": 6,
         "username": "worldTraveler",
         "name": "Alex Wanderer",
+        "userImage": "https://i.ibb.co/fXG7h8m/arif.png",
         "comment": "Amazing pictures! I wish I could experience these festivals.",
         "timestamp": "2024-01-23T16:45:30Z"
       },
@@ -54,6 +61,7 @@
         "commentId": 7,
         "username": "worldTraveler",
         "name": "Alex Wanderer",
+        "userImage": "https://i.ibb.co/dWYXNrQ/imran.jpg",
         "comment": "Amazing pictures! I wish I could experience these festivals.",
         "timestamp": "2024-01-23T16:45:30Z"
       },
@@ -61,6 +69,7 @@
         "commentId": 8,
         "username": "worldTraveler",
         "name": "Alex Wanderer",
+        "userImage": "https://i.ibb.co/02PnxHW/imon.png",
         "comment": "Amazing pictures! I wish I could experience these festivals.",
         "timestamp": "2024-01-23T16:45:30Z"
       }
@@ -72,6 +81,7 @@
     }
   },
   {
+    "_id": 122,
     "category": "Fashion",
     "blogImg": "https://i.ibb.co/hgkmGhs/education.jpg",
     "title": "Culinary Delights of Different Cultures",
@@ -84,6 +94,7 @@
         "commentId": 1,
         "username": "foodieExplorer",
         "name": "Olivia Foodie",
+        "userImage": "https://i.ibb.co/fXG7h8m/arif.png",
         "comment": "I'm drooling over these dishes! Can't wait to try them.",
         "timestamp": "2024-01-23T18:15:20Z"
       },
@@ -91,6 +102,7 @@
         "commentId": 2,
         "username": "travelingFoodie",
         "name": "Daniel Traveler",
+        "userImage": "https://i.ibb.co/fXG7h8m/arif.png",
         "comment": "This post is making me hungry! Fantastic selection of dishes.",
         "timestamp": "2024-01-23T19:30:05Z"
       }
@@ -102,6 +114,7 @@
     }
   },
   {
+    "_id": 123,
     "category": "Education",
     "blogImg": "https://i.ibb.co/Mc2Yt0y/travel.jpg",
     "title": "Art Across Continents",
@@ -114,6 +127,7 @@
         "commentId": 1,
         "username": "artLover",
         "name": "Sophia Artistic",
+        "userImage": "https://i.ibb.co/fXG7h8m/arif.png",
         "comment": "The way cultures express themselves through art is mesmerizing!",
         "timestamp": "2024-01-23T09:10:55Z"
       },
@@ -121,6 +135,7 @@
         "commentId": 2,
         "username": "creativeMind",
         "name": "William Creative",
+        "userImage": "https://i.ibb.co/02PnxHW/imon.png",
         "comment": "I never knew there were so many art forms around the world. Thanks for sharing!",
         "timestamp": "2024-01-23T10:25:40Z"
       },
@@ -128,6 +143,7 @@
         "commentId": 3,
         "username": "creativeMind",
         "name": "William Creative",
+        "userImage": "https://i.ibb.co/02PnxHW/imon.png",
         "comment": "I never knew there were so many art forms around the world. Thanks for sharing!",
         "timestamp": "2024-01-23T10:25:40Z"
       }
@@ -139,6 +155,7 @@
     }
   },
   {
+    "_id": 124,
     "category": "Business",
     "blogImg": "https://i.ibb.co/zHdRyhK/business.jpg",
     "title": "Traditional Music Across Cultures",
@@ -183,6 +200,7 @@
     }
   },
   {
+    "_id": 125,
     "category": "Sport",
     "blogImg": "https://i.ibb.co/QX6cHhj/wedding.jpg",
     "title": "Historical Landmarks: A Cultural Odyssey",
@@ -195,6 +213,7 @@
         "commentId": 1,
         "username": "historyBuff",
         "name": "Victoria Historian",
+        "userImage": "https://i.ibb.co/4VGDgP4/shahid.jpg",
         "comment": "These landmarks have so much history attached to them. Incredible!",
         "timestamp": "2024-01-23T14:05:45Z"
       },
@@ -209,6 +228,7 @@
         "commentId": 3,
         "username": "timeTraveler",
         "name": "Thomas Time",
+        "userImage": "https://i.ibb.co/02PnxHW/imon.png",
         "comment": "I feel like I've traveled through time just by reading this. Thanks for the virtual tour!",
         "timestamp": "2024-01-23T15:40:30Z"
       },
@@ -216,6 +236,7 @@
         "commentId": 4,
         "username": "timeTraveler",
         "name": "Thomas Time",
+        "userImage": "https://i.ibb.co/fXG7h8m/arif.png",
         "comment": "I feel like I've traveled through time just by reading this. Thanks for the virtual tour!",
         "timestamp": "2024-01-23T15:40:30Z"
       },
@@ -223,6 +244,7 @@
         "commentId": 5,
         "username": "timeTraveler",
         "name": "Thomas Time",
+        "userImage": "https://i.ibb.co/fXG7h8m/arif.png",
         "comment": "I feel like I've traveled through time just by reading this. Thanks for the virtual tour!",
         "timestamp": "2024-01-23T15:40:30Z"
       }
@@ -234,6 +256,7 @@
     }
   },
   {
+    "_id": 126,
     "category": "Innovation Showcase",
     "blogImg": "https://i.ibb.co/TcvL3PQ/wedding-2-0.jpg",
     "title": "Modern Skyscrapers: A Global Phenomenon",
@@ -246,6 +269,7 @@
         "commentId": 1,
         "username": "architectureEnthusiast",
         "name": "Sophie Structures",
+        "userImage": "https://i.ibb.co/fXG7h8m/arif.png",
         "comment": "These skyscrapers redefine the skyline. Impressive!",
         "timestamp": "2024-01-23T20:45:15Z"
       },
@@ -253,6 +277,7 @@
         "commentId": 2,
         "username": "cityExplorer",
         "name": "James Heights",
+        "userImage": "https://i.ibb.co/fXG7h8m/arif.png",
         "comment": "Every city has its unique architectural charm. Love this exploration!",
         "timestamp": "2024-01-23T21:55:30Z"
       },
@@ -260,6 +285,7 @@
         "commentId": 3,
         "username": "cityExplorer",
         "name": "James Heights",
+        "userImage": "https://i.ibb.co/4VGDgP4/shahid.jpg",
         "comment": "Every city has its unique architectural charm. Love this exploration!",
         "timestamp": "2024-01-23T21:55:30Z"
       }

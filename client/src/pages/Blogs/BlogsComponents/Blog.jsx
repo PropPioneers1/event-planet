@@ -17,7 +17,7 @@ const Blog = ({ blog }) => {
         <div className="flex items-center gap-2">
           <img
             src={blog?.user?.userImage}
-            className="w-10 h-10 rounded-full object-cover"
+            className="w-12 h-12 rounded-full object-cover"
             alt=""
           />
           <div>
@@ -52,7 +52,7 @@ const Blog = ({ blog }) => {
           <div className="py-3">
             <img
               src={blog?.blogImg}
-              className="h-[380px] w-full object-cover"
+              className="h-[280px] md:h-[380px] w-full object-cover"
               alt=""
             />
           </div>
@@ -67,17 +67,19 @@ const Blog = ({ blog }) => {
             <FaHeart
               onClick={() => setIsLike(!isLike)}
               className={`${
-                isLike ? "text-primary" : "text-secondary"
+                isLike ? "text-red-500" : "text-secondary"
               } cursor-pointer`}
             />
             <p className="pb-[3px]">{isLike ? blog?.likes + 1 : blog?.likes}</p>
           </div>
 
           <div
-            className="flex items-center gap-1"
-            onClick={() => document.getElementById("my_modal_3").showModal()}
+            className="flex items-center gap-1 cursor-pointer hover:underline"
+            onClick={() =>
+              document.getElementById(`my_modal_${blog?._id}`).showModal()
+            }
           >
-            <FaCommentAlt className="text-secondary cursor-pointer" />
+            <FaCommentAlt className="text-secondary" />
             <p className="pb-1">{blog?.comments?.length}</p>
           </div>
 
@@ -86,7 +88,13 @@ const Blog = ({ blog }) => {
           </div>
         </div>
       </div>
-      <BlogComment />
+      <BlogComment
+        blog={blog}
+        setIsMoreTrue={setIsMoreTrue}
+        isMoreTrue={isMoreTrue}
+        setIsLike={setIsLike}
+        isLike={isLike}
+      />
     </div>
   );
 };
