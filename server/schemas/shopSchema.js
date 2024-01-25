@@ -9,6 +9,11 @@ const shopSchema=mongoose.Schema({
         type: String,
         required:true
     },
+    quantity:{
+        type:Number,
+        min:1,
+        max:100
+    },
     description:{
         type:String,
         required:true
