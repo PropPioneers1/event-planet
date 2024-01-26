@@ -5,7 +5,7 @@ import Home from "../pages/Home/Home";
 import SignUp from "../pages/SignUp/SignUp";
 import SignIn from "../pages/SignIn/SignIn";
 import UpcomingDetails from "../pages/Home/HomeComponenets/UpComingEvent/UpcomingDetails";
-import AllEvent from '../pages/AllEvent/AllEvent';
+import AllEvent from "../pages/AllEvent/AllEvent";
 import Dashboard from "../layouts/Dashboard";
 import Profile from "../pages/Dashboard/Profile/Profile";
 import PaymentHistory from "../pages/Dashboard/Payment/PaymentHistory";
@@ -15,88 +15,83 @@ import CreateTheme from "../pages/Dashboard/CreateTheme/CreateTheme";
 import Shopping from "../pages/Shopping/Shopping";
 import SelectWay from "../pages/CreateEvent/Chooseway.jsx/SelectWay";
 import CreateDesForm from "../pages/CreateEvent/AddEvent/CreateDesForm";
-
+import UpdateProfile from "../pages/UpdateProfile/UpdateProfile";
 
 
 const Router = createBrowserRouter([
-  {
-    path: "/",
-    element: <MainLayout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
+	{
+		path: "/",
+		element: <MainLayout />,
+		errorElement: <ErrorPage />,
+		children: [
+			{
+				path: "/",
+				element: <Home />,
+			},
 
-      {
-        path: "sign-up",
-        element: <SignUp></SignUp>,
-      },
-      {
-        path: "sign-in",
-        element: <SignIn></SignIn>,
-      },
-      {
-        path: "upcomingDetails/:id",
-        element:<UpcomingDetails></UpcomingDetails>,
-      },
-      {
-        path:'select-way/:lebel',
-        element:<SelectWay></SelectWay>
-      }
-      ,
-      {
-        path: "shopping",
-        element: <Shopping></Shopping>
-      },
-      {
-        path: 'create-form',
-        element: <CreateDesForm></CreateDesForm>
+			{
+				path: "sign-up",
+				element: <SignUp></SignUp>,
+			},
+			{
+				path: "sign-in",
+				element: <SignIn></SignIn>,
+			},
+			{
+				path: "upcomingDetails/:id",
+				element: <UpcomingDetails></UpcomingDetails>,
+			},
+			{
+				path: "select-way/:lebel",
+				element: <SelectWay></SelectWay>,
+			},
+			{
+				path: "shopping",
+				element: <Shopping></Shopping>,
+			},
+			{
+				path: "create-form",
+				element: <CreateDesForm></CreateDesForm>,
+			},
 
-      },
+			{
+				path: "event",
+				element: <AllEvent></AllEvent>,
+			},
+			{
+				path: "editProfile",
+				element: <UpdateProfile></UpdateProfile>,
+			},
+		],
+	},
 
-      {
-        path: "event",
-        element: <AllEvent></AllEvent>,
-      }
-    ],
-  },
+	{
+		path: "/dashboard",
+		element: <Dashboard></Dashboard>,
+		children: [
+			{
+				path: "profile",
+				element: <Profile></Profile>,
+			},
+			{
+				path: "add-product",
+				element: <AddProduct></AddProduct>,
+			},
+			{
+				path: "create-theme",
+				element: <CreateTheme></CreateTheme>,
+			},
 
-
-  {
-    path: "/dashboard",
-    element: <Dashboard></Dashboard>,
-    children: [
-      {
-        path: "profile",
-        element: <Profile></Profile>
-      },
-      {
-        path: "add-product",
-        element: <AddProduct></AddProduct>
-      },
-      {
-        path: "create-theme",
-        element: <CreateTheme></CreateTheme>
-      },
-
-      {
-        path: "create-blog",
-        element: <CreateBlog></CreateBlog>
-      },
-      {
-        path: "payment-history",
-        element: <PaymentHistory></PaymentHistory>
-      },
-
-    ]
-  }
-
-])
-
-
+			{
+				path: "create-blog",
+				element: <CreateBlog></CreateBlog>,
+			},
+			{
+				path: "payment-history",
+				element: <PaymentHistory></PaymentHistory>,
+			},
+		],
+	},
+]);
 
 export default Router;
-
-

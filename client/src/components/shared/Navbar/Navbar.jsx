@@ -5,23 +5,20 @@ import { SlMenu } from "react-icons/sl";
 import { IoCloseOutline } from "react-icons/io5";
 import { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
-import toast from "react-hot-toast";
+import MenuDropdown from "./MenuDropDown";
 
 const Navbar = () => {
-  const {user,logOut} = useAuth();
-  const handleSignOut = async () => {
-    await logOut()
-    toast.success('Sign Out Successfully')
-  }
-  const [isMenuTrue, setIsMenuTrue] = useState(false);
-  const categories = [
-    "Education",
-    "Business",
-    "Travel",
-    "Conference",
-    "Food Festival",
-    "Sports Event",
-  ];
+	const { user } = useAuth();
+
+	const [isMenuTrue, setIsMenuTrue] = useState(false);
+	const categories = [
+		"Education",
+		"Business",
+		"Travel",
+		"Conference",
+		"Food Festival",
+		"Sports Event",
+	];
 
 	const locations = [
 		"Sylhet",
@@ -97,27 +94,37 @@ const Navbar = () => {
 		</>
 	);
 
-  const authLinks = (
-    <>
-      {
-        user? <><button onClick={handleSignOut} className="font-semibold border-2 border-accent
-        rounded-md py-2 px-4 transition-all duration-500 ease-out hover:bg-accent">Sign Out</button></> :<><NavLink onClick={() => setIsMenuTrue(false)} to="/sign-in">
-        <button className="font-semibold border-2 border-accent
-         rounded-md py-2 px-4 transition-all duration-500 ease-out hover:bg-accent">Sign in
-		</button>
-			</NavLink>
-			<div className="w-[1px] h-[15px] bg-[#EEEEEE] hidden lg:block "></div>
-			<NavLink onClick={() => setIsMenuTrue(false)} to="/sign-up">
-				<button
-					className="font-semibold border-2 border-accent
+	const authLinks = (
+		<>
+			{user ? (
+				<>
+					<button>
+						<MenuDropdown></MenuDropdown>
+					</button>
+				</>
+			) : (
+				<>
+					<NavLink onClick={() => setIsMenuTrue(false)} to="/sign-in">
+						<button
+							className="font-semibold border-2 border-accent
          rounded-md py-2 px-4 transition-all duration-500 ease-out hover:bg-accent"
-        >
-          Sign up
-        </button>
-      </NavLink></>
-      }
-    </>
-  );
+						>
+							Sign in
+						</button>
+					</NavLink>
+					<div className="w-[1px] h-[15px] bg-[#EEEEEE] hidden lg:block "></div>
+					<NavLink onClick={() => setIsMenuTrue(false)} to="/sign-up">
+						<button
+							className="font-semibold border-2 border-accent
+         rounded-md py-2 px-4 transition-all duration-500 ease-out hover:bg-accent"
+						>
+							Sign up
+						</button>
+					</NavLink>
+				</>
+			)}
+		</>
+	);
 
 	return (
 		<div className="">
