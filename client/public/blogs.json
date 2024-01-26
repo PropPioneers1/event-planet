@@ -1,0 +1,299 @@
+[
+  {
+    "_id": 121,
+    "category": "Festival",
+    "blogImg": "https://i.ibb.co/wppR2Nt/science.jpg",
+    "title": "Traditional Festivals Around the World",
+    "post": "Explore the vibrant tapestry of traditional festivals celebrated in different cultures globally. From the colorful Holi festival in India to the lively Carnival in Brazil, discover the joyous celebrations that bring communities together.",
+    "tags": ["festivals", "traditions", "celebrations"],
+    "likes": 230,
+    "postedTimestamp": "2024-01-23T16:45:30Z",
+    "comments": [
+      {
+        "commentId": 1,
+        "username": "festiveExplorer",
+        "name": "Elena Festival",
+        "userImage": "https://i.ibb.co/dWYXNrQ/imran.jpg",
+        "comment": "I love learning about cultural celebrations!",
+        "timestamp": "2024-01-23T15:20:10Z"
+      },
+      {
+        "commentId": 2,
+        "username": "worldTraveler",
+        "name": "Alex Wanderer",
+        "userImage": "https://i.ibb.co/02PnxHW/imon.png",
+        "comment": "Amazing pictures! I wish I could experience these festivals.",
+        "timestamp": "2024-01-23T16:45:30Z"
+      },
+      {
+        "commentId": 3,
+        "username": "worldTraveler",
+        "name": "Alex Wanderer",
+        "userImage": "https://i.ibb.co/4VGDgP4/shahid.jpg",
+        "comment": "Amazing pictures! I wish I could experience these festivals.",
+        "timestamp": "2024-01-23T16:45:30Z"
+      },
+      {
+        "commentId": 4,
+        "username": "worldTraveler",
+        "name": "Alex Wanderer",
+        "userImage": "https://i.ibb.co/dBpxXCr/fiver-profile.jpg",
+        "comment": "Amazing pictures! I wish I could experience these festivals.",
+        "timestamp": "2024-01-23T16:45:30Z"
+      },
+      {
+        "commentId": 5,
+        "username": "worldTraveler",
+        "name": "Alex Wanderer",
+        "userImage": "https://i.ibb.co/5czHnZh/samad.png",
+        "comment": "Amazing pictures! I wish I could experience these festivals.",
+        "timestamp": "2024-01-23T16:45:30Z"
+      },
+      {
+        "commentId": 6,
+        "username": "worldTraveler",
+        "name": "Alex Wanderer",
+        "userImage": "https://i.ibb.co/fXG7h8m/arif.png",
+        "comment": "Amazing pictures! I wish I could experience these festivals.",
+        "timestamp": "2024-01-23T16:45:30Z"
+      },
+      {
+        "commentId": 7,
+        "username": "worldTraveler",
+        "name": "Alex Wanderer",
+        "userImage": "https://i.ibb.co/dWYXNrQ/imran.jpg",
+        "comment": "Amazing pictures! I wish I could experience these festivals.",
+        "timestamp": "2024-01-23T16:45:30Z"
+      },
+      {
+        "commentId": 8,
+        "username": "worldTraveler",
+        "name": "Alex Wanderer",
+        "userImage": "https://i.ibb.co/02PnxHW/imon.png",
+        "comment": "Amazing pictures! I wish I could experience these festivals.",
+        "timestamp": "2024-01-23T16:45:30Z"
+      }
+    ],
+    "user": {
+      "username": "maRifat",
+      "name": "Md. Ar Rakib Islam Rifat",
+      "userImage": "https://i.ibb.co/Xk2ynrG/rifat.jpg"
+    }
+  },
+  {
+    "_id": 122,
+    "category": "Fashion",
+    "blogImg": "https://i.ibb.co/hgkmGhs/education.jpg",
+    "title": "Culinary Delights of Different Cultures",
+    "post": "Embark on a gastronomic journey and savor the unique flavors of various cuisines from around the globe. From spicy street food in Thailand to exquisite pastries in France, experience the diverse world of culinary delights.",
+    "tags": ["food", "culinary", "gastronomy"],
+    "likes": 320,
+    "postedTimestamp": "2024-01-23T16:45:30Z",
+    "comments": [
+      {
+        "commentId": 1,
+        "username": "foodieExplorer",
+        "name": "Olivia Foodie",
+        "userImage": "https://i.ibb.co/fXG7h8m/arif.png",
+        "comment": "I'm drooling over these dishes! Can't wait to try them.",
+        "timestamp": "2024-01-23T18:15:20Z"
+      },
+      {
+        "commentId": 2,
+        "username": "travelingFoodie",
+        "name": "Daniel Traveler",
+        "userImage": "https://i.ibb.co/fXG7h8m/arif.png",
+        "comment": "This post is making me hungry! Fantastic selection of dishes.",
+        "timestamp": "2024-01-23T19:30:05Z"
+      }
+    ],
+    "user": {
+      "username": "mk",
+      "name": "Mahbub Khandakar",
+      "userImage": "https://i.ibb.co/S0CBsDX/mahbub.jpg"
+    }
+  },
+  {
+    "_id": 123,
+    "category": "Education",
+    "blogImg": "https://i.ibb.co/Mc2Yt0y/travel.jpg",
+    "title": "Art Across Continents",
+    "post": "Embark on a creative journey exploring the diverse forms of art that represent the rich cultural heritage of different regions. From classical paintings to modern street art, witness the expressions of human creativity across continents.",
+    "tags": ["art", "creativity", "heritage"],
+    "likes": 180,
+    "postedTimestamp": "2024-01-23T16:45:30Z",
+    "comments": [
+      {
+        "commentId": 1,
+        "username": "artLover",
+        "name": "Sophia Artistic",
+        "userImage": "https://i.ibb.co/fXG7h8m/arif.png",
+        "comment": "The way cultures express themselves through art is mesmerizing!",
+        "timestamp": "2024-01-23T09:10:55Z"
+      },
+      {
+        "commentId": 2,
+        "username": "creativeMind",
+        "name": "William Creative",
+        "userImage": "https://i.ibb.co/02PnxHW/imon.png",
+        "comment": "I never knew there were so many art forms around the world. Thanks for sharing!",
+        "timestamp": "2024-01-23T10:25:40Z"
+      },
+      {
+        "commentId": 3,
+        "username": "creativeMind",
+        "name": "William Creative",
+        "userImage": "https://i.ibb.co/02PnxHW/imon.png",
+        "comment": "I never knew there were so many art forms around the world. Thanks for sharing!",
+        "timestamp": "2024-01-23T10:25:40Z"
+      }
+    ],
+    "user": {
+      "username": "brcShakil",
+      "name": "Bayazidur Rahman Chowdhury",
+      "userImage": "https://i.ibb.co/gy5F1qt/Whats-App-Image-2024-01-16-at-11-21-49-PM.jpg"
+    }
+  },
+  {
+    "_id": 124,
+    "category": "Business",
+    "blogImg": "https://i.ibb.co/zHdRyhK/business.jpg",
+    "title": "Traditional Music Across Cultures",
+    "post": "Immerse yourself in the melodious tunes of traditional music from various corners of the world. From the rhythmic beats of African drums to the soothing melodies of Asian instruments, experience the rich tapestry of global music traditions.",
+    "tags": ["music", "traditions", "melody"],
+    "likes": 200,
+    "postedTimestamp": "2024-01-23T16:45:30Z",
+    "comments": [
+      {
+        "commentId": 1,
+        "username": "musicLover",
+        "name": "Emma Melody",
+        "comment": "I didn't know there were so many unique musical styles. Beautiful!",
+        "timestamp": "2024-01-23T11:55:20Z"
+      },
+      {
+        "commentId": 2,
+        "username": "worldMelodies",
+        "name": "Michael Harmonic",
+        "comment": "Listening to these tunes feels like a cultural journey. Thanks for the playlist!",
+        "timestamp": "2024-01-23T13:20:05Z"
+      },
+      {
+        "commentId": 3,
+        "username": "worldMelodies",
+        "name": "Michael Harmonic",
+        "comment": "Listening to these tunes feels like a cultural journey. Thanks for the playlist!",
+        "timestamp": "2024-01-23T13:20:05Z"
+      },
+      {
+        "commentId": 4,
+        "username": "worldMelodies",
+        "name": "Michael Harmonic",
+        "comment": "Listening to these tunes feels like a cultural journey. Thanks for the playlist!",
+        "timestamp": "2024-01-23T13:20:05Z"
+      }
+    ],
+    "user": {
+      "username": "ak",
+      "name": "Arif Khan",
+      "userImage": "https://i.ibb.co/fXG7h8m/arif.png"
+    }
+  },
+  {
+    "_id": 125,
+    "category": "Sport",
+    "blogImg": "https://i.ibb.co/QX6cHhj/wedding.jpg",
+    "title": "Historical Landmarks: A Cultural Odyssey",
+    "post": "Take a captivating stroll through time and explore the historical landmarks that stand as testaments to different civilizations. From the majestic pyramids",
+    "tags": ["history", "landmarks", "architecture"],
+    "likes": 280,
+    "postedTimestamp": "2024-01-23T16:45:30Z",
+    "comments": [
+      {
+        "commentId": 1,
+        "username": "historyBuff",
+        "name": "Victoria Historian",
+        "userImage": "https://i.ibb.co/4VGDgP4/shahid.jpg",
+        "comment": "These landmarks have so much history attached to them. Incredible!",
+        "timestamp": "2024-01-23T14:05:45Z"
+      },
+      {
+        "commentId": 2,
+        "username": "timeTraveler",
+        "name": "Thomas Time",
+        "comment": "I feel like I've traveled through time just by reading this. Thanks for the virtual tour!",
+        "timestamp": "2024-01-23T15:40:30Z"
+      },
+      {
+        "commentId": 3,
+        "username": "timeTraveler",
+        "name": "Thomas Time",
+        "userImage": "https://i.ibb.co/02PnxHW/imon.png",
+        "comment": "I feel like I've traveled through time just by reading this. Thanks for the virtual tour!",
+        "timestamp": "2024-01-23T15:40:30Z"
+      },
+      {
+        "commentId": 4,
+        "username": "timeTraveler",
+        "name": "Thomas Time",
+        "userImage": "https://i.ibb.co/fXG7h8m/arif.png",
+        "comment": "I feel like I've traveled through time just by reading this. Thanks for the virtual tour!",
+        "timestamp": "2024-01-23T15:40:30Z"
+      },
+      {
+        "commentId": 5,
+        "username": "timeTraveler",
+        "name": "Thomas Time",
+        "userImage": "https://i.ibb.co/fXG7h8m/arif.png",
+        "comment": "I feel like I've traveled through time just by reading this. Thanks for the virtual tour!",
+        "timestamp": "2024-01-23T15:40:30Z"
+      }
+    ],
+    "user": {
+      "username": "am",
+      "name": "Anik Malakar",
+      "userImage": "https://i.ibb.co/SJ2GQCv/anik.jpg"
+    }
+  },
+  {
+    "_id": 126,
+    "category": "Innovation Showcase",
+    "blogImg": "https://i.ibb.co/TcvL3PQ/wedding-2-0.jpg",
+    "title": "Modern Skyscrapers: A Global Phenomenon",
+    "post": "Dive into the awe-inspiring world of modern skyscrapers that dominate city skylines across the globe. From the towering Burj Khalifa in Dubai to the innovative structures in New York, witness the architectural marvels shaping our urban landscapes.",
+    "tags": ["architecture", "skyscrapers", "urban"],
+    "likes": 150,
+    "postedTimestamp": "2024-01-23T16:45:30Z",
+    "comments": [
+      {
+        "commentId": 1,
+        "username": "architectureEnthusiast",
+        "name": "Sophie Structures",
+        "userImage": "https://i.ibb.co/fXG7h8m/arif.png",
+        "comment": "These skyscrapers redefine the skyline. Impressive!",
+        "timestamp": "2024-01-23T20:45:15Z"
+      },
+      {
+        "commentId": 2,
+        "username": "cityExplorer",
+        "name": "James Heights",
+        "userImage": "https://i.ibb.co/fXG7h8m/arif.png",
+        "comment": "Every city has its unique architectural charm. Love this exploration!",
+        "timestamp": "2024-01-23T21:55:30Z"
+      },
+      {
+        "commentId": 3,
+        "username": "cityExplorer",
+        "name": "James Heights",
+        "userImage": "https://i.ibb.co/4VGDgP4/shahid.jpg",
+        "comment": "Every city has its unique architectural charm. Love this exploration!",
+        "timestamp": "2024-01-23T21:55:30Z"
+      }
+    ],
+    "user": {
+      "username": "njp",
+      "name": "Nilima Jahan Pritom",
+      "userImage": "https://i.ibb.co/Dt5gqTv/Whats-App-Image-2024-01-17-at-12-09-51-AM.jpg"
+    }
+  }
+]
