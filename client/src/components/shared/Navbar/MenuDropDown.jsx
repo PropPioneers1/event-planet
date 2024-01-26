@@ -12,7 +12,7 @@ const MenuDropdown = () => {
 	const { user, logOut } = useAuth();
 
 	// const [roles] = useRole();
-	const roles = "user";
+	const roles = "admin";
 
 	const handleLogOut = async () => {
 		await logOut();
