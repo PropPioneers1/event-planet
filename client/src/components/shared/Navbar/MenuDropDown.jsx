@@ -36,8 +36,8 @@ const MenuDropdown = () => {
 								referrerPolicy="no-referrer"
 								src={user && user.photoURL ? user.photoURL : ""}
 								alt="profile"
-								height="30"
-								width="30"
+								height="50"
+								width="50"
 							/>
 						) : (
 							<img
@@ -50,18 +50,23 @@ const MenuDropdown = () => {
 				</div>
 			</div>
 			{isOpen && (
-				<div className="absolute rounded-xl text-black shadow-md w-[40vw] md:w-[15vw] bg-white overflow-hidden right-0 top-12  text-sm">
+				<div className="absolute rounded-xl space-y-2 text-black shadow-md w-[40vw] md:w-[15vw] bg-white overflow-hidden right-0 top-12  text-sm">
 					<div className=" p-2 ">
 						<div className="flex justify-center">
-							<img
-								className="h-14 w-14  rounded-full"
-								src="https://i.ibb.co/H7vjrrw/profile11.jpg"
-								alt=""
-							/>
+							{user ? (
+								<img
+									className="rounded-full w-1/3"
+									src={user?.photoURL}
+									alt=""
+								/>
+							) : (
+								<img
+									className="h-14 w-14  rounded-full"
+									src="https://i.ibb.co/H7vjrrw/profile11.jpg"
+									alt=""
+								/>
+							)}
 						</div>
-						<h1 className="mb-1 transition font-semibold">
-							User or Admin Name
-						</h1>
 					</div>
 					<hr className="h-[5px] w-full" />
 					<div className="flex flex-col cursor-pointer">
@@ -74,10 +79,10 @@ const MenuDropdown = () => {
 
 						{user ? (
 							<>
-								<p className="text-center">
+								<p className="text-center text-lg font-title">
 									{user?.displayName}
 								</p>
-
+								<hr />
 								{/* Admin Rules route */}
 
 								{roles === "admin" && (
