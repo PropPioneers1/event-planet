@@ -4,6 +4,7 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home/Home";
 import SignUp from "../pages/SignUp/SignUp";
 import SignIn from "../pages/SignIn/SignIn";
+import AllEvent from "../pages/AllEvent/AllEvent";
 import Dashboard from "../layouts/Dashboard";
 import Profile from "../pages/Dashboard/Profile/Profile";
 import PaymentHistory from "../pages/Dashboard/Payment/PaymentHistory";
@@ -14,8 +15,8 @@ import Shopping from "../pages/Shopping/Shopping";
 
 import SelectWay from "../pages/CreateEvent/Chooseway.jsx/SelectWay";
 import CreateDesForm from "../pages/CreateEvent/AddEvent/CreateDesForm";
-import AllEvent from "../pages/AllEvent/AllEvent";
 import Blogs from "../pages/Blogs/Blogs";
+import ThemeDetails from "../pages/CreateEvent/OurThemes/ThemeDetails/ThemeDetails";
 
 const Router = createBrowserRouter([
   {
@@ -40,9 +41,10 @@ const Router = createBrowserRouter([
         element: <Blogs />,
       },
       {
-        path: "select-way",
+        path: "select-way/:label",
         element: <SelectWay></SelectWay>,
       },
+
       {
         path: "shopping",
         element: <Shopping></Shopping>,
@@ -51,7 +53,10 @@ const Router = createBrowserRouter([
         path: "create-form",
         element: <CreateDesForm></CreateDesForm>,
       },
-
+      {
+        path: "theme-details/:idx/:label",
+        element: <ThemeDetails />,
+      },
       {
         path: "event",
         element: <AllEvent></AllEvent>,

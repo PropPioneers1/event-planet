@@ -1,0 +1,134 @@
+[
+  {
+    "category": "Education",
+    "themes": [
+      {
+        "theme": "Elegant",
+        "themeDescription": "The Elegant theme for our Education event embodies sophistication and refinement. It reflects a commitment to high standards and a pursuit of excellence in education. The atmosphere will be characterized by tasteful decor, subdued colors, and a sense of grace. Attendees can expect an environment conducive to intellectual discussions and meaningful interactions. The Elegant theme is designed to inspire a sense of professionalism and a dedication to the pursuit of knowledge.",
+        "themeImages": [
+          "https://i.ibb.co/1JcsgQd/A-Night-Of-Mode-School-Formal-Theme-ezgif-com-webp-to-jpg-converter.jpg",
+          "https://i.ibb.co/b6x1s0x/Glitz-Glamour-School-Formal-Theme-ezgif-com-webp-to-jpg-converter.jpg",
+          "https://i.ibb.co/bBc9Fnt/Glow-Up-School-Formal-Theme-ezgif-com-webp-to-jpg-converter.jpg"
+        ]
+      },
+      {
+        "theme": "Casual",
+        "themeDescription": "The Casual theme of our Education event aims to create a relaxed and informal atmosphere. It's an invitation to break down traditional barriers and engage in open, friendly discussions. The decor will be laid-back, with vibrant colors and comfortable seating arrangements. Attendees can anticipate an event that fosters a sense of community and encourages networking in a relaxed setting. The Casual theme is perfect for those who appreciate a more easy-going and approachable educational experience.",
+        "themeImages": [
+          "https://i.ibb.co/r28nZTt/Ice-Magic-School-Formal-Theme-ezgif-com-webp-to-jpg-converter.jpg",
+          "https://i.ibb.co/qL84t17/Under-a-Starry-Night-Formal-Theme-ezgif-com-webp-to-jpg-converter.jpg",
+          "https://i.ibb.co/CW8P6qb/2023-Light-Up-Letters-Stary-Night-ezgif-com-webp-to-jpg-converter.jpgs"
+        ]
+      },
+      {
+        "theme": "Classic",
+        "themeDescription": "The Classic theme for our Education event celebrates timeless values and enduring principles in education. It draws inspiration from the rich history of academic traditions. The decor will reflect a sense of heritage, with warm tones and classic design elements. This theme aims to evoke a feeling of continuity and a connection to the roots of education. Attendees can expect a classic and timeless ambiance that honors the enduring nature of learning and knowledge.",
+        "themeImages": [
+          "https://i.ibb.co/b6x1s0x/Glitz-Glamour-School-Formal-Theme-ezgif-com-webp-to-jpg-converter.jpg",
+          "https://i.ibb.co/qL84t17/Under-a-Starry-Night-Formal-Theme-ezgif-com-webp-to-jpg-converter.jpg",
+          "https://i.ibb.co/1JcsgQd/A-Night-Of-Mode-School-Formal-Theme-ezgif-com-webp-to-jpg-converter.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "category": "Business",
+    "themes": [
+      {
+        "theme": "Elegant",
+        "themeDescription": "The Elegant-themed business event embodies sophistication and refined taste. Participants can expect an atmosphere of grace and style, where discussions focus on timeless business principles and strategies. From distinguished speakers to exquisite decor, every element is curated to create an ambiance of sophistication. Join us for an event that seamlessly blends professionalism with elegance, offering a unique experience for individuals who appreciate the finer aspects of the business world.",
+        "themeImages": ["image1", "image2", "image3"]
+      },
+      {
+        "theme": "Casual",
+        "themeDescription": "The Casual-themed business event is all about fostering a relaxed and friendly environment for professionals to connect and collaborate. Attendees can expect a laid-back atmosphere where conversations flow naturally, and networking feels effortless. This theme encourages open discussions, casual interactions, and a stress-free ambiance, providing a refreshing approach to business engagement. Join us for an event that combines professionalism with a casual vibe, creating opportunities for meaningful connections in an informal setting.",
+        "themeImages": ["image1", "image2", "image3"]
+      },
+      {
+        "theme": "Classic",
+        "themeDescription": "The Classic-themed business event pays homage to traditional business values and principles. This theme is designed to provide a platform for in-depth discussions on foundational concepts, strategies, and leadership in the business world. From timeless keynote sessions to a tastefully designed environment, every aspect reflects a commitment to classic professionalism. Join us for an event that embraces the enduring values of business, offering a curated experience for individuals who appreciate the classic elements of the corporate landscape.",
+        "themeImages": ["image1", "image2", "image3"]
+      }
+    ]
+  },
+  {
+    "category": "Sport",
+    "themes": [
+      {
+        "theme": "Elegant",
+        "themeDescription": "The Team Spirit Rally-themed sports event is a celebration of camaraderie, competition, and teamwork. Participants can expect an electrifying atmosphere where the focus is on fostering team spirit and unity. From high-energy pep talks to thrilling team-based activities, this theme is designed to inspire and energize athletes and sports enthusiasts alike. Join us for a day filled with exciting competitions, team-building exercises, and a passionate display of sportsmanship that transcends individual accomplishments.",
+        "themeImages": ["image1", "image2", "image3"]
+      },
+      {
+        "theme": "Casual",
+        "themeDescription": "The Extreme Challenges-themed sports event is an adrenaline-packed experience for thrill-seekers and sports enthusiasts. This theme caters to individuals who crave excitement and adventure in their sporting endeavors. From extreme sports demonstrations to challenging obstacle courses, participants will push their limits and test their skills in an environment that embraces the spirit of daring athleticism. Join us for an event that promises heart-pounding action and a showcase of the most daring sports challenges.",
+        "themeImages": ["image1", "image2", "image3"]
+      },
+      {
+        "theme": "Classic",
+        "themeDescription": "The Legacy of Champions-themed sports event pays tribute to the rich history and achievements in the world of sports. This theme celebrates iconic moments, legendary athletes, and the enduring legacy of champions. From inspirational talks by sports legends to interactive exhibits showcasing sports history, participants will immerse themselves in the stories and triumphs that have shaped the sporting world. Join us for an event that honors the legacy of champions and inspires the next generation of athletes.",
+        "themeImages": ["image1", "image2", "image3"]
+      }
+    ]
+  },
+  {
+    "category": "Fashion",
+    "themes": [
+      {
+        "theme": "Elegant",
+        "themeDescription": "The Haute Couture Showcase-themed fashion event is a celebration of high-end fashion and craftsmanship. This theme brings together designers, fashion enthusiasts, and industry professionals to witness the pinnacle of couture creativity. From runway shows featuring exquisite handmade garments to exclusive behind-the-scenes insights, attendees can immerse themselves in the world of luxury fashion. Join us for an event that captures the essence of haute couture, where artistry, innovation, and elegance converge on the runway.",
+        "themeImages": ["image1", "image2", "image3"]
+      },
+      {
+        "theme": "Casual",
+        "themeDescription": "The Street Style Extravaganza-themed fashion event is a dynamic exploration of urban fashion trends and individual expression. This theme embraces the diversity of street fashion, featuring vibrant streetwear, edgy styles, and the latest trends from fashion-forward cities around the world. Attendees can expect lively street-style showcases, interactive workshops, and opportunities to connect with influencers shaping the urban fashion scene. Join us for an event that celebrates the creativity and boldness of street fashion in all its forms.",
+        "themeImages": ["image1", "image2", "image3"]
+      },
+      {
+        "theme": "Classic",
+        "themeDescription": "The Timeless Elegance Revival-themed fashion event pays homage to classic fashion eras and the enduring allure of timeless elegance. This theme transports attendees to a world where vintage styles are reimagined with a modern twist. From retro-inspired runway shows to curated exhibitions, participants can experience the timeless beauty of fashion throughout the ages. Join us for an event that blends the nostalgia of the past with the sophistication of contemporary design, offering a journey through the history of timeless elegance in fashion.",
+        "themeImages": ["image1", "image2", "image3"]
+      }
+    ]
+  },
+  {
+    "category": "Food Festival",
+    "themes": [
+      {
+        "theme": "Elegant",
+        "themeDescription": "The Gastronomic Delights Food Festival is a celebration of diverse culinary experiences, bringing together food enthusiasts, chefs, and vendors. Explore a world of flavors, aromas, and textures as you embark on a gastronomic journey. From street food to gourmet delicacies, this theme promises a feast for the senses. Join us for live cooking demonstrations, interactive food tastings, and a vibrant atmosphere that celebrates the art of cooking and the joy of indulging in delectable treats.",
+        "themeImages": ["image1", "image2", "image3"]
+      },
+      {
+        "theme": "Casual",
+        "themeDescription": "The Cultural Cuisine Celebration Food Festival is a melting pot of global flavors, showcasing the rich diversity of culinary traditions. Immerse yourself in a world of cultural delights as chefs from various backgrounds present authentic dishes and share the stories behind them. This theme invites you to explore the connections between food and culture, fostering an appreciation for the global tapestry of flavors. Join us for a journey that transcends borders, where each dish is a celebration of heritage and a testament to the universal language of food.",
+        "themeImages": ["image1", "image2", "image3"]
+      },
+      {
+        "theme": "Classic",
+        "themeDescription": "The Sweet Indulgence Paradise Food Festival is a haven for dessert lovers, featuring a delightful array of sweet treats and confections. From decadent cakes to artisanal chocolates, this theme is a paradise for those with a sweet tooth. Indulge in a world of sugar and spice, where pastry chefs showcase their skills, and attendees can savor an assortment of desserts. Join us for a celebration of all things sweet, as we transform the festival into a paradise for those who appreciate the artistry and joy of dessert-making.",
+        "themeImages": ["image1", "image2", "image3"]
+      }
+    ]
+  },
+  {
+    "category": "Innovation Showcase",
+    "themes": [
+      {
+        "theme": "Elegant",
+        "themeDescription": "The Tech Marvels theme within the Innovation Showcase is a deep dive into the most extraordinary technological advancements. Attendees can expect to witness awe-inspiring innovations that push the boundaries of what's possible in the tech world. From futuristic gadgets to groundbreaking software solutions, the Tech Marvels theme showcases the incredible feats of technology that have the potential to transform industries and improve our daily lives.",
+        "themeImages": ["image1", "image2", "image3"]
+      },
+      {
+        "theme": "Casual",
+        "themeDescription": "The Future Horizons theme at the Innovation Showcase explores emerging trends and technologies that are set to shape the future. This theme provides a glimpse into the next wave of innovations, including artificial intelligence, augmented reality, and sustainable technologies. Attendees will gain insights into the transformative potential of these advancements and how they can impact businesses, society, and the world at large.",
+        "themeImages": ["image1", "image2", "image3"]
+      },
+      {
+        "theme": "Classic",
+        "themeDescription": "The Startup Spotlight theme is dedicated to showcasing the ingenuity of startups at the forefront of technological innovation. Entrepreneurs and founders will present their groundbreaking ideas, products, and services, offering attendees a unique opportunity to discover the disruptors and game-changers in the startup ecosystem. Join us in celebrating innovation from its grassroots, as we shine a spotlight on the startups poised to make a significant impact on various industries.",
+        "themeImages": ["image1", "image2", "image3"]
+      }
+    ]
+  }
+]
