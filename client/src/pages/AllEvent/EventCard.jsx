@@ -17,7 +17,7 @@ const EventCard = () => {
 	}, []);
 
 	const count = cards?.length;
-	console.log(count);
+	// console.log(count);
 
 	const numberOfPages = Math.ceil(count / itemsPerPage);
 	const pages = [...Array(numberOfPages).keys()];

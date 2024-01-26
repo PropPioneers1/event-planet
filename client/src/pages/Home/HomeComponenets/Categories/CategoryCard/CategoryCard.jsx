@@ -53,9 +53,11 @@ const CategoryCard = ({ label, icon: Icon, idx }) => {
 								Create Event
 							</button>
 						</Link>
-						<button className="btn ml-5 font-title modal-button">
-							Book Now Event
-						</button>
+						<Link to="/event">
+							<button className="btn ml-5 font-title modal-button">
+								Book Now Event
+							</button>
+						</Link>
 					</div>
 				</div>
 			</dialog>
@@ -65,7 +67,7 @@ const CategoryCard = ({ label, icon: Icon, idx }) => {
 
 CategoryCard.propTypes = {
 	label: PropTypes.string,
-	icon: PropTypes.string,
+	icon: PropTypes.func,
 	idx: PropTypes.number,
 };
 

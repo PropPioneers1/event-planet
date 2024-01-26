@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
-import Container from "../../../components/ui/Container";
-import CreateDesForm from "../AddEvent/CreateDesForm";
+
 import OurThemes from "../OurThemes/OurThemes";
 import "./select.css";
-import { useEffect, useState } from "react";
 
 const SelectWay = () => {
   return (

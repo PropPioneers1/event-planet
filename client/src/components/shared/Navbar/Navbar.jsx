@@ -4,10 +4,13 @@ import { FaSortDown } from "react-icons/fa6";
 import { SlMenu } from "react-icons/sl";
 import { IoCloseOutline } from "react-icons/io5";
 import { useState } from "react";
+import useAuth from "../../../hooks/useAuth";
+import MenuDropdown from "./MenuDropDown";
 
 const Navbar = () => {
-  const [isMenuTrue, setIsMenuTrue] = useState(false);
+  const { user } = useAuth();
 
+  const [isMenuTrue, setIsMenuTrue] = useState(false);
   const categories = [
     "Education",
     "Business",
@@ -17,16 +20,16 @@ const Navbar = () => {
     "Sports Event",
   ];
 
-  const locations = [
-    "Sylhet",
-    "Mymensingh",
-    "Rangpur",
-    "Rajshahi",
-    "Khulna",
-    "Dhaka",
-    "Chattogram",
-    "Barishal",
-  ];
+  // const locations = [
+  //   "Sylhet",
+  //   "Mymensingh",
+  //   "Rangpur",
+  //   "Rajshahi",
+  //   "Khulna",
+  //   "Dhaka",
+  //   "Chattogram",
+  //   "Barishal",
+  // ];
 
   const navLinks = (
     <>
@@ -34,7 +37,9 @@ const Navbar = () => {
         <li className="font-semibold hover:text-accent py-2 lg:py-5">Home</li>
       </NavLink>
       <NavLink onClick={() => setIsMenuTrue(false)} to="/event">
-        <li className="font-semibold hover:text-accent py-2 lg:py-5">Event</li>
+        <li className="font-semibold hover:text-accent py-2 lg:py-5">
+          All Event
+        </li>
       </NavLink>
       <NavLink onClick={() => setIsMenuTrue(false)} to="/">
         <li className="relative group hover:text-accent py-2 lg:py-5">
@@ -55,29 +60,11 @@ const Navbar = () => {
           </ul>
         </li>
       </NavLink>
-      <NavLink onClick={() => setIsMenuTrue(false)} to="/">
-        <li className="relative group py-2  lg:py-5 hover:text-accent">
-          <span className="font-semibold flex  items-center gap-1">
-            Location <FaSortDown />
-          </span>
-          {/* Drop down menu*/}
-          <ul
-            className={`absolute hidden transition-all duration-300 ease-out group-hover:block lg:w-40 bg-[#EEEEEE]
-            text-[#222831] text-sm
-            lg:left-0 lg:top-16 left-20 top-10 z-10  space-y-3 p-4 shadow-md overflow-y-auto`}
-          >
-            {locations?.map((location, idx) => (
-              <li key={idx} className="hover:text-accent">
-                {location}
-              </li>
-            ))}
-          </ul>
-        </li>
-      </NavLink>
+
       <NavLink onClick={() => setIsMenuTrue(false)} to="/blogs">
-        <li className="font-semibold hover:text-accent py-2 lg:py-5">Blogs</li>
+        <li className="font-semibold hover:text-accent py-2 lg:py-5">Blog</li>
       </NavLink>
-      <NavLink onClick={() => setIsMenuTrue(false)} to="/">
+      <NavLink onClick={() => setIsMenuTrue(false)} to="/shopping">
         <li className="font-semibold hover:text-accent py-2 lg:py-5">Shop</li>
       </NavLink>
     </>
@@ -85,23 +72,33 @@ const Navbar = () => {
 
   const authLinks = (
     <>
-      <NavLink onClick={() => setIsMenuTrue(false)} to="/sign-in">
-        <button
-          className="font-semibold border-2 border-accent
+      {user ? (
+        <>
+          <button>
+            <MenuDropdown></MenuDropdown>
+          </button>
+        </>
+      ) : (
+        <>
+          <NavLink onClick={() => setIsMenuTrue(false)} to="/sign-in">
+            <button
+              className="font-semibold border-2 border-accent
          rounded-md py-2 px-4 transition-all duration-500 ease-out hover:bg-accent"
-        >
-          Sign in
-        </button>
-      </NavLink>
-      <div className="w-[1px] h-[15px] bg-[#EEEEEE] hidden lg:block "></div>
-      <NavLink onClick={() => setIsMenuTrue(false)} to="/sign-up">
-        <button
-          className="font-semibold border-2 border-accent
+            >
+              Sign in
+            </button>
+          </NavLink>
+          <div className="w-[1px] h-[15px] bg-[#EEEEEE] hidden lg:block "></div>
+          <NavLink onClick={() => setIsMenuTrue(false)} to="/sign-up">
+            <button
+              className="font-semibold border-2 border-accent
          rounded-md py-2 px-4 transition-all duration-500 ease-out hover:bg-accent"
-        >
-          Sign up
-        </button>
-      </NavLink>
+            >
+              Sign up
+            </button>
+          </NavLink>
+        </>
+      )}
     </>
   );
 

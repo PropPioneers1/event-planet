@@ -4,6 +4,7 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home/Home";
 import SignUp from "../pages/SignUp/SignUp";
 import SignIn from "../pages/SignIn/SignIn";
+import UpcomingDetails from "../pages/Home/HomeComponenets/UpComingEvent/UpcomingDetails";
 import AllEvent from "../pages/AllEvent/AllEvent";
 import Dashboard from "../layouts/Dashboard";
 import Profile from "../pages/Dashboard/Profile/Profile";
@@ -17,6 +18,7 @@ import SelectWay from "../pages/CreateEvent/Chooseway.jsx/SelectWay";
 import CreateDesForm from "../pages/CreateEvent/AddEvent/CreateDesForm";
 import Blogs from "../pages/Blogs/Blogs";
 import ThemeDetails from "../pages/CreateEvent/OurThemes/ThemeDetails/ThemeDetails";
+import UpdateProfile from "../pages/UpdateProfile/UpdateProfile";
 
 const Router = createBrowserRouter([
   {
@@ -46,6 +48,10 @@ const Router = createBrowserRouter([
       },
 
       {
+        path: "upcomingDetails/:id",
+        element: <UpcomingDetails></UpcomingDetails>,
+      },
+      {
         path: "shopping",
         element: <Shopping></Shopping>,
       },
@@ -60,6 +66,10 @@ const Router = createBrowserRouter([
       {
         path: "event",
         element: <AllEvent></AllEvent>,
+      },
+      {
+        path: "editProfile",
+        element: <UpdateProfile></UpdateProfile>,
       },
     ],
   },
