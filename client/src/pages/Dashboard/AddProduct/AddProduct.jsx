@@ -1,25 +1,43 @@
+import axios from "axios";
+import { uploadImage } from "../../../api/utlis";
 import SectionTitle from "../../../components/ui/SectionTitle/SectionTitle";
+import toast from "react-hot-toast";
 
 
 const AddProduct = () => {
 
-    const handleAddProduct =(e)=>{
+    const handleAddProduct =async(e)=>{
         e.preventDefault();
         const form = e.target;
         const title = form.title.value;
         const quantity = form.quantity.value;
         const price = form.price.value;
         const rating = form.rating.value;
-        const image = form.image.files[0];
+        const localImage = form.image.files[0];
+        const description = form.description.value;
+
+        form.reset()
+
+        const imageUpload = await uploadImage(localImage)
 
         const product = {
             title,
             quantity,
             price,
             rating,
-            image
+            image: imageUpload?.data?.display_url,
+            description
         }
-        console.log(product);
+
+        try {
+            const { data } = await axios.post('http://localhost:5000/shop', product);
+            toast.success(data?.message)
+        }
+        catch (error) {
+            console.error(error);
+            toast.error(error.message)
+
+        }
 
     }
 

@@ -3,11 +3,10 @@ import { FaHome, FaUserAlt } from "react-icons/fa";
 import { MdPayments } from "react-icons/md";
 import { HiBars3CenterLeft } from "react-icons/hi2";
 import { FiShoppingCart } from "react-icons/fi";
-import Container from "../components/ui/Container";
 
 const Dashboard = () => {
 
-    const activeStyle = "flex item-center gap-4 bg-secondary text-white mb-4 p-2 rounded font-semibold"
+    const activeStyle = "flex item-center gap-4 bg-secondary bg-opacity-70 text-white mb-4 p-2 rounded font-semibold"
     const inActiveStyle = "flex item-center gap-4 bg-secondary text-white  mb-4 p-2 font-semibold"
 
     const dashLinks = <>
@@ -76,7 +75,7 @@ const Dashboard = () => {
     </>
 
     return (
-        <Container>
+        <div className="max-w-7xl mx-auto">
             <div className="min-h-screen">
 
                 <div className="flex flex-col md:flex-row">
@@ -118,7 +117,7 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
-        </Container>
+        </div>
     );
 };
 
