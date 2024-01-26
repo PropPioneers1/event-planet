@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 
 
 const BlogSchema = mongoose.Schema({
-  _id: Number,
   category: String,
   blogImg: String,
   title: String,

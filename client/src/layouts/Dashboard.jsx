@@ -106,8 +106,9 @@ const Dashboard = () => {
                         </div>
                         <div className="w-64 min-h-screen  py-6 px-4 hidden md:block">
                             {/* TODO: Change logo */}
-                            <img className="object-cover" src="https://i.ibb.co/T8Xgw50/nexgen.png" alt="" />
-                            <ul>
+                            {/* <img className="object-cover" src="https://i.ibb.co/T8Xgw50/nexgen.png" alt="" /> */}
+                            <a className="text-3xl font-bold py-6">Event Planet</a>    
+                            <ul className="mt-8">
                                 {dashLinks}
                             </ul>
                         </div>
