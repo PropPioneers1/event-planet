@@ -8,7 +8,7 @@ const OurThemes = () => {
   const { label } = useParams();
 
   useEffect(() => {
-    fetch("../../../../public/allThemes.json")
+    fetch("/allThemes.json")
       .then((res) => res.json())
       .then((data) => {
         if (label) {

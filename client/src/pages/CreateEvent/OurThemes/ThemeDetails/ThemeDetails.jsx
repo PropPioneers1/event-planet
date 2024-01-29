@@ -6,10 +6,9 @@ const ThemeDetails = () => {
   const [categoryTheme, setCategoryTheme] = useState({});
   const { label, idx } = useParams();
   const [index, setIndex] = useState(0);
-  console.log(index, "<============");
-  console.log(idx, "<============");
+
   useEffect(() => {
-    fetch("../../../../../public/allThemes.json")
+    fetch("/allThemes.json")
       .then((res) => res.json())
       .then((data) => {
         if (label) {
