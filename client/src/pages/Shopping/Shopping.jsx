@@ -26,17 +26,14 @@ const Shopping = () => {
 
   const handlePurchase = (cart) => {
     if (user) {
-      const { _id, image, quantity, title, price } = cart;
+      const { _id, image, title, price } = cart;
 
       const cartItem = {
         email: user.email,
         image,
-        quantity,
         title,
         price,
-      };
-      console.log(cartItem)
-      
+      }; 
       axiosSecure.post(`/shop/shopCart/${_id}`, cartItem)
       .then((res) => {
         if (res.data) {
