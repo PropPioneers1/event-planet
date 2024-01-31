@@ -18,14 +18,14 @@ const PaymentHistory = () => {
 
 
     return (
-        <div className="p-8">
+        <div className="p-10 bg-white">
             <h2 className="text-2xl font-bold my-6">Total Payments: {paymentHistory.length}</h2>
-            <div className="">
+            <div className="bg-white">
                 <div className="overflow-x-auto">
                     <table className="table">
                         {/* head */}
                         <thead>
-                            <tr className="bg-neutral">
+                            <tr className="bg-white">
                                 <th>#</th>
                                 <th>Price</th>
                                 <th>Transition Id</th>

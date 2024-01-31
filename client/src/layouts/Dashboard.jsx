@@ -3,6 +3,7 @@ import { FaHome, FaUserAlt } from "react-icons/fa";
 import { MdPayments } from "react-icons/md";
 import { FiShoppingCart } from "react-icons/fi";
 import { IoAddCircleOutline, IoCreate } from "react-icons/io5";
+import { PiSignInBold } from "react-icons/pi";
 import { CgLogOut } from "react-icons/cg";
 import { useState } from "react";
 import DashBar from "../pages/Dashboard/DashBar";
@@ -12,8 +13,8 @@ const Dashboard = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isCollapse, setIsCollapse] = useState(false)
 
-    const activeStyle = "flex items-center h-16  gap-6 text-2xl text-primary p-4 mb-2 rounded font-semibold"
-    const inActiveStyle = "flex items-center h-16 gap-6  text-2xl text-[#707070] p-4 mb-2 font-semibold hover:text-primary ";
+    const activeStyle = "flex items-center h-16  gap-5 text-2xl text-primary p-4 mb-2 rounded font-semibold"
+    const inActiveStyle = "flex items-center h-16 gap-5  text-2xl text-[#707070] p-4 mb-2 font-semibold hover:text-primary ";
 
     const iconStyle = "text-2xl flex items-center"
 
@@ -27,7 +28,7 @@ const Dashboard = () => {
             }
         >
             <FiShoppingCart className={iconStyle}></FiShoppingCart>
-           <li className={isCollapse ? "hidden" : "block"}> Add Product</li>
+            <li className={isCollapse ? "hidden" : "block"}> Add Product</li>
         </NavLink>
 
         <NavLink
@@ -59,6 +60,19 @@ const Dashboard = () => {
             <MdPayments className={iconStyle}></MdPayments>
             <li className={isCollapse ? "hidden" : "block"}> Payment History</li>
         </NavLink>
+        <NavLink
+            to="/dashboard/admin-summary"
+            className={({ isActive, isPending }) =>
+                isPending ? "pending" : isActive ? activeStyle : inActiveStyle
+            }
+        >
+            <MdPayments className={iconStyle}></MdPayments>
+            <li className={isCollapse ? "hidden" : "block"}> Admin Summary</li>
+        </NavLink>
+
+
+
+        <hr />
 
         <NavLink
             to="/"
@@ -85,41 +99,46 @@ const Dashboard = () => {
     </>
 
     return (
-            <div className="min-h-screen">
-                <DashBar
-                    isSidebarOpen={isSidebarOpen}
-                    setIsSidebarOpen={setIsSidebarOpen}
-                    dashLinks={dashLinks}
+        <div className="min-h-screen">
+            <DashBar
+                isSidebarOpen={isSidebarOpen}
+                setIsSidebarOpen={setIsSidebarOpen}
+                dashLinks={dashLinks}
 
-                ></DashBar>
-                <div className="flex flex-col md:flex-row">
+            ></DashBar>
+            <div className="flex flex-col md:flex-row">
 
-                    <div className="md:border-r-2">
+                <div className="md:border-r-2">
 
 
 
-                        {/* sidebar  */}
-                        <div className={` px-2 min-h-screen ${isCollapse ? "w-auto" : "w-72 hidden md:block"} `}>
-                            <ul className="mt-8 ">
-                                {dashLinks}
-                            </ul>
-                            <button
-                                onClick={() => setIsCollapse(!isCollapse)}
-                                className="flex items-center gap-4 h-16  text-2xl text-[#707070] p-4 rounded font-semibold hover:text-primary">
-                                <CgLogOut className={iconStyle}></CgLogOut>
-                                <span className={isCollapse ? "hidden" : "block"}> Collapse</span>
-                            </button>
-                        </div>
-                        <div
-                            onClick={() => setIsSidebarOpen(false)}
-                            className={`fixed z-30 top-0 w-full min-h-screen md:hidden  bg-[#000000b3] ${isSidebarOpen ? "block" : "hidden"}`}>
-                        </div>
+                    {/* sidebar  */}
+                    <div className={` px-2 min-h-screen ${isCollapse ? "w-auto" : "w-72 hidden lg:block"} `}>
+                        <ul className="mt-8 ">
+                            {dashLinks}
+                        </ul>
+                        <button
+                            onClick={() => setIsCollapse(!isCollapse)}
+                            className="flex items-center gap-4 h-16  text-2xl text-[#707070] p-4 rounded font-semibold hover:text-primary">
+                            {
+                                isCollapse ?
+                                    <PiSignInBold className={iconStyle}></PiSignInBold>
+                                    :
+                                    <CgLogOut className={iconStyle}></CgLogOut>
+                            }
+                            <span className={isCollapse ? "hidden" : "block"}> Collapse</span>
+                        </button>
                     </div>
-                    <div className="w-full">
-                        <Outlet></Outlet>
+                    <div
+                        onClick={() => setIsSidebarOpen(false)}
+                        className={`fixed z-30 top-0 w-full min-h-screen lg:hidden  bg-[#000000b3] ${isSidebarOpen ? "block" : "hidden"}`}>
                     </div>
                 </div>
+                <div className="w-full p-10 bg-neutral min-h-screen">
+                    <Outlet></Outlet>
+                </div>
             </div>
+        </div>
     );
 };
 

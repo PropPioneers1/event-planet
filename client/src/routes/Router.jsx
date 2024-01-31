@@ -19,6 +19,7 @@ import CreateDesForm from "../pages/CreateEvent/AddEvent/CreateDesForm";
 import Blogs from "../pages/Blogs/Blogs";
 import ThemeDetails from "../pages/CreateEvent/OurThemes/ThemeDetails/ThemeDetails";
 import UpdateProfile from "../pages/UpdateProfile/UpdateProfile";
+import AdminSummary from "../pages/Dashboard/AdminSummary/AdminSummary";
 
 const Router = createBrowserRouter([
   {
@@ -99,6 +100,10 @@ const Router = createBrowserRouter([
         path: "payment-history",
         element: <PaymentHistory></PaymentHistory>,
       },
+      {
+        path: "admin-summary",
+        element: <AdminSummary></AdminSummary>
+      }
     ],
   },
 ]);
