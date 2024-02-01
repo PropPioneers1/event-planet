@@ -1,3 +1,5 @@
+import DashBar from "../pages/Dashboard/DashBar";
+import { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { FaHome, FaUserAlt } from "react-icons/fa";
 import { MdPayments } from "react-icons/md";
@@ -5,8 +7,7 @@ import { FiShoppingCart } from "react-icons/fi";
 import { IoAddCircleOutline, IoCreate } from "react-icons/io5";
 import { PiSignInBold } from "react-icons/pi";
 import { CgLogOut } from "react-icons/cg";
-import { useState } from "react";
-import DashBar from "../pages/Dashboard/DashBar";
+import { MdSummarize } from "react-icons/md";
 
 const Dashboard = () => {
 
@@ -66,7 +67,7 @@ const Dashboard = () => {
                 isPending ? "pending" : isActive ? activeStyle : inActiveStyle
             }
         >
-            <MdPayments className={iconStyle}></MdPayments>
+            <MdSummarize className={iconStyle}></MdSummarize>
             <li className={isCollapse ? "hidden" : "block"}> Admin Summary</li>
         </NavLink>
 
@@ -134,7 +135,7 @@ const Dashboard = () => {
                         className={`fixed z-30 top-0 w-full min-h-screen lg:hidden  bg-[#000000b3] ${isSidebarOpen ? "block" : "hidden"}`}>
                     </div>
                 </div>
-                <div className="w-full p-10 bg-neutral min-h-screen">
+                <div className="w-full p-6 lg:p-10 bg-neutral min-h-screen overflow-hidden">
                     <Outlet></Outlet>
                 </div>
             </div>

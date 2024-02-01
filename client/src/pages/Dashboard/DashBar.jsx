@@ -19,7 +19,7 @@ const DashBar = ({ dashLinks, isSidebarOpen, setIsSidebarOpen }) => {
     };
 
     return (
-        <div className="navbar flex justify-between border-b  ">
+        <div className="navbar flex justify-between border-b px-4 ">
             <div className="p-2 ">
                 <a className="text-3xl hidden lg:block font-bold py-2">Event Planet</a>
 

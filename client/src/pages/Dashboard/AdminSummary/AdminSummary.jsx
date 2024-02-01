@@ -71,7 +71,9 @@ const AdminSummary = () => {
                         {
                             upComingEvents?.map((item, idx) => <tr key={idx}>
                                 <th>{idx + 1}</th>
-                                <td>{item?.eventName}</td>
+                                <td>
+                                    <p className="hover:text-primary">{item?.eventName}</p>
+                                </td>
                                 <td><div className="avatar-group -space-x-6 rtl:space-x-reverse">
                                     <div className="avatar">
                                         <div className="w-12">

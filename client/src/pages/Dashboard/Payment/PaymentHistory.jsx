@@ -25,7 +25,7 @@ const PaymentHistory = () => {
                     <table className="table">
                         {/* head */}
                         <thead>
-                            <tr className="bg-white">
+                            <tr className="bg-neutral text-xl">
                                 <th>#</th>
                                 <th>Price</th>
                                 <th>Transition Id</th>
@@ -33,7 +33,7 @@ const PaymentHistory = () => {
                                 <th>Status</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="text-base">
                             {
                                 paymentHistory?.map((item, idx) => <tr key={idx}>
                                     <th>{idx + 1}</th>
