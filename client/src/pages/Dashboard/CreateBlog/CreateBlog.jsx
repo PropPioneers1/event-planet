@@ -61,7 +61,7 @@ const CreateBlog = () => {
     }
 
     return (
-        <div className=" min-h-screen flex justify-center items-center px-4 bg-neutral">
+        <div className=" min-h-screen flex justify-center  bg-neutral">
             <div className="w-[500px] border shadow-xl rounded p-4 bg-white">
                 <h2 className="text-3xl font-bold text-center border-b py-2">Create Blog</h2>
                 {/* User logo and name */}

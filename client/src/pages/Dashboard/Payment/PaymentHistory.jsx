@@ -18,14 +18,14 @@ const PaymentHistory = () => {
 
 
     return (
-        <div className="p-8">
+        <div className="p-10 bg-white">
             <h2 className="text-2xl font-bold my-6">Total Payments: {paymentHistory.length}</h2>
-            <div className="">
+            <div className="bg-white">
                 <div className="overflow-x-auto">
                     <table className="table">
                         {/* head */}
                         <thead>
-                            <tr className="bg-neutral">
+                            <tr className="bg-neutral text-xl">
                                 <th>#</th>
                                 <th>Price</th>
                                 <th>Transition Id</th>
@@ -33,7 +33,7 @@ const PaymentHistory = () => {
                                 <th>Status</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="text-base">
                             {
                                 paymentHistory?.map((item, idx) => <tr key={idx}>
                                     <th>{idx + 1}</th>

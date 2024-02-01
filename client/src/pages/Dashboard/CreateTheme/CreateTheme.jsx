@@ -48,7 +48,7 @@ const CreateTheme = () => {
     }
 
     return (
-        <div className="p-10 bg-neutral min-h-screen">
+        <div className=" bg-neutral min-h-screen">
            
 
             <div className="bg-white p-10">
