@@ -13,10 +13,13 @@ import AddProduct from "../pages/Dashboard/AddProduct/AddProduct";
 import CreateBlog from "../pages/Dashboard/CreateBlog/CreateBlog";
 import CreateTheme from "../pages/Dashboard/CreateTheme/CreateTheme";
 import Shopping from "../pages/Shopping/Shopping";
+
 import SelectWay from "../pages/CreateEvent/Chooseway.jsx/SelectWay";
 import CreateDesForm from "../pages/CreateEvent/AddEvent/CreateDesForm";
+import Blogs from "../pages/Blogs/Blogs";
+import ThemeDetails from "../pages/CreateEvent/OurThemes/ThemeDetails/ThemeDetails";
 import UpdateProfile from "../pages/UpdateProfile/UpdateProfile";
-
+import Chat from "../pages/Chat/Chat";
 
 const Router = createBrowserRouter([
 	{
@@ -28,7 +31,6 @@ const Router = createBrowserRouter([
 				path: "/",
 				element: <Home />,
 			},
-
 			{
 				path: "sign-up",
 				element: <SignUp></SignUp>,
@@ -38,12 +40,17 @@ const Router = createBrowserRouter([
 				element: <SignIn></SignIn>,
 			},
 			{
-				path: "upcomingDetails/:id",
-				element: <UpcomingDetails></UpcomingDetails>,
+				path: "blogs",
+				element: <Blogs />,
 			},
 			{
-				path: "select-way/:lebel",
+				path: "select-way/:label",
 				element: <SelectWay></SelectWay>,
+			},
+
+			{
+				path: "upcomingDetails/:id",
+				element: <UpcomingDetails></UpcomingDetails>,
 			},
 			{
 				path: "shopping",
@@ -53,7 +60,10 @@ const Router = createBrowserRouter([
 				path: "create-form",
 				element: <CreateDesForm></CreateDesForm>,
 			},
-
+			{
+				path: "theme-details/:idx/:label",
+				element: <ThemeDetails />,
+			},
 			{
 				path: "event",
 				element: <AllEvent></AllEvent>,
@@ -61,6 +71,10 @@ const Router = createBrowserRouter([
 			{
 				path: "editProfile",
 				element: <UpdateProfile></UpdateProfile>,
+			},
+			{
+				path: "chat",
+				element: <Chat></Chat>,
 			},
 		],
 	},

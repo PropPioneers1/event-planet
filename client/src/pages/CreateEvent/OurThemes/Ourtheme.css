@@ -1,7 +1,10 @@
-.container {
+.card-container {
   position: relative;
   width: 190px;
   height: 254px;
+  border-radius: 8px;
+  padding: 10px;
+  background: linear-gradient(135deg, rgba(165, 165, 165, 0.05), rgba(34, 40, 49, 0.3));
 }
 
 .cardth {
@@ -12,7 +15,7 @@
   border-radius: 8px;
   color: #232323;
   padding: 16px;
-  border: 1px solid #bf1282;
+  /* border: 1px solid #bf1282; */
   transition: all .5s ease-in-out;
   overflow: hidden;
 }
@@ -37,10 +40,25 @@
   z-index: -1;
 }
 
+.card-2 {
+	background: linear-gradient(135deg, #e3dbf6, #a99bf9);
+
+}
+
+
+.card-2 .cardth {
+  border: 3px solid #222831;
+}
+.card-2 .cardth:hover {
+  border-color: #326275;
+}
+
+
+
 /*Hovers*/
 .cardth:hover {
   transform: translate(-15px, -15px);
-  border-color: #5bc0eb;
+  /* border-color: #5bc0eb; */
 }
 
 .cardth:hover .card-hidden {

@@ -10,6 +10,8 @@ const QnaHandler=require('./QnaHandler/QnaHandler')
 const shopHandler=require('./shopHandler/shopHandler')
 const blogHandler=require('./blogHandler/BlogHandler')
 
+const ChatRoute = require('./Routes/ChatRoute')
+const MessageRoute = require('./Routes/MessageRoute')
 
 // middleware
 app.use(cors());
@@ -43,8 +45,9 @@ app.use('/shop',shopHandler)
 app.use('/qna',QnaHandler)
 app.use('/blog',blogHandler)
 
-
-
+// chat route use
+app.use('/chat',ChatRoute)
+app.use('/message',MessageRoute)
 
 
 // Eroor handler 
