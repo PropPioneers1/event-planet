@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { FaLocationDot, } from "react-icons/fa6";
+import { FaLocationDot } from "react-icons/fa6";
 import { FaCartPlus } from "react-icons/fa";
 import { FaCircleArrowRight } from "react-icons/fa6";
 import { BsCalendar2DateFill } from "react-icons/bs";
@@ -35,17 +35,17 @@ const UpcomingDetails = () => {
   const baseChildPrice = 0;
   // decrement
   const decrement = (type) => {
-    if (type === 'adult') {
+    if (type === "adult") {
       setAdultCount(adultCount - 1);
-    } else if (type === 'child') {
+    } else if (type === "child") {
       setChildCount(childCount - 1);
     }
   };
-// increment
+  // increment
   const increment = (type) => {
-    if (type === 'adult') {
+    if (type === "adult") {
       setAdultCount(adultCount + 1);
-    } else if (type === 'child') {
+    } else if (type === "child") {
       setChildCount(childCount + 1);
     }
   };
@@ -54,7 +54,7 @@ const UpcomingDetails = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch("../../../../../public/upcomingevent.json")
+    fetch("/upcomingevent.json")
       .then((res) => res.json())
       .then((data) => {
         const result = data.find((item) => item.id == id);
@@ -98,7 +98,9 @@ const UpcomingDetails = () => {
                     <div className="py-3 px-10 bg-secondary shadow-lg flex items-center gap-3 text-white">
                       <FaLocationDot></FaLocationDot>
                       <div className="">
-                        <h2 className="text-lg font-semibold">Event Location</h2>
+                        <h2 className="text-lg font-semibold">
+                          Event Location
+                        </h2>
                         <p>{cards?.date}</p>
                       </div>
                     </div>
@@ -201,50 +203,56 @@ const UpcomingDetails = () => {
                           </div>
                         </div>
                         <div className="bg-secondary border-l border-r">
-      <h2 className="py-4 text-center text-white font-medium">Event Ticket</h2>
-      <div className="bg-white h-[250px] text-secondary p-3">
-        <div className="mb-8 text-center">
-          <h2 className="mb-4 font-semibold">Adult</h2>
-          <span
-            onClick={() => decrement('adult')}
-            className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
-          >
-            -
-          </span>
-          <span className="border px-4 py-2 border-gray-600 mx-2 p-3 rounded">{adultCount}</span>
-          <span
-            onClick={() => increment('adult')}
-            className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
-          >
-            +
-          </span>
-        </div>
+                          <h2 className="py-4 text-center text-white font-medium">
+                            Event Ticket
+                          </h2>
+                          <div className="bg-white h-[250px] text-secondary p-3">
+                            <div className="mb-8 text-center">
+                              <h2 className="mb-4 font-semibold">Adult</h2>
+                              <span
+                                onClick={() => decrement("adult")}
+                                className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
+                              >
+                                -
+                              </span>
+                              <span className="border px-4 py-2 border-gray-600 mx-2 p-3 rounded">
+                                {adultCount}
+                              </span>
+                              <span
+                                onClick={() => increment("adult")}
+                                className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
+                              >
+                                +
+                              </span>
+                            </div>
 
-        <div className="text-center">
-          <h2 className="mb-4 font-semibold">Child</h2>
-          <span
-            onClick={() => decrement('child')}
-            className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
-          >
-            -
-          </span>
-          <span className="border px-4 py-2 border-gray-600 mx-2 p-3 rounded">{childCount}</span>
-          <span
-            onClick={() => increment('child')}
-            className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
-          >
-            +
-          </span>
-        </div>
-      </div>
-    </div>
+                            <div className="text-center">
+                              <h2 className="mb-4 font-semibold">Child</h2>
+                              <span
+                                onClick={() => decrement("child")}
+                                className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
+                              >
+                                -
+                              </span>
+                              <span className="border px-4 py-2 border-gray-600 mx-2 p-3 rounded">
+                                {childCount}
+                              </span>
+                              <span
+                                onClick={() => increment("child")}
+                                className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
+                              >
+                                +
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                         <div className="bg-secondary">
                           <h2 className="py-4 text-center text-white font-medium">
-                          Total Price
+                            Total Price
                           </h2>
                           <div className="bg-white h-[250px] flex-col items-center text-center text-black p-3">
                             <div className="my-10 font-medium">
-                             Adult Price: ${totalAdultPrice}
+                              Adult Price: ${totalAdultPrice}
                             </div>
                             <hr />
                             <div className="pt-10 font-medium">
