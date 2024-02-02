@@ -5,14 +5,10 @@ const shopSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    title: {
-        type: String,
-        required: true
-    },
-    quantity: {
-        type: Number,
-        min: 1,
-        max: 100
+    quantity:{
+        type:Number,
+        min:1,
+        max:100
     },
     description: {
         type: String,
