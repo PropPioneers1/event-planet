@@ -6,7 +6,7 @@ require("dotenv").config();
 const port = process.env.PORT || 5000;
 const app = express();
 const QnaHandler=require('./QnaHandler/QnaHandler')
-const selecthemeHandler=require('./SelectTheme/SelectthHandler.jsx')
+// const eventHandler=require('./eventHandler/eventHandler')
 const shopHandler=require('./shopHandler/shopHandler')
 const blogHandler=require('./blogHandler/BlogHandler')
 
@@ -20,10 +20,11 @@ app.use(bodyParser.json());
 
 
 // Mongodb connection
-mongoose.connect(`mongodb+srv://EventPlanet:2LxqUuIzAi3v6496@proppioneers.pzy67in.mongodb.net/Event-Planet`, {
-
-})
-
+mongoose
+  .connect(
+    `mongodb+srv://EventPlanet:2LxqUuIzAi3v6496
+@proppioneers.pzy67in.mongodb.net/Event-Planet`
+  )
   .then(() => {
     console.log("Connected to MongoDB");
   })
@@ -33,11 +34,13 @@ mongoose.connect(`mongodb+srv://EventPlanet:2LxqUuIzAi3v6496@proppioneers.pzy67i
 
 
 
+
+
 // routes
-app.get('/', (req, res) =>{  res.send('Your are in Event Planet serversite')})
+// app.use('/event',eventHandler)
 app.use('/shop',shopHandler)
+
 app.use('/qna',QnaHandler)
-app.use('/selectedthm',selecthemeHandler)
 app.use('/blog',blogHandler)
 
 
@@ -51,7 +54,6 @@ app.use('/blog',blogHandler)
 app.use((req, res, next) => {
   res.status(404).send("Requested url was not found");
 });
-
 // developer code error handler (customized)
 app.use((err, req, res, next) => {
   try {

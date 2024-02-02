@@ -8,15 +8,15 @@ const QnaSchema = new mongoose.Schema({
   audienceSize: {
     type: Number,
     required: true,
-    min: 20,
+    min: 20, 
   },
   useHotDeals: {
     type: String,
     required: true,
-    enum: ['Yes', 'No'],
+    enum: ['Yes', 'No'], 
   },
   selectedCardOrTicketPrice: {
-    type: mongoose.Schema.Types.Mixed,
+    type: mongoose.Schema.Types.Mixed, 
     required: function () {
       return this.useHotDeals === 'Yes' ? false : true;
     },
@@ -27,7 +27,7 @@ const QnaSchema = new mongoose.Schema({
   numberOfGuests: {
     type: Number,
     required: true,
-    min: 1,
+    min: 1, 
   },
   guestNames: {
     type: String,
@@ -37,37 +37,13 @@ const QnaSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  status: {
-    type: String,
-    enum: ['pending'],
-  },
-  recommendedProductImage: {
-    type: String,
-    required: false,
-  },
-  venueDetails: {
-    selectedcity: String,
-    selectedstate: String,
-    selectedvenu: String,
-  },
-  dateandtime: {
-    setdate: {
-      type: String,
+  status:{
+    type:String,
+    enum:['pending']
+  }
   
-    },
-    settime: {
-      type:String
-    },
-   
-  },
-  categoryName:{
-   type: String ,
-    required:true},
-  ClientEmail:{
-    type:String, required:true
-  },
-  ClientName: {String},
-
 });
+
+
 
 module.exports = QnaSchema ;

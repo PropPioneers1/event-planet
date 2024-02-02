@@ -10,7 +10,6 @@ const UpComingEvent = () => {
     fetch('./upcomingevent.json')
     .then(res=>res.json())
     .then(data=>{
-      
       setCards(data)
     })
   },[])
