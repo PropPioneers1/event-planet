@@ -1,6 +1,8 @@
 import { PropTypes } from "prop-types";
 import { FaCommentAlt, FaHeart } from "react-icons/fa";
 import { IoIosBookmark } from "react-icons/io";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const BlogComment = ({
   blog,
@@ -8,7 +10,35 @@ const BlogComment = ({
   isMoreTrue,
   setIsLike,
   isLike,
+  refetch,
 }) => {
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const handleComment = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const userComment = form.comment.value;
+
+    const usersComment = {
+      name: user?.displayName,
+      email: user?.email,
+      userImage: user?.photoURL,
+      comment: userComment,
+      timestamp: new Date(),
+    };
+
+    axiosSecure
+      .put(`/blog/${blog?._id}/comments`, usersComment)
+      .then((res) => {
+        if (res?.data?.status === 200) {
+          console.log(res.data);
+          refetch();
+          form.reset();
+        }
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <div className="">
       <dialog id={`my_modal_${blog?._id}`} className="modal bg-[#eeeeee5b]">
@@ -66,9 +96,8 @@ const BlogComment = ({
               )}
               {/* icons */}
               <div
-                className={`${
-                  blog?.blogImage === "" && "pt-3"
-                } flex items-center gap-5 `}
+                className={`${blog?.blogImage === "" &&
+                  "pt-3"} flex items-center gap-5 `}
               >
                 <div className="flex items-center gap-1">
                   <FaHeart
@@ -98,9 +127,9 @@ const BlogComment = ({
               </div>
             </div>
             <div>
-              {blog?.comments?.map((comment) => (
+              {blog?.comments?.map((comment, idx) => (
                 <div
-                  key={comment?.commentId}
+                  key={idx}
                   className="bg-neutral p-2 mt-2 rounded-md flex gap-2"
                 >
                   <img
@@ -122,11 +151,12 @@ const BlogComment = ({
             </div>
           </div>
           <div className="bg-neutral shadow-md sticky -left-5 -bottom-5 w-full h-16 px-2">
-            <form className="flex border-2 pt-2">
+            <form onSubmit={handleComment} className="flex border-2 pt-2">
               <textarea
                 type="text"
                 placeholder="Add your comment"
                 className="border flex-1 outline-none py-2 px-2 md:py-2 md:px-4 h-10"
+                name="comment"
               />
               <button className=" bg-black text-sm md:text-base font-semibold text-neutral py-1 px-2 md:py-2 md:px-4 border border-secondary focus:bg-secondary">
                 Comment
@@ -145,6 +175,7 @@ BlogComment.propTypes = {
   isMoreTrue: PropTypes.bool,
   setIsLike: PropTypes.func,
   isLike: PropTypes.bool,
+  refetch: PropTypes.func,
 };
 
 export default BlogComment;

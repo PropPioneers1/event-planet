@@ -57,7 +57,7 @@ const Router = createBrowserRouter([
         element: <Shopping></Shopping>,
       },
       {
-        path: "create-form",
+        path: "create-form/:label",
         element: <CreateDesForm></CreateDesForm>,
       },
       {
@@ -102,8 +102,8 @@ const Router = createBrowserRouter([
       },
       {
         path: "admin-summary",
-        element: <AdminSummary></AdminSummary>
-      }
+        element: <AdminSummary></AdminSummary>,
+      },
     ],
   },
 ]);

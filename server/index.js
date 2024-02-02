@@ -5,19 +5,15 @@ const cors = require("cors");
 require("dotenv").config();
 const port = process.env.PORT || 5000;
 const app = express();
-const QnaHandler=require('./QnaHandler/QnaHandler')
-// const eventHandler=require('./eventHandler/eventHandler')
-const shopHandler=require('./shopHandler/shopHandler')
-const blogHandler=require('./blogHandler/BlogHandler')
-
-
+const QnaHandler = require("./QnaHandler/QnaHandler");
+const selecthemeHandler = require("./SelectTheme/SelectthHandler");
+const shopHandler = require("./shopHandler/shopHandler");
+const blogHandler = require("./blogHandler/BlogHandler");
 // middleware
 app.use(cors());
 app.use(bodyParser.json());
 
 // console.log(object);
-
-
 
 // Mongodb connection
 mongoose
@@ -32,22 +28,16 @@ mongoose
     console.error("Error connecting to MongoDB:", error);
   });
 
-
-
-
-
 // routes
-// app.use('/event',eventHandler)
-app.use('/shop',shopHandler)
+app.get("/", (req, res) => {
+  res.send("Your are in Event Planet serversite");
+});
+app.use("/shop", shopHandler);
+app.use("/qna", QnaHandler);
+app.use("/selectedthm", selecthemeHandler);
+app.use("/blog", blogHandler);
 
-app.use('/qna',QnaHandler)
-app.use('/blog',blogHandler)
-
-
-
-
-
-// Eroor handler 
+// Eroor handler
 
 // _________________________________________________
 // incorrect url error
@@ -59,8 +49,8 @@ app.use((err, req, res, next) => {
   try {
     res.status(500).send(`There is an error in your code: ${err.message}`);
   } catch (error) {
-    // Handle any errors that might occur during the response send process in  try 
-    res.status(500).send('Internal server error');
+    // Handle any errors that might occur during the response send process in  try
+    res.status(500).send("Internal server error");
   }
 });
 

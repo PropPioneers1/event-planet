@@ -4,25 +4,143 @@ import { FaHeart } from "react-icons/fa";
 import { FaCommentAlt } from "react-icons/fa";
 import { IoIosBookmark } from "react-icons/io";
 import BlogComment from "../BlogComment/BlogComment";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { FaRegBookmark } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import useAuth from "./../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, refetch }) => {
   // console.log(blog.user);
   const [isMoreTrue, setIsMoreTrue] = useState(false);
   const [isLike, setIsLike] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+
+  // months
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const flexCenter =
+    "flex items-center gap-1 text-sm cursor-pointer hover:text-primary";
+
+  const handleOpenDots = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const likeBlog = isLike ? blog?.likes + 1 : blog?.likes;
+
+  // like update
+  const handleLike = (id) => {
+    const updatedLikes = isLike ? blog.likes - 1 : blog.likes + 1;
+    setIsLike(!isLike);
+
+    const userActivity = {
+      likes: updatedLikes,
+    };
+
+    console.log(userActivity);
+
+    axiosSecure
+      .put(`/blog/${id}/likes`, userActivity)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  // delete blog
+  const handleDelete = async () => {
+    const id = blog?._id;
+    console.log(id);
+    const { data } = await axiosSecure.delete(`/blog/${id}`);
+    console.log(data);
+    if (data.deletedCount) {
+      toast.success("Successfully deleted blog");
+      refetch();
+    }
+  };
+
+  // get date, month, year
+  const day = new Date(blog?.postedTimestamp).getDate();
+  const month = months[new Date(blog?.postedTimestamp).getMonth()];
+  const years = new Date(blog?.postedTimestamp).getFullYear();
 
   return (
     <div className="py-6 border-b">
       <div>
         {/* admit info */}
-        <div className="flex items-center gap-2">
-          <img
-            src={blog?.user?.userImage}
-            className="w-12 h-12 rounded-full object-cover"
-            alt=""
-          />
-          <div>
-            <h2 className="font-semibold">{blog?.user?.name}</h2>
-            <p className="text-[12px]">{blog?.postedTimestamp}</p>
+        <div className="flex justify-between">
+          <div className="flex items-center gap-2">
+            <img
+              src={blog?.user?.userImage}
+              className="w-12 h-12 rounded-full object-cover"
+              alt=""
+            />
+            <div>
+              <h2 className="font-semibold">{blog?.user?.name}</h2>
+              <p className="text-[12px]">
+                {day} {month}, {years}
+              </p>
+            </div>
+          </div>
+          {/* three dots */}
+          <div className="relative">
+            <BsThreeDotsVertical
+              onClick={() => handleOpenDots()}
+              className="text-2xl pt-1 cursor-pointer"
+            />
+            <div
+              className={`bg-white list-none  
+              shadow-2xl w-40 p-3 absolute right-2 top-10 rounded-tl-[3px] rounded-bl-[3px] rounded-br-[3px]
+               flex-col gap-3 py-4 ${isOpen ? "flex" : "hidden"}
+               `}
+              style={{ boxShadow: "-1px 0px 20px 2px rgba(0,0,0,0.68)" }}
+            >
+              <div
+                className="w-[20px] h-[20px] bg-white absolute right-0 -top-4 "
+                style={{
+                  clipPath: "polygon(100% 0, 0 100%, 100% 100%)",
+                  boxShadow: "-1px 0px 20px 2px rgba(0,0,0,0.68)",
+                }}
+              ></div>
+              <li className={flexCenter}>
+                <FaRegBookmark />
+                Save
+              </li>
+              {user?.email === blog?.user?.email ? (
+                <>
+                  <Link to={`/dashboard/edit-blog/${blog?._id}`}>
+                    <li className={flexCenter}>
+                      <FaEdit />
+                      Edit
+                    </li>
+                  </Link>
+                  <li className={flexCenter} onClick={handleDelete}>
+                    <MdDelete />
+                    Delete
+                  </li>
+                </>
+              ) : (
+                ""
+              )}
+            </div>
           </div>
         </div>
         {/* post */}
@@ -59,18 +177,19 @@ const Blog = ({ blog }) => {
         )}
         {/* icons */}
         <div
-          className={`${
-            blog?.blogImage === "" && "pt-3"
-          } flex items-center gap-5 `}
+          className={`${blog?.blogImage === "" &&
+            "pt-3"} flex items-center gap-5 `}
         >
           <div className="flex items-center gap-1">
             <FaHeart
-              onClick={() => setIsLike(!isLike)}
+              onClick={() => {
+                handleLike(blog?._id);
+              }}
               className={`${
                 isLike ? "text-red-500" : "text-secondary"
               } cursor-pointer`}
             />
-            <p className="pb-[3px]">{isLike ? blog?.likes + 1 : blog?.likes}</p>
+            <p className="pb-[3px]">{likeBlog}</p>
           </div>
 
           <div
@@ -94,6 +213,7 @@ const Blog = ({ blog }) => {
         isMoreTrue={isMoreTrue}
         setIsLike={setIsLike}
         isLike={isLike}
+        refetch={refetch}
       />
     </div>
   );
@@ -101,6 +221,7 @@ const Blog = ({ blog }) => {
 
 Blog.propTypes = {
   blog: PropTypes.object,
+  refetch: PropTypes.func,
 };
 
 export default Blog;
