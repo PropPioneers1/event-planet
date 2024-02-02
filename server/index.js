@@ -5,7 +5,11 @@ const cors = require("cors");
 require("dotenv").config();
 const port = process.env.PORT || 5000;
 const app = express();
-const eventHandler=require('./eventHandler/eventHandler')
+const QnaHandler=require('./QnaHandler/QnaHandler')
+const selecthemeHandler=require('./SelectTheme/SelectthHandler.jsx')
+const shopHandler=require('./shopHandler/shopHandler')
+const blogHandler=require('./blogHandler/BlogHandler')
+
 
 // middleware
 app.use(cors());
@@ -13,12 +17,13 @@ app.use(bodyParser.json());
 
 // console.log(object);
 
+
+
 // Mongodb connection
-mongoose
-  .connect(
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}
-@proppioneers.pzy67in.mongodb.net/Event-Planet`
-  )
+mongoose.connect(`mongodb+srv://EventPlanet:2LxqUuIzAi3v6496@proppioneers.pzy67in.mongodb.net/Event-Planet`, {
+
+})
+
   .then(() => {
     console.log("Connected to MongoDB");
   })
@@ -26,23 +31,27 @@ mongoose
     console.error("Error connecting to MongoDB:", error);
   });
 
-<<<<<<< HEAD
+
 
 // routes
-app.use('/event',eventHandler)
+app.get('/', (req, res) =>{  res.send('Your are in Event Planet serversite')})
+app.use('/shop',shopHandler)
+app.use('/qna',QnaHandler)
+app.use('/selectedthm',selecthemeHandler)
+app.use('/blog',blogHandler)
+
+
 
 
 
 // Eroor handler 
-=======
-// Eroor handler
->>>>>>> 77c7403aec98844ad32038d3954a324a99ab312f
 
 // _________________________________________________
 // incorrect url error
 app.use((req, res, next) => {
   res.status(404).send("Requested url was not found");
 });
+
 // developer code error handler (customized)
 app.use((err, req, res, next) => {
   try {

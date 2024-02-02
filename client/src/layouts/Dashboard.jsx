@@ -1,14 +1,25 @@
+import DashBar from "../pages/Dashboard/DashBar";
+import { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { FaHome, FaUserAlt } from "react-icons/fa";
 import { MdPayments } from "react-icons/md";
-import { HiBars3CenterLeft } from "react-icons/hi2";
 import { FiShoppingCart } from "react-icons/fi";
-import Container from "../components/ui/Container";
+import { IoAddCircleOutline, IoCreate } from "react-icons/io5";
+import { PiSignInBold } from "react-icons/pi";
+import { CgLogOut } from "react-icons/cg";
+import { MdSummarize } from "react-icons/md";
 
 const Dashboard = () => {
 
-    const activeStyle = "flex item-center gap-4 bg-secondary text-white mb-4 p-2 rounded font-semibold"
-    const inActiveStyle = "flex item-center gap-4 bg-secondary text-white  mb-4 p-2 font-semibold"
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isCollapse, setIsCollapse] = useState(false)
+
+    const activeStyle = "flex items-center h-16  gap-5 text-2xl text-primary p-4 mb-2 rounded font-semibold"
+    const inActiveStyle = "flex items-center h-16 gap-5  text-2xl text-[#707070] p-4 mb-2 font-semibold hover:text-primary ";
+
+    const iconStyle = "text-2xl flex items-center"
+
+
 
     const dashLinks = <>
         <NavLink
@@ -17,8 +28,8 @@ const Dashboard = () => {
                 isPending ? "pending" : isActive ? activeStyle : inActiveStyle
             }
         >
-            <FiShoppingCart className="text-2xl"></FiShoppingCart>
-            Add Product
+            <FiShoppingCart className={iconStyle}></FiShoppingCart>
+            <li className={isCollapse ? "hidden" : "block"}> Add Product</li>
         </NavLink>
 
         <NavLink
@@ -27,8 +38,8 @@ const Dashboard = () => {
                 isPending ? "pending" : isActive ? activeStyle : inActiveStyle
             }
         >
-            <MdPayments className="text-2xl"></MdPayments>
-            Create Theme
+            <IoAddCircleOutline className={iconStyle}></IoAddCircleOutline>
+            <li className={isCollapse ? "hidden" : "block"}>Create Theme</li>
         </NavLink>
 
         <NavLink
@@ -37,8 +48,8 @@ const Dashboard = () => {
                 isPending ? "pending" : isActive ? activeStyle : inActiveStyle
             }
         >
-            <MdPayments className="text-2xl"></MdPayments>
-            Create Blog
+            <IoCreate className={iconStyle}></IoCreate>
+            <li className={isCollapse ? "hidden" : "block"}> Create Blog</li>
         </NavLink>
 
         <NavLink
@@ -47,11 +58,22 @@ const Dashboard = () => {
                 isPending ? "pending" : isActive ? activeStyle : inActiveStyle
             }
         >
-            <MdPayments className="text-2xl"></MdPayments>
-            Payment History
+            <MdPayments className={iconStyle}></MdPayments>
+            <li className={isCollapse ? "hidden" : "block"}> Payment History</li>
+        </NavLink>
+        <NavLink
+            to="/dashboard/admin-summary"
+            className={({ isActive, isPending }) =>
+                isPending ? "pending" : isActive ? activeStyle : inActiveStyle
+            }
+        >
+            <MdSummarize className={iconStyle}></MdSummarize>
+            <li className={isCollapse ? "hidden" : "block"}> Admin Summary</li>
         </NavLink>
 
-        <div className="divider"></div>
+
+
+        <hr />
 
         <NavLink
             to="/"
@@ -59,8 +81,8 @@ const Dashboard = () => {
                 isPending ? "pending" : isActive ? activeStyle : inActiveStyle
             }
         >
-            <FaHome className="text-2xl"></FaHome>
-            Home
+            <FaHome className={iconStyle}></FaHome>
+            <li className={isCollapse ? "hidden" : "block"}> Home</li>
         </NavLink>
 
         <NavLink
@@ -69,56 +91,55 @@ const Dashboard = () => {
                 isPending ? "pending" : isActive ? activeStyle : inActiveStyle
             }
         >
-            <FaUserAlt className="text-xl"></FaUserAlt>
-            Profile
+            <FaUserAlt className={iconStyle}></FaUserAlt>
+            <li className={isCollapse ? "hidden" : "block"}>Profile</li>
         </NavLink>
+
+
 
     </>
 
     return (
-        <Container>
-            <div className="min-h-screen">
+        <div className="min-h-screen">
+            <DashBar
+                isSidebarOpen={isSidebarOpen}
+                setIsSidebarOpen={setIsSidebarOpen}
+                dashLinks={dashLinks}
 
-                <div className="flex flex-col md:flex-row">
-                    <div className="md:border-2 ">
-                        <div className="drawer md:hidden z-50 ">
-                            <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-                            <div className="drawer-content flex justify-between p-4 bg-neutral">
-                                {/* Page content here */}
-                                <label
-                                    htmlFor="my-drawer"
-                                    className="drawer-button">
-                                    <HiBars3CenterLeft className="text-4xl px-0   font-bold cursor-pointer"></HiBars3CenterLeft>
-                                </label>
-                                <a className="text-2xl font-bold md:hidden">Event Planet</a>
-                            </div>
-                            {/* Drawer side for mobile device */}
-                            <div className="drawer-side">
-                                <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
-                                <ul className="menu bg-neutral pt-20 w-80 min-h-full text-base-content">
-                                    {/* Sidebar content here */}
+            ></DashBar>
+            <div className="flex flex-col md:flex-row">
 
-                                    {
-                                        dashLinks
-                                    }
+                <div className="md:border-r-2">
 
-                                </ul>
-                            </div>
-                        </div>
-                        <div className="w-64 min-h-screen  py-6 px-4 hidden md:block">
-                            {/* TODO: Change logo */}
-                            <img className="object-cover" src="https://i.ibb.co/T8Xgw50/nexgen.png" alt="" />
-                            <ul>
-                                {dashLinks}
-                            </ul>
-                        </div>
+
+
+                    {/* sidebar  */}
+                    <div className={` px-2 min-h-screen ${isCollapse ? "w-auto" : "w-72 hidden lg:block"} `}>
+                        <ul className="mt-8 ">
+                            {dashLinks}
+                        </ul>
+                        <button
+                            onClick={() => setIsCollapse(!isCollapse)}
+                            className="flex items-center gap-4 h-16  text-2xl text-[#707070] p-4 rounded font-semibold hover:text-primary">
+                            {
+                                isCollapse ?
+                                    <PiSignInBold className={iconStyle}></PiSignInBold>
+                                    :
+                                    <CgLogOut className={iconStyle}></CgLogOut>
+                            }
+                            <span className={isCollapse ? "hidden" : "block"}> Collapse</span>
+                        </button>
                     </div>
-                    <div className="w-full">
-                        <Outlet></Outlet>
+                    <div
+                        onClick={() => setIsSidebarOpen(false)}
+                        className={`fixed z-30 top-0 w-full min-h-screen lg:hidden  bg-[#000000b3] ${isSidebarOpen ? "block" : "hidden"}`}>
                     </div>
                 </div>
+                <div className="w-full p-6 lg:p-10 bg-neutral min-h-screen overflow-hidden">
+                    <Outlet></Outlet>
+                </div>
             </div>
-        </Container>
+        </div>
     );
 };
 

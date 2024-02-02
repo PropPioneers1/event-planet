@@ -15,7 +15,7 @@ const TestPlaner = () => {
 		<div>
 			<div className="w-full lg:w-3/4 mb-5  mt-5 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3  mx-auto">
 				{eventPlaner?.map((event, idx) => (
-					<div key={idx} className="card-planer border">
+					<div key={idx} className="card-planer ">
 						<div className="card-inner">
 							<div
 								className="front "

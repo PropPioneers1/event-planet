@@ -101,7 +101,7 @@ const Trendingproducts = () => {
 
   
  
-<Buttonall> Visit Our Shop <FaShopify></FaShopify> </Buttonall>
+<Link to='/shopping'><Buttonall > Visit Our Shop <FaShopify></FaShopify> </Buttonall></Link>
   </div>
 
 

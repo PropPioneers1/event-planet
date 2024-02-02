@@ -54,7 +54,7 @@ const UpcomingDetails = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch("../../../../../public/upcomingevent.json")
+    fetch("/upcomingevent.json")
       .then((res) => res.json())
       .then((data) => {
         const result = data.find((item) => item.id == id);

@@ -12,7 +12,7 @@ import EventCard from "./EventCard";
 import Container from "../../components/ui/Container";
 const AllEvent = () => {
 	return (
-		<div>
+		<div className="mt-16">
 			<Container>
 				<Swiper
 					spaceBetween={30}

@@ -1,29 +1,70 @@
 import { useState } from 'react';
+import { uploadImage } from '../../../api/utlis';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+
 
 
 const CreateBlog = () => {
 
-    const [imagePreview, setImagePreview] = useState(null)
+    const [imagePreview, setImagePreview] = useState(null);
+    const [category, setCategory] = useState("");
+    const [tags, setTag] = useState("")
 
-    const uploadImage = (event) => {
+
+
+    const initialTags = ["architecture", "skyscrapers", "urban", "history", "landmarks", "music", "traditions", "melody", "art", "creativity", "heritage", "festivals", "traditions", "celebrations"]
+
+    const getImageUrl = (event) => {
         console.log("working");
         let imageLink = URL.createObjectURL(event.target.files[0]);
         setImagePreview(imageLink)
 
     }
 
-    const handleBlog = (event) => {
+
+
+    const handleBlog = async (event) => {
         event.preventDefault()
         const form = event.target;
-        const description = form.description.value;
+        const post = form.post.value;
         const image = form.imageFile.files[0];
-        console.log({ description, image });
+        const title = form.title.value;
+
+        const imageUpload = await uploadImage(image);
+
+
+        const blog = {
+            title,
+            post,
+            blogImg: imageUpload?.data?.display_url,
+            category,
+            likes: 0,
+            comments: [],
+            postedTimestamp: new Date().getTime(),
+            tags
+
+        }
+
+        console.log(typeof(postedTimestamp))
+
+        try {
+            const { data } = await axios.post('http://localhost:5000/blog', blog);
+            console.log(data);
+            toast.success(data?.message)
+        }
+        catch (error) {
+            console.error(error);
+            toast.error(error.message)
+
+        }
     }
 
     return (
-        <div className=" min-h-screen flex justify-center items-center bg-neutral">
-            <div className="w-[500px] border p-4 bg-white">
+        <div className=" min-h-screen flex justify-center  bg-neutral">
+            <div className="w-[500px] border shadow-xl rounded p-4 bg-white">
                 <h2 className="text-3xl font-bold text-center border-b py-2">Create Blog</h2>
+                {/* User logo and name */}
                 <div className="avatar flex items-center gap-2 py-2">
                     <div className="w-12 rounded-full">
                         <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
@@ -31,21 +72,26 @@ const CreateBlog = () => {
                     <p className="text-xl">John Smith</p>
                 </div>
                 <form onSubmit={handleBlog} >
-                    <input
-                        type="text"
-                        name='description'
+                    {/* Post area */}
+                    <textarea
+                        name='post'
                         placeholder="What's on your mind, John?"
-                        className="input px-0 w-full mb-6 focus:outline-none focus:border-none" />
-                    <div
-                        className="w-full min-h-[150px] flex items-center justify-center">
+                        className="input px-0 w-full mb-6 focus:outline-none focus:border-none"
+                        required
+                    >
+                    </textarea>
+                    {/* Select image and preview */}
+                    <div className="w-full min-h-[150px] flex items-center justify-center">
                         <label
                             htmlFor="image-file"
                             className="min-h-40 w-full border text-center rounded-2xl">
                             <input
-                                onChange={uploadImage}
+                                onChange={getImageUrl}
                                 name='imageFile'
                                 className="hidden"
-                                type="file" id="image-file" />
+                                type="file" id="image-file"
+                                required
+                            />
                             <div className="flex flex-col items-center justify-center h-64"
                                 style={{ backgroundImage: `url("${imagePreview}")`, backgroundSize: "cover", backgroundPosition: "center" }} >
                                 {
@@ -62,10 +108,47 @@ const CreateBlog = () => {
                             </div>
                         </label>
                     </div>
+                    {/* input for title */}
+                    <input
+                        type="text"
+                        name="title"
+                        placeholder="Write A Title For Your Blog"
+                        className="input input-bordered w-full focus:outline-none mt-6 mb-2"
+                        required
+                    />
+                    {/* Category */}
+                    <select
+                        className="select select-bordered w-full my-4 focus:border-none"
+                        onChange={(e) => setCategory(e.target.value)}
+                        defaultValue={category}
+                        required
+                    >
+                        <option disabled value="">Select Event Category</option>
+                        <option value="Business">Business</option>
+                        <option value="Education">Education</option>
+                        <option value="Sport">Sports</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Food Festival">Food Festival</option>
+                        <option value="Innovation Showcase">Innovation Showcase</option>
+                    </select>
+                    {/* select for tags */}
+                    <select
+                        className="select select-bordered w-full my-4 focus:border-none"
+                        onChange={(e) => setTag([...tags, e.target.value])}
+                        value={tags}
+                        required
+                    >
+                        <option disabled value="">Select Event Category</option>
+                        {
+                            initialTags?.map((kal, idx) => <option key={idx} value={kal}>{kal}</option>)
+                        }
+
+                    </select>
+
                     <div className='flex  justify-center'>
                         <button
                             type='submit'
-                            className='btn w-full bg-primary text-white mt-6'>
+                            className='btn w-full bg-primary text-white my-6'>
                             Post
                         </button>
                     </div>
