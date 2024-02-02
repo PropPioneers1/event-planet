@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const image = "https://i.ibb.co/QFrKPX3/birthday.jpg";
 
 const SingleCard = ({card}) => {
-    const {eventName,date,time,ticketPriceRange,description,countdownTimer,id} = card;
+    const {eventName,date,time,price,description,countdownTimer,id} = card;
 
     return (
         <div>
@@ -22,7 +22,7 @@ const SingleCard = ({card}) => {
             </div>
             {/* Show price at the top */}
             <div className="absolute top-7 right-7 bg-opacity-60 rounded text-white font-medium p-2 bg-accent">
-              Price {ticketPriceRange}
+              Price ${price}
             </div>
 
             <div className="pb-8 p-4">
