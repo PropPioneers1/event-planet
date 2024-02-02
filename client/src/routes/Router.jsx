@@ -20,6 +20,7 @@ import Blogs from "../pages/Blogs/Blogs";
 import ThemeDetails from "../pages/CreateEvent/OurThemes/ThemeDetails/ThemeDetails";
 import UpdateProfile from "../pages/UpdateProfile/UpdateProfile";
 import AdminSummary from "../pages/Dashboard/AdminSummary/AdminSummary";
+import CheckOut from "../pages/Home/HomeComponenets/UpComingEvent/CheckOut";
 
 const Router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const Router = createBrowserRouter([
       {
         path: "upcomingDetails/:id",
         element: <UpcomingDetails></UpcomingDetails>,
+      },
+      {
+        path:"checkOut",
+        element:<CheckOut></CheckOut>
       },
       {
         path: "shopping",
