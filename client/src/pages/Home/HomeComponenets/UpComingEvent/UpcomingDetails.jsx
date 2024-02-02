@@ -290,7 +290,7 @@ const UpcomingDetails = () => {
                       </div>
                       <div className="collapse-content">
                         <p>
-                          To book tickets for an event, simply navigate to the
+                          To books tickets for an event, simply navigate to the
                           event page on our website and select the desired date
                           and ticket type. Then, proceed to the checkout where
                           you can review your order and complete the booking
