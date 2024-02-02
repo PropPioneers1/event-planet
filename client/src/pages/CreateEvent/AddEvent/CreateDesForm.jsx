@@ -1,17 +1,14 @@
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+
+import { useNavigate } from "react-router-dom";
 import HotDeals from "../../Home/HomeComponenets/HotDeals/HotDeals";
 import "./CreatDes.css";
 import axios from "axios";
+// import toast from 'react-hot-toast'
 import toast, { Toaster } from "react-hot-toast";
+// import { } from "react-icons/fa";
 import { FaArrowLeft, FaArrowRight, FaSeedling } from "react-icons/fa6";
-import useAuth from "../../../hooks/useAuth";
-
 const CreateDesForm = () => {
-  const { label } = useParams();
-  console.log(label);
-  const { user } = useAuth();
-  console.log(user, 'hey');
   const navigate = useNavigate();
   const [organizationName, setOrganizationName] = useState("");
   const [audienceSize, setAudienceSize] = useState("");
@@ -23,30 +20,17 @@ const CreateDesForm = () => {
   const [guestNames, setGuestNames] = useState("");
   const [guestProfessions, setGuestProfessions] = useState("");
   const [cardId, selectCardId] = useState("");
-  const [city, setcity] = useState("");
-  const [state, setstate] = useState("");
-  const [venue, setvenu] = useState("");
-  const [eventDate, setEventDate] = useState("");
-  const [eventTime, setEventTime] = useState("");
 
   const handleCardSelect = (cardId) => {
     selectCardId(cardId);
   };
 
-  const totalQuestions = 8;
+  const totalQuestions = 6;
 
   const calculateProgress = () =>
     ((currentQuestion - 1) / (totalQuestions - 1)) * 100;
 
   const handleNext = () => {
-    const venueDetails ={
-    selectedcity:city, 
-    selectedstate:state,
-    selectedvenu:venue
-    }
-    const dateandtime={
-      setdate:eventDate,settime:eventTime
-    }
     if (
       (currentQuestion === 1 && organizationName) ||
       (currentQuestion === 2 && audienceSize) ||
@@ -56,12 +40,10 @@ const CreateDesForm = () => {
       (currentQuestion === 6 &&
         numberOfGuests &&
         guestNames &&
-        guestProfessions) ||
-      (currentQuestion === 7 && venueDetails)||
-      (currentQuestion===8 && dateandtime)
+        guestProfessions)
     ) {
-      if (currentQuestion === 8) {
-        const QnaData = {
+      if (currentQuestion === 6) {
+        const formData = {
           organizationName,
           audienceSize,
           useHotDeals,
@@ -71,17 +53,11 @@ const CreateDesForm = () => {
           numberOfGuests,
           guestNames,
           guestProfessions,
-          venueDetails,
-          dateandtime,
           status: "pending",
-          ClientName: user.displayName,
-          ClientEmail: user.email,
-          categoryName:label,
-         
         };
-console.log(QnaData);
+
         axios
-          .post("http://localhost:5000/qna", QnaData)
+          .post("http://localhost:5000/qna", formData)
           .then(() => {
             toast.success("Your Response sent successfully");
             navigate("/");
@@ -94,7 +70,7 @@ console.log(QnaData);
         setCurrentQuestion(currentQuestion + 1);
       }
     } else {
-      toast.error("Please answer the current question before proceeding.");
+      alert("Please answer the current question before proceeding.");
     }
   };
 
@@ -120,7 +96,6 @@ console.log(QnaData);
         >
           {currentQuestion === 1 && (
             <div className="grid " data-aos="fade-right">
-              {/* Question 1 */}
               <label
                 htmlFor="organizationName"
                 className=" md:text-4xl text-xl
@@ -144,7 +119,6 @@ console.log(QnaData);
               data-aos="fade-right"
               className="grid justify-center align-middle items-center"
             >
-              {/* Question 2 */}
               <label
                 htmlFor="audienceSize"
                 className=" md:text-4xl text-xl text-black font-bold mb-4 Quistions"
@@ -169,7 +143,6 @@ console.log(QnaData);
 
           {currentQuestion === 3 && (
             <div className="grid" data-aos="fade-right">
-              {/* Question 3 */}
               <label
                 htmlFor="useHotDeals"
                 className=" md:text-4xl text-xl text-black font-bold mb-4 Quistions"
@@ -205,7 +178,6 @@ console.log(QnaData);
 
           {currentQuestion === 4 && useHotDeals === "Yes" && (
             <div>
-              {/* Question 4 */}
               <h2 className="text-center text-5xl font-bold mt-10 text-black">
                 Select Your Hot Deals
               </h2>
@@ -215,7 +187,6 @@ console.log(QnaData);
 
           {currentQuestion === 4 && useHotDeals === "No" && (
             <div className="grid">
-              {/* Question 4 (alternative for No) */}
               <label
                 htmlFor="ticketPrice"
                 className=" md:text-4xl text-xl text-black font-bold mb-4 Quistions"
@@ -240,7 +211,6 @@ console.log(QnaData);
 
           {currentQuestion === 5 && (
             <div className="grid" data-aos="fade-right">
-              {/* Question 5 */}
               <label
                 htmlFor="otherDemands"
                 className=" md:text-4xl text-xl text-black font-bold mb-4 Quistions"
@@ -259,7 +229,6 @@ console.log(QnaData);
 
           {currentQuestion === 6 && (
             <div className="grid" data-aos="fade-right">
-              {/* Question 6 */}
               <label
                 htmlFor="numberOfGuests"
                 className=" md:text-2xl text-xl text-black text-start font-bold mb-4 Quistions"
@@ -312,112 +281,6 @@ console.log(QnaData);
             </div>
           )}
 
-          {currentQuestion === 7 && (
-            <div className="grid" data-aos="fade-right">
-              {/* Question 7 (New Venue Selection) */}
-              <label
-                htmlFor="venueDetails"
-                className="md:text-4xl text-xl text-black font-bold mb-4 Quistions"
-              >
-                Select your venue:
-              </label>
-              <div className="grid grid-cols-2 gap-4">
-             
-                <select
-                  name=""
-                  onChange={(e) => setstate(e.target.value)}
-                  id=""
-                  className="lg:py-1 py-3 rounded-[4px] px-5 lg:px-4"
-                >
-                  <option value="">All States</option>
-                  <option value="Dhaka">Dhaka</option>
-                  <option value="Sylhet">Sylhet</option>
-                  <option value="Chattogram">Chattogram</option>
-                  <option value="Barishal">Barishal</option>
-                  <option value="Khulna">Khulna</option>
-                  <option value="Rajshahi">Rajshahi</option>
-                  <option value="Rangpur">Rangpur </option>
-                  <option value="Mymensingh">Mymensingh </option>
-                </select>
-                <select
-                  name=""
-                  id=""
-                  onChange={(e) => setcity(e.target.value)}
-                  className="lg:py-1 py-3 rounded-[4px] px-5 lg:px-4"
-                >
-                  <option value="">All Cities</option>
-                  <option value="Molvibazar">Molvibazar</option>
-                  <option value="Sylhet">Sylhet</option>
-                  <option value="Habigang">Habigang</option>
-                  <option value="Sunamgang">Sunamgang</option>
-                  <option value="Comilla">Comilla</option>
-                  <option value="Rajshahi">Rajshahi</option>
-                  <option value="Rangpur">Rangpur </option>
-                  <option value="Mymensingh">Mymensingh </option>
-                </select>
-                <select
-                  name=""
-                  id=""
-                  onChange={(e) => setvenu(e.target.value)}
-                  className="lg:py-1 py-3 rounded-[4px]  px-5 lg:px-4"
-                >
-                  <option value="">All Venues</option>
-                  <option value="Dhaka">Dhaka</option>
-                  <option value="Sylhet">Sylhet</option>
-                  <option value="Chattogram">Chattogram</option>
-                  <option value="Barishal">Barishal</option>
-                  <option value="Khulna">Khulna</option>
-                  <option value="Rajshahi">Rajshahi</option>
-                  <option value="Rangpur">Rangpur </option>
-                  <option value="Mymensingh">Mymensingh </option>
-                </select>
-               
-              </div>
-            </div>
-          )}
-{currentQuestion === 8 && (
-          <div className="grid" data-aos="fade-right">
-            {/* Question 8 */}
-            <label
-  htmlFor="eventDate"
-  className="md:text-4xl text-xl text-black font-bold mb-4 Quistions"
->
-  1/ Enter your event date:
-</label>
-<input
-  type="date"
-  id="eventDate"
-  className="bg-white w-56 md:w-96 text-center rounded-lg  h-8"
-  onChange={(e) => {
-    const selectedDate = new Date(e.target.value);
-    const selectDate =
-      selectedDate.getMonth() +
-      1 +
-      '-' +
-      selectedDate.getDate() +
-      '-' +
-      selectedDate.getFullYear();
-    setEventDate(selectDate);
-  }}
-/>
-
-
-            <label
-              htmlFor="eventTime"
-              className="md:text-4xl text-xl text-start text-black font-bold mb-4 Quistions mt-6"
-            >
-              2/ Enter your event time:
-            </label>
-            <input
-              type="time"
-              id="eventTime"
-              value={eventTime}
-              className="bg-white w-56 md:w-96 text-center rounded-lg  h-8"
-              onChange={(e) => setEventTime(e.target.value)}
-            />
-          </div>
-        )}
-
           <div className="flex-1 my-auto mt-10 mx-4">
             <div className="relative pt-1">
               <div className="flex mb-2 items-center justify-between">
@@ -448,11 +311,11 @@ console.log(QnaData);
               </button>
             )}
 
-            {currentQuestion === 8 ? (
+            {currentQuestion === 6 ? (
               <button
                 className="btn btn-ghost text-end text-black bg-blue-200"
                 onClick={handleNext}
-                disabled={!city || ! venue || !state}
+                disabled={!numberOfGuests || !guestNames || !guestProfessions}
               >
                 Submit <FaSeedling></FaSeedling>
                 <Toaster />
@@ -468,12 +331,7 @@ console.log(QnaData);
                     (currentQuestion === 3 && useHotDeals) ||
                     (currentQuestion === 4 &&
                       (useHotDeals === "Yes" || ticketPrice)) ||
-                    (currentQuestion === 5 && otherDemands) ||
-                    (currentQuestion === 6 &&
-                      numberOfGuests &&
-                      guestNames &&
-                      guestProfessions)||
-                      (currentQuestion===7 && city && state && venue)
+                    (currentQuestion === 5 && otherDemands)
                   )
                 }
               >
