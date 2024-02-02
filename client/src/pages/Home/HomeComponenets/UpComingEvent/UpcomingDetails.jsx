@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaCartPlus } from "react-icons/fa";
 import { FaCircleArrowRight } from "react-icons/fa6";
@@ -269,9 +269,11 @@ const UpcomingDetails = () => {
                           <p>Total: {totalAdultChildTicketPrice}</p>
                         </div>
                         <div>
-                          <button className="button flex items-center gap-3">
+                         <Link to="/checkOut">
+                         <button className="button flex items-center gap-3">
                             <FaCartPlus></FaCartPlus>Register Now
                           </button>
+                         </Link>
                         </div>
                       </div>
                     </div>
