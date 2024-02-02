@@ -8,6 +8,8 @@ import Footer from "../../components/shared/Footer";
 import TestMonial from "./HomeComponenets/Testmonial/Testmonial";
 import TestPlaner from "./HomeComponenets/Event-Planer/TestPlaner";
 import Categories from "./HomeComponenets/Categories/Categories";
+import Chat from "./HomeComponenets/ChatBot/ChatBot";
+// import MessangerChat from "./HomeComponenets/ChatBot/MessangerChat";
 
 const Home = () => {
 	return (
@@ -30,6 +32,8 @@ const Home = () => {
 			<TestPlaner></TestPlaner>
 			{/* made by Rifat */}
 			<Footer></Footer>
+			<Chat></Chat>
+			{/* <MessangerChat></MessangerChat> */}
 		</div>
 	);
 };

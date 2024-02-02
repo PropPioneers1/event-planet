@@ -42,7 +42,7 @@ const AddProduct = () => {
     }
 
     return (
-        <div className="p-10 bg-neutral h-screen">
+        <div className=" bg-neutral h-screen">
             <div className="bg-white p-6">
                 <SectionTitle title="Add Product" />
                 <form 

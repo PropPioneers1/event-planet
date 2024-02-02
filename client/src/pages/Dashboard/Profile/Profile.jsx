@@ -4,7 +4,7 @@ import userImg from "../../../assets/image/user.png";
 const Profile = () => {
   const { user } = useAuth();
   return (
-    <div className="bg-white p-4 min-h-screen">
+    <div className="p-4 min-h-screen">
       <h2 className="text-2xl font-bold border-b border-black py-2">
         Profile Information
       </h2>
