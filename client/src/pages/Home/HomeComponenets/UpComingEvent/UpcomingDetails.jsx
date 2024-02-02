@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { FaLocationDot, } from "react-icons/fa6";
+import { FaLocationDot } from "react-icons/fa6";
 import { FaCartPlus } from "react-icons/fa";
 import { FaCircleArrowRight } from "react-icons/fa6";
 import { BsCalendar2DateFill } from "react-icons/bs";
@@ -22,35 +22,35 @@ import {
   LinkedinIcon,
 } from "react-share";
 import Footer from "../../../../components/shared/Footer";
-
+import "./upcoming.scss";
 const UpcomingDetails = () => {
-  const shareUrl = "https://www.facebook.com/";
+  const shareUrl = "https://event-planet-9789f.web.app/";
   const img = "https://i.ibb.co/fq6DWhd/Wedding.jpg";
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [cards, setCards] = useState({});
+  console.log(cards);
   const [adultCount, setAdultCount] = useState(0);
   const [childCount, setChildCount] = useState(0);
-  const baseAdultPrice = 0;
-  const baseChildPrice = 0;
   // decrement
   const decrement = (type) => {
-    if (type === 'adult') {
+    if (type === "adult") {
       setAdultCount(adultCount - 1);
-    } else if (type === 'child') {
+    } else if (type === "child") {
       setChildCount(childCount - 1);
     }
   };
-// increment
+  // increment
   const increment = (type) => {
-    if (type === 'adult') {
+    if (type === "adult") {
       setAdultCount(adultCount + 1);
-    } else if (type === 'child') {
+    } else if (type === "child") {
       setChildCount(childCount + 1);
     }
   };
-  const totalAdultPrice = baseAdultPrice + adultCount;
-  const totalChildPrice = baseChildPrice + childCount;
+  const totalAdultPrice = adultCount * cards.price;
+  const totalChildPrice = childCount * cards.price;
+  const totalAdultChildTicketPrice = totalAdultPrice + totalChildPrice;
 
   useEffect(() => {
     setLoading(true);
@@ -98,7 +98,9 @@ const UpcomingDetails = () => {
                     <div className="py-3 px-10 bg-secondary shadow-lg flex items-center gap-3 text-white">
                       <FaLocationDot></FaLocationDot>
                       <div className="">
-                        <h2 className="text-lg font-semibold">Event Location</h2>
+                        <h2 className="text-lg font-semibold">
+                          Event Location
+                        </h2>
                         <p>{cards?.date}</p>
                       </div>
                     </div>
@@ -183,7 +185,7 @@ const UpcomingDetails = () => {
                           </h2>
                           <div className="bg-white h-[250px] overflow-hidden text-black p-3">
                             <div className="mb-4">
-                              <h2>Adult</h2>
+                              <h2 className="font-bold">VIP</h2>
                               <p>
                                 {" "}
                                 Lorem ipsum dolor sit amet consectetur
@@ -191,7 +193,7 @@ const UpcomingDetails = () => {
                               </p>
                             </div>
                             <div>
-                              <h2>Child</h2>
+                              <h2 className="font-bold">Normal</h2>
                               <p>
                                 {" "}
                                 Lorem ipsum dolor sit amet consectetur
@@ -201,54 +203,60 @@ const UpcomingDetails = () => {
                           </div>
                         </div>
                         <div className="bg-secondary border-l border-r">
-      <h2 className="py-4 text-center text-white font-medium">Event Ticket</h2>
-      <div className="bg-white h-[250px] text-secondary p-3">
-        <div className="mb-8 text-center">
-          <h2 className="mb-4 font-semibold">Adult</h2>
-          <span
-            onClick={() => decrement('adult')}
-            className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
-          >
-            -
-          </span>
-          <span className="border px-4 py-2 border-gray-600 mx-2 p-3 rounded">{adultCount}</span>
-          <span
-            onClick={() => increment('adult')}
-            className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
-          >
-            +
-          </span>
-        </div>
+                          <h2 className="py-4 text-center text-white font-medium">
+                            Event Ticket
+                          </h2>
+                          <div className="bg-white h-[250px] text-secondary p-3">
+                            <div className="mb-8 text-center">
+                              <h2 className="mb-4 font-semibold">VIP</h2>
+                              <span
+                                onClick={() => decrement("adult")}
+                                className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
+                              >
+                                -
+                              </span>
+                              <span className="border px-4 py-2 border-gray-600 mx-2 p-3 rounded">
+                                {adultCount}
+                              </span>
+                              <span
+                                onClick={() => increment("adult")}
+                                className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
+                              >
+                                +
+                              </span>
+                            </div>
 
-        <div className="text-center">
-          <h2 className="mb-4 font-semibold">Child</h2>
-          <span
-            onClick={() => decrement('child')}
-            className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
-          >
-            -
-          </span>
-          <span className="border px-4 py-2 border-gray-600 mx-2 p-3 rounded">{childCount}</span>
-          <span
-            onClick={() => increment('child')}
-            className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
-          >
-            +
-          </span>
-        </div>
-      </div>
-    </div>
+                            <div className="text-center">
+                              <h2 className="mb-4 font-semibold">Normal</h2>
+                              <span
+                                onClick={() => decrement("child")}
+                                className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
+                              >
+                                -
+                              </span>
+                              <span className="border px-4 py-2 border-gray-600 mx-2 p-3 rounded">
+                                {childCount}
+                              </span>
+                              <span
+                                onClick={() => increment("child")}
+                                className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
+                              >
+                                +
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                         <div className="bg-secondary">
                           <h2 className="py-4 text-center text-white font-medium">
-                          Total Price
+                            Total Price
                           </h2>
                           <div className="bg-white h-[250px] flex-col items-center text-center text-black p-3">
                             <div className="my-10 font-medium">
-                             Adult Price: ${totalAdultPrice}
+                              VIP Price: ${totalAdultPrice}
                             </div>
                             <hr />
                             <div className="pt-10 font-medium">
-                              Chlid Price: ${totalChildPrice}
+                              Normal Price: ${totalChildPrice}
                             </div>
                           </div>
                         </div>
@@ -258,11 +266,11 @@ const UpcomingDetails = () => {
                           <p>Quantity: 0</p>
                         </div>
                         <div className="text-white font-medium">
-                          <p>Total: 0</p>
+                          <p>Total: {totalAdultChildTicketPrice}</p>
                         </div>
                         <div>
-                          <button className="btn">
-                            <FaCartPlus></FaCartPlus>Book Now
+                          <button className="button flex items-center gap-3">
+                            <FaCartPlus></FaCartPlus>Register Now
                           </button>
                         </div>
                       </div>
@@ -278,28 +286,99 @@ const UpcomingDetails = () => {
                         checked="checked"
                       />
                       <div className="collapse-title text-xl font-medium">
-                        How can i book event?
+                        How do I book tickets for an event?
                       </div>
                       <div className="collapse-content">
-                        <p>hello</p>
+                        <p>
+                          To book tickets for an event, simply navigate to the
+                          event page on our website and select the desired date
+                          and ticket type. Then, proceed to the checkout where
+                          you can review your order and complete the booking
+                          process. You will receive a confirmation email once
+                          your booking is successful.
+                        </p>
                       </div>
                     </div>
                     <div className="collapse collapse-plus bg-base-200">
                       <input type="radio" name="my-accordion-3" />
                       <div className="collapse-title text-xl font-medium">
-                        How can i contact you
+                        What payment methods are accepted?
                       </div>
                       <div className="collapse-content">
-                        <p>hello</p>
+                        <p>
+                          We accept a variety of payment methods to make your
+                          booking experience convenient. You can pay securely
+                          using major credit cards, including Visa, Mastercard,
+                          American Express, and Discover. Additionally, we also
+                          offer payment through Stripe for seamless online
+                          transactions.
+                        </p>
                       </div>
                     </div>
                     <div className="collapse collapse-plus bg-base-200">
                       <input type="radio" name="my-accordion-3" />
                       <div className="collapse-title text-xl font-medium">
-                        Click to open this one and close others
+                        How will I receive my tickets after booking?
                       </div>
                       <div className="collapse-content">
-                        <p>hello</p>
+                        <p>
+                          After successfully completing your booking, you will
+                          receive an email confirmation containing your tickets.
+                          You can either print out the tickets or present the
+                          digital copy on your smartphone at the event venue.
+                          Please ensure to check your spam or junk folder if you{" "}
+                          {"don't"} see the confirmation email in your inbox.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="collapse collapse-plus bg-base-200">
+                      <input type="radio" name="my-accordion-3" />
+                      <div className="collapse-title text-xl font-medium">
+                        How can I contact customer support?
+                      </div>
+                      <div className="collapse-content">
+                        <p>
+                          Our customer support team is available to assist you
+                          with any questions or concerns you may have. You can
+                          reach us via email at support:proppionears1@gmail.com
+                          or by phone at +88 (880) 1634-264626 during our
+                          business hours. We strive to provide prompt and
+                          helpful assistance to ensure your event experience is
+                          smooth and enjoyable.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="collapse collapse-plus bg-base-200">
+                      <input type="radio" name="my-accordion-3" />
+                      <div className="collapse-title text-xl font-medium">
+                        Is there parking available at the venue?
+                      </div>
+                      <div className="collapse-content">
+                        <p>
+                          Yes, parking facilities are available at the event
+                          venue for your convenience. We recommend arriving
+                          early to secure a parking spot, especially during peak
+                          hours or popular events. Please follow any signage or
+                          instructions provided by the venue staff for smooth
+                          parking.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="collapse collapse-plus bg-base-200">
+                      <input type="radio" name="my-accordion-3" />
+                      <div className="collapse-title text-xl font-medium">
+                        Can I bring outside food or drinks to the event?
+                      </div>
+                      <div className="collapse-content">
+                        <p>
+                          Outside food and drinks are generally not permitted at
+                          the event venue. However, some events may have
+                          specific policies or exceptions regarding this. We
+                          kindly ask that you adhere to the {"venue's"}{" "}
+                          guidelines to ensure the safety and enjoyment of all
+                          attendees. Refreshments and concessions are typically
+                          available for purchase at the venue.
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -384,35 +463,32 @@ const UpcomingDetails = () => {
                       </h2>
                       <div className="p-3">
                         <div className="flex items-center gap-4">
-                          <FacebookShareButton url={shareUrl}>
-                            <FacebookIcon
-                              className="rounded"
-                              size={40}
-                            ></FacebookIcon>
+                          <FacebookShareButton
+                            url={shareUrl}
+                            quote={"Share our event"}
+                            title="Share Event"
+                            description="this is event"
+                          >
+                            <FacebookIcon round={true} size={40}></FacebookIcon>
                           </FacebookShareButton>
-                          <TwitterShareButton url={shareUrl}>
-                            <TwitterIcon
-                              className="rounded"
-                              size={40}
-                            ></TwitterIcon>
+                          <TwitterShareButton
+                            url={shareUrl}
+                            quote={"Share our event"}
+                            title="Share Event"
+                          >
+                            <TwitterIcon round={true} size={40}></TwitterIcon>
                           </TwitterShareButton>
-                          <LinkedinShareButton url={shareUrl}>
-                            <LinkedinIcon
-                              className="rounded"
-                              size={40}
-                            ></LinkedinIcon>
+                          <LinkedinShareButton
+                            url={shareUrl}
+                            title="share Event"
+                          >
+                            <LinkedinIcon round={true} size={40}></LinkedinIcon>
                           </LinkedinShareButton>
                           <WhatsappShareButton url={shareUrl}>
-                            <WhatsappIcon
-                              className="rounded"
-                              size={40}
-                            ></WhatsappIcon>
+                            <WhatsappIcon round={true} size={40}></WhatsappIcon>
                           </WhatsappShareButton>
                           <EmailShareButton url={shareUrl}>
-                            <EmailIcon
-                              className="rounded"
-                              size={40}
-                            ></EmailIcon>
+                            <EmailIcon round={true} size={40}></EmailIcon>
                           </EmailShareButton>
                         </div>
                       </div>
