@@ -11,20 +11,21 @@
   display: flex;
   /* width: fit-content; */
   animation: carousel 60s linear infinite;
-  width: (calc(-250px * 18));
+  width: calc(-250px * 18);
 }
+
 .slide {
   /* width: 250px; */
-  background:  #f6f4f4;
+  background: #d1daeb;
   align-items: center;
   padding: 15px;
   perspective: 100px;
   transition: transform 1s;
 }
+
 .slider:hover .slide-track {
   transform: translateZ(20px);
   animation-play-state: paused;
- 
 }
 
 @keyframes carousel {
@@ -36,8 +37,6 @@
     transform: translateX(calc(-250px * 9));
   }
 }
-
-
 
 .trendingimg {
   width: 100%;

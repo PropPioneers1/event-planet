@@ -25,14 +25,12 @@ const OurThemes = () => {
 
   return (
     <div className="m-10 ">
-      <h1 className="text-2xl md:text-3xl font-semibold font-title capitalize">
-        choose a theme of your event in category - {categoryTheme?.category}:
-      </h1>
+   
       <div
-        className="grid grid-cols-1 md:grid-cols-2
-         lg:grid-cols-5 gap-10 mt-10 place-items-center"
+        className="grid grid-cols-1 md:grid-cols-3
+          gap-4 mt-10 place-items-center"
       >
-        <div></div>
+        {/* <div className=""/>    */}
         {/* theme one */}
         {themes?.map((theme, idx) => (
           <div key={idx} className="card-container card-2">
@@ -41,7 +39,7 @@ const OurThemes = () => {
               <p className="font-bold ">Theme-{idx + 1}</p>
               <div className="card-hidden ">
                 <p className="title-in ">{theme?.theme}</p>
-                <p>{theme?.themeDescription.slice(0, 60)}... </p>
+                {/* <p>{theme?.themeDescription.slice(0, 60)}... </p> */}
                 <Link to={`/theme-details/${idx}/${label}`}>
                   <button className="button text-neutral">Details</button>
                 </Link>
