@@ -1,18 +1,17 @@
 import { useEffect } from "react";
 import Container from "../../../../components/ui/Container";
-import './upcoming.scss'
+import "./upcoming.scss";
 import { useState } from "react";
 import SingleCard from "./SingleCard";
 const UpComingEvent = () => {
- 
-  const [cards,setCards] = useState([])
-  useEffect(()=>{
-    fetch('./upcomingevent.json')
-    .then(res=>res.json())
-    .then(data=>{
-      setCards(data)
-    })
-  },[])
+  const [cards, setCards] = useState([]);
+  useEffect(() => {
+    fetch("./upcomingevent.json")
+      .then((res) => res.json())
+      .then((data) => {
+        setCards(data);
+      });
+  }, []);
   return (
     <div>
       <div className="bg-neutral py-4 md:py-6 lg:py-8 mb-5">
@@ -59,7 +58,7 @@ const UpComingEvent = () => {
               {/* <button className="bg-gradient-to-r from-[#F53F7B] to-[#3F72AF]  p-2 rounded text-white font-medium">
                 All Upcoming Event
               </button> */}
-            <button className="button">Up Coming Event</button>
+              <button className="button">Up Coming Event</button>
             </div>
           </div>
         </Container>
@@ -67,13 +66,13 @@ const UpComingEvent = () => {
 
       {/* up coming event card maping */}
       <Container>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 place-items-center py-4">
-      {
-        cards && cards.map(card=><SingleCard key={card.id} card={card}></SingleCard>)
-      }
-      </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 place-items-center py-4">
+          {cards &&
+            cards.map((card) => (
+              <SingleCard key={card.id} card={card}></SingleCard>
+            ))}
+        </div>
       </Container>
-      
     </div>
   );
 };

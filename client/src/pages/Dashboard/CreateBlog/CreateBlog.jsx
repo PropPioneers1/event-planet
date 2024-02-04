@@ -49,7 +49,7 @@ const CreateBlog = () => {
         console.log(typeof(postedTimestamp))
 
         try {
-            const { data } = await axios.post('http://localhost:5000/blog', blog);
+            const { data } = await axios.post('https://event-planet-server.vercel.app/blog', blog);
             console.log(data);
             toast.success(data?.message)
         }

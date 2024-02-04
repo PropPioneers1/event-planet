@@ -5,6 +5,7 @@ export default {
     extend: {
       fontFamily: {
         title: "Lora, serif",
+        heading: "Quattrocento Sans, sans-serif",
       },
       colors: {
         neutral: "#EEEEEE",

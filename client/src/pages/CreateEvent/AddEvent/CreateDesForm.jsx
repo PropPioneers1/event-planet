@@ -81,7 +81,7 @@ const CreateDesForm = () => {
         };
         console.log(QnaData);
         axios
-          .post("http://localhost:5000/qna", QnaData)
+          .post("https://event-planet-server.vercel.app/qna", QnaData)
           .then(() => {
             toast.success("Your Response sent successfully");
             navigate("/");
