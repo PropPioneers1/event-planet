@@ -40,28 +40,28 @@ const CheckOut = () => {
             <h3>Pay with stripe upon delevery</h3>
             {/* table */}
             <h1 className=" font-medium text-2xl my-5">Order Details</h1>
-            <div className="border">
-                <div className="bg-secondary text-white grid grid-cols-4">
-                    <div className="col-span-3 border-r-2 p-4">Product</div>
-                    <div className="col-span-1 p-4">Total</div>
+            <div className="border border-gray-400 rounded">
+                <div className="bg-secondary rounded text-white grid grid-cols-4">
+                    <div className="col-span-3 border-r-2 p-4 font-medium text-xl">Product</div>
+                    <div className="col-span-1 p-4 font-medium text-xl">Total</div>
                 </div>
                 <div className=" grid grid-cols-4">
                     <div className="col-span-3">
-                    <div className="border-r-2 border-b-2 p-4 min-h-[150px]">
+                    <div className="  border-gray-400 border-r border-b p-4 min-h-[150px]">
                     <div>date:</div>
                     <div>VIP:</div>
                     <div>Normal:</div>
                     <div>Location:</div>
                     </div>
-                    <div className="p-4 border-r-2 border-b-2">Sub Total</div>
-                    <div className="p-4 border-r-2 ">Payment Method</div>
+                    <div className="p-4 border-gray-400 border-r border-b">Sub Total</div>
+                    <div className="p-4 border-gray-400 border-r">Payment Method</div>
                     </div>
 
                     <div className="col-span-1">
-                     <div className=" min-h-[150px] border-b-2 p-4">
-                    <div>300</div>
+                     <div className=" min-h-[150px] border-b border-gray-400 p-4 flex items-center">
+                    <div className="">200$</div>
                     </div>
-                    <div className="p-4 border-b-2">300</div>
+                    <div className="p-4 border-b border-gray-400">300$</div>
                     <div className="p-4">Stripe</div>
                     </div>
                 </div>
