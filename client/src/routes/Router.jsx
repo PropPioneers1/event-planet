@@ -54,6 +54,10 @@ const Router = createBrowserRouter([
         element: <UpcomingDetails></UpcomingDetails>,
       },
       {
+        path:"checkOut/:id",
+        element:<CheckOut></CheckOut>
+      },
+      {
         path:"checkOut",
         element:<CheckOut></CheckOut>
       },
