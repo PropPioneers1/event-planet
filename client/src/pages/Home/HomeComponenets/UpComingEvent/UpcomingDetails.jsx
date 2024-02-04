@@ -24,13 +24,15 @@ import {
 import Footer from "../../../../components/shared/Footer";
 import "./upcoming.scss";
 import EventMap from "./EventMap";
+import useAuth from "../../../../hooks/useAuth";
 const UpcomingDetails = () => {
   const shareUrl = "https://event-planet-9789f.web.app/";
   const img = "https://i.ibb.co/fq6DWhd/Wedding.jpg";
+  const {user} = useAuth()
+  console.log(user.email)
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [cards, setCards] = useState({});
-  console.log(cards);
   const [adultCount, setAdultCount] = useState(0);
   const [childCount, setChildCount] = useState(0);
   // decrement
@@ -49,9 +51,10 @@ const UpcomingDetails = () => {
       setChildCount(childCount + 1);
     }
   };
-  const totalAdultPrice = adultCount * cards.price;
-  const totalChildPrice = childCount * cards.price;
-  const totalAdultChildTicketPrice = totalAdultPrice + totalChildPrice;
+  const totalVipPrice = adultCount * cards.price;
+  const totalNormalPrice = childCount * cards.price;
+  const totalTicketQuantity = adultCount + childCount;
+  const totalAdultChildTicketPrice = totalVipPrice + totalNormalPrice;
 
   useEffect(() => {
     setLoading(true);
@@ -63,6 +66,25 @@ const UpcomingDetails = () => {
         setLoading(false);
       });
   }, [id]);
+  console.log(cards)
+  const data = { 
+    eventId:cards?.id,
+    guestName:user?.displayName,
+    guestEmail:user?.email,
+    eventName:cards?.eventName,
+    eventDate:cards?.date,
+    eventTime:cards?.time,
+    eventLocation:cards?.location,
+    totalVipTicket:adultCount,
+    totalNormalTicket:childCount,
+    tikectQuantity: totalTicketQuantity,
+    vipTicketPrice:totalVipPrice,
+    normalTicketPrice:totalNormalPrice,
+    totalPrice:totalAdultChildTicketPrice,
+  }
+  const handleCheckOut = () => {
+    console.log(data)
+  }
   if (loading) return <div className="pt-80">loading...</div>;
   return (
     <>
@@ -253,25 +275,25 @@ const UpcomingDetails = () => {
                           </h2>
                           <div className="bg-white h-[250px] flex-col items-center text-center text-black p-3">
                             <div className="my-10 font-medium">
-                              VIP Price: ${totalAdultPrice}
+                              VIP Price: ${totalVipPrice}
                             </div>
                             <hr />
                             <div className="pt-10 font-medium">
-                              Normal Price: ${totalChildPrice}
+                              Normal Price: ${totalNormalPrice}
                             </div>
                           </div>
                         </div>
                       </div>
                       <div className="bg-secondary flex items-center justify-around p-5">
                         <div className="text-white font-medium">
-                          <p>Quantity: 0</p>
+                          <p>Quantity: {totalTicketQuantity}</p>
                         </div>
                         <div className="text-white font-medium">
                           <p>Total: {totalAdultChildTicketPrice}</p>
                         </div>
                         <div>
-                         <Link to="/checkOut">
-                         <button className="button flex items-center gap-3">
+                         <Link to={`/checkOut/${cards.id}`}>
+                         <button onClick={handleCheckOut} className="button flex items-center gap-3">
                             <FaCartPlus></FaCartPlus>Register Now
                           </button>
                          </Link>
