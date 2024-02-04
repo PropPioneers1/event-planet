@@ -23,6 +23,7 @@ import {
 } from "react-share";
 import Footer from "../../../../components/shared/Footer";
 import "./upcoming.scss";
+import EventMap from "./EventMap";
 const UpcomingDetails = () => {
   const shareUrl = "https://event-planet-9789f.web.app/";
   const img = "https://i.ibb.co/fq6DWhd/Wedding.jpg";
@@ -390,6 +391,10 @@ const UpcomingDetails = () => {
               <div className="md:col-span-2 col-span-1 mt-16">
                 <div className="bg-neutral p-3">
                   <div>
+                    <div className="py-4">
+                      <h2 className="my-3 text-xl font-semibold">Show Event Area</h2>
+                      <EventMap></EventMap>
+                    </div>
                     <h2 className="border-b border-b-gray-300 pb-2 text-xl">
                       <span className="font-semibold">Total Seats:</span> 500{" "}
                       <span className="font-semibold">(500 left)</span>
