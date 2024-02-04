@@ -3,6 +3,8 @@ import Container from "../../../../components/ui/Container";
 import "./upcoming.scss";
 import { useState } from "react";
 import SingleCard from "./SingleCard";
+import CountDown from "./CountDown";
+
 const UpComingEvent = () => {
   const [cards, setCards] = useState([]);
   useEffect(() => {
@@ -10,10 +12,13 @@ const UpComingEvent = () => {
       .then((res) => res.json())
       .then((data) => {
         setCards(data);
+        const sliceData = data.slice(0, 4);
+        setCards(sliceData);
       });
   }, []);
   return (
     <div>
+      {/* Count Down component */}
       <div className="bg-neutral py-4 md:py-6 lg:py-8 mb-5">
         <Container>
           {/* count down time */}
@@ -61,6 +66,7 @@ const UpComingEvent = () => {
               <button className="button">Up Coming Event</button>
             </div>
           </div>
+          <CountDown></CountDown>
         </Container>
       </div>
 
