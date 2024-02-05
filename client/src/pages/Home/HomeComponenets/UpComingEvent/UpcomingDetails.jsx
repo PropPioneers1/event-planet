@@ -25,11 +25,13 @@ import Footer from "../../../../components/shared/Footer";
 import "./upcoming.scss";
 import EventMap from "./EventMap";
 import useAuth from "../../../../hooks/useAuth";
+import { bookEvent } from "../../../../api/event";
+import toast from "react-hot-toast";
+
 const UpcomingDetails = () => {
   const shareUrl = "https://event-planet-9789f.web.app/";
   const img = "https://i.ibb.co/fq6DWhd/Wedding.jpg";
   const {user} = useAuth()
-  console.log(user?.email)
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [cards, setCards] = useState({});
@@ -66,24 +68,32 @@ const UpcomingDetails = () => {
         setLoading(false);
       });
   }, [id]);
-  console.log(cards)
-  const data = { 
-    eventId:cards?.id,
-    guestName:user?.displayName,
-    guestEmail:user?.email,
-    eventName:cards?.eventName,
-    eventDate:cards?.date,
-    eventTime:cards?.time,
-    eventLocation:cards?.location,
-    totalVipTicket:adultCount,
-    totalNormalTicket:childCount,
-    tikectQuantity: totalTicketQuantity,
-    vipTicketPrice:totalVipPrice,
-    normalTicketPrice:totalNormalPrice,
-    totalPrice:totalAdultChildTicketPrice,
-  }
-  const handleCheckOut = () => {
+  
+  const handleCheckOut = async() => {
+    const eventData = { 
+      eventId:cards?.id,
+      guestName:user?.displayName,
+      guestEmail:user?.email,
+      eventName:cards?.eventName,
+      eventDate:cards?.date,
+      eventTime:cards?.time,
+      eventLocation:cards?.location,
+      totalVipTicket:adultCount,
+      totalNormalTicket:childCount,
+      tikectQuantity: totalTicketQuantity,
+      vipTicketPrice:totalVipPrice,
+      normalTicketPrice:totalNormalPrice,
+      totalPrice:totalAdultChildTicketPrice,
+    }
+    try{
+    const data = await bookEvent(eventData)
     console.log(data)
+    toast.success(`Dear ${user?.displayName} you booked event`)
+    }
+    catch(err){
+      console.log(err.message)
+      toast(err.message)
+    }
   }
   if (loading) return <div className="pt-80">loading...</div>;
   return (
