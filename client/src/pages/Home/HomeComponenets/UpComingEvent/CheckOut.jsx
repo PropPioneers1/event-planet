@@ -3,24 +3,40 @@ import nagad from '../../../../../src/assets/payment-methods-logo/nagad.png';
 import bkash from '../../../../../src/assets/payment-methods-logo/bkash.png'
 import rokect from '../../../../../src/assets/payment-methods-logo/rocket.png'
 import paypal from '../../../../../src/assets/payment-methods-logo/paypal.png'
+// import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import useAuth from "../../../../hooks/useAuth";
+import axios from "axios";
 const CheckOut = () => {
+  const{user}=useAuth()
+
   const handlePaymentSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const form = e.target;
     const mobile = form.mobile.value;
     const paymentMethod = form.paymentMethod.value;
     const data = {
-      mobile,
-      paymentMethod,
-      // eventName,
-      // productId,
-      // userEmail,
-      // currancy,
-      // totalAmount,
-
-    }
-    console.log(data)
-  }
+      mobileNUmber: mobile,
+      eventName: 'xyz',
+      // productId: 9999999,
+      cus_email: user.email,
+      currency: paymentMethod, // Fix the typo here
+      totalAmount: 20000,
+      success_url: 'http://localhost:5000/success/:id',
+      fail_url: 'http://localhost:5000/failure'
+    };
+    axios.post('http://localhost:5000/payment', data)
+      .then(response => {
+        console.log(response.data);
+      window.location.replace(response.data.url)
+      })
+      .catch(error => {
+        console.error(error.message);
+    
+      });
+  
+    console.log(data);
+  };
+  
   return (
     <div className="py-[100px]">
       <Container>
