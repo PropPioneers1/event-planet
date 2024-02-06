@@ -21,6 +21,8 @@ import ThemeDetails from "../pages/CreateEvent/OurThemes/ThemeDetails/ThemeDetai
 import UpdateProfile from "../pages/UpdateProfile/UpdateProfile";
 import AdminSummary from "../pages/Dashboard/AdminSummary/AdminSummary";
 import CheckOut from "../pages/Home/HomeComponenets/UpComingEvent/CheckOut";
+import PaymentSuccess from "../components/shared/PaymentPage/PaymentSuccess";
+import PaymentFaild from "../components/shared/PaymentPage/PaymentFaild";
 
 const Router = createBrowserRouter([
   {
@@ -56,6 +58,14 @@ const Router = createBrowserRouter([
       {
         path:"checkOut/:id",
         element:<CheckOut></CheckOut>
+      },
+      {
+        path:"success/:tran_id",
+        element:<PaymentSuccess></PaymentSuccess>
+      },
+      {
+        path:"payment/faild/:tran_id",
+        element:<PaymentFaild></PaymentFaild>
       },
       {
         path:"checkOut",

@@ -6,7 +6,14 @@ import paypal from '../../../../../src/assets/payment-methods-logo/paypal.png'
 // import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useAuth from "../../../../hooks/useAuth";
 import axios from "axios";
-const CheckOut = () => {
+import { useParams } from "react-router-dom";
+import { signleCheckOutData } from "../../../../api/event";
+const CheckOut = async () => {
+  const {id} = useParams()
+  console.log(id)
+  const data = await signleCheckOutData(id)
+  console.log(data)
+
   const{user}=useAuth()
 
   const handlePaymentSubmit = (e) => {
