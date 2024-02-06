@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Container from "../../../../components/ui/Container";
 import useAuth from "../../../../hooks/useAuth";
@@ -17,9 +17,7 @@ const ThemeDetails = () => {
       .then((res) => res.json())
       .then((data) => {
         if (label) {
-          const themes = data?.filter(
-            (category) => category.category === label
-          );
+          const themes = data?.filter((category) => category.category === label);
           setCategoryTheme(themes);
         }
       });
@@ -41,18 +39,20 @@ const ThemeDetails = () => {
       userRequirement,
       ClientEmailth: user.email,
     };
-    console.log(userTheme);
-
-    axios
-      .post("https://event-planet-server.vercel.app/selectedthm", userTheme)
-      .then(() => {
-        toast.success("Your Response sent successfully");
-        navigate("/");
-      })
-      .catch((error) => {
-        console.error("Error submitting form:", error);
-        toast.error("Error submitting Theme form. Please try again.");
-      });
+console.log(userTheme);
+    
+      axios
+        .post("http://localhost:5000/selectedthm", userTheme)
+        .then(() => {
+          toast.success("Your Response sent successfully");
+          navigate("/");
+        })
+        .catch((error) => {
+          console.error("Error submitting form:", error);
+          toast.error("Error submitting Theme form. Please try again.");
+        });
+    
+    
   };
 
   return (
