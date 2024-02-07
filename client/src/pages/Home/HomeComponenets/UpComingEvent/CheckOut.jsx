@@ -6,14 +6,7 @@ import paypal from '../../../../../src/assets/payment-methods-logo/paypal.png'
 // import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useAuth from "../../../../hooks/useAuth";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import { signleCheckOutData } from "../../../../api/event";
-const CheckOut = async () => {
-  const {id} = useParams()
-  console.log(id)
-  const data = await signleCheckOutData(id)
-  console.log(data)
-
+const CheckOut = () => {
   const{user}=useAuth()
 
   const handlePaymentSubmit = (e) => {
@@ -28,9 +21,9 @@ const CheckOut = async () => {
       cus_email: user.email,
       currency: paymentMethod, // Fix the typo here
       totalAmount: 20000,
-      success_url: 'http://localhost:5000/success/:id',
-      fail_url: 'http://localhost:5000/failure'
-    };
+     
+   paidstatus:false,
+    }; 
     axios.post('http://localhost:5000/payment', data)
       .then(response => {
         console.log(response.data);
@@ -40,7 +33,7 @@ const CheckOut = async () => {
         console.error(error.message);
     
       });
-  
+      // http://localhost:5173/payment/success/$%7Btean_id%7D
     console.log(data);
   };
   
