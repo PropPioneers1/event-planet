@@ -60,11 +60,11 @@ const Router = createBrowserRouter([
         element:<CheckOut></CheckOut>
       },
       {
-        path:"success/:tran_id",
+        path:"payment/success/:tran_id",
         element:<PaymentSuccess></PaymentSuccess>
       },
       {
-        path:"payment/faild/:tran_id",
+        path:"payment/failure/:tran_id",
         element:<PaymentFaild></PaymentFaild>
       },
       {

@@ -2,10 +2,11 @@ import { useParams } from "react-router-dom";
 
 
 const PaymentSuccess = () => {
-    const {trans_id} = useParams()
+    const {tran_id} = useParams()
+    console.log(tran_id);
     return (
-        <div>
-            payment success
+        <div className="mt-44">
+            payment success{tran_id}
         </div>
     );
 };
