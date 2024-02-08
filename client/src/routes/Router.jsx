@@ -58,21 +58,18 @@ const Router = createBrowserRouter([
         element: <UpcomingDetails></UpcomingDetails>,
       },
       {
-        path:"checkOut/:id",
-        element:<CheckOut></CheckOut>
+        path: "checkout",
+        element: <CheckOut></CheckOut>,
       },
       {
-        path:"payment/success/:tran_id",
-        element:<PaymentSuccess></PaymentSuccess>
+        path: "payment/success/:tran_id",
+        element: <PaymentSuccess></PaymentSuccess>,
       },
       {
-        path:"payment/failure/:tran_id",
-        element:<PaymentFaild></PaymentFaild>
+        path: "payment/failure/:tran_id",
+        element: <PaymentFaild></PaymentFaild>,
       },
-      {
-        path:"checkOut",
-        element:<CheckOut></CheckOut>
-      },
+
       {
         path: "shopping",
         element: <Shopping></Shopping>,
@@ -130,9 +127,9 @@ const Router = createBrowserRouter([
         element: <AdminSummary></AdminSummary>,
       },
       {
-        path:"event-requests",
-        element: <EventRequests></EventRequests>
-      }
+        path: "event-requests",
+        element: <EventRequests></EventRequests>,
+      },
     ],
   },
 ]);
