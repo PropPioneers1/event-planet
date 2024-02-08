@@ -9,7 +9,7 @@ const Blogs = () => {
   const [allBlogs, setAllBlogs] = useState([]);
   const [isSearch, setIsSearch] = useState("");
   const axiosSecure = useAxiosSecure();
-  const [blogCategory, setBlogCategory] = useState("");
+  // const [blogCategory, setBlogCategory] = useState("");
 
   const { data: blogs, isPending: isBlogLoading, refetch } = useQuery({
     queryKey: ["all-blogs"],
@@ -23,12 +23,12 @@ const Blogs = () => {
         const blgs = blogsData?.filter((blog) => blog?.post?.match(isSearch));
         return blgs;
       }
-      if (blogCategory) {
-        const categoryBlog = blogsData.filter((blog) =>
-          blog.category.includes(blogCategory)
-        );
-        return categoryBlog;
-      }
+      // if (blogCategory) {
+      //   const categoryBlog = blogsData.filter((blog) =>
+      //     blog.category.includes(blogCategory)
+      //   );
+      //   return categoryBlog;
+      // }
 
       return blogsData;
     },
@@ -37,20 +37,20 @@ const Blogs = () => {
   console.log(allBlogs);
 
   // get all categories
-  const allCategories = allBlogs?.map((blog) => blog.category);
-  const categories = allCategories?.reduce((prevCategory, currentCategory) => {
-    if (!prevCategory.includes(currentCategory)) {
-      prevCategory.push(currentCategory);
-    }
-    return prevCategory;
-  }, []);
+  // const allCategories = allBlogs?.map((blog) => blog.category);
+  // const categories = allCategories?.reduce((prevCategory, currentCategory) => {
+  //   if (!prevCategory.includes(currentCategory)) {
+  //     prevCategory.push(currentCategory);
+  //   }
+  //   return prevCategory;
+  // }, []);
 
   // end getting categories
 
-  const arrayOfTags = [].concat(allBlogs?.map((blog) => blog?.tags));
-  const tags = arrayOfTags.reduce((result, currentArray) => {
-    return result.concat(currentArray);
-  }, []);
+  // const arrayOfTags = [].concat(allBlogs?.map((blog) => blog?.tags));
+  // const tags = arrayOfTags.reduce((result, currentArray) => {
+  //   return result.concat(currentArray);
+  // }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -64,26 +64,8 @@ const Blogs = () => {
         <div>Loading</div>
       ) : (
         <Container>
-          <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-5">
-            <div className="hidden lg:block lg:col-span-1  ">
-              {/* blogs */}
-              <div className="fixed">
-                <h2 className="font-lora text-3xl font-bold pb-5">Blogs</h2>
-                {/* Categories */}
-                <div className="grid gap-1">
-                  {categories?.map((category, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setBlogCategory(category)}
-                      className="border-2 border-secondary rounded-[3px] px-5 py-2 "
-                    >
-                      {category}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-            <div className="md:col-span-2 md:px-5">
+          <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-5">
+            <div className="md:col-span-4 ">
               <form onSubmit={handleSearch} className="flex">
                 <input
                   type="text"
@@ -98,21 +80,6 @@ const Blogs = () => {
               {blogs?.map((blog, idx) => (
                 <Blog key={idx} blog={blog} refetch={refetch} />
               ))}
-            </div>
-            <div className="md:col-span-1 hidden md:block">
-              <div className="fixed px-4">
-                <h2 className="font-lora text-3xl font-bold pb-5">Tags</h2>
-                <div className="flex flex-wrap gap-1">
-                  {tags?.map((tag, idx) => (
-                    <button
-                      key={idx}
-                      className="border-2 border-secondary px-2 rounded-[3px] text-sm font-semibold"
-                    >
-                      {tag}
-                    </button>
-                  ))}
-                </div>
-              </div>
             </div>
           </div>
         </Container>
