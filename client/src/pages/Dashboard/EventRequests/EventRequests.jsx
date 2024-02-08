@@ -1,10 +1,55 @@
+import { useEffect, useState } from "react";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { RxCross2 } from "react-icons/rx";
+import { TiTick } from "react-icons/ti";
 
 
 const EventRequests = () => {
+
+    const [events, setEvents] = useState([]);
+    const axiosSecure = useAxiosSecure()
+
+
+    useEffect(() => {
+        axiosSecure.get("/event")
+            .then(res => {
+                const events = res?.data?.events;
+                const pendingEvents = events?.filter(item => item?.status === "pending")
+                setEvents(pendingEvents)
+            })
+    }, [axiosSecure]);
+
+
+    // This function will reject the event
+    const handleReject = (_id) => {
+        console.log(_id);
+        const updateStatus = {
+            status: "rejected"
+        }
+
+        axiosSecure.patch(`/event/${_id}`,updateStatus)
+        .then(res=>{
+            console.log(res.data);
+        })
+    }
+
+    // This function will Accept the event
+    const handleAccept = (_id) => {
+        console.log(_id);
+        const updateStatus = {
+            status: "unpaid"
+        }
+
+        axiosSecure.patch(`/event/${_id}`,updateStatus)
+        .then(res=>{
+            console.log(res.data);
+        })
+    }
+
     return (
         <div>
             {/* Upcoming events */}
-            <div className="overflow-x-auto my-12 bg-white p-6 rounded-md">
+            <div className="overflow-x-auto bg-white p-6 rounded-md">
                 <h2 className="text-2xl font-bold text-[#707070] my-6">Event Requests</h2>
                 <table className="table  ">
                     {/* head */}
@@ -20,12 +65,13 @@ const EventRequests = () => {
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody className="font-bold text-base text-[#707070]">
-                    
-                             <tr >
-                                <th>1</th>
+                    <tbody className="font-bold  text-[#707070]">
+
+                        {
+                            events?.map((item, idx) => <tr key={item._id} >
+                                <th>{idx + 1}</th>
                                 <td>
-                                    <p className="hover:text-primary">Summer Beats Music Festival</p>
+                                    <p className="hover:text-primary">{item?.eventName}</p>
                                 </td>
                                 <td><div className="avatar-group -space-x-6 rtl:space-x-reverse">
                                     <div className="avatar">
@@ -49,18 +95,39 @@ const EventRequests = () => {
                                         </div>
                                     </div>
                                 </div></td>
-                                <td>2024-08-20</td>
-                                <td>Sunshine Park</td>
-                                <td>EventX Productions</td>
-                                <td>Pending</td>
-                                <td></td>
-                            </tr>
-                      
+                                <td>{item?.startDate}</td>
+                                <td>{item?.venue}</td>
+                                <td>{item?.organization}</td>
+                                <td>{item?.status}</td>
+                                <td>
+                                    {/* <div className="dropdown dropdown-bottom dropdown-left ">
+                                        <div tabIndex={0} role="button" className="btn btn-ghost rounded-btn">
+                                            <HiDotsHorizontal size={36}></HiDotsHorizontal>
+                                        </div>
+                                        <ul tabIndex={0} className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-32 mt-4">
+                                            <li><a>Item 1</a></li>
+                                            <li><a>Item 2</a></li>
+                                        </ul>
+                                    </div> */}
+                                    <button
+                                        onClick={() => handleReject(item._id)}
+                                        className="btn mr-4">
+                                        <RxCross2 size={24} />
+                                    </button>
+                                    <button
+                                    onClick={()=>handleAccept(item._id)}
+                                        className="btn">
+                                        <TiTick size={24} />
+                                    </button>
+                                </td>
+                            </tr>)
+                        }
+
 
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div >
     );
 };
 

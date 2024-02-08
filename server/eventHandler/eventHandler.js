@@ -9,19 +9,19 @@ router.get("/", async (req, res) => {
   let query = {}
   const page = parseInt(req.query.page);
   const eventCount = await eventModel.countDocuments({})
- 
-  if(page >=0){
+
+  if (page >= 0) {
     const limit = 8;
     const skip = page * limit
     query = await eventModel.find({}).skip(skip).limit(limit);
   }
-  else{
+  else {
     query = await eventModel.find({});
   }
 
   try {
     const result = query;
-    res.status(200).send({eventCount,events:result});
+    res.status(200).send({ eventCount, events: result });
   } catch (error) {
     console.log("Not Fount Block");
     res.status(500).json({ error: "internal server error" });
@@ -49,8 +49,28 @@ router.put("/:id", (req, res) => {
 
 });
 
-router.put("/:id", (req, res) => {
+// Patch todo
+router.patch("/:id", async (req, res) => {
+  const { id } = req.params;
+  const updateStatus = req.body; 
 
+  try {
+    // Find the document by ID and update the specified property
+    const updatedEvent = await eventModel.findByIdAndUpdate(
+      id,
+      { $set: { status: updateStatus.status } }, // Use $set operator to update a specific property
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedEvent) {
+      return res.status(404).json({ error: "Event not found" });
+    }
+
+    res.status(200).json(updatedEvent);
+  } catch (error) {
+    console.error("Error updating event:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
 
 // update many todo
