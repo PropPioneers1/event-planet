@@ -17,30 +17,37 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 
 const AllEvent = () => {
-const axiosSecure = useAxiosSecure();
-	const [events, setEvents] = useState([]);
+
+	const axiosSecure = useAxiosSecure();
+
+	const [events, setEvents] = useState({ eventCount: 0, data: [] });
 	const [page, setPage] = useState(0);
 
 	const [category, setCategory] = useState("");
 	const [state, setState] = useState("");
 	const [city, setCity] = useState("");
+	const [venue, setVenue] = useState("");
 
 	console.log(page);
 
 	useEffect(() => {
 		axiosSecure.get(`/event?page=${page}`)
-		.then(res=>{
-			console.log(res?.data?.events);
-			setEvents(res.data)
-		})
-	}, [axiosSecure,page]);
+			.then(res => {
+				console.log(res);
+				setEvents(res?.data)
+			})
+	}, [axiosSecure, page]);
 
+	console.log(events.eventCount);
 
-	const totalPages = Math.ceil(events.eventCount / 8);
+	console.log(events);
+	const totalPages = Math.ceil(events?.eventCount / 8);
 	console.log(totalPages);
 
-	const pages = [...new Array(totalPages).fill(0)];
 
+
+	const pages = [...new Array(totalPages).fill(0)];
+	console.log(pages);
 
 
 
@@ -170,7 +177,8 @@ const axiosSecure = useAxiosSecure();
 								<div className="form-control flex-1 ">
 									<select
 										className="select w-full rounded-md  focus:border-none focus:outline-none"
-										defaultValue={city}
+										onChange={(e) => setVenue(e.target.value)}
+										defaultValue={venue}
 										required
 									>
 										<option disabled value="">All Venues</option>
@@ -219,7 +227,7 @@ const axiosSecure = useAxiosSecure();
 						}
 
 						{
-							pages.map((item, index) =>
+							pages?.map((item, index) =>
 								<button
 									key={index}
 									onClick={() => setPage(index)}
@@ -229,7 +237,7 @@ const axiosSecure = useAxiosSecure();
 						}
 
 						{
-							page !== pages.length -1  &&
+							page !== pages?.length - 1 &&
 							<div className="flex items-center">
 								<button onClick={() => setPage(page + 1)} className="text-2xl font-semibold text-[#878787] ml-4">Next</button>
 								<IoIosArrowForward className="text-2xl font-semibold text-[#878787]" />
