@@ -1,104 +1,76 @@
-import { useEffect, useState } from "react";
-import Container from "../../components/ui/Container";
-import SingleCard from "../Home/HomeComponenets/UpComingEvent/SingleCard";
 
-const EventCard = () => {
-	const [cards, setCards] = useState([]);
+import PropTypes from 'prop-types';
+import { IoLocationSharp, IoTimeOutline } from 'react-icons/io5';
 
-	const [itemsPerPage, setItemsPerPage] = useState(6);
-	const [currentPage, setCurrentPage] = useState(0);
+const EventCard = ({item}) => {
+    const { eventName, venue, startDate, eventImages, ticketPrice } = item;
+    
 
-	useEffect(() => {
-		fetch("./upcomingevent.json")
-			.then((res) => res.json())
-			.then((data) => {
-				setCards(data);
-			});
-	}, []);
+    const month = new Date(startDate).toLocaleString('default', { month: 'long' })
+    const eventDate = new Date(startDate).getDate();
+    const time = new Date(startDate).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 
-	const count = cards?.length;
-	// console.log(count);
 
-	const numberOfPages = Math.ceil(count / itemsPerPage);
-	const pages = [...Array(numberOfPages).keys()];
+    return (
+        <div
+            className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-white border border-primary border-opacity-10 hover:border-opacity-100 rounded transition-all duration-500">
+            {/* div for image */}
+            <div
+                className="relative w-full md:w-11/12">
+                <img
+                    className="object-cover w-full h-[250px] md:h-full  rounded " src={eventImages[0]} alt="Event Image"
+                />
+                {/* date and month*/}
+                <div
+                    className="absolute top-0 w-[70px] h-[70px] p-6 flex flex-col items-center justify-center  bg-gradient-to-tr  from-primary to-[#921b42]  ">
+                    <p className="text-2xl text-white font-bold">
+                        {
+                            eventDate
+                        }
+                    </p>
+                    <p className="text-base text-white font-bold">
+                        {
+                            month.length > 4 ? month.slice(0, 3) : month
+                        }
+                    </p>
+                </div>
+                {/* for right side border style */}
+                <div className="absolute top-4 -right-1 w-2 h-16 bg-primary">
 
-	const handleItemsPerPage = (e) => {
-		const value = parseInt(e.target.value);
-		setItemsPerPage(value);
-		setCurrentPage(0);
-	};
+                </div>
+            </div>
+            {/* div for content */}
+            <div>
+                <h3 className="text-xl font-bold">{eventName}</h3>
+                <p className="text-lg text-primary">Tickets from $ {ticketPrice}</p>
+                {/* Start time and location */}
+                <div className="my-6 space-y-2">
+                    <div className="flex items-center gap-4">
+                        <div className="bg-neutral p-2 rounded-full">
+                            <IoTimeOutline className="text-primary"></IoTimeOutline>
+                        </div>
+                        <p className='text-[#878787]'>Start at {time}</p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <div className="bg-neutral p-2 rounded-full">
+                            <IoLocationSharp className="text-primary"></IoLocationSharp>
+                        </div>
+                        <p className='text-[#878787]'>{venue}</p>
+                    </div>
+                </div>
+                <div className='md:w-56 sm:w-auto max-w-56'>
+                    <button
+                        className="btn rounded-full w-full text-[#636363] text-lg font-bold my-4 hover:bg-primary hover:text-white transition-all duration-300">
+                        Ticket & Details
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+};
 
-	const handlePrevPage = () => {
-		if (currentPage > 0) {
-			setCurrentPage(currentPage - 1);
-		}
-	};
-
-	const handleNextPage = () => {
-		if (currentPage < pages?.length - 1) {
-			setCurrentPage(currentPage + 1);
-		}
-	};
-
-	return (
-		<div>
-			<Container>
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 place-items-center py-10">
-					{cards &&
-						cards.map((card) => (
-							<SingleCard key={card.id} card={card}></SingleCard>
-						))}
-				</div>
-				{/* Pagination code Here */}
-				<div className="text-center py-5">
-					<button
-						className="btn btn-sm bg-primary text-white"
-						onClick={handlePrevPage}
-						style={{ marginRight: "1rem" }}
-					>
-						Prev
-					</button>
-					{pages.map((page) => (
-						<button
-							key={page}
-							onClick={() => setCurrentPage(page)}
-							style={{
-								margin: "0 0.5rem",
-								padding: "0.5rem",
-								border:
-									currentPage === page
-										? "1px solid #000"
-										: "none",
-							}}
-							className={
-								currentPage == page &&
-								"btn bg-primary btn-sm text-white border-none"
-							}
-						>
-							{page + 1}
-						</button>
-					))}
-					<button
-						className="btn btn-sm bg-primary text-white"
-						onClick={handleNextPage}
-						style={{ marginLeft: "1rem" }}
-					>
-						Next
-					</button>
-					<select
-						className="btn btn-sm bg-primary text-white"
-						value={itemsPerPage}
-						onChange={handleItemsPerPage}
-						style={{ marginLeft: "1rem" }}
-					>
-						<option value={2}>2</option>
-						<option value={6}>6</option>
-						<option value={8}>8</option>
-					</select>
-				</div>
-			</Container>
-		</div>
-	);
+EventCard.propTypes = {
+    item: PropTypes.object
 };
 
 export default EventCard;
