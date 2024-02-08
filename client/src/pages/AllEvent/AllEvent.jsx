@@ -28,17 +28,14 @@ const AllEvent = () => {
 	const [city, setCity] = useState("");
 	const [venue, setVenue] = useState("");
 
-	console.log(page);
 
 	useEffect(() => {
 		axiosSecure.get(`/event?page=${page}`)
 			.then(res => {
-				console.log(res);
 				setEvents(res?.data)
 			})
 	}, [axiosSecure, page]);
 
-	console.log(events.eventCount);
 
 	console.log(events);
 	const totalPages = Math.ceil(events?.eventCount / 8);

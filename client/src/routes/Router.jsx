@@ -22,6 +22,8 @@ import UpdateProfile from "../pages/UpdateProfile/UpdateProfile";
 import AdminSummary from "../pages/Dashboard/AdminSummary/AdminSummary";
 import CheckOut from "../pages/Home/HomeComponenets/UpComingEvent/CheckOut";
 import EventRequests from "../pages/Dashboard/EventRequests/EventRequests";
+import PaymentSuccess from "../components/shared/PaymentPage/PaymentSuccess";
+import PaymentFaild from "../components/shared/PaymentPage/PaymentFaild";
 
 const Router = createBrowserRouter([
   {
@@ -53,6 +55,18 @@ const Router = createBrowserRouter([
       {
         path: "upcomingDetails/:id",
         element: <UpcomingDetails></UpcomingDetails>,
+      },
+      {
+        path:"checkOut/:id",
+        element:<CheckOut></CheckOut>
+      },
+      {
+        path:"payment/success/:tran_id",
+        element:<PaymentSuccess></PaymentSuccess>
+      },
+      {
+        path:"payment/failure/:tran_id",
+        element:<PaymentFaild></PaymentFaild>
       },
       {
         path:"checkOut",

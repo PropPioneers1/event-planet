@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "./trending.css";
 import Lottie from "lottie-react";
 // import shop from '../../../../assets/image/shop.webp'
-import { IoStar } from "react-icons/io5";
+// import { IoStar } from "react-icons/io5";
 import lcottievb from "../../../../../public/Animation - 1705432373781.json";
 import { FaShopify } from "react-icons/fa";
 import Container from "../../../../components/ui/Container";

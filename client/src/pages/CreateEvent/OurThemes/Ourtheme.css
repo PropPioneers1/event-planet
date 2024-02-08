@@ -1,7 +1,7 @@
 .card-container {
   position: relative;
-  width: 190px;
-  height: 254px;
+  width: 120px;
+  height:154px;
   border-radius: 8px;
   padding: 10px;
   background: linear-gradient(135deg, rgba(165, 165, 165, 0.05), rgba(34, 40, 49, 0.3));
@@ -9,8 +9,8 @@
 
 .cardth {
   position: relative;
-  width: 190px;
-  height: 254px;
+  width: 120px;
+  height: 154px;
   background: #f5f5f5;
   border-radius: 8px;
   color: #232323;
@@ -85,6 +85,7 @@
 }
 
 /*Button*/
+
 
 
 
