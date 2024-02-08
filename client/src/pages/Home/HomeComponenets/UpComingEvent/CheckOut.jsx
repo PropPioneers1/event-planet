@@ -19,9 +19,8 @@ const CheckOut = () => {
       eventName: 'xyz',
       // productId: 9999999,
       cus_email: user.email,
-      currency: paymentMethod, // Fix the typo here
+      currency: paymentMethod, 
       totalAmount: 20000,
-     
    paidstatus:false,
     }; 
     axios.post('http://localhost:5000/payment', data)
