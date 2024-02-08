@@ -11,6 +11,7 @@ const QnaHandler = require("./QnaHandler/QnaHandler");
 const selecthemeHandler = require("./SelectTheme/SelectthHandler");
 const shopHandler = require("./shopHandler/shopHandler");
 const blogHandler = require("./blogHandler/BlogHandler");
+const eventHandler = require("./eventHandler/eventHandler");
 const upComingDetailHandler = require("./upComingDetailHandler/detailHandler")
 
 const paymenthandler=require("./paymentHandler/PaymentHandler")
@@ -41,6 +42,7 @@ app.use("/shop", shopHandler);
 app.use("/qna", QnaHandler);
 app.use("/selectedthm", selecthemeHandler);
 app.use("/blog", blogHandler);
+app.use("/event",eventHandler)
 app.use("/upcomingDetails", upComingDetailHandler)
 app.use('/payment',paymenthandler)
 
