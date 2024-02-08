@@ -2,21 +2,20 @@ import { IoIosPeople } from "react-icons/io";
 import { FaCalendarCheck } from "react-icons/fa6";
 import { TbTicket } from "react-icons/tb";
 import { useEffect, useState } from "react";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import axios from "axios";
 
 
 const AdminSummary = () => {
 
     const [upComingEvents, setUpComingEvents] = useState([]);
-    const axiosSecure = useAxiosSecure()
 
     useEffect(() => {
-        axiosSecure.get("/upcomingevent.json")
+        axios.get("/upcomingevent.json")
             .then(res => {
                 console.log(res.data);
-                setUpComingEvents(res.data)
+                setUpComingEvents(res?.data)
             })
-    }, [axiosSecure])
+    }, [])
 
     return (
         <div className="">

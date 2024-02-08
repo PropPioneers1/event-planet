@@ -9,6 +9,7 @@ const QnaHandler = require("./QnaHandler/QnaHandler");
 const selecthemeHandler = require("./SelectTheme/SelectthHandler");
 const shopHandler = require("./shopHandler/shopHandler");
 const blogHandler = require("./blogHandler/BlogHandler");
+const eventHandler = require("./eventHandler/eventHandler");
 // middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -36,6 +37,7 @@ app.use("/shop", shopHandler);
 app.use("/qna", QnaHandler);
 app.use("/selectedthm", selecthemeHandler);
 app.use("/blog", blogHandler);
+app.use("/event",eventHandler)
 
 // Eroor handler
 
