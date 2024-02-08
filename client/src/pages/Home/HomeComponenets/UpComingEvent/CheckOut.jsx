@@ -6,15 +6,13 @@ import paypal from '../../../../../src/assets/payment-methods-logo/paypal.png'
 // import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useAuth from "../../../../hooks/useAuth";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import { signleCheckOutData } from "../../../../api/event";
-const CheckOut = async () => {
-  const {id} = useParams()
-  console.log(id)
-  const data = await signleCheckOutData(id)
-  console.log(data)
-
-  const{user}=useAuth()
+import { useLocation } from "react-router-dom";
+const CheckOut = () => {
+  const{user}=useAuth();
+  const location = useLocation();
+  const checkOutData = location.state?.eventData;
+  console.log(checkOutData)
+  const {ticketNumber,eventDate,guestEmail,totalPrice,vipTicketPrice,normalTicketPrice,} = checkOutData
 
   const handlePaymentSubmit = (e) => {
     e.preventDefault();
@@ -43,7 +41,7 @@ const CheckOut = async () => {
   
     console.log(data);
   };
-  
+
   return (
     <div className="py-[100px]">
       <Container>
@@ -58,7 +56,7 @@ const CheckOut = async () => {
               {/* head */}
               <thead>
                 <tr>
-                  <th className="col-span-4">Order Number</th>
+                  <th className="col-span-4">Order Number:</th>
                   <th>Date</th>
                   <th>Email</th>
                   <th> Total</th>
@@ -68,10 +66,10 @@ const CheckOut = async () => {
               <tbody>
                 {/* row 1 */}
                 <tr>
-                  <th>5845</th>
-                  <td>12.2.2024</td>
-                  <td>proppionears1@gmail.com</td>
-                  <td>400$</td>
+                  <th> {ticketNumber} </th>
+                  <td> {eventDate} </td>
+                  <td> {guestEmail} </td>
+                  <td> {totalPrice} </td>
                   <td>Stripe</td>
                 </tr>
               </tbody>
@@ -85,15 +83,15 @@ const CheckOut = async () => {
             <h1 className=" font-medium text-2xl my-5">Order Details</h1>
             <div className="border border-gray-400 rounded">
                 <div className="bg-secondary rounded text-white grid grid-cols-4">
-                    <div className="col-span-3 border-r-2 p-4 font-medium text-xl">Product</div>
+                    <div className="col-span-3 border-r-2 p-4 font-medium text-xl">Event</div>
                     <div className="col-span-1 p-4 font-medium text-xl">Total</div>
                 </div>
                 <div className=" grid grid-cols-4">
                     <div className="col-span-3">
                     <div className="  border-gray-400 border-r border-b p-4 min-h-[150px]">
-                    <div>date:</div>
-                    <div>VIP:</div>
-                    <div>Normal:</div>
+                    <div>date: {eventDate} </div>
+                    <div>VIP: {vipTicketPrice}</div>
+                    <div>Normal: {normalTicketPrice}</div>
                     <div>Location:</div>
                     </div>
                     <div className="p-4 border-gray-400 border-r border-b">Sub Total</div>
@@ -108,9 +106,9 @@ const CheckOut = async () => {
 
                     <div className="col-span-1">
                      <div className=" min-h-[150px] border-b border-gray-400 p-4 flex items-center">
-                    <div className="">200$</div>
+                    <div className=""> {totalPrice} </div>
                     </div>
-                    <div className="p-4 border-b border-gray-400">300$</div>
+                    <div className="p-4 border-b border-gray-400"> {totalPrice} </div>
                     <div className="p-4 border-b border-gray-400">Stripe</div>
                     <div className="p-3 border-gray-400 border-l">
                    <form onSubmit={handlePaymentSubmit}>

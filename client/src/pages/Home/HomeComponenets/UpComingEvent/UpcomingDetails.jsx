@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaCartPlus } from "react-icons/fa";
 import { FaCircleArrowRight } from "react-icons/fa6";
@@ -25,13 +25,12 @@ import Footer from "../../../../components/shared/Footer";
 import "./upcoming.scss";
 import EventMap from "./EventMap";
 import useAuth from "../../../../hooks/useAuth";
-import { bookEvent } from "../../../../api/event";
-import toast from "react-hot-toast";
 
 const UpcomingDetails = () => {
   const shareUrl = "https://event-planet-9789f.web.app/";
   const img = "https://i.ibb.co/fq6DWhd/Wedding.jpg";
   const {user} = useAuth()
+  const navigate = useNavigate()
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [cards, setCards] = useState({});
@@ -68,16 +67,20 @@ const UpcomingDetails = () => {
         setLoading(false);
       });
   }, [id]);
+  const generateTicketNumber = () => {
+    return Math.floor(Math.random() * 100).toString().padStart(3, '0');
+  };
   
-  const handleCheckOut = async() => {
+  const handleCheckOut = () => {
+    const eventTicketNumber = generateTicketNumber();
     const eventData = { 
+      ticketNumber: eventTicketNumber,
       eventId:cards?.id,
       guestName:user?.displayName,
       guestEmail:user?.email,
       eventName:cards?.eventName,
       eventDate:cards?.date,
       eventTime:cards?.time,
-      eventLocation:cards?.location,
       totalVipTicket:adultCount,
       totalNormalTicket:childCount,
       tikectQuantity: totalTicketQuantity,
@@ -85,15 +88,14 @@ const UpcomingDetails = () => {
       normalTicketPrice:totalNormalPrice,
       totalPrice:totalAdultChildTicketPrice,
     }
-    try{
-    const data = await bookEvent(eventData)
-    console.log(data)
-    toast.success(`Dear ${user?.displayName} you booked event`)
-    }
-    catch(err){
-      console.log(err.message)
-      toast(err.message)
-    }
+    // genarate ticket number
+    
+    navigate(`/checkOut/${cards.id}`, {
+      state: { eventData}
+    })
+    
+   console.log(eventData)
+   console.log(eventTicketNumber)
   }
   if (loading) return <div className="pt-80">loading...</div>;
   return (
@@ -302,11 +304,11 @@ const UpcomingDetails = () => {
                           <p>Total: {totalAdultChildTicketPrice}</p>
                         </div>
                         <div>
-                         <Link to={`/checkOut/${cards.id}`}>
+                         
                          <button onClick={handleCheckOut} className="button flex items-center gap-3">
                             <FaCartPlus></FaCartPlus>Register Now
                           </button>
-                         </Link>
+                        
                         </div>
                       </div>
                     </div>

@@ -72,7 +72,8 @@ router.post("/", async (req, res) => {
   }
 });
 router.post('/success/:id',async (req, res) => {
-  console.log(req.params.id);
+  console.log("sussess id",req.params.id);
+  res.redirect(`http://localhost:5173/success${req.params.id}`)
 })
  
 
