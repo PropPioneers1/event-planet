@@ -34,9 +34,23 @@ router.get("/:id", async (req, res) => {
 });
 
 // Post a todo
+// router.post("/", async (req, res) => {
+//   const newevent = new Event(req.body);
+//   try {
+//     await  newevent.save();
+//     res.status(201).json({ message: "inserted successfully" });
+//   } catch (error) {
+//     res.status(500).json({ error: " Server Error" });
+//   }
+// });
 router.post("/", async (req, res) => {
-
-
+  try {
+    const newEvent = await eventModel.create(req.body);
+    res.status(201).json({ message: "inserted successfully", event: newEvent });
+  } catch (error) {
+    console.error("Error creating event:", error);
+    res.status(500).json({ error: "Server Error" });
+  }
 });
 
 // Post multiple todos
