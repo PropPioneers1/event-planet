@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const express = require("express");
+const sendMail=require('./controller/sendMail')
 const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
@@ -45,6 +46,10 @@ app.use("/blog", blogHandler);
 app.use("/event",eventHandler)
 app.use("/upcomingDetails", upComingDetailHandler)
 app.use('/payment',paymenthandler)
+
+// send confirmation mail if the user successfully booking a event
+app.get('/sendEmail',sendMail)
+
 
 // Eroor handler
 

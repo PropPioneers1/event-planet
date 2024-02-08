@@ -2,7 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
 const shopSchema = require("../schemas/shopSchema");
+const shopCartSchema = require("../schemas/shopCartSchema");
 const shopModel = mongoose.model("Shop", shopSchema);
+const shopCartModel=mongoose.model('shopcart',shopCartSchema)
 
 // Get all shoItem
 router.get("/", async (req, res) => {
@@ -10,6 +12,22 @@ router.get("/", async (req, res) => {
     const result = await shopModel.find({});
     res.status(200).json({ result });
   } catch (err) {
+    res.status(500).json({
+      error: "There was a server-side error",
+    });
+  }
+});
+
+router.get("/details-shopCart/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await shopModel.findById(id); // Use findById directly for single document retrieval
+    if (!result) {
+      return res.status(404).json({ error: "Shopping cart item not found" });
+    }
+    res.status(200).json({ result });
+  } catch (err) {
+    console.error(err);
     res.status(500).json({
       error: "There was a server-side error",
     });
