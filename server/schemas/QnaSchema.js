@@ -1,48 +1,86 @@
 const mongoose = require('mongoose');
 
 const QnaSchema = new mongoose.Schema({
-  organizationName: {
+  userName: {
     type: String,
-    required: true,
+    required: true
   },
-  audienceSize: {
+  email: {
+    type: String,
+    required: true
+  },
+  phone:{
+    type:Number ,
+    required: true
+  },
+  organization: {
+    type: String,
+    required: true
+  },
+  category: {
+    type: String,
+    required: true
+  },
+  eventName: {
+    type: String,
+    required: true
+  },
+  totalSeat: {
     type: Number,
-    required: true,
-    min: 20, 
+    required: true
   },
-  useHotDeals: {
+  state: {
     type: String,
-    required: true,
-    enum: ['Yes', 'No'], 
+    required: true
   },
-  selectedCardOrTicketPrice: {
-    type: mongoose.Schema.Types.Mixed, 
-    required: function () {
-      return this.useHotDeals === 'Yes' ? false : true;
-    },
-  },
-  otherDemands: {
+  city: {
     type: String,
+    required: true
   },
-  numberOfGuests: {
+  venue: {
+    type: String,
+    required: true
+  },
+  startDate: {
+    type: Date,
+    required: true
+  },
+  endDate: {
+    type: Date,
+    required: true
+  },
+  ticketPrice: {
     type: Number,
-    required: true,
-    min: 1, 
+    required: true
   },
-  guestNames: {
+  speakers: {
+    type: [String],
+    required: true
+  },
+  eventPrice: {
+    type: Number,
+    required: true
+  },
+  description: {
     type: String,
-    required: true,
+    required: true
   },
-  guestProfessions: {
+  eventImages: {
+    type: [String],
+    required: true
+  },
+  speakersImages: {
+    type: [String],
+    required: true
+  },
+
+  status: {
     type: String,
-    required: true,
-  },
-  status:{
-    type:String,
-    enum:['pending']
+    required: true
   }
-  
 });
+  
+
 
 
 
