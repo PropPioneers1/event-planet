@@ -2,13 +2,14 @@
 import PropTypes from 'prop-types';
 import { IoLocationSharp, IoTimeOutline } from 'react-icons/io5';
 
-const EventCard = ({ eventName, time, venue, price, date }) => {
+const EventCard = ({item}) => {
+    const { eventName, venue, startDate, eventImages, ticketPrice } = item;
+    
 
+    const month = new Date(startDate).toLocaleString('default', { month: 'long' })
+    const eventDate = new Date(startDate).getDate();
+    const time = new Date(startDate).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 
-    const month = new Date(date).toLocaleString('default', { month: 'long' })
-
-    const eventDate = new Date(date).getDate()
-    // console.log(eventDate);
 
     return (
         <div
@@ -17,7 +18,7 @@ const EventCard = ({ eventName, time, venue, price, date }) => {
             <div
                 className="relative w-full md:w-11/12">
                 <img
-                    className="object-cover w-full h-[250px] md:h-full  rounded " src="https://i.ibb.co/DLJQhbZ/people-having-fun-wedding-hall.jpg" alt="Event Image"
+                    className="object-cover w-full h-[250px] md:h-full  rounded " src={eventImages[0]} alt="Event Image"
                 />
                 {/* date and month*/}
                 <div
@@ -41,7 +42,8 @@ const EventCard = ({ eventName, time, venue, price, date }) => {
             {/* div for content */}
             <div>
                 <h3 className="text-xl font-bold">{eventName}</h3>
-                <p className="text-lg text-primary">Tickets from ${price}</p>
+                <p className="text-lg text-primary">Tickets from $ {ticketPrice}</p>
+                {/* Start time and location */}
                 <div className="my-6 space-y-2">
                     <div className="flex items-center gap-4">
                         <div className="bg-neutral p-2 rounded-full">
@@ -68,11 +70,7 @@ const EventCard = ({ eventName, time, venue, price, date }) => {
 };
 
 EventCard.propTypes = {
-    eventName: PropTypes.string,
-    time: PropTypes.string,
-    venue: PropTypes.string,
-    price: PropTypes.string,
-    date: PropTypes.string
+    item: PropTypes.object
 };
 
 export default EventCard;

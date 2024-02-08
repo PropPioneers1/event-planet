@@ -8,6 +8,7 @@ import { IoAddCircleOutline, IoCreate } from "react-icons/io5";
 import { PiSignInBold } from "react-icons/pi";
 import { CgLogOut } from "react-icons/cg";
 import { MdSummarize } from "react-icons/md";
+import { FaCodePullRequest } from "react-icons/fa6";
 
 const Dashboard = () => {
 
@@ -60,6 +61,15 @@ const Dashboard = () => {
         >
             <MdPayments className={iconStyle}></MdPayments>
             <li className={isCollapse ? "hidden" : "block"}> Payment History</li>
+        </NavLink>
+        <NavLink
+            to="/dashboard/event-requests"
+            className={({ isActive, isPending }) =>
+                isPending ? "pending" : isActive ? activeStyle : inActiveStyle
+            }
+        >
+            <FaCodePullRequest className={iconStyle}></FaCodePullRequest>
+            <li className={isCollapse ? "hidden" : "block"}> Event Requests</li>
         </NavLink>
         <NavLink
             to="/dashboard/admin-summary"

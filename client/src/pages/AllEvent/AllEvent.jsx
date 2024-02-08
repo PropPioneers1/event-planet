@@ -13,36 +13,44 @@ import { useEffect, useState } from "react";
 
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import EventCard from "./EventCard";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 
 const AllEvent = () => {
 
-	const [cards, setCards] = useState([]);
-	const [page, setPage] = useState(1);
+	const axiosSecure = useAxiosSecure();
 
+	const [events, setEvents] = useState({ eventCount: 0, data: [] });
+	const [page, setPage] = useState(0);
 
+	const [category, setCategory] = useState("");
+	const [state, setState] = useState("");
+	const [city, setCity] = useState("");
+	const [venue, setVenue] = useState("");
 
 
 	useEffect(() => {
-		fetch("./upcomingevent.json")
-			.then((res) => res.json())
-			.then((data) => {
-				setCards(data);
-			});
-	}, []);
+		axiosSecure.get(`/event?page=${page}`)
+			.then(res => {
+				setEvents(res?.data)
+			})
+	}, [axiosSecure, page]);
 
 
-	const totalPages = Math.ceil(cards.length / 1);
-	// console.log(totalPages);
+	console.log(events);
+	const totalPages = Math.ceil(events?.eventCount / 8);
+	console.log(totalPages);
+
+
 
 	const pages = [...new Array(totalPages).fill(0)];
-	console.log(page);
+	console.log(pages);
 
 
 
 	return (
 		<div className="mt-16">
-
+			{/* Slider */}
 			<Swiper
 				spaceBetween={30}
 				centeredSlides={true}
@@ -92,22 +100,117 @@ const AllEvent = () => {
 
 
 			<div className="bg-neutral py-10">
+
 				<Container>
+					{/* Search Inputs */}
+					<div className="mb-20 mt-10">
+						<form >
+							<div className="flex flex-col md:flex-row md:items-center gap-6 mb-4">
+								{/* Name */}
+								<div className="form-control flex-1">
+									<input
+										type="text"
+										name="title"
+										placeholder="Enter Name..."
+										className="input  md:w-full rounded-md input-bordered focus:outline-none"
+										required
+									/>
+								</div>
+								{/* Category */}
+								<div className="form-control flex-1 ">
+									<select
+										className="select  w-full rounded-md   focus:border-none focus:outline-none"
+										onChange={(e) => setCategory(e.target.value)}
+										defaultValue={category}
+										required
+									>
+										<option disabled value="">All Categories</option>
+										<option value="Business">Business</option>
+										<option value="Education">Education</option>
+										<option value="Sport">Sports</option>
+										<option value="Fashion">Fashion</option>
+										<option value="Food Festival">Food Festival</option>
+										<option value="Innovation Showcase">Innovation Showcase</option>
+									</select>
+								</div>
+								{/* States */}
+								<div className="form-control flex-1 ">
+									<select
+										className="select w-full rounded-md  focus:border-none focus:outline-none"
+										onChange={(e) => setState(e.target.value)}
+										defaultValue={state}
+										required
+									>
+										<option disabled value="">All States</option>
+										<option value="Business">Business</option>
+										<option value="Education">Education</option>
+										<option value="Sport">Sports</option>
+										<option value="Fashion">Fashion</option>
+										<option value="Food Festival">Food Festival</option>
+										<option value="Innovation Showcase">Innovation Showcase</option>
+									</select>
+								</div>
+							</div>
+							{/* Raw 2 */}
+							<div className="flex flex-col md:flex-row md:items-center gap-6">
+								{/* Cities*/}
+								<div className="form-control flex-1 ">
+									<select
+										className="select w-full rounded-md  focus:border-none focus:outline-none"
+										onChange={(e) => setCity(e.target.value)}
+										defaultValue={city}
+										required
+									>
+										<option disabled value="">All Cities</option>
+										<option value="Business">Business</option>
+										<option value="Education">Education</option>
+										<option value="Sport">Sports</option>
+										<option value="Fashion">Fashion</option>
+										<option value="Food Festival">Food Festival</option>
+										<option value="Innovation Showcase">Innovation Showcase</option>
+									</select>
+								</div>
+								{/* Venues */}
+								<div className="form-control flex-1 ">
+									<select
+										className="select w-full rounded-md  focus:border-none focus:outline-none"
+										onChange={(e) => setVenue(e.target.value)}
+										defaultValue={venue}
+										required
+									>
+										<option disabled value="">All Venues</option>
+										<option value="Business">Business</option>
+										<option value="Education">Education</option>
+										<option value="Sport">Sports</option>
+										<option value="Fashion">Fashion</option>
+										<option value="Food Festival">Food Festival</option>
+										<option value="Innovation Showcase">Innovation Showcase</option>
+									</select>
+								</div>
+								{/* Submit Button */}
+								<div className="form-control flex-1 ">
+									<button className="btn w-[189px] md:w-full rounded-md bg-primary text-white text-lg">
+										Find Event
+									</button>
+								</div>
+							</div>
+
+						</form>
+					</div>
+
+					{/* Event cards */}
 					<div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8 py-8 ">
 						{
-							cards.map(card =>
+							events?.events?.map(item =>
 								<EventCard
-									key={card.id}
-									eventName={card?.eventName}
-									date={card?.date}
-									time={card?.time}
-									venue={card?.venue}
-									price={card?.price}
+									key={item._id}
+									item={item}
 
 								></EventCard>)
 						}
 
 					</div>
+					{/* Pagination Buttons */}
 					<div className="flex justify-center gap-2">
 
 						{
@@ -121,7 +224,7 @@ const AllEvent = () => {
 						}
 
 						{
-							pages.map((item, index) =>
+							pages?.map((item, index) =>
 								<button
 									key={index}
 									onClick={() => setPage(index)}
@@ -131,7 +234,7 @@ const AllEvent = () => {
 						}
 
 						{
-							page !== cards.length - 1 &&
+							page !== pages?.length - 1 &&
 							<div className="flex items-center">
 								<button onClick={() => setPage(page + 1)} className="text-2xl font-semibold text-[#878787] ml-4">Next</button>
 								<IoIosArrowForward className="text-2xl font-semibold text-[#878787]" />
