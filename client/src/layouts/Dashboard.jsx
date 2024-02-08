@@ -15,10 +15,10 @@ const Dashboard = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isCollapse, setIsCollapse] = useState(false)
 
-    const activeStyle = "flex items-center h-16  gap-5 text-2xl text-primary p-4 mb-2 rounded font-semibold"
-    const inActiveStyle = "flex items-center h-16 gap-5  text-2xl text-[#707070] p-4 mb-2 font-semibold hover:text-primary ";
+    const activeStyle = "flex items-center h-16  gap-5 text-xl text-primary p-4 mb-2 rounded font-semibold"
+    const inActiveStyle = "flex items-center h-16 gap-5  text-xl text-[#707070] p-4 mb-2 font-semibold hover:text-primary ";
 
-    const iconStyle = "text-2xl flex items-center"
+    const iconStyle = "text-xl flex items-center"
 
 
 
@@ -130,7 +130,7 @@ const Dashboard = () => {
                         </ul>
                         <button
                             onClick={() => setIsCollapse(!isCollapse)}
-                            className="flex items-center gap-4 h-16  text-2xl text-[#707070] p-4 rounded font-semibold hover:text-primary">
+                            className="flex items-center gap-4 h-16  text-xl text-[#707070] p-4 rounded font-semibold hover:text-primary">
                             {
                                 isCollapse ?
                                     <PiSignInBold className={iconStyle}></PiSignInBold>
