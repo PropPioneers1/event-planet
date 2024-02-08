@@ -12,7 +12,7 @@ const OurNextEvents = () => {
   useEffect(() => {
     axios
       .get("http://localhost:5000/event")
-      .then((res) => setNextEvents(res?.data?.slice(0, 6)));
+      .then((res) => setNextEvents(res?.data?.events?.slice(0, 6)));
   }, []);
 
   const settings = {

@@ -2,6 +2,7 @@ import { MdLocationOn, MdOutlineWatchLater } from "react-icons/md";
 import { getTime } from "../../../../../utils/getTime";
 import { useEffect, useState } from "react";
 import { PropTypes } from "prop-types";
+import { Link } from "react-router-dom";
 
 const OurNextEventCard = ({ event, activeSlide, idx }) => {
   const [countdown, setCountdown] = useState({
@@ -176,14 +177,16 @@ const OurNextEventCard = ({ event, activeSlide, idx }) => {
               </p>
             </div>
           </div>
-          <button
-            className=" w-full font-semibold py-3 rounded-full transition-all duration-300 ease-in
+          <Link to={`upcomingDetails/${event?._id}`}>
+            <button
+              className=" w-full font-semibold py-3 rounded-full transition-all duration-300 ease-in
                     bg-gradient-to-tl from-[#861f42]
                     to-primary hover:bg-gradient-to-tr
                    text-white"
-          >
-            Tickets & Details
-          </button>
+            >
+              Tickets & Details
+            </button>
+          </Link>
         </div>
       </div>
     </div>

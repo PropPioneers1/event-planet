@@ -40,7 +40,7 @@ const CategoryCard = ({ label, icon: Icon, idx }) => {
             {label}
           </h1>
           <div className="flex justify-center">
-            <Link to={`/select-way/${label}`}>
+            <Link to={`create-form/${label}`}>
               <button className="btn modal-button font-title">
                 Create Event
               </button>

@@ -1,95 +1,108 @@
+import axios from "axios";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import HotDeals from "../../Home/HomeComponenets/HotDeals/HotDeals";
-import "./CreatDes.css";
-import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { FaArrowLeft, FaArrowRight, FaSeedling } from "react-icons/fa6";
 import useAuth from "../../../hooks/useAuth";
+import { uploadImage } from "../../../api/utlis";
+// import SectionTitle from "../../../components/ui/SectionTitle/SectionTitle";
+// import HotDeals from "../../Home/HomeComponenets/HotDeals/HotDeals";
 
 const CreateDesForm = () => {
   const { label } = useParams();
-  console.log(label);
   const { user } = useAuth();
-  console.log(user, "hey");
   const navigate = useNavigate();
   const [organizationName, setOrganizationName] = useState("");
   const [audienceSize, setAudienceSize] = useState("");
-  const [useHotDeals, setUseHotDeals] = useState("");
+  const [eventName, setEventname] = useState("");
   const [ticketPrice, setTicketPrice] = useState("");
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [otherDemands, setOtherDemands] = useState("");
   const [numberOfGuests, setNumberOfGuests] = useState("");
   const [guestNames, setGuestNames] = useState("");
   const [guestProfessions, setGuestProfessions] = useState("");
-  const [cardId, selectCardId] = useState("");
-  const [city, setcity] = useState("");
-  const [state, setstate] = useState("");
-  const [venue, setvenu] = useState("");
+  const [expectedPrice, setExpectedPrice] = useState("");
+  const [eventEndDate, setEventEndDate] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [venue, setVenue] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [eventTime, setEventTime] = useState("");
+  const [localImage, setLocalImage] = useState(null);
+  const [userName, setUserName] = useState("");
 
-  const handleCardSelect = (cardId) => {
-    selectCardId(cardId);
-  };
-
-  const totalQuestions = 8;
+  const totalQuestions = 11;
 
   const calculateProgress = () =>
     ((currentQuestion - 1) / (totalQuestions - 1)) * 100;
 
-  const handleNext = () => {
+
+  const handleNext = async () => {
+    // if (!localImage) {
+    //   toast.error("Please upload an image before proceeding.");
+    //   return;
+    // }
+
     const venueDetails = {
       selectedcity: city,
       selectedstate: state,
       selectedvenu: venue,
     };
-    const dateandtime = {
-      setdate: eventDate,
-      settime: eventTime,
-    };
+
+
+
     if (
       (currentQuestion === 1 && organizationName) ||
       (currentQuestion === 2 && audienceSize) ||
-      (currentQuestion === 3 && useHotDeals) ||
-      (currentQuestion === 4 && (useHotDeals === "Yes" || ticketPrice)) ||
+      (currentQuestion === 3 && organizationName) ||
+      (currentQuestion === 4 && ticketPrice) ||
       (currentQuestion === 5 && otherDemands) ||
       (currentQuestion === 6 &&
         numberOfGuests &&
         guestNames &&
         guestProfessions) ||
       (currentQuestion === 7 && venueDetails) ||
-      (currentQuestion === 8 && dateandtime)
+      (currentQuestion === 8 && eventTime || eventDate ||eventEndDate) ||
+      (currentQuestion === 9 && localImage)||
+      (currentQuestion === 10 && expectedPrice)
+      (currentQuestion === 11 && userName)
     ) {
-      if (currentQuestion === 8) {
+      if (currentQuestion === totalQuestions) {
         const QnaData = {
-          organizationName,
-          audienceSize,
-          useHotDeals,
-          selectedCardOrTicketPrice:
-            useHotDeals === "Yes" ? cardId : ticketPrice,
-          otherDemands,
-          numberOfGuests,
-          guestNames,
+          userName: userName,
+          email: user.email,
+          organization :  organizationName,
+          category: label,
+          eventName: eventName,
+          totalSeat: audienceSize,
+          state: venueDetails.selectedstate,
+          city:venueDetails.selectedcity,
+          venue: venueDetails.selectedvenu,
+          startDate: eventDate,
+          endDate:eventEndDate,
+          ticketPrice:ticketPrice,
+          speakers:  [guestNames],
+          eventPrice: expectedPrice,
+          description:  otherDemands,
+          eventImages:[ localImage],
+          speakersImages: [numberOfGuests],
           guestProfessions,
-          venueDetails,
-          dateandtime,
-          status: "pending",
-          ClientName: user.displayName,
-          ClientEmail: user.email,
-          categoryName: label,
+          status: "unpaid"
+         
+          
+          
+          
         };
         console.log(QnaData);
-        axios
-          .post("https://event-planet-server.vercel.app/qna", QnaData)
-          .then(() => {
-            toast.success("Your Response sent successfully");
-            navigate("/");
-          })
-          .catch((error) => {
-            console.error("Error submitting form:", error);
-            toast.error("Error submitting form. Please try again.");
-          });
+
+        try {
+          await axios.post("http://localhost:5000/qna", QnaData);
+          toast.success("Your Response sent successfully");
+          navigate("/");
+        } catch (error) {
+          console.error("Error submitting form:", error);
+          toast.error("Error submitting form. Please try again.");
+        }
       } else {
         setCurrentQuestion(currentQuestion + 1);
       }
@@ -101,6 +114,24 @@ const CreateDesForm = () => {
   const handlePrevious = () => {
     setCurrentQuestion(currentQuestion - 1);
   };
+
+  const getImageUrl = async (event) => {
+    try {
+      const image = event.target.files[0];
+      console.log(image,'hek');
+      // const formData = new FormData();
+      // formData.append("image", image);
+
+      const response = await uploadImage(image);
+      const imageUrl = response.data.display_url;
+
+      setLocalImage(imageUrl);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      toast.error("Error uploading image. Please try again.");
+    }
+  };
+
 
   return (
     <div className="mt-18 h-full hero min-h-screen bg-white justify-center align-middle items-center ">
@@ -114,17 +145,13 @@ const CreateDesForm = () => {
         </p>
 
         <div
-          className="text-center p-10 rounded-xl
-         bg-neutral shadow-2xl shadow-blue-200 mx-auto
-         mt-6  md:w-[650px] w-[320px]  lg:w-[800px]"
+          className="text-center p-10 rounded-xl bg-neutral shadow-2xl shadow-blue-200 mx-auto mt-6  md:w-[650px] w-[320px]  lg:w-[800px]"
         >
           {currentQuestion === 1 && (
             <div className="grid " data-aos="fade-right">
-              {/* Question 1 */}
               <label
                 htmlFor="organizationName"
-                className=" md:text-4xl text-xl
-               text-black font-bold mb-10 Quistions"
+                className=" md:text-4xl text-xl text-black font-bold mb-10 Quistions"
               >
                 What is your organization name?
               </label>
@@ -144,7 +171,6 @@ const CreateDesForm = () => {
               data-aos="fade-right"
               className="grid justify-center align-middle items-center"
             >
-              {/* Question 2 */}
               <label
                 htmlFor="audienceSize"
                 className=" md:text-4xl text-xl text-black font-bold mb-4 Quistions"
@@ -167,53 +193,29 @@ const CreateDesForm = () => {
             </div>
           )}
 
-          {currentQuestion === 3 && (
+{currentQuestion === 3 && (
             <div className="grid" data-aos="fade-right">
               {/* Question 3 */}
               <label
                 htmlFor="useHotDeals"
                 className=" md:text-4xl text-xl text-black font-bold mb-4 Quistions"
               >
-                Do you want to use our hot deals for tickets?
+                what is your event name
               </label>
-              <div>
-                <label className="m-12 text-2xl">
-                  <input
-                    type="radio"
-                    name="useHotDeals"
-                    value="Yes"
-                    className="bg-white m-2 radio-input "
-                    checked={useHotDeals === "Yes"}
-                    onChange={() => setUseHotDeals("Yes")}
-                  />
-                  Yes
-                </label>
-                <label className="mb:m-12  text-2xl">
-                  <input
-                    type="radio"
-                    name="useHotDeals"
-                    value="No"
-                    className="bg-white m-2 radio-input"
-                    checked={useHotDeals === "No"}
-                    onChange={() => setUseHotDeals("No")}
-                  />
-                  No
-                </label>
-              </div>
+              <input
+                type="text"
+                id="EventName"
+                value={organizationName}
+                placeholder="Enter Your Event name"
+                onChange={(e) => setEventname(e.target.value)}
+                className=" bg-white h-12 pl-5  w-56 md:w-96 mx-auto rounded-full"
+              />
             </div>
           )}
 
-          {currentQuestion === 4 && useHotDeals === "Yes" && (
-            <div>
-              {/* Question 4 */}
-              <h2 className="text-center text-5xl font-bold mt-10 text-black">
-                Select Your Hot Deals
-              </h2>
-              <HotDeals onCardSelect={handleCardSelect} />
-            </div>
-          )}
+      
 
-          {currentQuestion === 4 && useHotDeals === "No" && (
+{currentQuestion === 4 &&  (
             <div className="grid">
               {/* Question 4 (alternative for No) */}
               <label
@@ -238,182 +240,230 @@ const CreateDesForm = () => {
             </div>
           )}
 
+
           {currentQuestion === 5 && (
             <div className="grid" data-aos="fade-right">
-              {/* Question 5 */}
               <label
                 htmlFor="otherDemands"
-                className=" md:text-4xl text-xl text-black font-bold mb-4 Quistions"
+                className="md:text-4xl text-xl text-black font-bold mb-4 Quistions"
               >
-                Add your other demands:
+                Do you have any other special demands for your event?
               </label>
               <textarea
                 id="otherDemands"
                 value={otherDemands}
-                placeholder="Enter your other demands here"
-                className="bg-white h-24 w-56 md:w-96 p-2 mx-auto rounded-lg"
+                placeholder="Enter Your Special Demands"
                 onChange={(e) => setOtherDemands(e.target.value)}
-              />
+                className="h-24 p-4  w-76 md:w-96 mx-auto rounded-xl"
+              ></textarea>
             </div>
           )}
 
           {currentQuestion === 6 && (
             <div className="grid" data-aos="fade-right">
-              {/* Question 6 */}
               <label
                 htmlFor="numberOfGuests"
-                className=" md:text-2xl text-xl text-black text-start font-bold mb-4 Quistions"
+                className="md:text-4xl text-xl text-black font-bold mb-4 Quistions"
               >
-                1/ Enter the number of guests:
+                How many guests are you inviting?
               </label>
               <input
                 type="number"
                 id="numberOfGuests"
                 value={numberOfGuests}
-                placeholder="Enter the number of guests"
-                className="bg-white w-56 md:w-96  text-center rounded-lg  h-8"
+                placeholder="Enter number of guests"
+                className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
                 onChange={(e) => {
                   const value = parseFloat(e.target.value);
                   if (!isNaN(value)) {
-                    setNumberOfGuests(Math.max(value, 1));
+                    setNumberOfGuests(value);
                   }
                 }}
               />
-
-              <label
-                htmlFor="guestNames"
-                className=" md:text-2xl text-xl text-start text-black font-bold mb-4 Quistions mt-6"
-              >
-                2/ Enter the names of the guests (comma-separated):
-              </label>
-              <input
-                type="text"
-                id="guestNames"
-                value={guestNames}
-                placeholder="Enter guest names"
-                className="bg-white w-56 md:w-96  text-center rounded-lg  h-8"
-                onChange={(e) => setGuestNames(e.target.value)}
-              />
-
-              <label
-                htmlFor="guestProfessions"
-                className=" md:text-2xl text-xl text-start text-black font-bold mb-4 Quistions mt-6"
-              >
-                3/ Enter the professions of the guests (comma-separated):
-              </label>
-              <input
-                type="text"
-                id="guestProfessions"
-                value={guestProfessions}
-                placeholder="Enter guest professions"
-                className="bg-white w-56 md:w-96  text-center rounded-lg  h-8"
-                onChange={(e) => setGuestProfessions(e.target.value)}
-              />
+              {Array.from({ length: numberOfGuests }).map((_, index) => (
+                <div key={index} className="md:flex items-center justify-center align-middle
+                 grid space-x-4 gap-5 mt-4">
+                  <input
+                    type="text"
+                    placeholder={`Guest ${index + 1} Name`}
+                    className="h-12 p-2 md:w-56 w-36    rounded-md border border-gray-300"
+                    value={guestNames[index] || ""}
+                    onChange={(e) => {
+                      const updatedGuestNames = [...guestNames];
+                      updatedGuestNames[index] = e.target.value;
+                      setGuestNames(updatedGuestNames);
+                    }}
+                  />
+                  <input
+                    type="text"
+                    placeholder={`Guest ${index + 1} Profession`}
+                    className="h-12 p-2 md:w-56 w-36 rounded-md border border-gray-300"
+                    value={guestProfessions[index] || ""}
+                    onChange={(e) => {
+                      const updatedGuestProfessions = [...guestProfessions];
+                      updatedGuestProfessions[index] = e.target.value;
+                      setGuestProfessions(updatedGuestProfessions);
+                    }}
+                  />
+                </div>
+              ))}
             </div>
           )}
 
           {currentQuestion === 7 && (
             <div className="grid" data-aos="fade-right">
-              {/* Question 7 (New Venue Selection) */}
               <label
-                htmlFor="venueDetails"
+                htmlFor="city"
                 className="md:text-4xl text-xl text-black font-bold mb-4 Quistions"
               >
-                Select your venue:
+                Which city will the event take place in?
               </label>
-              <div className="grid grid-cols-2 gap-4">
-                <select
-                  name=""
-                  onChange={(e) => setstate(e.target.value)}
-                  id=""
-                  className="lg:py-1 py-3 rounded-[4px] px-5 lg:px-4"
-                >
-                  <option value="">All States</option>
-                  <option value="Dhaka">Dhaka</option>
-                  <option value="Sylhet">Sylhet</option>
-                  <option value="Chattogram">Chattogram</option>
-                  <option value="Barishal">Barishal</option>
-                  <option value="Khulna">Khulna</option>
-                  <option value="Rajshahi">Rajshahi</option>
-                  <option value="Rangpur">Rangpur </option>
-                  <option value="Mymensingh">Mymensingh </option>
-                </select>
-                <select
-                  name=""
-                  id=""
-                  onChange={(e) => setcity(e.target.value)}
-                  className="lg:py-1 py-3 rounded-[4px] px-5 lg:px-4"
-                >
-                  <option value="">All Cities</option>
-                  <option value="Molvibazar">Molvibazar</option>
-                  <option value="Sylhet">Sylhet</option>
-                  <option value="Habigang">Habigang</option>
-                  <option value="Sunamgang">Sunamgang</option>
-                  <option value="Comilla">Comilla</option>
-                  <option value="Rajshahi">Rajshahi</option>
-                  <option value="Rangpur">Rangpur </option>
-                  <option value="Mymensingh">Mymensingh </option>
-                </select>
-                <select
-                  name=""
-                  id=""
-                  onChange={(e) => setvenu(e.target.value)}
-                  className="lg:py-1 py-3 rounded-[4px]  px-5 lg:px-4"
-                >
-                  <option value="">All Venues</option>
-                  <option value="Dhaka">Dhaka</option>
-                  <option value="Sylhet">Sylhet</option>
-                  <option value="Chattogram">Chattogram</option>
-                  <option value="Barishal">Barishal</option>
-                  <option value="Khulna">Khulna</option>
-                  <option value="Rajshahi">Rajshahi</option>
-                  <option value="Rangpur">Rangpur </option>
-                  <option value="Mymensingh">Mymensingh </option>
-                </select>
-              </div>
+              <input
+                type="text"
+                id="city"
+                value={city}
+                placeholder="Enter City"
+                className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
+                onChange={(e) => setCity(e.target.value)}
+              />
+              <label
+                htmlFor="state"
+                className="md:text-4xl text-xl text-black font-bold mb-4 mt-8 Quistions"
+              >
+                Which state will the event take place in?
+              </label>
+              <input
+                type="text"
+                id="state"
+                value={state}
+                placeholder="Enter State"
+                className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
+                onChange={(e) => setState(e.target.value)}
+              />
+              <label
+                htmlFor="venue"
+                className="md:text-4xl text-xl text-black font-bold mb-4 mt-8 Quistions"
+              >
+                Enter the venue of the event.
+              </label>
+              <input
+                type="text"
+                id="venue"
+                value={venue}
+                placeholder="Enter Venue"
+                className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
+                onChange={(e) => setVenue(e.target.value)}
+              />
             </div>
           )}
+
           {currentQuestion === 8 && (
             <div className="grid" data-aos="fade-right">
-              {/* Question 8 */}
               <label
                 htmlFor="eventDate"
                 className="md:text-4xl text-xl text-black font-bold mb-4 Quistions"
               >
-                1/ Enter your event date:
+                Add the start date of your event?
               </label>
               <input
                 type="date"
                 id="eventDate"
-                className="bg-white w-56 md:w-96 text-center rounded-lg  h-8"
-                onChange={(e) => {
-                  const selectedDate = new Date(e.target.value);
-                  const selectDate =
-                    selectedDate.getMonth() +
-                    1 +
-                    "-" +
-                    selectedDate.getDate() +
-                    "-" +
-                    selectedDate.getFullYear();
-                  setEventDate(selectDate);
-                }}
+                value={eventDate}
+                className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
+                onChange={(e) => setEventDate(e.target.value)}
               />
-
+          
+              <label
+                htmlFor="eventEndDate"
+                className="md:text-4xl text-xl text-black font-bold mb-4 Quistions"
+              >
+                When does your event end? (End Date)
+              </label>
+              <input
+                type="date"
+                id="eventEndDate"
+                value={eventEndDate}
+                className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
+                onChange={(e) => setEventEndDate(e.target.value)}
+              />
+          
               <label
                 htmlFor="eventTime"
-                className="md:text-4xl text-xl text-start text-black font-bold mb-4 Quistions mt-6"
+                className="md:text-4xl text-xl text-black font-bold mb-4 mt-8 Quistions"
               >
-                2/ Enter your event time:
+                At what time will the event start?
               </label>
               <input
                 type="time"
                 id="eventTime"
                 value={eventTime}
-                className="bg-white w-56 md:w-96 text-center rounded-lg  h-8"
+                className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
                 onChange={(e) => setEventTime(e.target.value)}
               />
             </div>
           )}
+
+{currentQuestion === 9 && (
+  <div className="grid" data-aos="fade-right">
+    <label
+      htmlFor="image"
+      className="md:text-4xl text-xl text-black font-bold mb-4 Quistions"
+    >
+      Add your event display Image
+    </label>
+    <input
+      onChange={getImageUrl}
+      name="imageFile"
+      className="file-input file-input-bordered w-full h-16"
+      type="file"
+      id="image-file"
+      required
+    />
+  </div>
+)}
+{currentQuestion === 10 && (
+  <div className="grid" data-aos="fade-right">
+    <label
+      htmlFor="expectedPrice"
+      className="md:text-4xl text-xl text-black font-bold mb-4 Quistions"
+    >
+      Add your expected price for your desired event:
+    </label>
+    <input
+      type="number"
+      id="expectedPrice"
+      value={expectedPrice}
+      placeholder="Enter your expected price"
+      className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
+      onChange={(e) => {
+        const value = parseFloat(e.target.value);
+        if (!isNaN(value)) {
+          setExpectedPrice(value);
+        }
+      }}
+    />
+  </div>
+)}
+{currentQuestion === 11 && (
+  <div className="grid" data-aos="fade-right">
+    <label
+      htmlFor="userName"
+      className="md:text-4xl text-xl text-black font-bold mb-4 Quistions"
+    >
+      Please enter your name:
+    </label>
+    <input
+      type="text"
+      id="userName"
+      value={userName}
+      placeholder="Enter Your Name"
+      onChange={(e) => setUserName(e.target.value)}
+      className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
+    />
+  </div>
+)}
+
+
 
           <div className="flex-1 my-auto mt-10 mx-4">
             <div className="relative pt-1">
@@ -438,43 +488,46 @@ const CreateDesForm = () => {
             {currentQuestion > 1 && (
               <button
                 onClick={handlePrevious}
-                className="btn 
-              btn-ghost bg-blue-200 p-2 text-center"
+                className="btn btn-ghost bg-blue-200 p-2 text-center"
               >
-                <FaArrowLeft></FaArrowLeft> Previous
+                <FaArrowLeft /> Previous
               </button>
             )}
 
-            {currentQuestion === 8 ? (
-              <button
-                className="btn btn-ghost text-end text-black bg-blue-200"
-                onClick={handleNext}
-                disabled={!city || !venue || !state}
-              >
-                Submit <FaSeedling></FaSeedling>
-                <Toaster />
-              </button>
+            {currentQuestion === totalQuestions ? (
+            <button
+            className="btn btn-ghost  text-black bg-200 p-2 text-center"
+            onClick={handleNext}
+            disabled={!city || !venue || !state || !eventDate || !eventTime || !localImage}
+          >
+            Submit <FaSeedling />
+            <Toaster />
+          </button>
+          
             ) : (
               <button
                 className="btn btn-ghost text-black text-end bg-blue-200"
                 onClick={handleNext}
                 disabled={
-                  !(
+                  !( 
                     (currentQuestion === 1 && organizationName) ||
                     (currentQuestion === 2 && audienceSize) ||
-                    (currentQuestion === 3 && useHotDeals) ||
-                    (currentQuestion === 4 &&
-                      (useHotDeals === "Yes" || ticketPrice)) ||
+                    (currentQuestion === 3 && organizationName) ||
+                    (currentQuestion === 4 && ticketPrice) ||
                     (currentQuestion === 5 && otherDemands) ||
                     (currentQuestion === 6 &&
                       numberOfGuests &&
                       guestNames &&
                       guestProfessions) ||
-                    (currentQuestion === 7 && city && state && venue)
+                    (currentQuestion === 7 && city && state && venue) ||
+                    (currentQuestion === 8 && eventDate && eventTime) ||
+                    (currentQuestion === 9 && localImage)||
+                    (currentQuestion === 10 && expectedPrice) ||
+                    (currentQuestion === 11 && userName) 
                   )
                 }
               >
-                Next <FaArrowRight></FaArrowRight>
+                Next <FaArrowRight />
               </button>
             )}
           </div>
@@ -485,3 +538,4 @@ const CreateDesForm = () => {
 };
 
 export default CreateDesForm;
+
