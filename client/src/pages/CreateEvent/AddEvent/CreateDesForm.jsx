@@ -30,8 +30,9 @@ const CreateDesForm = () => {
   const [eventTime, setEventTime] = useState("");
   const [localImage, setLocalImage] = useState(null);
   const [userName, setUserName] = useState("");
-
-  const totalQuestions = 11;
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [guestImages, setGuestImages] = useState([]);
+  const totalQuestions = 12;
 
   const calculateProgress = () =>
     ((currentQuestion - 1) / (totalQuestions - 1)) * 100;
@@ -64,8 +65,9 @@ const CreateDesForm = () => {
       (currentQuestion === 7 && venueDetails) ||
       (currentQuestion === 8 && eventTime || eventDate ||eventEndDate) ||
       (currentQuestion === 9 && localImage)||
-      (currentQuestion === 10 && expectedPrice)
-      (currentQuestion === 11 && userName)
+      (currentQuestion === 10 && expectedPrice)||
+      (currentQuestion === 11 && userName)||
+      (currentQuestion === 12 && phoneNumber)
     ) {
       if (currentQuestion === totalQuestions) {
         const QnaData = {
@@ -85,8 +87,8 @@ const CreateDesForm = () => {
           eventPrice: expectedPrice,
           description:  otherDemands,
           eventImages:[ localImage],
-          speakersImages: [numberOfGuests],
-          guestProfessions,
+          speakersImages: [guestImages],
+        
           status: "unpaid"
          
           
@@ -96,7 +98,7 @@ const CreateDesForm = () => {
         console.log(QnaData);
 
         try {
-          await axios.post("http://localhost:5000/qna", QnaData);
+          await axios.post("http://localhost:5000/event", QnaData);
           toast.success("Your Response sent successfully");
           navigate("/");
         } catch (error) {
@@ -131,7 +133,21 @@ const CreateDesForm = () => {
       toast.error("Error uploading image. Please try again.");
     }
   };
-
+  const handleGuestImageUpload = async (event, index) => {
+    try {
+      const image = event.target.files[0];
+      const response = await uploadImage(image);
+      const imageUrl = response.data.display_url;
+  
+      // Update the guest images array with the new image URL
+      const updatedGuestImages = [...guestImages];
+      updatedGuestImages[index] = imageUrl;
+      setGuestImages(updatedGuestImages);
+    } catch (error) {
+      console.error("Error uploading guest image:", error);
+      toast.error("Error uploading guest image. Please try again.");
+    }
+  };
 
   return (
     <div className="mt-18 h-full hero min-h-screen bg-white justify-center align-middle items-center ">
@@ -205,7 +221,7 @@ const CreateDesForm = () => {
               <input
                 type="text"
                 id="EventName"
-                value={organizationName}
+                value={eventName}
                 placeholder="Enter Your Event name"
                 onChange={(e) => setEventname(e.target.value)}
                 className=" bg-white h-12 pl-5  w-56 md:w-96 mx-auto rounded-full"
@@ -280,33 +296,41 @@ const CreateDesForm = () => {
                   }
                 }}
               />
-              {Array.from({ length: numberOfGuests }).map((_, index) => (
-                <div key={index} className="md:flex items-center justify-center align-middle
-                 grid space-x-4 gap-5 mt-4">
-                  <input
-                    type="text"
-                    placeholder={`Guest ${index + 1} Name`}
-                    className="h-12 p-2 md:w-56 w-36    rounded-md border border-gray-300"
-                    value={guestNames[index] || ""}
-                    onChange={(e) => {
-                      const updatedGuestNames = [...guestNames];
-                      updatedGuestNames[index] = e.target.value;
-                      setGuestNames(updatedGuestNames);
-                    }}
-                  />
-                  <input
-                    type="text"
-                    placeholder={`Guest ${index + 1} Profession`}
-                    className="h-12 p-2 md:w-56 w-36 rounded-md border border-gray-300"
-                    value={guestProfessions[index] || ""}
-                    onChange={(e) => {
-                      const updatedGuestProfessions = [...guestProfessions];
-                      updatedGuestProfessions[index] = e.target.value;
-                      setGuestProfessions(updatedGuestProfessions);
-                    }}
-                  />
-                </div>
-              ))}
+            {Array.from({ length: numberOfGuests }).map((_, index) => (
+  <div key={index} className="md:flex items-center justify-center align-middle
+    grid space-x-4 gap-5 mt-4">
+    <input
+      type="text"
+      placeholder={`Guest ${index + 1} Name`}
+      className="h-12 p-2 md:w-56 w-36 rounded-md border border-gray-300"
+      value={guestNames[index] || ""}
+      onChange={(e) => {
+        const updatedGuestNames = [...guestNames];
+        updatedGuestNames[index] = e.target.value;
+        setGuestNames(updatedGuestNames);
+      }}
+    />
+    <input
+      type="text"
+      placeholder={`Guest ${index + 1} Profession`}
+      className="h-12 p-2 md:w-56 w-36 rounded-md border border-gray-300"
+      value={guestProfessions[index] || ""}
+      onChange={(e) => {
+        const updatedGuestProfessions = [...guestProfessions];
+        updatedGuestProfessions[index] = e.target.value;
+        setGuestProfessions(updatedGuestProfessions);
+      }}
+    />
+    <input
+      onChange={(e) => handleGuestImageUpload(e, index)}
+      name={`guestImage${index}`}
+      className="file-input file-input-bordered w-full h-16"
+      type="file"
+      id={`guest-image-file-${index}`}
+      required
+    />
+  </div>
+))}
             </div>
           )}
 
@@ -463,7 +487,24 @@ const CreateDesForm = () => {
   </div>
 )}
 
-
+{currentQuestion === 12 && (
+    <div className="grid" data-aos="fade-right">
+      <label
+        htmlFor="phoneNumber"
+        className="md:text-4xl text-xl text-black font-bold mb-4 Quistions"
+      >
+        Please enter your phone number:
+      </label>
+      <input
+        type="text"
+        id="phoneNumber"
+        value={phoneNumber}
+        placeholder="Enter Your Phone Number"
+        onChange={(e) => setPhoneNumber(e.target.value)}
+        className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
+      />
+    </div>
+  )}
 
           <div className="flex-1 my-auto mt-10 mx-4">
             <div className="relative pt-1">
@@ -523,7 +564,8 @@ const CreateDesForm = () => {
                     (currentQuestion === 8 && eventDate && eventTime) ||
                     (currentQuestion === 9 && localImage)||
                     (currentQuestion === 10 && expectedPrice) ||
-                    (currentQuestion === 11 && userName) 
+                    (currentQuestion === 11 && userName) ||
+                    (currentQuestion === 12 && phoneNumber) 
                   )
                 }
               >
