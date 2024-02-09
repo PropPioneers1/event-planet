@@ -2,6 +2,7 @@ import Container from "../../components/ui/Container";
 import { FaShoppingCart, FaEye, FaStar } from "react-icons/fa";
 import ShoppingBanner from "./ShoppingBanner/ShoppingBanner";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 import {
   Card,
   CardHeader,
@@ -38,7 +39,6 @@ const Shopping = () => {
         if (res.data) {
           Swal.fire({
             title: `${title} added to your cart`,
-            text: "You clicked the button!",
             icon: "success",
           });
         }
@@ -54,7 +54,7 @@ const Shopping = () => {
 
   return (
     <Container>
-      <div>
+      <div className="h-96">
         <h2 className="mt-20 mb-4 text-3xl text-center text-blue-500 font-serif font-bold">
           Purchase Product
         </h2>
@@ -63,9 +63,14 @@ const Shopping = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
           {shopItem?.map((cart, idx) => (
             <Card key={idx} className="mt-6 border-4 border-blue-500">
-              <CardHeader color="blue-gray" className="relative h-56">
-                <img src={cart.image} alt="card-image" />
+              <CardHeader className="relative mt-2 h-56">
+                <img
+                  src={cart.image}
+                  alt="card-image"
+                  className="object-cover w-full h-full"
+                />
               </CardHeader>
+
               <CardBody>
                 <Typography variant="h5" color="blue-gray" className="mb-2">
                   {cart?.title}
@@ -79,9 +84,12 @@ const Shopping = () => {
                 <Typography>{cart?.description}</Typography>
               </CardBody>
               <CardFooter className="pt-0 flex gap-2">
-                <button className="btn btn-outline btn-success">
-                  <FaEye /> Details
-                </button>
+                <Link to={`/details-shopCart/${cart._id}`}>
+                  {" "}
+                  <button className="btn btn-outline btn-success">
+                    <FaEye /> Details
+                  </button>
+                </Link>
                 <button
                   onClick={() => handlePurchase(cart)}
                   className="btn btn-outline btn-secondary"

@@ -8,16 +8,17 @@ import { IoAddCircleOutline, IoCreate } from "react-icons/io5";
 import { PiSignInBold } from "react-icons/pi";
 import { CgLogOut } from "react-icons/cg";
 import { MdSummarize } from "react-icons/md";
+import { FaCodePullRequest } from "react-icons/fa6";
 
 const Dashboard = () => {
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isCollapse, setIsCollapse] = useState(false)
 
-    const activeStyle = "flex items-center h-16  gap-5 text-2xl text-primary p-4 mb-2 rounded font-semibold"
-    const inActiveStyle = "flex items-center h-16 gap-5  text-2xl text-[#707070] p-4 mb-2 font-semibold hover:text-primary ";
+    const activeStyle = "flex items-center h-16  gap-5 text-xl text-primary p-4 mb-2 rounded font-semibold"
+    const inActiveStyle = "flex items-center h-16 gap-5  text-xl text-[#707070] p-4 mb-2 font-semibold hover:text-primary ";
 
-    const iconStyle = "text-2xl flex items-center"
+    const iconStyle = "text-xl flex items-center"
 
 
 
@@ -60,6 +61,15 @@ const Dashboard = () => {
         >
             <MdPayments className={iconStyle}></MdPayments>
             <li className={isCollapse ? "hidden" : "block"}> Payment History</li>
+        </NavLink>
+        <NavLink
+            to="/dashboard/event-requests"
+            className={({ isActive, isPending }) =>
+                isPending ? "pending" : isActive ? activeStyle : inActiveStyle
+            }
+        >
+            <FaCodePullRequest className={iconStyle}></FaCodePullRequest>
+            <li className={isCollapse ? "hidden" : "block"}> Event Requests</li>
         </NavLink>
         <NavLink
             to="/dashboard/admin-summary"
@@ -120,7 +130,7 @@ const Dashboard = () => {
                         </ul>
                         <button
                             onClick={() => setIsCollapse(!isCollapse)}
-                            className="flex items-center gap-4 h-16  text-2xl text-[#707070] p-4 rounded font-semibold hover:text-primary">
+                            className="flex items-center gap-4 h-16  text-xl text-[#707070] p-4 rounded font-semibold hover:text-primary">
                             {
                                 isCollapse ?
                                     <PiSignInBold className={iconStyle}></PiSignInBold>
