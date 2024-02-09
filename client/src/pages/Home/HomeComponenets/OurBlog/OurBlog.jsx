@@ -4,6 +4,7 @@ import { IoBookmarkSharp } from "react-icons/io5";
 import SectionHeading from "../../../../components/shared/SectionHeading/SectionHeading";
 import Container from "./../../../../components/ui/Container";
 import useAxiosSecure from "./../../../../hooks/useAxiosSecure";
+import { Link } from "react-router-dom";
 
 const OurBlog = () => {
   const axiosSecure = useAxiosSecure();
@@ -56,26 +57,30 @@ const OurBlog = () => {
                   {blog?.category} Event
                 </h4>
                 <p className="py-3">{blog?.post?.slice(0, 100)}...</p>
-                <button
-                  className="font-semibold text-white bg-gradient-to-tl from-[#861f42]
+                <Link to="blogs">
+                  <button
+                    className="font-semibold text-white bg-gradient-to-tl from-[#861f42]
                       to-primary hover:from-primary  
                       hover:to-[#861f42] py-2 px-5 rounded-md"
-                >
-                  Read More
-                </button>
+                  >
+                    Read More
+                  </button>
+                </Link>
               </div>
             </div>
           ))}
         </div>
         {/* see all btn */}
         <div className="grid place-items-center mt-10">
-          <button
-            className="text-center uppercase font-semibold text-white bg-gradient-to-tl from-[#861f42]
+          <Link to="blogs">
+            <button
+              className="text-center uppercase font-semibold text-white bg-gradient-to-tl from-[#861f42]
                       to-primary hover:from-primary  
                       hover:to-[#861f42] px-10 py-2 rounded-full"
-          >
-            See all blog
-          </button>
+            >
+              See all blog
+            </button>
+          </Link>
         </div>
       </Container>
     </div>

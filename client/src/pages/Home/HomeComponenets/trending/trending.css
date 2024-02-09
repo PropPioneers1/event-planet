@@ -39,14 +39,14 @@
 
 
 
-.trendingimg {
+/* .trendingimg {
   width: 100%;
   transition: transform 1s;
 }
 
 .trendingimg:hover {
   transform: translateZ(20px);
-}
+} */
 
 .slider::before,
 .slider::after {

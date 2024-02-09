@@ -28,23 +28,23 @@ const OurGallery = () => {
         {/* image-1 */}
         <div
           className="lg:col-span-3 lg:row-span-2 col-span-1
-           group relative hover:bg-[#000000b3] bg-[#0000004e] bg-blend-overlay
+           group relative hover:bg-[#000000b3] bg-[#0000004e] bg-blend-overlay bg-center
             bg-cover bg-no-repeat cursor-pointer transition-all duration-300 ease-out"
-          style={{ backgroundImage: `url(${gallery[3]?.image})` }}
+          style={{ backgroundImage: `url(${gallery[0]?.image})` }}
         >
           <div className="absolute bottom-4 left-4 group-hover:opacity-0 transition-all duration-300">
             <h2 className="md:text-xl text-lg  font-semibold text-neutral">
-              {gallery[3]?.title}
+              {gallery[0]?.title}
             </h2>
-            <p className="text-neutral">{gallery[3]?.category}</p>
+            <p className="text-neutral">{gallery[0]?.category}</p>
           </div>
         </div>
 
         {/* image-2 */}
         <div
           className="lg:col-span-6 lg:row-span-1 col-span-1  group
-           relative hover:bg-[#000000b3] bg-[#0000004e] bg-blend-overlay bg-cover
-            bg-no-repeat cursor-pointer transition-all duration-300 ease-out"
+           relative hover:bg-[#000000b3] bg-[#0000004e] bg-blend-overlay bg-center bg-cover
+            bg-no-repeat  cursor-pointer transition-all duration-300 ease-out"
           style={{ backgroundImage: `url(${gallery[1]?.image})` }}
         >
           <div className="absolute bottom-4 left-4 group-hover:opacity-0 transition-all duration-300">
@@ -58,8 +58,8 @@ const OurGallery = () => {
         {/* image-3 */}
         <div
           className="lg:col-span-3 lg:row-span-1 col-span-1 
-           group relative hover:bg-[#000000b3] bg-[#0000004e] bg-blend-overlay
-            bg-cover bg-no-repeat cursor-pointer transition-all duration-300 ease-out"
+           group relative hover:bg-[#000000b3] bg-[#0000004e] bg-blend-overlay bg-center
+            bg-cover  bg-no-repeat cursor-pointer transition-all duration-300 ease-out"
           style={{ backgroundImage: `url(${gallery[2]?.image})` }}
         >
           <div className="absolute bottom-4 left-4 group-hover:opacity-0 transition-all duration-300">
@@ -73,22 +73,22 @@ const OurGallery = () => {
         {/* image-4 */}
         <div
           className="lg:col-span-3 lg:row-span-1 col-span-1 
-           group relative hover:bg-[#000000b3] bg-[#0000004e] bg-blend-overlay
+           group relative hover:bg-[#000000b3] bg-[#0000004e] bg-blend-overlay bg-center
             bg-cover bg-no-repeat cursor-pointer transition-all duration-300 ease-out"
-          style={{ backgroundImage: `url(${gallery[0]?.image})` }}
+          style={{ backgroundImage: `url(${gallery[3]?.image})` }}
         >
           <div className="absolute bottom-4 left-4 group-hover:opacity-0 transition-all duration-300">
             <h2 className="md:text-xl text-lg  font-semibold text-neutral">
-              {gallery[0]?.title}
+              {gallery[3]?.title}
             </h2>
-            <p className="text-neutral">{gallery[0]?.category}</p>
+            <p className="text-neutral">{gallery[3]?.category}</p>
           </div>
         </div>
 
         {/* image-5 */}
         <div
           className="lg:col-span-6 lg:row-span-1 col-span-1 
-           group relative hover:bg-[#000000b3] bg-[#0000004e] bg-blend-overlay
+           group relative hover:bg-[#000000b3] bg-[#0000004e] bg-blend-overlay bg-center
             bg-cover bg-no-repeat cursor-pointer transition-all duration-300 ease-out"
           style={{ backgroundImage: `url(${gallery[4]?.image})` }}
         >
@@ -103,7 +103,7 @@ const OurGallery = () => {
         {/* image-6 */}
         <div
           className="lg:col-span-3 lg:row-span-1 col-span-1  group
-           relative hover:bg-[#000000b3] bg-[#0000004e] bg-blend-overlay bg-cover
+           relative hover:bg-[#000000b3] bg-[#0000004e] bg-blend-overlay bg-center bg-cover
             bg-no-repeat cursor-pointer transition-all duration-300 ease-out"
           style={{ backgroundImage: `url(${gallery[5]?.image})` }}
         >
@@ -118,7 +118,7 @@ const OurGallery = () => {
         {/* image-7 */}
         <div
           className="lg:col-span-6 lg:row-span-1 col-span-1  
-          group relative hover:bg-[#000000b3] bg-[#0000004e] bg-blend-overlay 
+          group relative hover:bg-[#000000b3] bg-[#0000004e] bg-blend-overlay bg-center 
           bg-cover bg-no-repeat cursor-pointer transition-all duration-300 ease-out"
           style={{ backgroundImage: `url(${gallery[6]?.image})` }}
         >
@@ -133,7 +133,7 @@ const OurGallery = () => {
         {/* image-8 */}
         <div
           className="lg:col-span-3 lg:row-span-1 col-span-1  
-          group relative hover:bg-[#000000b3] bg-[#0000004e] bg-blend-overlay 
+          group relative hover:bg-[#000000b3] bg-[#0000004e] bg-blend-overlay bg-center 
           bg-cover bg-no-repeat cursor-pointer transition-all duration-300 ease-out"
           style={{ backgroundImage: `url(${gallery[7]?.image})` }}
         >
