@@ -10,6 +10,9 @@ import TestMonial from "./HomeComponenets/Testmonial/Testmonial";
 import Categories from "./HomeComponenets/Categories/Categories";
 import Chat from "./HomeComponenets/ChatBot/ChatBot";
 
+
+import Notification from "../Notification/Notification";
+
 // import MessangerChat from "./HomeComponenets/ChatBot/MessangerChat";
 import OurNextEvents from "./HomeComponenets/OurNextEvents/OurNextEvents";
 import OurEventPlaners from "./HomeComponenets/OurEventPlaner/OurEventPlaner";
@@ -17,6 +20,7 @@ import OurGallery from "./HomeComponenets/OurGallery/OurGallery";
 import OurBlog from "./HomeComponenets/OurBlog/OurBlog";
 
 const Home = () => {
+
   return (
     <div>
       {/* made by BRCShakil */}
@@ -61,6 +65,7 @@ const Home = () => {
       <Footer></Footer>
       <Chat></Chat>
       {/* <MessangerChat></MessangerChat> */}
+      <Notification></Notification>
     </div>
   );
 };
