@@ -32,7 +32,7 @@ const DetailsProduct = () => {
 
   return (
     <div className="card border-4 mt-20 border-violet-500 bg-base-100 shadow-xl md:w-2/3 lg:w-1/2 xl:w-1/3 mx-auto">
-  <figure >
+  <figure>
     <img src={image} alt="Shoes" className="rounded-xl w-full " />
   </figure>
   <div className="card-body items-center text-center p-6">
@@ -41,7 +41,6 @@ const DetailsProduct = () => {
     <span className="flex text-center text-yellow-500">
       {rating} <FaStar className="mt-1" />
     </span>
-
     <p className="text-sm md:text-base lg:text-lg xl:text-xl">{description}</p>
 
     <div className="card-actions mt-4">

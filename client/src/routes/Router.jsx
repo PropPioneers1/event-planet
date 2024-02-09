@@ -25,6 +25,7 @@ import DetailsProduct from "../pages/Shopping/DetailsProduct/DetailsProduct";
 import EventRequests from "../pages/Dashboard/EventRequests/EventRequests";
 import PaymentSuccess from "../components/shared/PaymentPage/PaymentSuccess";
 import PaymentFaild from "../components/shared/PaymentPage/PaymentFaild";
+import MyCart from "../pages/Dashboard/MyCart/MyCart";
 
 const Router = createBrowserRouter([
   {
@@ -130,6 +131,10 @@ const Router = createBrowserRouter([
         path: "event-requests",
         element: <EventRequests></EventRequests>,
       },
+      {
+        path:'my-cart',
+        element:<MyCart></MyCart>
+      }
     ],
   },
 ]);

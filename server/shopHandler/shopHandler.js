@@ -9,7 +9,7 @@ const shopCartModel=mongoose.model('shopcart',shopCartSchema)
 // Get all shoItem
 router.get("/", async (req, res) => {
   try {
-    console.log(req.query)
+   
     const page=parseInt(req.query.page);
     const size=parseInt(req.query.size);
     
@@ -22,6 +22,38 @@ router.get("/", async (req, res) => {
   }
 });
 
+
+// get all cart items
+
+router.get("/my-cart", async (req, res) => {
+  try {
+    const result = await shopCartModel.find({});
+    res.status(200).json({ result });
+  } catch (err) {
+    res.status(500).json({
+      error: "There was a server-side error",
+    });
+  }
+});
+
+//  get cart product by email
+
+
+router.get("/my-cart/:email", async (req, res) => {
+  try {
+    const { email } = req.params;
+    const result = await shopCartModel.find({ email }); // Use findOne for searching by email
+    if (!result) {
+      return res.status(404).json({ error: "Shopping cart item not found" });
+    }
+    res.status(200).json({ result });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: "There was a server-side error",
+    });
+  }
+});
 
 
 
