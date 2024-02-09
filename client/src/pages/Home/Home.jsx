@@ -9,9 +9,29 @@ import TestMonial from "./HomeComponenets/Testmonial/Testmonial";
 import TestPlaner from "./HomeComponenets/Event-Planer/TestPlaner";
 import Categories from "./HomeComponenets/Categories/Categories";
 import Chat from "./HomeComponenets/ChatBot/ChatBot";
+import Notification from "../Notification/Notification";
+// import { useEffect } from "react";
+// import { getToken } from "firebase/messaging";
+// import { messaging } from "../../firebase/firebase.config";
 // import MessangerChat from "./HomeComponenets/ChatBot/MessangerChat";
 
 const Home = () => {
+
+  // const requestPermission = async () => {
+  //   const permission = await Notification.requestPermission();
+  //   if (permission === 'granted') {
+  //   const token = await getToken(messaging,{vapidKey: "BN4_7aNJDbWeHLEXhUS9M-tVJCLqq-gDRYvB3wC6Ma03hkLxthaAep1uJtOa--LSBzyeaVmPvDIIJtau9TLWZww"})
+  //   console.log("Token Genareted", token)
+  //   } else if (permission === 'denied') {
+  //     alert("You denied permission for notifications.");
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   requestPermission();
+  // }, []);
+
+
   return (
     <div>
       {/* made by BRCShakil */}
@@ -34,6 +54,7 @@ const Home = () => {
       <Footer></Footer>
       <Chat></Chat>
       {/* <MessangerChat></MessangerChat> */}
+      <Notification></Notification>
     </div>
   );
 };
