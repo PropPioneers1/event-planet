@@ -10,7 +10,9 @@
     border-radius: 5px;
 }
 .pagination .selected{
-    background-color:pink ;
+    color: red;
+  text-decoration:underline;
+  font-size: x-large;
 }
 .pagination .new{
     background-color:orange ;

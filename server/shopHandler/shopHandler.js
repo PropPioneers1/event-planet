@@ -36,9 +36,8 @@ router.get("/my-cart", async (req, res) => {
   }
 });
 
+
 //  get cart product by email
-
-
 router.get("/my-cart/:email", async (req, res) => {
   try {
     const { email } = req.params;
