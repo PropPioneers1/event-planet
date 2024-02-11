@@ -26,9 +26,9 @@ const CheckOut = () => {
       cus_email: user.email,
       currency: paymentMethod, // Fix the typo here
       totalAmount: 20000,
-      success_url: 'http://localhost:5000/success/:id',
-      fail_url: 'http://localhost:5000/failure'
-    };
+     
+   paidstatus:false,
+    }; 
     axios.post('http://localhost:5000/payment', data)
       .then(response => {
         console.log(response.data);
@@ -38,7 +38,7 @@ const CheckOut = () => {
         console.error(error.message);
     
       });
-  
+      // http://localhost:5173/payment/success/$%7Btean_id%7D
     console.log(data);
   };
 

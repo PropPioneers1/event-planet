@@ -21,6 +21,7 @@ import ThemeDetails from "../pages/CreateEvent/OurThemes/ThemeDetails/ThemeDetai
 import UpdateProfile from "../pages/UpdateProfile/UpdateProfile";
 import AdminSummary from "../pages/Dashboard/AdminSummary/AdminSummary";
 import CheckOut from "../pages/Home/HomeComponenets/UpComingEvent/CheckOut";
+import EventRequests from "../pages/Dashboard/EventRequests/EventRequests";
 import PaymentSuccess from "../components/shared/PaymentPage/PaymentSuccess";
 import PaymentFaild from "../components/shared/PaymentPage/PaymentFaild";
 
@@ -60,11 +61,11 @@ const Router = createBrowserRouter([
         element:<CheckOut></CheckOut>
       },
       {
-        path:"success/:tran_id",
+        path:"payment/success/:tran_id",
         element:<PaymentSuccess></PaymentSuccess>
       },
       {
-        path:"payment/faild/:tran_id",
+        path:"payment/failure/:tran_id",
         element:<PaymentFaild></PaymentFaild>
       },
       {
@@ -123,6 +124,10 @@ const Router = createBrowserRouter([
         path: "admin-summary",
         element: <AdminSummary></AdminSummary>,
       },
+      {
+        path:"event-requests",
+        element: <EventRequests></EventRequests>
+      }
     ],
   },
 ]);
