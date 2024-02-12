@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "image": "https://i.ibb.co/gy5F1qt/Whats-App-Image-2024-01-16-at-11-21-49-PM.jpg",
+    "name": "Bayazidur Rahman",
+    "professional": "Business Event Planner",
+    "category": "Corporate Events",
+    "speciality": "Corporate Summits",
+    "description": "Bayazidur Rahman Chowdhury is a dedicated event professional specializing in corporate summits. His expertise lies in curating engaging programs that foster meaningful connections among industry leaders. He has received accolades for his outstanding contributions to the corporate event planning landscape.",
+    "facebook": "https://www.facebook.com/brc.shakil"
+  },
+  {
+    "id": 2,
+    "image": "https://i.ibb.co/nbTsrcv/Mahbub11.jpg",
+    "name": "Mahbub Khandakar",
+    "professional": "Sports Event Planner",
+    "category": "Sports Events",
+    "speciality": "Extreme Sports Challenges",
+    "description": "Mahbub Khandakar is a sports enthusiast and event planner known for organizing extreme sports challenges. His events push the boundaries of athleticism and attract participants from around the globe. Mahbub has been applauded for his efforts in promoting the excitement and camaraderie of extreme sports.",
+    "facebook": "https://web.facebook.com/mahbub.khandakar.94"
+  },
+  {
+    "id": 3,
+    "image": "https://i.ibb.co/K9csJVf/Whats-App-Image-2024-01-17-at-7-49-27-PM.jpg",
+    "name": "Anik Malakar",
+    "professional": "Educational Event Planner",
+    "category": "Education",
+    "speciality": "Thought-provoking Symposiums",
+    "description": "Anik Malakar, a visionary event planner, is dedicated to advancing education through thought-provoking symposiums. Renowned for fostering cutting-edge insights and discussions, Anik has garnered recognition for his pivotal role in promoting educational excellence, making a lasting impact in the realm of transformative learning experiences.",
+    "facebook": "https://www.facebook.com/anik.mk.9/"
+  },
+  {
+    "id": 4,
+    "image": "https://i.ibb.co/fXG7h8m/arif.png",
+    "name": "Arif Khan",
+    "professional": "Conference Event Planner",
+    "category": "Technology",
+    "speciality": "Innovation Conferences",
+    "description": "Arif Khan is a dynamic event strategist specializing in innovation conferences. With a track record of orchestrating successful gatherings of thought leaders, Arif Khan has played a pivotal role in shaping dialogues around technological advancements. His conferences have been praised for fostering innovation on a global scale.",
+    "facebook": "https://www.facebook.com/profile.php?id=100009023173348"
+  },
+  {
+    "id": 5,
+    "image": "https://i.ibb.co/nBhRb1Y/Whats-App-Image-2024-01-17-at-12-04-42-AM.jpg",
+    "name": "Md. Ar Rakib Islam",
+    "professional": "Food Festival Event Planner",
+    "category": "Culinary",
+    "speciality": "Gourmet Events",
+    "description": "Rakib Islan Rifat is a culinary virtuoso, a creative force in the realm of gourmet events. His festivals stand testament to a profound passion for exquisite flavors and culinary arts. Rakib has earned acclaim for promoting gastronomic diversity, curating memorable dining experiences that linger in the hearts of attendees.",
+    "facebook": "https://www.facebook.com/rohan.rifat69?mibextid=9R9pXO"
+  },
+  {
+    "id": 6,
+    "image": "https://i.ibb.co/Dt5gqTv/Whats-App-Image-2024-01-17-at-12-09-51-AM.jpg",
+    "name": "Nilima Jahan Pritom",
+    "professional": "Travel Event Planner",
+    "category": "Travel",
+    "speciality": " Travel Experiences",
+    "description": "Nilima Jahan Pritom is a seasoned event planner with a decade of experience dedicated to crafting travel experiences. Her expertise has resulted in the organization of numerous events, consistently leaving participants awe-inspired. Passionate and skilled, she transforms visions into unforgettable journeys.",
+    "facebook": ""
+  }
+]

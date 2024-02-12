@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "icon": "icon1.png",
+    "title": "Friendly Team",
+    "description": "More Than 200 Teams"
+  },
+  {
+    "id": 2,
+    "icon": "icon2.png",
+    "title": "Unique Scenario",
+    "description": "We are thinking Out of the Box"
+  },
+  {
+    "id": 3,
+    "icon": "icon3.png",
+    "title": "Unforgettable Times",
+    "description": "Experience new moments"
+  },
+  {
+    "id": 4,
+    "icon": "icon4.png",
+    "title": " New Ideas",
+    "description": "Innovative solutions tailored "
+  },
+  {
+    "id": 5,
+    "icon": "icon5.png",
+    "title": "Perfect Venues",
+    "description": "Uncommon venues"
+  },
+  {
+    "id": 6,
+    "icon": "icon6.png",
+    "title": "Stellar Support",
+    "description": "Get assistance around"
+  },
+  {
+    "id": 7,
+    "icon": "icon7.png",
+    "title": "Convenient Solutions",
+    "description": "Streamlined services "
+  },
+  {
+    "id": 8,
+    "icon": "icon8.png",
+    "title": "Innovative Management",
+    "description": "Revolutionary approaches "
+  }
+]
