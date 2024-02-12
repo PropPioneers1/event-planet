@@ -4,13 +4,14 @@
 import { SiSpinrilla } from "react-icons/si";
 import "./signup.css";
 import Container from "../../components/ui/Container";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import '../Home/HomeComponenets/UpComingEvent/upcoming.scss'
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import { saveUser } from "../../api/user";
 const SignUp = () => {
-  const {createUser,signInGoogle, signInFacebook,loading} = useAuth()
+  const {createUser,updateUserProfile,signInGoogle, signInFacebook,loading} = useAuth()
+  const navigate = useNavigate()
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
@@ -29,14 +30,16 @@ const SignUp = () => {
     try{
       // sign Un user
      const result =  await createUser(email,password)
-     console.log(result)
+     
+     // update user
+     await updateUserProfile(name)
 
     //  save user in database
    if(result?.user?.email){
-    // update user
-    
+
     const dbResponse = await saveUser(result?.user)
     console.log(dbResponse)
+    navigate('/')
     toast.success('Signup successful!')
    }
 
@@ -49,7 +52,10 @@ const SignUp = () => {
   // handle google sign up
   const handleGoogleSignUp = async() => {
     try{
-    await signInGoogle()
+    const result = await signInGoogle();
+     //4. save user data in database
+     await saveUser(result?.user)
+      navigate('/')
     toast.success('Successfully Sign Up')
     }
     catch(err){
@@ -58,7 +64,9 @@ const SignUp = () => {
   }
   const handleFacebookSignUp = async() => {
     try{
-    await signInFacebook()
+    const result = await signInFacebook()
+    await saveUser(result?.user);
+    navigate('/')
     toast.success('Successfully Sign Up')
     }
     catch(err){

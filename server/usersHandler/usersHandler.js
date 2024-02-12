@@ -7,7 +7,7 @@ const usersModal = mongoose.model("user", userSchema);
 
 router.put('/',async(req,res) => {
     const userInfo = req.body;
-    const query = {userEmail: userInfo.userEmail}
+    const query = {email: userInfo.email}
       try{
         // insert email if user dose not exist
       const existingUser = await usersModal.findOne(query);
