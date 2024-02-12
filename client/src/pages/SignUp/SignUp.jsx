@@ -8,23 +8,32 @@ import { Link } from "react-router-dom";
 import '../Home/HomeComponenets/UpComingEvent/upcoming.scss'
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import { saveUser } from "../../api/user";
 const SignUp = () => {
-  const {createUser,signInGoogle,loading} = useAuth()
+  const {createUser,signInGoogle, signInFacebook,loading} = useAuth()
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
+    const confirmPassword = form.confirmpassword.value;
     const termsAndConditionCheck =form.termsAndConditions.checked;
-
+    if(password === confirmPassword){
+      return toast.error('Password dose not match')
+    }
     if(!termsAndConditionCheck){
       return toast.error('Please agree to the terms and conditions.');
     }
     try{
       // sign in user
-      await createUser(email,password)
-      toast.success('Signup successful!')
+     const result =  await createUser(email,password)
+     console.log(result)
+
+    //  save user in database
+    const dbResponse = await saveUser(result?.user)
+    console.log(dbResponse)
+    toast.success('Signup successful!')
 
     }
     catch(err){
@@ -36,6 +45,15 @@ const SignUp = () => {
   const handleGoogleSignUp = async() => {
     try{
     await signInGoogle()
+    toast.success('Successfully Sign Up')
+    }
+    catch(err){
+      toast.error(err?.message)
+    }
+  }
+  const handleFacebookSignUp = async() => {
+    try{
+    await signInFacebook()
     toast.success('Successfully Sign Up')
     }
     catch(err){
@@ -67,7 +85,7 @@ const SignUp = () => {
                 <button onClick={handleGoogleSignUp} className="button">
                   SIGNUP WITH GOOGLE
                 </button>
-                <button className="button">
+                <button onClick={handleFacebookSignUp} className="button">
                   SIGNUP WITH FACEBOOK
                 </button>
               </div>
@@ -109,10 +127,17 @@ const SignUp = () => {
                     <input
                       type="password"
                       name="password"
-                      autoComplete="new-password"
-                      id="password"
                       required
-                      placeholder="Enter Your Password"
+                      placeholder="Enter Password.."
+                      className="w-full px-3 py-2 input-style  transition-all duration-300"
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="password"
+                      name="confirmpassword"
+                      required
+                      placeholder="Confirm Password.."
                       className="w-full px-3 py-2 input-style  transition-all duration-300"
                     />
                   </div>

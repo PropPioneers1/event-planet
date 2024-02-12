@@ -23,18 +23,18 @@ const Blog = ({ blog, refetch }) => {
 
   // months
   const months = [
-    "January",
-    "February",
-    "March",
-    "April",
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
     "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
 
   const flexCenter =
@@ -82,6 +82,8 @@ const Blog = ({ blog, refetch }) => {
   const month = months[new Date(blog?.postedTimestamp).getMonth()];
   const years = new Date(blog?.postedTimestamp).getFullYear();
 
+  console.log(user?.email);
+
   return (
     <div className="py-6 border-b">
       <div>
@@ -124,7 +126,7 @@ const Blog = ({ blog, refetch }) => {
                 <FaRegBookmark />
                 Save
               </li>
-              {user?.email === blog?.user?.email ? (
+              {user?.email && user?.email === blog?.user?.email ? (
                 <>
                   <Link to={`/dashboard/edit-blog/${blog?._id}`}>
                     <li className={flexCenter}>
@@ -178,32 +180,36 @@ const Blog = ({ blog, refetch }) => {
         {/* icons */}
         <div
           className={`${blog?.blogImage === "" &&
-            "pt-3"} flex items-center gap-5 `}
+            "pt-3"} flex justify-between items-center gap-5 `}
         >
-          <div className="flex items-center gap-1">
-            <FaHeart
-              onClick={() => {
-                handleLike(blog?._id);
-              }}
-              className={`${
-                isLike ? "text-red-500" : "text-secondary"
-              } cursor-pointer`}
-            />
-            <p className="pb-[3px]">{likeBlog}</p>
+          {/* heart & comment */}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1">
+              <FaHeart
+                onClick={() => {
+                  handleLike(blog?._id);
+                }}
+                className={`${
+                  isLike ? "text-red-500" : "text-secondary"
+                } cursor-pointer text-xl`}
+              />
+              <p className="pb-[3px] text-xl">{likeBlog}</p>
+            </div>
+
+            <div
+              className="flex items-center gap-1 cursor-pointer hover:underline"
+              onClick={() =>
+                document.getElementById(`my_modal_${blog?._id}`).showModal()
+              }
+            >
+              <FaCommentAlt className="text-secondary text-xl" />
+              <p className="pb-1 text-xl">{blog?.comments?.length}</p>
+            </div>
           </div>
 
-          <div
-            className="flex items-center gap-1 cursor-pointer hover:underline"
-            onClick={() =>
-              document.getElementById(`my_modal_${blog?._id}`).showModal()
-            }
-          >
-            <FaCommentAlt className="text-secondary" />
-            <p className="pb-1">{blog?.comments?.length}</p>
-          </div>
-
-          <div className="flex items-center gap-1">
-            <IoIosBookmark className="text-secondary cursor-pointer" />
+          {/* save */}
+          <div className="">
+            <IoIosBookmark className="text-secondary cursor-pointer text-xl" />
           </div>
         </div>
       </div>

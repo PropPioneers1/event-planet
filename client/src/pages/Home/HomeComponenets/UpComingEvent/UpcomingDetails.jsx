@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaCartPlus } from "react-icons/fa";
@@ -25,79 +25,86 @@ import Footer from "../../../../components/shared/Footer";
 import "./upcoming.scss";
 import EventMap from "./EventMap";
 import useAuth from "../../../../hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import { getTime } from "../../../../utils/getTime";
 
 const UpcomingDetails = () => {
   const shareUrl = "https://event-planet-9789f.web.app/";
   const img = "https://i.ibb.co/fq6DWhd/Wedding.jpg";
-  const {user} = useAuth()
-  const navigate = useNavigate()
+  const { user } = useAuth();
   const { id } = useParams();
-  const [loading, setLoading] = useState(false);
-  const [cards, setCards] = useState({});
-  const [adultCount, setAdultCount] = useState(0);
-  const [childCount, setChildCount] = useState(0);
+  const [number, setNumber] = useState(0);
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+
   // decrement
-  const decrement = (type) => {
-    if (type === "adult") {
-      setAdultCount(adultCount - 1);
-    } else if (type === "child") {
-      setChildCount(childCount - 1);
+  const decrement = () => {
+    if (number === 0) {
+      setNumber(0);
+    } else {
+      setNumber(number - 1);
     }
   };
   // increment
-  const increment = (type) => {
-    if (type === "adult") {
-      setAdultCount(adultCount + 1);
-    } else if (type === "child") {
-      setChildCount(childCount + 1);
-    }
+  const increment = () => {
+    setNumber(number + 1);
   };
-  const totalVipPrice = adultCount * cards.price;
-  const totalNormalPrice = childCount * cards.price;
-  const totalTicketQuantity = adultCount + childCount;
-  const totalAdultChildTicketPrice = totalVipPrice + totalNormalPrice;
 
-  useEffect(() => {
-    setLoading(true);
-    fetch("/upcomingevent.json")
-      .then((res) => res.json())
-      .then((data) => {
-        const result = data.find((item) => item.id == id);
-        setCards(result);
-        setLoading(false);
-      });
-  }, [id]);
-  const generateTicketNumber = () => {
-    return Math.floor(Math.random() * 100).toString().padStart(3, '0');
+  // const totalVipPrice = adultCount * cards.price;
+  // const totalNormalPrice = childCount * cards.price;
+  // const totalTicketQuantity = adultCount + childCount;
+  // const totalAdultChildTicketPrice = totalVipPrice + totalNormalPrice;
+
+  const { data: eventDetails } = useQuery({
+    queryKey: ["event-details"],
+    queryFn: async () => {
+      const result = await axiosSecure.get(`/event/${id}`);
+      return result?.data;
+    },
+  });
+
+  // months array
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const month = new Date(eventDetails?.startDate).getMonth();
+  const date = new Date(eventDetails?.startDate).getDate();
+  const years = new Date(eventDetails?.startDate).getFullYear();
+  const time = getTime(eventDetails?.startDate);
+
+  const totalPrice = number * eventDetails?.ticketPrice;
+
+  const handleCheckOut = async () => {
+    const eventData = {
+      eventId: eventDetails?._id,
+      guestName: user?.displayName,
+      guestEmail: user?.email,
+      eventName: eventDetails?.eventName,
+      eventDate: eventDetails?.startDate,
+      // eventTime: cards?.time,
+      eventLocation: `${eventDetails?.state} ${eventDetails?.city}`,
+      ticketQuantity: number,
+      totalPrice: totalPrice,
+    };
+
+    navigate(`/checkout`, {
+      state: eventData,
+    });
   };
-  
-  const handleCheckOut = () => {
-    const eventTicketNumber = generateTicketNumber();
-    const eventData = { 
-      ticketNumber: eventTicketNumber,
-      eventId:cards?.id,
-      guestName:user?.displayName,
-      guestEmail:user?.email,
-      eventName:cards?.eventName,
-      eventDate:cards?.date,
-      eventTime:cards?.time,
-      totalVipTicket:adultCount,
-      totalNormalTicket:childCount,
-      tikectQuantity: totalTicketQuantity,
-      vipTicketPrice:totalVipPrice,
-      normalTicketPrice:totalNormalPrice,
-      totalPrice:totalAdultChildTicketPrice,
-    }
-    // genarate ticket number
-    
-    navigate(`/checkOut/${cards.id}`, {
-      state: { eventData}
-    })
-    
-   console.log(eventData)
-   console.log(eventTicketNumber)
-  }
-  if (loading) return <div className="pt-80">loading...</div>;
+
   return (
     <>
       <Container>
@@ -110,205 +117,132 @@ const UpcomingDetails = () => {
               <div className="md:col-span-4 col-span-1">
                 <div className="left-side">
                   <div>
-                    <h2 className=" text-5xl mb-5">{cards?.eventName}</h2>
+                    <h2 className=" text-5xl mb-5">
+                      {eventDetails?.eventName}
+                    </h2>
                   </div>
                   <div>
-                    <img src={img} className="w-full rounded" alt="" />
+                    <img
+                      src={eventDetails?.eventImages[0]}
+                      className="w-full rounded"
+                      alt=""
+                    />
                   </div>
                   <div className="md:flex items-center justify-around gap-4 py-5 space-y-4 md:space-y-0">
                     <div className="py-3 px-10 bg-secondary shadow-lg flex items-center gap-3 text-white">
-                      <BsCalendar2DateFill></BsCalendar2DateFill>
                       <div>
-                        <h2 className="md:text-lg font-semibold">Event Date</h2>
-                        <p>{cards?.date}</p>
-                      </div>
-                    </div>
-                    <div className="py-3 px-10 bg-secondary shadow-lg flex items-center gap-3 text-white">
-                      <IoMdTime></IoMdTime>
-                      <div className="">
-                        <h2 className="text-lg font-semibold">Event Time</h2>
-                        <p>{cards?.date}</p>
-                      </div>
-                    </div>
-                    <div className="py-3 px-10 bg-secondary shadow-lg flex items-center gap-3 text-white">
-                      <FaLocationDot></FaLocationDot>
-                      <div className="">
-                        <h2 className="text-lg font-semibold">
-                          Event Location
+                        <h2 className="md:text-lg font-semibold text-center pb-1">
+                          Event Date
                         </h2>
-                        <p>{cards?.date}</p>
+                        <div className="flex items-center gap-2">
+                          <BsCalendar2DateFill className="text-neutral" />
+
+                          <p className="font-semibold">
+                            {months[month]} {date} {years}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="py-3 px-10 bg-secondary shadow-lg  gap-3 text-white">
+                      <h2 className="text-lg font-semibold text-center">
+                        Event Time
+                      </h2>
+                      <div className="flex items-center gap-2">
+                        <IoMdTime className="text-neutral" />
+                        <p className="font-semibold">{time}</p>
+                      </div>
+                    </div>
+                    <div className="py-3 px-10 bg-secondary shadow-lg  gap-3 text-white">
+                      <h2 className="text-lg font-semibold text-center">
+                        Event Location
+                      </h2>
+                      <div className="flex items-center gap-2">
+                        <FaLocationDot className="text-neutral"></FaLocationDot>
+                        <p className="font-semibold">{eventDetails?.city}</p>
                       </div>
                     </div>
                   </div>
                   {/* descriptions */}
                   <div>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Nihil tenetur est adipisci blanditiis repellendus placeat!
-                      Ad corrupti tenetur, libero eius, pariatur doloribus atque
-                      quidem incidunt excepturi repellat non quas quo. Lorem
-                      ipsum, dolor sit amet consectetur adipisicing elit. Beatae
-                      tempore libero accusantium aliquid, quas architecto dolore
-                      minus? Ex eveniet dignissimos, aliquam recusandae at nemo
-                      repellat voluptatem dolor reiciendis ipsam eum!{" "}
-                    </p>
+                    <p>{eventDetails?.description}</p>
                   </div>
-                  {/* event timeLine */}
-                  <div className="py-5">
-                    <h2 className="mb-3 font-medium text-2xl">
-                      Event Timelines
-                    </h2>
-                    <div className="flex items-center gap-10">
-                      <span className="bg-neutral w-14 p-5 font-semibold rounded-full text-center">
-                        {" "}
-                        1
-                      </span>
-                      <div>
-                        <h2 className="font-medium text-lg">Day 1</h2>
-                        <p className="">
-                          Lorem ipsum dolor sit amet, consectetur adipisicing
-                          elit. Alias perferendis vel tempora error neque,
-                          doloremque totam ex voluptatum deleniti, consectetur
-                          molestias nulla provident voluptatem autem amet vitae
-                          quo ducimus asperiores.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-10 my-5">
-                      <span className="bg-neutral w-14 p-5 font-semibold rounded-full text-center">
-                        {" "}
-                        2
-                      </span>
-                      <div>
-                        <h2 className="font-medium text-lg">Day 2</h2>
-                        <p className="">
-                          Lorem ipsum dolor sit amet, consectetur adipisicing
-                          elit. Alias perferendis vel tempora error neque,
-                          doloremque totam ex voluptatum deleniti, consectetur
-                          molestias nulla provident voluptatem autem amet vitae
-                          quo ducimus asperiores.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-10">
-                      <span className="bg-neutral w-14 p-5 font-semibold rounded-full text-center">
-                        {" "}
-                        3
-                      </span>
-                      <div>
-                        <h2 className="font-medium text-lg">Day 3</h2>
-                        <p className="">
-                          Lorem ipsum dolor sit amet, consectetur adipisicing
-                          elit. Alias perferendis vel tempora error neque,
-                          doloremque totam ex voluptatum deleniti, consectetur
-                          molestias nulla provident voluptatem autem amet vitae
-                          quo ducimus asperiores.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+
                   {/* Register now */}
                   <div className="md:p-5 bg-neutral">
-                    <div className="">
+                    <div>
                       <h2 className="font-medium text-2xl mb-4">
                         Book Your Event👍
                       </h2>
-                      <div className="grid grid-cols-3 place-content-center border">
-                        <div className="bg-secondary">
-                          <h2 className="py-4 text-center text-white font-medium">
-                            Event Name
-                          </h2>
-                          <div className="bg-white h-[250px] overflow-hidden text-black p-3">
-                            <div className="mb-4">
-                              <h2 className="font-bold">VIP</h2>
-                              <p>
-                                {" "}
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit.
-                              </p>
+                      <div className="bg-white">
+                        <div className="grid grid-cols-3 place-content-center border bg-white">
+                          <div className="bg-white">
+                            <h2 className="py-4 text-center bg-secondary text-white font-medium">
+                              Event Name
+                            </h2>
+                            <div className="bg-white overflow-hidden text-black p-3">
+                              <div className="mb-4">
+                                {/* <h2 className="font-bold">VIP</h2> */}
+                                <p className="text-lg md:text-xl font-semibold">
+                                  {eventDetails?.eventName}
+                                </p>
+                              </div>
                             </div>
-                            <div>
-                              <h2 className="font-bold">Normal</h2>
-                              <p>
-                                {" "}
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit.
-                              </p>
+                          </div>
+                          <div className="bg-white border-l border-r">
+                            <h2 className="py-4 text-center bg-secondary text-white font-medium">
+                              Event Ticket
+                            </h2>
+                            <div className="bg-white text-secondary p-3">
+                              <div className="mb-8 text-center">
+                                <h2 className="mb-4 font-semibold">VIP</h2>
+                                {/* decrement */}
+                                <button
+                                  onClick={() => decrement()}
+                                  className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
+                                >
+                                  -
+                                </button>
+                                {/* increment */}
+                                <span className="border px-4 py-2 border-gray-600 mx-2 p-3 rounded">
+                                  {number}
+                                </span>
+                                <button
+                                  onClick={() => increment()}
+                                  className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
+                                >
+                                  +
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="bg-white">
+                            <h2 className="py-4 text-center bg-secondary text-white font-medium">
+                              Total Price
+                            </h2>
+                            <div className="bg-white flex-col items-center text-center text-black p-3">
+                              <div className=" font-medium">
+                                <p className="font-semibold">
+                                  Price: ${totalPrice}
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
-                        <div className="bg-secondary border-l border-r">
-                          <h2 className="py-4 text-center text-white font-medium">
-                            Event Ticket
-                          </h2>
-                          <div className="bg-white h-[250px] text-secondary p-3">
-                            <div className="mb-8 text-center">
-                              <h2 className="mb-4 font-semibold">VIP</h2>
-                              <span
-                                onClick={() => decrement("adult")}
-                                className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
-                              >
-                                -
-                              </span>
-                              <span className="border px-4 py-2 border-gray-600 mx-2 p-3 rounded">
-                                {adultCount}
-                              </span>
-                              <span
-                                onClick={() => increment("adult")}
-                                className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
-                              >
-                                +
-                              </span>
-                            </div>
-
-                            <div className="text-center">
-                              <h2 className="mb-4 font-semibold">Normal</h2>
-                              <span
-                                onClick={() => decrement("child")}
-                                className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
-                              >
-                                -
-                              </span>
-                              <span className="border px-4 py-2 border-gray-600 mx-2 p-3 rounded">
-                                {childCount}
-                              </span>
-                              <span
-                                onClick={() => increment("child")}
-                                className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
-                              >
-                                +
-                              </span>
-                            </div>
+                        <div className="bg-secondary flex items-center justify-around p-5">
+                          <div className="text-white font-medium">
+                            <p>Quantity: {number}</p>
                           </div>
-                        </div>
-                        <div className="bg-secondary">
-                          <h2 className="py-4 text-center text-white font-medium">
-                            Total Price
-                          </h2>
-                          <div className="bg-white h-[250px] flex-col items-center text-center text-black p-3">
-                            <div className="my-10 font-medium">
-                              VIP Price: ${totalVipPrice}
-                            </div>
-                            <hr />
-                            <div className="pt-10 font-medium">
-                              Normal Price: ${totalNormalPrice}
-                            </div>
+                          <div className="text-white font-medium">
+                            <p>Total: {totalPrice}</p>
                           </div>
-                        </div>
-                      </div>
-                      <div className="bg-secondary flex items-center justify-around p-5">
-                        <div className="text-white font-medium">
-                          <p>Quantity: {totalTicketQuantity}</p>
-                        </div>
-                        <div className="text-white font-medium">
-                          <p>Total: {totalAdultChildTicketPrice}</p>
-                        </div>
-                        <div>
-                         
-                         <button onClick={handleCheckOut} className="button flex items-center gap-3">
-                            <FaCartPlus></FaCartPlus>Register Now
-                          </button>
-                        
+                          <div>
+                            <button
+                              onClick={handleCheckOut}
+                              className="button flex items-center gap-3"
+                            >
+                              <FaCartPlus></FaCartPlus>Register Now
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -426,7 +360,9 @@ const UpcomingDetails = () => {
                 <div className="bg-neutral p-3">
                   <div>
                     <div className="py-4">
-                      <h2 className="my-3 text-xl font-semibold">Show Event Area</h2>
+                      <h2 className="my-3 text-xl font-semibold">
+                        Show Event Area
+                      </h2>
                       <EventMap></EventMap>
                     </div>
                     <h2 className="border-b border-b-gray-300 pb-2 text-xl">

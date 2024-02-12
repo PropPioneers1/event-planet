@@ -1,10 +1,10 @@
-import bannerBg from "../../../../assets/banner/banner-bg-1.jpg";
+import bannerBg from "../../../../assets/banner/banner-bg-3.jpg";
 import Container from "../../../../components/ui/Container";
 
 const HomeBanner = () => {
   return (
     <div
-      className="min-h-screen grid place-items-center bg-cover bg-no-repeat bg-[#0000009a] bg-blend-overlay "
+      className="min-h-screen grid place-items-center bg-cover bg-no-repeat bg-[#000000cd] bg-blend-overlay "
       style={{
         backgroundImage: `url(${bannerBg})`,
       }}
@@ -19,7 +19,7 @@ const HomeBanner = () => {
             >
               Find Nearby Location
             </h1>
-            <p className="text-xl md:text-2xl lg:text-4xl text-gray-400 pb-2 md:pb-4">
+            <p className="text-xl md:text-2xl lg:text-4xl text-neutral pb-2 md:pb-4">
               Explore top-rated attractions, activities and more!
             </p>
           </div>
@@ -95,10 +95,10 @@ const HomeBanner = () => {
               <option value="">Mymensingh </option>
             </select>
             <button
-              className="bg-gradient-to-r from-[#6e85a1] 
-            to-primary  w-28 md:text-lg text-base text-neutral
-            md:px-7 px-4 py-2 rounded-[4px] lg:rounded-full hover:bg-gradient-to-r hover:from-[#3b4149]
-            hover:to-secondary"
+              className="bg-gradient-to-tl from-[#3F72AF] 
+            to-[#0e2644]  w-28 md:text-lg text-base text-neutral
+            md:px-7 px-4 py-2 rounded-[4px] lg:rounded-full hover:bg-gradient-to-r hover:from-[#0e2644]
+            hover:to-[#3F72AF] transition-all duration-300"
             >
               Search
             </button>
