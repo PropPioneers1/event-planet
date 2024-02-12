@@ -19,21 +19,26 @@ const SignUp = () => {
     const password = form.password.value;
     const confirmPassword = form.confirmpassword.value;
     const termsAndConditionCheck =form.termsAndConditions.checked;
-    if(password === confirmPassword){
+
+    if(password !== confirmPassword){
       return toast.error('Password dose not match')
     }
     if(!termsAndConditionCheck){
       return toast.error('Please agree to the terms and conditions.');
     }
     try{
-      // sign in user
+      // sign Un user
      const result =  await createUser(email,password)
      console.log(result)
 
     //  save user in database
+   if(result?.user?.email){
+    // update user
+    
     const dbResponse = await saveUser(result?.user)
     console.log(dbResponse)
     toast.success('Signup successful!')
+   }
 
     }
     catch(err){
