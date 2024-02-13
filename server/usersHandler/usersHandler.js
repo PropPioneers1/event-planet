@@ -24,4 +24,29 @@ router.put('/',async(req,res) => {
             res.status(500).json({ error: "Internal Server Error" }); 
       }
 })
+
+// Get all users
+    router.get('/',async(req,res)=>{
+      try{
+        const result = await usersModal.find({});
+        res.status(200).json({ message: "Get All users successfully", result });
+      }
+      catch(error){        
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error" }); 
+       }
+    })
+// Get Single Users
+    router.get('/:email',async(req,res)=>{
+      const email = req.params.email;
+      const query = {email: email}
+      try{
+      const result = await usersModal.findOne(query);
+      res.status(200).json({ message: "Get Single users successfully", result });
+      }
+      catch(error){        
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error" }); 
+      }
+    })
 module.exports = router;

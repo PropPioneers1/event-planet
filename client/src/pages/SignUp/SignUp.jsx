@@ -10,7 +10,7 @@ import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import { saveUser } from "../../api/user";
 const SignUp = () => {
-  const {createUser,updateUserProfile,signInGoogle, signInFacebook,loading} = useAuth()
+  const {createUser,updateUserProfile,signInGoogle, signInFacebook,loading} = useAuth();
   const navigate = useNavigate()
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -106,8 +106,8 @@ const SignUp = () => {
 
             {/* Right Section */}
             <div className="border-4 rounded border-opacity-50 border-[#eeeeee] p-5 md:p-8 lg:p-10 col-span-1 md:col-span-2 md:w-full">
-              <div className="pb-6 text-white font-medium text-2xl">
-                Sign Up For Free
+              <div className="pb-6 ">
+               <h2 className="text-center text-white font-medium text-2xl"> Sign Up For Free</h2>
               </div>
               <form
                 onSubmit={handleSubmit}

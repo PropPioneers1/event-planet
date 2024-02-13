@@ -29,7 +29,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { getTime } from "../../../../utils/getTime";
 
-const UpcomingDetails = () => {
+const UpcomingDetails = async() => {
   const shareUrl = "https://event-planet-9789f.web.app/";
   const img = "https://i.ibb.co/fq6DWhd/Wedding.jpg";
   const { user } = useAuth();
