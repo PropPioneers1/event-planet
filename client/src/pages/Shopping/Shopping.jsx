@@ -67,7 +67,7 @@ const handleNextPage=()=>{
 
 
 
-  const handlePurchase = (cart) => {
+  const handleAddToCart = (cart) => {
     if (user) {
       const { _id, image, title, price } = cart;
 
@@ -121,7 +121,12 @@ const handleNextPage=()=>{
                 <Typography>$ {cart?.price}</Typography>
                 <Typography>
                   <span className="flex text-center">
-                    {cart?.rating} <FaStar className="mt-1" />
+                    {cart?.rating} <FaStar className="mt-1 ml-2" />
+                     <FaStar className="mt-1" />
+                     <FaStar className="mt-1" />
+                     <FaStar className="mt-1" />
+                     
+                     
                   </span>
                 </Typography>
                 <Typography>{cart?.description.slice(0, 50)}.......</Typography>
@@ -134,7 +139,7 @@ const handleNextPage=()=>{
                   </button>
                 </Link>
                 <button
-                  onClick={() => handlePurchase(cart)}
+                  onClick={() => handleAddToCart(cart)}
                   className="btn btn-outline btn-secondary"
                 >
                   <FaShoppingCart /> Add to cart
