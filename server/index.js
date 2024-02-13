@@ -17,6 +17,7 @@ const upComingDetailHandler = require("./upComingDetailHandler/detailHandler");
 
 const paymenthandler = require("./paymentHandler/PaymentHandler");
 const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
+const usersHandler = require("./usersHandler/usersHandler")
 // middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -48,10 +49,10 @@ app.use("/blog", blogHandler);
 app.use("/event", eventHandler);
 app.use("/upcomingDetails", upComingDetailHandler);
 app.use("/payment", paymenthandler);
-
 // send confirmation mail if the user successfully booking a event
 app.get('/sendEmail',sendMail)
 app.use("/token", notificationHandler);
+app.use('/users',usersHandler);
 
 
 // Eroor handler
