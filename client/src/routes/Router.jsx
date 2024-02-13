@@ -90,10 +90,7 @@ const Router = createBrowserRouter([
         path: "event",
         element: <AllEvent></AllEvent>,
       },
-      {
-        path: "editProfile",
-        element: <UpdateProfile></UpdateProfile>,
-      },
+      
     ],
   },
 
@@ -129,6 +126,10 @@ const Router = createBrowserRouter([
       {
         path: "event-requests",
         element: <EventRequests></EventRequests>,
+      },
+      {
+        path: "editProfile",
+        element: <UpdateProfile></UpdateProfile>,
       },
     ],
   },
