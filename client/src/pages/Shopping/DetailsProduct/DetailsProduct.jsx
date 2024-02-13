@@ -3,11 +3,22 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Link, useParams } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
+import { useState } from "react";
 const DetailsProduct = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const {user}=useAuth();
+const [quantity,setQuantity]=useState(0);
 
+const handleIncreaseQuantity=()=>{
+  setQuantity(quantity+1)
+}
+
+ const handleDecreaseQuantity=()=>{
+  if(quantity>0){
+    setQuantity(quantity-1)
+  }
+ }
   
 
 
@@ -176,6 +187,34 @@ View the store
 </div>
 </div>
 <div className="py-6 mb-6 border-t border-b border-gray-200 dark:border-gray-700">
+
+  {/* modal review */}
+  <button className="btn btn-sm mb-4" onClick={()=>document.getElementById('my_modal_5').showModal()}>Give a Review</button>
+<dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+  <div className="modal-box">
+  <form className="mb-6">
+        <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+            <label className="sr-only">Your comment</label>
+            <textarea id="comment" rows="6"
+                className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+                placeholder="Write a comment..." required></textarea>
+                <input type="file" className="file-input file-input-bordered file-input-secondary w-full max-w-xs" />
+        </div>
+        <button type="submit"
+            className="btn btn-outline btn-secondary">
+            Post comment
+        </button>
+    </form> 
+    <div className="modal-action">
+      <form method="dialog">
+        {/* if there is a button in form, it will close the modal */}
+        <button className="btn btn-outline btn-secondary ">X</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+<br />
 <span className="text-base text-gray-600 dark:text-gray-400">In Stock</span>
 <p className="mt-2 text-sm text-blue-500 dark:text-blue-200">Ships from china.
 <span className="text-gray-600 dark:text-gray-400">
@@ -189,11 +228,11 @@ Most customers receive within 3-31 days.
 <div className="w-28">
 <div className="relative flex flex-row w-full h-10 bg-transparent rounded-lg">
 <button className="w-20 h-full text-gray-600 bg-gray-100 border-r rounded-l outline-none cursor-pointer dark:border-gray-700 dark:hover:bg-gray-700 dark:text-gray-400 hover:text-gray-700 dark:bg-gray-900 hover:bg-gray-300">
-<span className="m-auto text-2xl font-thin">-</span>
+<button className="m-auto text-2xl font-thin" onClick={handleDecreaseQuantity}>-</button>
 </button>
-<input type="number" className="flex items-center w-full font-semibold text-center text-gray-700 placeholder-gray-700 bg-gray-100 outline-none dark:text-gray-400 dark:placeholder-gray-400 dark:bg-gray-900 focus:outline-none text-md hover:text-black" placeholder="1" />
+<p className="text-center py-2 items-center w-full font-semibold bg-gray-100 dark:text-gray-400 dark:placeholder-gray-400 dark:bg-gray-900 focus:outline-none text-md hover:text-black">{quantity}</p>
 <button className="w-20 h-full text-gray-600 bg-gray-100 border-l rounded-r outline-none cursor-pointer dark:border-gray-700 dark:hover:bg-gray-700 dark:text-gray-400 dark:bg-gray-900 hover:text-gray-700 hover:bg-gray-300">
-<span className="m-auto text-2xl font-thin">+</span>
+<button className="m-auto text-2xl font-thin" onClick={handleIncreaseQuantity}>+</button>
 </button>
 </div>
 </div>
