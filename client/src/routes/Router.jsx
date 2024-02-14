@@ -26,6 +26,8 @@ import EventRequests from "../pages/Dashboard/EventRequests/EventRequests";
 import PaymentSuccess from "../components/shared/PaymentPage/PaymentSuccess";
 import PaymentFaild from "../components/shared/PaymentPage/PaymentFaild";
 import MyCart from "../pages/Dashboard/MyCart/MyCart";
+import About from "../pages/About/About";
+
 
 const Router = createBrowserRouter([
   {
@@ -94,6 +96,10 @@ const Router = createBrowserRouter([
       {
         path: "editProfile",
         element: <UpdateProfile></UpdateProfile>,
+      },
+      {
+        path: "about",
+        element: <About></About>,
       },
     ],
   },

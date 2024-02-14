@@ -66,7 +66,7 @@ const CheckOut = () => {
               {/* head */}
               <thead>
                 <tr>
-                  <th className="col-span-4">Order Number</th>
+                  <th className="col-span-4">Order Number:</th>
                   <th>Date</th>
                   <th>Email</th>
                   <th> Total</th>
