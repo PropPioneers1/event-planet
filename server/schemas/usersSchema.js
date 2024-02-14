@@ -17,7 +17,7 @@ const userSchema = mongoose.Schema({
         type: String,
     },
     phone: {
-        type: Number,
+        type: String,
     },
     language: {
         type: String
@@ -27,6 +27,9 @@ const userSchema = mongoose.Schema({
     },
     address: {
         type: String
+    },
+    about:{
+        type:String
     }
 
 

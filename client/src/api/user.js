@@ -9,7 +9,8 @@ export const saveUser = async(user) => {
         phone:user?.phone,
         language:user?.language,
         gender:user?.gender,
-        address:user?.address
+        address:user?.address,
+        about:user?.about
     }
     const {data} = await axiosSecure.put('/users',userInfo);
     return data;

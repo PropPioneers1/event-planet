@@ -3,11 +3,14 @@ import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import { uploadImage } from "../../api/utlis";
 import { saveUser } from "../../api/user";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const UpdateProfile = () => {
 	const { user, loading } = useAuth();
-	const [imagePreview, setImagePreview] = useState(null);
+	const navigate = useNavigate()
 
+	const [imagePreview, setImagePreview] = useState(null);
 	const [gender, setGender] = useState("")
 
 	const localImageUpload = (event) => {
@@ -28,7 +31,9 @@ const UpdateProfile = () => {
 		const phone = form.phone.value;
 		const language = form.language.value;
 		const address = form.address.value;
+		const about = form.about.value;
 
+		console.log(about);
 		// uploading image in imageBb
 		const userImage = await uploadImage(image)
 
@@ -39,12 +44,22 @@ const UpdateProfile = () => {
 			phone,
 			language,
 			address,
-			gender
+			gender,
+			about
 		}
+
+		console.log(userInfo);
 
 		// saving user to database
 		const result = await saveUser(userInfo)
 		console.log(result);
+		if (result) {
+			toast.success("Profile Updated");
+			navigate("/dashboard/profile")
+		}
+		else{
+			toast.error("Something went wrong")
+		}
 	};
 
 	return (
@@ -163,7 +178,7 @@ const UpdateProfile = () => {
 							/>
 						</div>
 					</div>
-					<div className="md:flex md:px-24 gap-4">
+					<div className="md:flex md:px-24 gap-4 mb-4">
 						{/* gender */}
 						<div className="form-control md:w-1/2">
 							<label className="label">
@@ -198,6 +213,23 @@ const UpdateProfile = () => {
 								name="language"
 								required
 							/>
+						</div>
+					</div>
+					<div className="md:flex md:px-24 gap-4 ">
+						<div className="form-control  w-full">
+							{/* language */}
+							<label className="label">
+								<span className="label-text text-lg">
+									Tell Something About You
+								</span>
+							</label>
+							<textarea
+								placeholder="About You"
+								name="about"
+								className="textarea textarea-bordered textarea-md w-full focus:outline-none" 
+								required>
+
+							</textarea>
 						</div>
 					</div>
 
