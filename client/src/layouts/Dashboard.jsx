@@ -9,6 +9,7 @@ import { PiSignInBold } from "react-icons/pi";
 import { CgLogOut } from "react-icons/cg";
 import { MdSummarize } from "react-icons/md";
 import { FaCodePullRequest } from "react-icons/fa6";
+import { IoMdCart } from "react-icons/io";
 
 const Dashboard = () => {
 
@@ -51,6 +52,16 @@ const Dashboard = () => {
         >
             <IoCreate className={iconStyle}></IoCreate>
             <li className={isCollapse ? "hidden" : "block"}> Create Blog</li>
+        </NavLink>
+
+        <NavLink
+            to="/dashboard/my-cart"
+            className={({ isActive, isPending }) =>
+                isPending ? "pending" : isActive ? activeStyle : inActiveStyle
+            }
+        >
+            <IoMdCart className={iconStyle}></IoMdCart>
+            <li className={isCollapse ? "hidden" : "block"}> My Cart</li>
         </NavLink>
 
         <NavLink
