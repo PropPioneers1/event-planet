@@ -4,27 +4,44 @@
 import { SiSpinrilla } from "react-icons/si";
 import "./signup.css";
 import Container from "../../components/ui/Container";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import '../Home/HomeComponenets/UpComingEvent/upcoming.scss'
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import { saveUser } from "../../api/user";
 const SignUp = () => {
-  const {createUser,signInGoogle,loading} = useAuth()
+  const {createUser,updateUserProfile,signInGoogle, signInFacebook,loading} = useAuth();
+  const navigate = useNavigate()
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
     const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
+    const confirmPassword = form.confirmpassword.value;
     const termsAndConditionCheck =form.termsAndConditions.checked;
 
+    if(password !== confirmPassword){
+      return toast.error('Password dose not match')
+    }
     if(!termsAndConditionCheck){
       return toast.error('Please agree to the terms and conditions.');
     }
     try{
-      // sign in user
-      await createUser(email,password)
-      toast.success('Signup successful!')
+      // sign Un user
+     const result =  await createUser(email,password)
+     
+     // update user
+     await updateUserProfile(name)
+
+    //  save user in database
+   if(result?.user?.email){
+
+    const dbResponse = await saveUser(result?.user)
+    console.log(dbResponse)
+    navigate('/')
+    toast.success('Signup successful!')
+   }
 
     }
     catch(err){
@@ -35,7 +52,21 @@ const SignUp = () => {
   // handle google sign up
   const handleGoogleSignUp = async() => {
     try{
-    await signInGoogle()
+    const result = await signInGoogle();
+     //4. save user data in database
+     await saveUser(result?.user)
+      navigate('/')
+    toast.success('Successfully Sign Up')
+    }
+    catch(err){
+      toast.error(err?.message)
+    }
+  }
+  const handleFacebookSignUp = async() => {
+    try{
+    const result = await signInFacebook()
+    await saveUser(result?.user);
+    navigate('/')
     toast.success('Successfully Sign Up')
     }
     catch(err){
@@ -67,7 +98,7 @@ const SignUp = () => {
                 <button onClick={handleGoogleSignUp} className="button">
                   SIGNUP WITH GOOGLE
                 </button>
-                <button className="button">
+                <button onClick={handleFacebookSignUp} className="button">
                   SIGNUP WITH FACEBOOK
                 </button>
               </div>
@@ -75,8 +106,8 @@ const SignUp = () => {
 
             {/* Right Section */}
             <div className="border-4 rounded border-opacity-50 border-[#eeeeee] p-5 md:p-8 lg:p-10 col-span-1 md:col-span-2 md:w-full">
-              <div className="pb-6 text-white font-medium text-2xl">
-                Sign Up For Free
+              <div className="pb-6 ">
+               <h2 className="text-center text-white font-medium text-2xl"> Sign Up For Free</h2>
               </div>
               <form
                 onSubmit={handleSubmit}
@@ -109,10 +140,17 @@ const SignUp = () => {
                     <input
                       type="password"
                       name="password"
-                      autoComplete="new-password"
-                      id="password"
                       required
-                      placeholder="Enter Your Password"
+                      placeholder="Enter Password.."
+                      className="w-full px-3 py-2 input-style  transition-all duration-300"
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="password"
+                      name="confirmpassword"
+                      required
+                      placeholder="Confirm Password.."
                       className="w-full px-3 py-2 input-style  transition-all duration-300"
                     />
                   </div>

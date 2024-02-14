@@ -29,7 +29,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { getTime } from "../../../../utils/getTime";
 
-const UpcomingDetails = () => {
+const UpcomingDetails = async() => {
   const shareUrl = "https://event-planet-9789f.web.app/";
   const img = "https://i.ibb.co/fq6DWhd/Wedding.jpg";
   const { user } = useAuth();
@@ -83,7 +83,6 @@ const UpcomingDetails = () => {
   const month = new Date(eventDetails?.startDate).getMonth();
   const date = new Date(eventDetails?.startDate).getDate();
   const years = new Date(eventDetails?.startDate).getFullYear();
-
   const time = getTime(eventDetails?.startDate);
 
   const totalPrice = number * eventDetails?.ticketPrice;
