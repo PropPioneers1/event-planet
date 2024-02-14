@@ -2,48 +2,103 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { RxCross2 } from "react-icons/rx";
 import { TiTick } from "react-icons/ti";
+import Swal from 'sweetalert2';
+import { useQuery } from "@tanstack/react-query";
 
 
 const EventRequests = () => {
 
-    const [events, setEvents] = useState([]);
-    const axiosSecure = useAxiosSecure()
+    // const [events, setEvents] = useState([]);
+    const axiosSecure = useAxiosSecure();
 
 
-    useEffect(() => {
-        axiosSecure.get("/event")
-            .then(res => {
-                const events = res?.data?.events;
-                const pendingEvents = events?.filter(item => item?.status === "pending")
-                setEvents(pendingEvents)
-            })
-    }, [axiosSecure]);
+    // fetching pending events from database
+    // useEffect(() => {
+    //     axiosSecure.get("/event")
+    //         .then(res => {
+    //             const events = res?.data?.events;
+    //             const pendingEvents = events?.filter(item => item?.status === "pending");
+    //             setEvents(pendingEvents);
+    //         })
+    // }, [axiosSecure]);
+
+    const { data: events, isPending, refetch } = useQuery({
+        queryKey: ["pendingEvents"],
+        queryFn: async () => {
+          const result = await axiosSecure.get("/event");
+          const events = result?.data?.events;
+          const pendingEvents = events?.filter(item => item?.status === "pending");
+          return pendingEvents ;
+        },
+      });
 
 
     // This function will reject the event
-    const handleReject = (_id) => {
-        console.log(_id);
-        const updateStatus = {
-            status: "rejected"
-        }
+    const handleReject = (item) => {
 
-        axiosSecure.patch(`/event/${_id}`,updateStatus)
-        .then(res=>{
-            console.log(res.data);
-        })
+        Swal.fire({
+            title: "Are you sure?",
+            text: `You want to reject ${item?.eventName}`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Reject It!"
+        }).then((result) => {
+            // updating status of the event
+            if (result.isConfirmed) {
+                const updateStatus = {
+                    status: "rejected"
+                }
+
+                axiosSecure.patch(`/event/${item?._id}`, updateStatus)
+                    .then(res => {
+                        console.log(res.data);
+                        Swal.fire({
+                            title: "Rejected",
+                            text: `${item?.eventName} has been rejected`,
+                            icon: "success"
+                        });
+                        refetch()
+                    })
+            }
+        });
+
+
     }
 
     // This function will Accept the event
-    const handleAccept = (_id) => {
-        console.log(_id);
-        const updateStatus = {
-            status: "unpaid"
-        }
+    const handleAccept = (item) => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: `You want to accept ${item?.eventName}`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Accept It!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // updating event status
+                const updateStatus = {
+                    status: "unpaid"
+                }
 
-        axiosSecure.patch(`/event/${_id}`,updateStatus)
-        .then(res=>{
-            console.log(res.data);
-        })
+                axiosSecure.patch(`/event/${item?._id}`, updateStatus)
+                    .then(res => {
+                        console.log(res.data);
+                    })
+
+                Swal.fire({
+                    title: "Accepted!",
+                    text:`${item?.eventName} has been Accepted` ,
+                    icon: "success"
+                });
+                refetch()
+            }
+        });
+
+
     }
 
     return (
@@ -110,12 +165,12 @@ const EventRequests = () => {
                                         </ul>
                                     </div> */}
                                     <button
-                                        onClick={() => handleReject(item._id)}
+                                        onClick={() => handleReject(item)}
                                         className="btn mr-4">
                                         <RxCross2 size={24} />
                                     </button>
                                     <button
-                                    onClick={()=>handleAccept(item._id)}
+                                        onClick={() => handleAccept(item)}
                                         className="btn">
                                         <TiTick size={24} />
                                     </button>

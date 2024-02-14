@@ -4,6 +4,8 @@ import useAxiosSecure from "./../../../../hooks/useAxiosSecure";
 import Container from "../../../../components/ui/Container";
 import bannerImg from "../../../../assets/banner/banner-bg-6.jpg";
 import { useState } from "react";
+import Comment from "../Comment/Comment";
+import CommentForm from "../Comment/CommentForm";
 
 const BlogDetails = () => {
   const { id } = useParams();
@@ -17,6 +19,17 @@ const BlogDetails = () => {
       return result?.data;
     },
   });
+
+  // calling data for showing comment
+  const { data: blogPost, refetch } = useQuery({
+    queryKey: ["comments"],
+    queryFn: async () => {
+      const result = await axiosSecure.get(`/likesComments/${id}`);
+      return result?.data;
+    },
+  });
+
+  console.log(blogPost);
 
   if (isBlogPending) {
     return <div>LOading</div>;
@@ -145,8 +158,8 @@ const BlogDetails = () => {
           </div>
 
           {/* side-2 */}
-          <div className="col-span-4">
-            <div className="border border-gray-300 mt-8 p-6">
+          <div className="col-span-4 ">
+            <div className="border border-gray-300 mt-8 p-6 max-h-[500px] overflow-y-auto relative">
               <h3 className="text-xl font-semibold uppercase">comments</h3>
               <div className="flex items-center gap-1.5">
                 <div className="w-1 h-1 bg-primary"></div>
@@ -157,27 +170,10 @@ const BlogDetails = () => {
 
               {/* comments */}
               <div>
-                {blog?.comments
+                {blogPost
                   ?.slice(0, isSeeAllComments ? blog?.comments.length : 4)
-                  .map((comment, idx) => (
-                    <div key={idx} className=" p-2 mt-2 rounded-md flex gap-2">
-                      <img
-                        src={comment?.userImage}
-                        className="w-10 h-10 rounded-full"
-                        alt=""
-                      />
-                      <div className="bg-neutral p-2">
-                        <div>
-                          <h3 className="text-sm font-semibold">
-                            {comment?.name}
-                          </h3>
-                          <p className="text-[12px]">{comment?.timestamp}</p>
-                        </div>
-                        <p className="pl-5 text-sm text-slate-700">
-                          {comment?.comment}
-                        </p>
-                      </div>
-                    </div>
+                  .map((blog, idx) => (
+                    <Comment key={idx} blog={blog} />
                   ))}
                 {isSeeAllComments ? (
                   <p
@@ -195,21 +191,8 @@ const BlogDetails = () => {
                   </p>
                 )}
                 {/* form for comment */}
-                <div className="mt-5">
-                  <form className="flex">
-                    <textarea
-                      type="text"
-                      placeholder="Search blogs..."
-                      name="search"
-                      className="max-h-14 min-h-14 border bg-neutral font-semibold outline-none py-3 px-4 flex-1 border-r-0"
-                    />
-                    <button
-                      className=" bg-black font-semibold text-white py-2 px-5 border border-secondary
-                     focus:bg-secondary"
-                    >
-                      Comment
-                    </button>
-                  </form>
+                <div className="mt-5 sticky bottom-0 ">
+                  <CommentForm blogId={id} refetch={refetch} />
                 </div>
               </div>
             </div>
