@@ -2,6 +2,7 @@ import { SiSpinrilla } from "react-icons/si";
 import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import { uploadImage } from "../../api/utlis";
+import { saveUser } from "../../api/user";
 
 const UpdateProfile = () => {
 	const { user, loading } = useAuth();
@@ -32,8 +33,8 @@ const UpdateProfile = () => {
 		const userImage = await uploadImage(image)
 
 		const userInfo = {
-			userName: name,
-			userEmail: email,
+			name,
+			email,
 			userImage: userImage?.data?.display_url,
 			phone,
 			language,
@@ -41,7 +42,9 @@ const UpdateProfile = () => {
 			gender
 		}
 
-		console.log(userInfo);
+		// saving user to database
+		const result = await saveUser(userInfo)
+		console.log(result);
 	};
 
 	return (

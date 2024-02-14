@@ -12,7 +12,8 @@ router.put('/',async(req,res) => {
         // insert email if user dose not exist
       const existingUser = await usersModal.findOne(query);
       if(existingUser){
-        return res.send({message:"user already exists",insertedId: null})
+        const updatedUser = await usersModal.findOneAndUpdate(query,userInfo)
+        return res.send(updatedUser)
       }
       const result = new usersModal(userInfo);
       await result.save()
@@ -42,7 +43,7 @@ router.put('/',async(req,res) => {
       const query = {email: email}
       try{
       const result = await usersModal.findOne(query);
-      res.status(200).json({ message: "Get Single users successfully", result });
+      res.status(200).json( result );
       }
       catch(error){        
         console.error(error);
