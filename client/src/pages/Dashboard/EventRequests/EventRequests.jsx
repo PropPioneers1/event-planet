@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { RxCross2 } from "react-icons/rx";
 import { TiTick } from "react-icons/ti";
@@ -25,12 +24,12 @@ const EventRequests = () => {
     const { data: events, isPending, refetch } = useQuery({
         queryKey: ["pendingEvents"],
         queryFn: async () => {
-          const result = await axiosSecure.get("/event");
-          const events = result?.data?.events;
-          const pendingEvents = events?.filter(item => item?.status === "pending");
-          return pendingEvents ;
+            const result = await axiosSecure.get("/event");
+            const events = result?.data?.events;
+            const pendingEvents = events?.filter(item => item?.status === "pending");
+            return pendingEvents;
         },
-      });
+    });
 
 
     // This function will reject the event
@@ -91,7 +90,7 @@ const EventRequests = () => {
 
                 Swal.fire({
                     title: "Accepted!",
-                    text:`${item?.eventName} has been Accepted` ,
+                    text: `${item?.eventName} has been Accepted`,
                     icon: "success"
                 });
                 refetch()
@@ -99,6 +98,11 @@ const EventRequests = () => {
         });
 
 
+    }
+
+
+    if (isPending) {
+        return <h2>Loading....</h2>
     }
 
     return (

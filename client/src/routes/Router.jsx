@@ -94,10 +94,6 @@ const Router = createBrowserRouter([
         element: <AllEvent></AllEvent>,
       },
       {
-        path: "editProfile",
-        element: <UpdateProfile></UpdateProfile>,
-      },
-      {
         path: "about",
         element: <About></About>,
       },
@@ -138,6 +134,9 @@ const Router = createBrowserRouter([
         element: <EventRequests></EventRequests>,
       },
       {
+        path: "editProfile",
+        element: <UpdateProfile></UpdateProfile>,
+      },
         path:'my-cart',
         element:<MyCart></MyCart>
       }
