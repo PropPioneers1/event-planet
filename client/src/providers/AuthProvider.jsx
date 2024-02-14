@@ -13,13 +13,12 @@ import {
 import app from "../firebase/firebase.config";
 
 export const AuthContext = createContext(null);
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
-
-  const auth = getAuth(app);
-  const googleProvider = new GoogleAuthProvider();
 
   // for creating new user
   const createUser = (email, password) => {
@@ -55,14 +54,14 @@ const AuthProvider = ({ children }) => {
   // for watching current user
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log("Current user--->", currentUser);
+      // console.log('Current user--->',currentUser);
       setUser(currentUser);
       setLoading(false);
     });
     return () => {
       return unSubscribe();
     };
-  }, [auth]);
+  }, []);
 
   const authInfo = {
     createUser,
