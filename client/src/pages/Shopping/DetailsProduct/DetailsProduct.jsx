@@ -1,14 +1,28 @@
 import { useQuery } from "@tanstack/react-query";
+import ReactStars from "react-rating-stars-component";
+import { MdOutlineInfo } from "react-icons/md";
+import { FaArrowRightLong } from "react-icons/fa6";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Link, useParams } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { useState } from "react";
+import Feedback from "./Feedback/Feedback";
+import toast, { Toaster } from "react-hot-toast";
+
+const image_hosting_key=import.meta.env.VITE_IMAGE_HOSTING_KEY;
+// eslint-disable-next-line no-unused-vars
+const image_hosting_api= `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
+
 const DetailsProduct = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const {user}=useAuth();
 const [quantity,setQuantity]=useState(0);
+const [feedbacks,setFeedbacks] = useState([])
+const [textCount,setTextCount] = useState(0)
+// eslint-disable-next-line no-unused-vars
+const [rating,setRating] = useState()
 
 const handleIncreaseQuantity=()=>{
   setQuantity(quantity+1)
@@ -74,10 +88,51 @@ const handleIncreaseQuantity=()=>{
       }
     };
 
+    // get users feedback data in public folder
+    fetch('../../../../public/Feedback.json')
+    .then(res => res.json())
+    .then(data => {
+      setFeedbacks(data)
+    });
 
+    // handle text count
+    const handleTextCount = (e) => {
+      const textValue = e.target.value
+      const count = textValue.length;
+      if(count > 20){
+       return toast.error("Please short your write")
+      }
+      setTextCount(count);
+    }
+    // handle users feed back:
+    // rating change handler
+    const ratingChanged = (newRating) => {
+      setRating(newRating);
+    };
+    const handleUsersFeedBack = async() => {
 
+      // image upload to imgbb and then get and url
+      // const imageFile={image: data.image[0]}
+      // const res=await axiosSecure.post(image_hosting_api,imageFile)
+      const usersFeedBack = {
+        email:user?.email,
+        name:user?.displayName,
+        product_name:title,
+        product_image:image,
+        user_image:"image",
+        user_opinion:textCount,
+      }
+      console.log('first',usersFeedBack)
+      // post feed back
+      const result = await axiosSecure.post("/feedback",usersFeedBack)
+      if(result){
+        toast.success("Thanks For Your Feedback")
+      }
+      console.log(result)
+
+    }
   return (
-    <section className="py-10 mt-14 font-poppins dark:bg-gray-800">
+ <section className="py-10 mt-14 font-poppins dark:bg-gray-800">
 <div className="max-w-6xl px-4 mx-auto">
 <div className="flex flex-wrap mb-24 -mx-4">
 <div className="w-full px-4 mb-8 md:w-1/2 md:mb-0">
@@ -119,8 +174,74 @@ const handleIncreaseQuantity=()=>{
 </a>
 </div>
 </div>
+    {/* left side end  */}
+    {/* Show All users feedback here */}
+    <div>
+      <div className="flex justify-between py-6 items-center mb-2">
+      <div className="text-lg font-semibold flex items-center gap-4">
+        <h2>Ratings and reviews </h2>
+        <div><FaArrowRightLong></FaArrowRightLong></div>
+      </div>
+      {/* modal-> restricted text */}
+      <div>
+      <button className="flex items-center btn" onClick={()=>document.getElementById('my_modal_1').showModal()}>Rating And  Reviews Verified <MdOutlineInfo></MdOutlineInfo></button>
+        <dialog id="my_modal_1" className="modal">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">About ratings and reviews</h3>
+            <p className="py-4">Ratings are based on recent reviews from people in your region who use the same type of device that you use. Reviews are provided by people with a verified Google Account based on their experience with apps they have downloaded.</p>
+            <div className="modal-action">
+              <form method="dialog">
+                {/* if there is a button in form, it will close the modal */}
+                <button className="btn mr-3">Learn More</button>
+                <button className="btn">Got It</button>
+              </form>
+            </div>
+          </div>
+        </dialog>
+      </div>
+      </div>
+      {/* todo: */}
+      <div className="grid grid-cols-8 gap-5">
+        <div className="col-span-2 border text-center">
+          <h2 className="text-5xl font-semibold mb-2">4.2</h2>
+          <div className="flex justify-center">
+          <ReactStars
+          count={5}
+          onChange={ratingChanged}
+          size={25}
+          activeColor="#e0218a"
+        />
+        </div>
+        <p>125m reviews</p>
+        </div>
+        <div className="col-span-1 border text-center">
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+          <div>4</div>
+          <div>5</div>
+        </div>
+        <div className="col-span-5 border">
+        <progress className="progress progress-secondary" value={0} max="100"></progress>
+        <progress className="progress progress-secondary" value="10" max="100"></progress>
+        <progress className="progress progress-secondary" value="40" max="100"></progress>
+        <progress className="progress progress-secondary" value="70" max="100"></progress>
+        <progress className="progress progress-secondary" value="100" max="100"></progress>
+        </div>
+      </div>
+      {/* show all users feedback */}
+
+      <div>
+        <div className=" py-7">
+          {
+            feedbacks && feedbacks.map(feedback=> <Feedback key={feedback.id} feedback={feedback}></Feedback>)
+          }
+        </div>
+      </div>
+    </div>
 </div>
 </div>
+
 <div className="w-full px-4 md:w-1/2">
 <div className="lg:pl-20">
 <div className="mb-6 ">
@@ -189,31 +310,89 @@ View the store
 <div className="py-6 mb-6 border-t border-b border-gray-200 dark:border-gray-700">
 
   {/* modal review */}
-  <button className="btn btn-sm mb-4" onClick={()=>document.getElementById('my_modal_5').showModal()}>Give a Review</button>
+  <div>
+  <h2 className="text-2xl mb-2 font font-semibold">Rate This Product</h2>
+  <p>Tell others what you think.</p>
+  </div>
+  <div className="flex justify-between items-center">
+    <div>
+      <ReactStars
+      count={5}
+      onChange={ratingChanged}
+      size={36}
+      activeColor="#e0218a"
+    />,
+    </div>
+  <button className="btn btn-outline btn-secondary" onClick={()=>document.getElementById('my_modal_5').showModal()}>Give a Review</button>
+  </div>
 <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
   <div className="modal-box">
   <form className="mb-6">
-        <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-            <label className="sr-only">Your comment</label>
-            <textarea id="comment" rows="6"
-                className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
-                placeholder="Write a comment..." required></textarea>
-                <input type="file" className="file-input file-input-bordered file-input-secondary w-full max-w-xs" />
+        <div className="py-2 px-4 mb-4 relative bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+            {/*todo:  */}
+            <div className="flex sticky -top-5 bg-white justify-between py-2 items-center">
+              <div className="flex items-center gap-3">
+                <img className="w-14 h-14 rounded-full" src={image} alt="" />
+                <div>
+                  <h2 className="font-semibold uppercase text-xl"> {title} </h2>
+                  <p>Rate This Product</p>
+                </div>
+                </div>
+              <div>
+              <div className="modal-action">
+              <form method="dialog">
+                {/* if there is a button in form, it will close the modal */}
+                <button className="btn btn-outline btn-secondary ">X</button>
+              </form>
+            </div>
+              </div>
+            </div>
+
+            {/* feedback restictions */}
+            <div className="flex gap-3 mt-3">
+                  <div>
+                    <img className=" w-52 rounded-full" src={user?.photoURL} alt="" />
+                  </div>
+                  <div>
+                    <h2 className="font-semibold text-lg"> {user?.displayName} </h2>
+                    <p>Reviews are public and include your account and device info. Everyone can see your Google Account name and photo, and the type of device associated with your review. Developers can also see your country and device information (such as language, model, and OS version) and may use this information to respond to you. Past edits are visible to users and the app developer unless you delete your review. <Link className="text-blue-500 underline">Learn More</Link> </p>
+                  </div>
+
+                </div>
+                {/* get users ratings */}
+                <div className="text-lg font-semibold border-b-2 my-3 text-center">Rate star </div>
+                <di className="flex justify-center my-3">
+                <ReactStars
+                onChange={ratingChanged}
+                size={36}
+                activeColor="#e0218a"
+              />,
+              </di>
+              <div>
+              <label className="form-control w-full mb-5">
+              <input name="image" type="file" className="file-input file-input-bordered w-full " />
+            </label>
+                <textarea onChange={handleTextCount} className="w-full rounded p-3 border border-secondary" placeholder="Descrive Your Opinion.." cols="30" rows="2"></textarea>
+                <p className="text-right">
+                  <span>{textCount}</span>/500
+                </p>
+              </div>
         </div>
-        <button type="submit"
+        <div className="text-right">
+        <button onClick={handleUsersFeedBack}
             className="btn btn-outline btn-secondary">
-            Post comment
+            Post Review
         </button>
+        </div>
     </form> 
-    <div className="modal-action">
-      <form method="dialog">
-        {/* if there is a button in form, it will close the modal */}
-        <button className="btn btn-outline btn-secondary ">X</button>
-      </form>
-    </div>
+    
+
+
+
   </div>
 </dialog>
 
+{/* modal end */}
 <br />
 <span className="text-base text-gray-600 dark:text-gray-400">In Stock</span>
 <p className="mt-2 text-sm text-blue-500 dark:text-blue-200">Ships from china.
@@ -257,7 +436,11 @@ Buy now</a>
 </div>
 </div>
 </div>
-</section>
+<Toaster
+  position="top-right"
+  reverseOrder={false}
+/>
+  </section>
   );
 };
 
