@@ -2,13 +2,17 @@
 import { TbLoaderQuarter } from "react-icons/tb";
 import "../SignUp/signup.css";
 import Container from "../../components/ui/Container";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import '../../pages/Home/HomeComponenets/UpComingEvent/upcoming.scss'
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
-const SignIn = () => {
 
-  const {loading,signIn,signInGoogle} = useAuth();
+
+const SignIn = async() => {
+
+  const navigate = useNavigate();
+  const {loading,signIn,signInGoogle,signInFacebook} = useAuth();
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
@@ -29,12 +33,28 @@ const SignIn = () => {
     }
 
   };
-  const handleSignIn = async () => {
+  // sign in with google
+  const handleSignInWithGoogle = async () => {
     try{
       await signInGoogle()
-    toast.success('Sign In Successfully')
+      navigate("/")
+      toast.success('Sign In Successfully')
     }
-    catch(err){toast.error(err?.message)}
+    catch(err){
+      toast.error(err?.message)
+    }
+  }
+  // sign in facebook
+  const handleSignInWithFacebook = async() => {
+    try{
+     const result = await signInFacebook();
+     console.log(result)
+      navigate('/')
+      toast.success("Login Successfully")
+    }
+    catch(error){
+      toast.error(error?.message)
+    }
   }
   return (
     <div className="signUp-bg">
@@ -58,17 +78,17 @@ const SignIn = () => {
                   SIGN UP
                 </button>
                 </Link>
-                <button className="button" onClick={handleSignIn}>
+                <button className="button" onClick={handleSignInWithGoogle}>
                   SIGNUP WITH GOOGLE
                 </button>
-                <button className="button">
+                <button onClick={handleSignInWithFacebook} className="button">
                   SIGNUP WITH FACEBOOK
                 </button>
               </div>
             </div>
 
             {/* Right Section */}
-            <div className="border-4 rounded border-opacity-50 border-[#eeeeee] p-5 md:p-8 lg:p-10 col-span-1 md:col-span-2 md:w-full">
+            <div className="border-4 rounded border-opacity-50 border-[#eeeeee] p-5 md:p-8 lg:p-10 col-span-1 md:col-span-2 md:w-full glass">
               <div className="pb-6 text-white font-medium text-2xl">
                 Please Log In Now
               </div>

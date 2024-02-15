@@ -2,7 +2,6 @@ import { IoIosPeople } from "react-icons/io";
 import { FaCalendarCheck } from "react-icons/fa6";
 import { TbTicket } from "react-icons/tb";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { FaCalendarAlt } from "react-icons/fa";
 

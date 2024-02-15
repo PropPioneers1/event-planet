@@ -32,6 +32,7 @@ const upcomingDetailSchema = mongoose.Schema({
     },
     totalNormalTicket: {
         type:Number,
+        require:true
     },
     tikectQuantity: {
         type:Number,
