@@ -16,7 +16,7 @@ import Shopping from "../pages/Shopping/Shopping";
 
 import SelectWay from "../pages/CreateEvent/Chooseway.jsx/SelectWay";
 import CreateDesForm from "../pages/CreateEvent/AddEvent/CreateDesForm";
-import Blogs from "../pages/Blogs/Blogs";
+// import Blogs from "../pages/Blogs/Blogs";
 import ThemeDetails from "../pages/CreateEvent/OurThemes/ThemeDetails/ThemeDetails";
 import UpdateProfile from "../pages/UpdateProfile/UpdateProfile";
 import AdminSummary from "../pages/Dashboard/AdminSummary/AdminSummary";
@@ -25,9 +25,10 @@ import DetailsProduct from "../pages/Shopping/DetailsProduct/DetailsProduct";
 import EventRequests from "../pages/Dashboard/EventRequests/EventRequests";
 import PaymentSuccess from "../components/shared/PaymentPage/PaymentSuccess";
 import PaymentFaild from "../components/shared/PaymentPage/PaymentFaild";
+import OurBlogs from "../pages/Demo/OurBlogs/OurBlogs";
+import BlogDetails from "../pages/Demo/OurBlogs/BlogDetails/BlogDetails";
 import MyCart from "../pages/Dashboard/MyCart/MyCart";
 import About from "../pages/About/About";
-
 
 const Router = createBrowserRouter([
   {
@@ -49,7 +50,11 @@ const Router = createBrowserRouter([
       },
       {
         path: "blogs",
-        element: <Blogs />,
+        element: <OurBlogs />,
+      },
+      {
+        path: "/blog-details/:id",
+        element: <BlogDetails />,
       },
       {
         path: "select-way/:label",
@@ -78,8 +83,8 @@ const Router = createBrowserRouter([
         element: <Shopping></Shopping>,
       },
       {
-        path:"details-shopCart/:id",
-        element:<DetailsProduct></DetailsProduct>
+        path: "details-shopCart/:id",
+        element: <DetailsProduct></DetailsProduct>,
       },
       {
         path: "create-form/:label",
@@ -137,9 +142,10 @@ const Router = createBrowserRouter([
         path: "editProfile",
         element: <UpdateProfile></UpdateProfile>,
       },
-        path:'my-cart',
-        element:<MyCart></MyCart>
-      }
+      {
+        path: "my-cart",
+        element: <MyCart></MyCart>,
+      },
     ],
   },
 ]);

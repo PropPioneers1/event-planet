@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const express = require("express");
-const sendMail=require('./controller/sendMail')
+const sendMail = require("./controller/sendMail");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
@@ -16,8 +16,9 @@ const eventHandler = require("./eventHandler/eventHandler");
 const upComingDetailHandler = require("./upComingDetailHandler/detailHandler");
 
 const paymenthandler = require("./paymentHandler/PaymentHandler");
-const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
-const usersHandler = require("./usersHandler/usersHandler")
+// const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
+const usersHandler = require("./usersHandler/usersHandler");
+const LikesCommentsHandler = require("./LikesCommentsHandler/LikesCommentsHandler");
 // middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -27,8 +28,8 @@ app.use(bodyParser.json());
 // Mongodb connection
 mongoose
   .connect(
-    `mongodb+srv://EventPlanet:2LxqUuIzAi3v6496
-@proppioneers.pzy67in.mongodb.net/Event-Planet`
+    `mongodb+srv://EventPlanet:6oNbcueawJevcwOk
+    @proppioneers.pzy67in.mongodb.net/Event-Planet`
   )
   .then(() => {
     console.log("Connected to MongoDB");
@@ -50,10 +51,10 @@ app.use("/event", eventHandler);
 app.use("/upcomingDetails", upComingDetailHandler);
 app.use("/payment", paymenthandler);
 // send confirmation mail if the user successfully booking a event
-app.get('/sendEmail',sendMail)
-app.use("/token", notificationHandler);
-app.use('/users',usersHandler);
-
+app.get("/sendEmail", sendMail);
+// app.use("/token", notificationHandler);
+app.use("/users", usersHandler);
+app.use("/likesComments", LikesCommentsHandler);
 
 // Eroor handler
 
