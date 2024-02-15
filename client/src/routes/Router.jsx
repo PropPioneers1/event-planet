@@ -27,6 +27,7 @@ import PaymentSuccess from "../components/shared/PaymentPage/PaymentSuccess";
 import PaymentFaild from "../components/shared/PaymentPage/PaymentFaild";
 import MyCart from "../pages/Dashboard/MyCart/MyCart";
 import About from "../pages/About/About";
+import MyEvents from "../pages/Dashboard/MyEvents/MyEvents";
 
 
 const Router = createBrowserRouter([
@@ -78,8 +79,8 @@ const Router = createBrowserRouter([
         element: <Shopping></Shopping>,
       },
       {
-        path:"details-shopCart/:id",
-        element:<DetailsProduct></DetailsProduct>
+        path: "details-shopCart/:id",
+        element: <DetailsProduct></DetailsProduct>
       },
       {
         path: "create-form/:label",
@@ -137,9 +138,15 @@ const Router = createBrowserRouter([
         path: "editProfile",
         element: <UpdateProfile></UpdateProfile>,
       },
-        path:'my-cart',
-        element:<MyCart></MyCart>
+      {
+        path: 'my-cart',
+        element: <MyCart></MyCart>
+      },
+      {
+        path: 'my-events',
+        element: <MyEvents></MyEvents>
       }
+
     ],
   },
 ]);
