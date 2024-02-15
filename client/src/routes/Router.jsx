@@ -144,12 +144,17 @@ const Router = createBrowserRouter([
         element: <UpdateProfile></UpdateProfile>,
       },
       {
+<<<<<<< HEAD
+        path:'my-cart',
+        element:<MyCart></MyCart>
+=======
         path: 'my-cart',
         element: <MyCart></MyCart>
       },
       {
         path: 'my-events',
         element: <MyEvents></MyEvents>
+>>>>>>> 2b7ef15666f34a43372b4f1c933d2644d6735aee
       }
 
     ],
