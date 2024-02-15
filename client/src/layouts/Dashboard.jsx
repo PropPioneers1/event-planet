@@ -10,6 +10,7 @@ import { CgLogOut } from "react-icons/cg";
 import { MdSummarize } from "react-icons/md";
 import { FaCodePullRequest } from "react-icons/fa6";
 import { IoMdCart } from "react-icons/io";
+import { FaCalendarAlt } from "react-icons/fa";
 
 const Dashboard = () => {
 
@@ -90,6 +91,15 @@ const Dashboard = () => {
         >
             <MdSummarize className={iconStyle}></MdSummarize>
             <li className={isCollapse ? "hidden" : "block"}> Admin Summary</li>
+        </NavLink>
+        <NavLink
+            to="/dashboard/my-events"
+            className={({ isActive, isPending }) =>
+                isPending ? "pending" : isActive ? activeStyle : inActiveStyle
+            }
+        >
+            <FaCalendarAlt className={iconStyle}></FaCalendarAlt>
+            <li className={isCollapse ? "hidden" : "block"}>My Events</li>
         </NavLink>
 
 

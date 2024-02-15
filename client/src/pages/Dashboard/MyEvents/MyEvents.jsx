@@ -1,71 +1,36 @@
-import { IoIosPeople } from "react-icons/io";
-import { FaCalendarCheck } from "react-icons/fa6";
-import { TbTicket } from "react-icons/tb";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { FaCalendarAlt } from "react-icons/fa";
 
 
-const AdminSummary = () => {
+const MyEvents = () => {
 
     const axiosSecure = useAxiosSecure();
 
-    const [upcomingEvents, setUpComingEvents] = useState({ eventCount: 0, data: [] });
 
+    const { data: events } = useQuery({
+        queryKey: ["unpaidEvents"],
+        queryFn: async () => {
+            const result = await axiosSecure.get("/event");
+            const events = result?.data?.events;
+            const unpaidEvents = events?.filter(item => item?.status === "unpaid");
+            return unpaidEvents;
+        },
+    });
 
-    useEffect(() => {
-        axiosSecure.get("/event")
-            .then(res => {
-                setUpComingEvents(res?.data)
-            })
-    }, [axiosSecure,]);
+    console.log(events);
 
-    console.log(upcomingEvents);
 
     return (
-        <div className="">
-            {/* Admin summary card */}
-            {/* TODO: Make it dynamic */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
-                <div className="flex justify-between items-center p-10 bg-white rounded-lg shadow-md hover:bg-primary group transition-all duration-300">
-                    <div>
-                        <p className="text-3xl font-bold mb-4 group-hover:text-white ">1200+</p>
-                        <h2 className="text-xl text-[#707070] font-bold group-hover:text-white ">Total Registration</h2>
-                    </div>
-                    <div className="bg-primary bg-opacity-20 p-4 rounded-full group-hover:border">
-                        <IoIosPeople className="text-3xl text-primary group-hover:text-white " />
-                    </div>
-                </div>
-                <div className="flex justify-between items-center p-10 bg-white rounded-lg shadow-md hover:bg-primary  group transition-all duration-300">
-                    <div>
-                        <p className="text-3xl font-bold mb-4 group-hover:text-white ">
-                            {upcomingEvents?.eventCount} 
-                        </p>
-                        <h2 className="text-xl text-[#707070] font-bold group-hover:text-white ">Total Events</h2>
-                    </div>
-                    <div className="bg-primary bg-opacity-20 p-4 rounded-full group-hover:border">
-                        <FaCalendarCheck className="text-3xl text-primary group-hover:text-white " />
-                    </div>
-                </div>
-                <div className="flex justify-between items-center p-10 bg-white rounded-lg shadow-md hover:bg-primary group transition-all duration-300">
-                    <div>
-                        <p className="text-3xl font-bold mb-4 group-hover:text-white ">2500+</p>
-                        <h2 className="text-xl text-[#707070] font-bold group-hover:text-white ">Total Ticket Sold</h2>
-                    </div>
-                    <div className="bg-primary bg-opacity-20 p-4 rounded-full group-hover:border">
-                        <TbTicket className="text-3xl text-primary group-hover:text-white " />
-                    </div>
-                </div>
-            </div>
-
-            {/* Upcoming events */}
-            <div className="  my-12 bg-white p-6 rounded-md">
+        <div>
+             {/* Upcoming events */}
+             <div className="  my-12 bg-white p-6 rounded-md">
                 <h2
                     className="text-2xl font-bold flex items-center gap-2 text-[#707070] my-6 pb-4 border-b-2">
                     <span className="text-primary">
                         <FaCalendarAlt></FaCalendarAlt>
                     </span>
-                    Upcoming Events
+                   My Events
                 </h2>
                 <div className="overflow-x-auto max-h-[60vh]  ">
                     <table className="table overflow-y-auto ">
@@ -83,7 +48,7 @@ const AdminSummary = () => {
                         </thead>
                         <tbody className="font-bold text-base text-[#707070]">
                             {
-                                upcomingEvents?.events?.map((item, idx) => <tr key={idx}>
+                                events?.map((item, idx) => <tr key={idx}>
                                     <th>{idx + 1}</th>
                                     <td>
                                         <p className="hover:text-primary">{item?.eventName}</p>
@@ -127,4 +92,4 @@ const AdminSummary = () => {
     );
 };
 
-export default AdminSummary;
+export default MyEvents;

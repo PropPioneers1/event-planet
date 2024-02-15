@@ -30,8 +30,6 @@ router.get("/", async (req, res) => {
     query.city = eventCity;
   }
 
-  console.log(query, "<<=============");
-
   try {
     const eventCount = await eventModel.countDocuments(query);
     const result = await eventModel.find(query).skip(skip).limit(limit);

@@ -11,16 +11,6 @@ const EventRequests = () => {
     const axiosSecure = useAxiosSecure();
 
 
-    // fetching pending events from database
-    // useEffect(() => {
-    //     axiosSecure.get("/event")
-    //         .then(res => {
-    //             const events = res?.data?.events;
-    //             const pendingEvents = events?.filter(item => item?.status === "pending");
-    //             setEvents(pendingEvents);
-    //         })
-    // }, [axiosSecure]);
-
     const { data: events, isPending, refetch } = useQuery({
         queryKey: ["pendingEvents"],
         queryFn: async () => {
@@ -159,15 +149,6 @@ const EventRequests = () => {
                                 <td>{item?.organization}</td>
                                 <td>{item?.status}</td>
                                 <td>
-                                    {/* <div className="dropdown dropdown-bottom dropdown-left ">
-                                        <div tabIndex={0} role="button" className="btn btn-ghost rounded-btn">
-                                            <HiDotsHorizontal size={36}></HiDotsHorizontal>
-                                        </div>
-                                        <ul tabIndex={0} className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-32 mt-4">
-                                            <li><a>Item 1</a></li>
-                                            <li><a>Item 2</a></li>
-                                        </ul>
-                                    </div> */}
                                     <button
                                         onClick={() => handleReject(item)}
                                         className="btn mr-4">
@@ -181,8 +162,6 @@ const EventRequests = () => {
                                 </td>
                             </tr>)
                         }
-
-
                     </tbody>
                 </table>
             </div>

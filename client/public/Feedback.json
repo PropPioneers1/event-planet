@@ -1,0 +1,43 @@
+[
+    {
+      "id": 1,
+      "user_name": "John Doe",
+      "user_photo": "https://example.com/user1.jpg",
+      "rating": 4.5,
+      "feedback_date": "2024-02-15",
+      "user_opinion": "Great service, I highly recommend! The staff was friendly and helpful, and the product quality exceeded my expectations. I was pleasantly surprised by how quickly my order arrived, and the packaging was excellent. Overall, it was a fantastic experience, and I will definitely be a returning customer in the future."
+    },
+    {
+      "id": 2,
+      "user_name": "Jane Smith",
+      "user_photo": "https://example.com/user2.jpg",
+      "rating": 3.8,
+      "feedback_date": "2024-02-14",
+      "user_opinion": "Decent experience overall. The service was prompt, but there were a few issues with the product that could be improved. Despite that, I appreciate the effort put into resolving the issues, and I would consider giving it another try in the future."
+    },
+    {
+      "id": 3,
+      "user_name": "David Johnson",
+      "user_photo": "https://example.com/user3.jpg",
+      "rating": 4.2,
+      "feedback_date": "2024-02-13",
+      "user_opinion": "Satisfied with the product quality. The delivery was quick, and the item was exactly as described. I have no complaints and would recommend this product to others without hesitation."
+    },
+    {
+      "id": 4,
+      "user_name": "Emily Brown",
+      "user_photo": "https://example.com/user4.jpg",
+      "rating": 4.7,
+      "feedback_date": "2024-02-12",
+      "user_opinion": "Exceptional service, exceeded my expectations! The staff went above and beyond to ensure my satisfaction. The product itself is of high quality and arrived in perfect condition. I couldn't be happier with my purchase."
+    },
+    {
+      "id": 5,
+      "user_name": "Michael Wilson",
+      "user_photo": "https://example.com/user5.jpg",
+      "rating": 4.0,
+      "feedback_date": "2024-02-11",
+      "user_opinion": "Good value for money. The product met my needs perfectly, and I would definitely purchase again. The ordering process was smooth, and delivery was prompt. Overall, a positive experience."
+    }
+  ]
+  
