@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
+import { getDate } from "../../../../utils/getDate";
 
 const Blog = ({ blog }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,26 +33,7 @@ const Blog = ({ blog }) => {
     }
   };
 
-  // months
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-
-  // get date, month, year
-  const day = new Date(blog?.postedTimestamp).getDate();
-  const month = months[new Date(blog?.postedTimestamp).getMonth()];
-  const years = new Date(blog?.postedTimestamp).getFullYear();
+  const date = getDate(blog?.postedTimestamp);
 
   return (
     <div>
@@ -130,10 +112,7 @@ const Blog = ({ blog }) => {
         <div className="flex justify-between items-center  pt-6 pb-10">
           <div className="flex  gap-10 items-center">
             <p className="flex text-lg items-center gap-4 cursor-pointer text-black">
-              <FaRegCalendar className=" text-primary" />{" "}
-              <span>
-                {day} {month}, {years}{" "}
-              </span>
+              <FaRegCalendar className=" text-primary" /> <span>{date}</span>
             </p>
             <p className="flex text-lg items-center gap-4 cursor-pointer text-black">
               <FaRegComment className=" text-primary" /> <span>Comments</span>

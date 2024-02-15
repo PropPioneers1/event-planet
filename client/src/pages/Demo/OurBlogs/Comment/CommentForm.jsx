@@ -2,10 +2,12 @@ import toast from "react-hot-toast";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { PropTypes } from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 const CommentForm = ({ blogId, refetch }) => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   const handleComment = async (e) => {
     e.preventDefault();
@@ -24,6 +26,10 @@ const CommentForm = ({ blogId, refetch }) => {
       commentsTime: new Date(),
     };
 
+    if (!user) {
+      return navigate("/sign-up");
+    }
+
     const postingComment = await axiosSecure.post(
       "/likesComments",
       userComment
@@ -33,6 +39,7 @@ const CommentForm = ({ blogId, refetch }) => {
     if (postingComment.status === 201) {
       toast.success("commented");
       refetch();
+      form.reset();
     }
   };
 

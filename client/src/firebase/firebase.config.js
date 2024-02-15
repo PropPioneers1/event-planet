@@ -13,15 +13,13 @@ const firebaseConfig = {
   projectId: "event-planet-9789f",
   storageBucket: "event-planet-9789f.appspot.com",
   messagingSenderId: "641939071314",
-  appId: "1:641939071314:web:fa66321110510220739a8b"
+  appId: "1:641939071314:web:fa66321110510220739a8b",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export default app;
 // const messaging = getMessaging();
-
-
 
 // export const requestForToken = async () => {
 
@@ -30,7 +28,7 @@ export default app;
 //     if (currentToken) {
 //       console.log('Current token for client:', currentToken);
 //       const notificationToken = { token: currentToken };
-//       await axios.post(`http://localhost:5000/token`, notificationToken);
+//       await axios.post(`https://event-planet-server.vercel.app/token`, notificationToken);
 //     } else {
 //       console.log('No registration token available. Request permission to generate one.');
 //     }
@@ -38,7 +36,6 @@ export default app;
 //     console.error('An error occurred while retrieving token:', err);
 //   }
 // };
-
 
 //   export const onMessageListener = () =>
 //   new Promise((resolve) => {

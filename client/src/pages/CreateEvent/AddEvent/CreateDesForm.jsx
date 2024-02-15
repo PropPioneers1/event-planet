@@ -37,7 +37,6 @@ const CreateDesForm = () => {
   const calculateProgress = () =>
     ((currentQuestion - 1) / (totalQuestions - 1)) * 100;
 
-
   const handleNext = async () => {
     // if (!localImage) {
     //   toast.error("Please upload an image before proceeding.");
@@ -50,8 +49,6 @@ const CreateDesForm = () => {
       selectedvenu: venue,
     };
 
-
-
     if (
       (currentQuestion === 1 && organizationName) ||
       (currentQuestion === 2 && audienceSize) ||
@@ -63,42 +60,41 @@ const CreateDesForm = () => {
         guestNames &&
         guestProfessions) ||
       (currentQuestion === 7 && venueDetails) ||
-      (currentQuestion === 8 && eventTime || eventDate ||eventEndDate) ||
-      (currentQuestion === 9 && localImage)||
-      (currentQuestion === 10 && expectedPrice)||
-      (currentQuestion === 11 && userName)||
+      (currentQuestion === 8 && eventTime) || eventDate || eventEndDate ||
+      (currentQuestion === 9 && localImage) ||
+      (currentQuestion === 10 && expectedPrice) ||
+      (currentQuestion === 11 && userName) ||
       (currentQuestion === 12 && phoneNumber)
     ) {
       if (currentQuestion === totalQuestions) {
         const QnaData = {
           userName: userName,
           email: user.email,
-          organization :  organizationName,
+          organization: organizationName,
           category: label,
           eventName: eventName,
           totalSeat: audienceSize,
           state: venueDetails.selectedstate,
-          city:venueDetails.selectedcity,
+          city: venueDetails.selectedcity,
           venue: venueDetails.selectedvenu,
           startDate: eventDate,
-          endDate:eventEndDate,
-          ticketPrice:ticketPrice,
-          speakers:  [guestNames],
+          endDate: eventEndDate,
+          ticketPrice: ticketPrice,
+          speakers: [guestNames],
           eventPrice: expectedPrice,
-          description:  otherDemands,
-          eventImages:[ localImage],
+          description: otherDemands,
+          eventImages: [localImage],
           speakersImages: [guestImages],
-        
-          status: "unpaid"
-         
-          
-          
-          
+
+          status: "unpaid",
         };
         console.log(QnaData);
 
         try {
-          await axios.post("http://localhost:5000/event", QnaData);
+          await axios.post(
+            "https://event-planet-server.vercel.app/event",
+            QnaData
+          );
           toast.success("Your Response sent successfully");
           navigate("/");
         } catch (error) {
@@ -120,7 +116,7 @@ const CreateDesForm = () => {
   const getImageUrl = async (event) => {
     try {
       const image = event.target.files[0];
-      console.log(image,'hek');
+      console.log(image, "hek");
       // const formData = new FormData();
       // formData.append("image", image);
 
@@ -138,7 +134,7 @@ const CreateDesForm = () => {
       const image = event.target.files[0];
       const response = await uploadImage(image);
       const imageUrl = response.data.display_url;
-  
+
       // Update the guest images array with the new image URL
       const updatedGuestImages = [...guestImages];
       updatedGuestImages[index] = imageUrl;
@@ -160,9 +156,7 @@ const CreateDesForm = () => {
           Answer the following questions to customize your event.
         </p>
 
-        <div
-          className="text-center p-10 rounded-xl bg-neutral shadow-2xl shadow-blue-200 mx-auto mt-6  md:w-[650px] w-[320px]  lg:w-[800px]"
-        >
+        <div className="text-center p-10 rounded-xl bg-neutral shadow-2xl shadow-blue-200 mx-auto mt-6  md:w-[650px] w-[320px]  lg:w-[800px]">
           {currentQuestion === 1 && (
             <div className="grid " data-aos="fade-right">
               <label
@@ -209,7 +203,7 @@ const CreateDesForm = () => {
             </div>
           )}
 
-{currentQuestion === 3 && (
+          {currentQuestion === 3 && (
             <div className="grid" data-aos="fade-right">
               {/* Question 3 */}
               <label
@@ -229,9 +223,7 @@ const CreateDesForm = () => {
             </div>
           )}
 
-      
-
-{currentQuestion === 4 &&  (
+          {currentQuestion === 4 && (
             <div className="grid">
               {/* Question 4 (alternative for No) */}
               <label
@@ -255,7 +247,6 @@ const CreateDesForm = () => {
               />
             </div>
           )}
-
 
           {currentQuestion === 5 && (
             <div className="grid" data-aos="fade-right">
@@ -296,41 +287,44 @@ const CreateDesForm = () => {
                   }
                 }}
               />
-            {Array.from({ length: numberOfGuests }).map((_, index) => (
-  <div key={index} className="md:flex items-center justify-center align-middle
-    grid space-x-4 gap-5 mt-4">
-    <input
-      type="text"
-      placeholder={`Guest ${index + 1} Name`}
-      className="h-12 p-2 md:w-56 w-36 rounded-md border border-gray-300"
-      value={guestNames[index] || ""}
-      onChange={(e) => {
-        const updatedGuestNames = [...guestNames];
-        updatedGuestNames[index] = e.target.value;
-        setGuestNames(updatedGuestNames);
-      }}
-    />
-    <input
-      type="text"
-      placeholder={`Guest ${index + 1} Profession`}
-      className="h-12 p-2 md:w-56 w-36 rounded-md border border-gray-300"
-      value={guestProfessions[index] || ""}
-      onChange={(e) => {
-        const updatedGuestProfessions = [...guestProfessions];
-        updatedGuestProfessions[index] = e.target.value;
-        setGuestProfessions(updatedGuestProfessions);
-      }}
-    />
-    <input
-      onChange={(e) => handleGuestImageUpload(e, index)}
-      name={`guestImage${index}`}
-      className="file-input file-input-bordered w-full h-16"
-      type="file"
-      id={`guest-image-file-${index}`}
-      required
-    />
-  </div>
-))}
+              {Array.from({ length: numberOfGuests }).map((_, index) => (
+                <div
+                  key={index}
+                  className="md:flex items-center justify-center align-middle
+    grid space-x-4 gap-5 mt-4"
+                >
+                  <input
+                    type="text"
+                    placeholder={`Guest ${index + 1} Name`}
+                    className="h-12 p-2 md:w-56 w-36 rounded-md border border-gray-300"
+                    value={guestNames[index] || ""}
+                    onChange={(e) => {
+                      const updatedGuestNames = [...guestNames];
+                      updatedGuestNames[index] = e.target.value;
+                      setGuestNames(updatedGuestNames);
+                    }}
+                  />
+                  <input
+                    type="text"
+                    placeholder={`Guest ${index + 1} Profession`}
+                    className="h-12 p-2 md:w-56 w-36 rounded-md border border-gray-300"
+                    value={guestProfessions[index] || ""}
+                    onChange={(e) => {
+                      const updatedGuestProfessions = [...guestProfessions];
+                      updatedGuestProfessions[index] = e.target.value;
+                      setGuestProfessions(updatedGuestProfessions);
+                    }}
+                  />
+                  <input
+                    onChange={(e) => handleGuestImageUpload(e, index)}
+                    name={`guestImage${index}`}
+                    className="file-input file-input-bordered w-full h-16"
+                    type="file"
+                    id={`guest-image-file-${index}`}
+                    required
+                  />
+                </div>
+              ))}
             </div>
           )}
 
@@ -396,7 +390,7 @@ const CreateDesForm = () => {
                 className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
                 onChange={(e) => setEventDate(e.target.value)}
               />
-          
+
               <label
                 htmlFor="eventEndDate"
                 className="md:text-4xl text-xl text-black font-bold mb-4 Quistions"
@@ -410,7 +404,7 @@ const CreateDesForm = () => {
                 className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
                 onChange={(e) => setEventEndDate(e.target.value)}
               />
-          
+
               <label
                 htmlFor="eventTime"
                 className="md:text-4xl text-xl text-black font-bold mb-4 mt-8 Quistions"
@@ -427,84 +421,84 @@ const CreateDesForm = () => {
             </div>
           )}
 
-{currentQuestion === 9 && (
-  <div className="grid" data-aos="fade-right">
-    <label
-      htmlFor="image"
-      className="md:text-4xl text-xl text-black font-bold mb-4 Quistions"
-    >
-      Add your event display Image
-    </label>
-    <input
-      onChange={getImageUrl}
-      name="imageFile"
-      className="file-input file-input-bordered w-full h-16"
-      type="file"
-      id="image-file"
-      required
-    />
-  </div>
-)}
-{currentQuestion === 10 && (
-  <div className="grid" data-aos="fade-right">
-    <label
-      htmlFor="expectedPrice"
-      className="md:text-4xl text-xl text-black font-bold mb-4 Quistions"
-    >
-      Add your expected price for your desired event:
-    </label>
-    <input
-      type="number"
-      id="expectedPrice"
-      value={expectedPrice}
-      placeholder="Enter your expected price"
-      className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
-      onChange={(e) => {
-        const value = parseFloat(e.target.value);
-        if (!isNaN(value)) {
-          setExpectedPrice(value);
-        }
-      }}
-    />
-  </div>
-)}
-{currentQuestion === 11 && (
-  <div className="grid" data-aos="fade-right">
-    <label
-      htmlFor="userName"
-      className="md:text-4xl text-xl text-black font-bold mb-4 Quistions"
-    >
-      Please enter your name:
-    </label>
-    <input
-      type="text"
-      id="userName"
-      value={userName}
-      placeholder="Enter Your Name"
-      onChange={(e) => setUserName(e.target.value)}
-      className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
-    />
-  </div>
-)}
+          {currentQuestion === 9 && (
+            <div className="grid" data-aos="fade-right">
+              <label
+                htmlFor="image"
+                className="md:text-4xl text-xl text-black font-bold mb-4 Quistions"
+              >
+                Add your event display Image
+              </label>
+              <input
+                onChange={getImageUrl}
+                name="imageFile"
+                className="file-input file-input-bordered w-full h-16"
+                type="file"
+                id="image-file"
+                required
+              />
+            </div>
+          )}
+          {currentQuestion === 10 && (
+            <div className="grid" data-aos="fade-right">
+              <label
+                htmlFor="expectedPrice"
+                className="md:text-4xl text-xl text-black font-bold mb-4 Quistions"
+              >
+                Add your expected price for your desired event:
+              </label>
+              <input
+                type="number"
+                id="expectedPrice"
+                value={expectedPrice}
+                placeholder="Enter your expected price"
+                className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
+                onChange={(e) => {
+                  const value = parseFloat(e.target.value);
+                  if (!isNaN(value)) {
+                    setExpectedPrice(value);
+                  }
+                }}
+              />
+            </div>
+          )}
+          {currentQuestion === 11 && (
+            <div className="grid" data-aos="fade-right">
+              <label
+                htmlFor="userName"
+                className="md:text-4xl text-xl text-black font-bold mb-4 Quistions"
+              >
+                Please enter your name:
+              </label>
+              <input
+                type="text"
+                id="userName"
+                value={userName}
+                placeholder="Enter Your Name"
+                onChange={(e) => setUserName(e.target.value)}
+                className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
+              />
+            </div>
+          )}
 
-{currentQuestion === 12 && (
-    <div className="grid" data-aos="fade-right">
-      <label
-        htmlFor="phoneNumber"
-        className="md:text-4xl text-xl text-black font-bold mb-4 Quistions"
-      >
-        Please enter your phone number:
-      </label>
-      <input
-        type="text"
-        id="phoneNumber"
-        value={phoneNumber}
-        placeholder="Enter Your Phone Number"
-        onChange={(e) => setPhoneNumber(e.target.value)}
-        className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
-      />
-    </div>
-  )}
+          {currentQuestion === 12 && (
+            <div className="grid" data-aos="fade-right">
+              <label
+                htmlFor="phoneNumber"
+                className="md:text-4xl text-xl text-black font-bold mb-4 Quistions"
+              >
+                Please enter your phone number:
+              </label>
+              <input
+                type="text"
+                id="phoneNumber"
+                value={phoneNumber}
+                placeholder="Enter Your Phone Number"
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
+              />
+            </div>
+          )}
 
           <div className="flex-1 my-auto mt-10 mx-4">
             <div className="relative pt-1">
@@ -536,21 +530,27 @@ const CreateDesForm = () => {
             )}
 
             {currentQuestion === totalQuestions ? (
-            <button
-            className="btn btn-ghost  text-black bg-200 p-2 text-center"
-            onClick={handleNext}
-            disabled={!city || !venue || !state || !eventDate || !eventTime || !localImage}
-          >
-            Submit <FaSeedling />
-            <Toaster />
-          </button>
-          
+              <button
+                className="btn btn-ghost  text-black bg-200 p-2 text-center"
+                onClick={handleNext}
+                disabled={
+                  !city ||
+                  !venue ||
+                  !state ||
+                  !eventDate ||
+                  !eventTime ||
+                  !localImage
+                }
+              >
+                Submit <FaSeedling />
+                <Toaster />
+              </button>
             ) : (
               <button
                 className="btn btn-ghost text-black text-end bg-blue-200"
                 onClick={handleNext}
                 disabled={
-                  !( 
+                  !(
                     (currentQuestion === 1 && organizationName) ||
                     (currentQuestion === 2 && audienceSize) ||
                     (currentQuestion === 3 && organizationName) ||
@@ -562,10 +562,10 @@ const CreateDesForm = () => {
                       guestProfessions) ||
                     (currentQuestion === 7 && city && state && venue) ||
                     (currentQuestion === 8 && eventDate && eventTime) ||
-                    (currentQuestion === 9 && localImage)||
+                    (currentQuestion === 9 && localImage) ||
                     (currentQuestion === 10 && expectedPrice) ||
                     (currentQuestion === 11 && userName) ||
-                    (currentQuestion === 12 && phoneNumber) 
+                    (currentQuestion === 12 && phoneNumber)
                   )
                 }
               >
@@ -580,4 +580,3 @@ const CreateDesForm = () => {
 };
 
 export default CreateDesForm;
-

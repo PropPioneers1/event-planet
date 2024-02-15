@@ -11,7 +11,7 @@ const OurNextEvents = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/event")
+      .get("https://event-planet-server.vercel.app/event")
       .then((res) => setNextEvents(res?.data?.events?.slice(0, 6)));
   }, []);
 
