@@ -137,6 +137,7 @@ const Router = createBrowserRouter([
         path: "editProfile",
         element: <UpdateProfile></UpdateProfile>,
       },
+      {
         path:'my-cart',
         element:<MyCart></MyCart>
       }
