@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const express = require("express");
-const sendMail=require('./controller/sendMail')
+const sendMail = require("./controller/sendMail");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
@@ -17,8 +17,9 @@ const upComingDetailHandler = require("./upComingDetailHandler/detailHandler");
 const feedbackHandler = require("./FeedbackHandler/feedbackHandler");
 
 const paymenthandler = require("./paymentHandler/PaymentHandler");
-const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
-const usersHandler = require("./usersHandler/usersHandler")
+// const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
+const usersHandler = require("./usersHandler/usersHandler");
+const LikesCommentsHandler = require("./LikesCommentsHandler/LikesCommentsHandler");
 // middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -51,10 +52,10 @@ app.use("/upcomingDetails", upComingDetailHandler);
 app.use("/payment", paymenthandler);
 app.use("/feedback", feedbackHandler);
 // send confirmation mail if the user successfully booking a event
-app.get('/sendEmail',sendMail)
-app.use("/token", notificationHandler);
-app.use('/users',usersHandler);
-
+app.get("/sendEmail", sendMail);
+// app.use("/token", notificationHandler);
+app.use("/users", usersHandler);
+app.use("/likesComments", LikesCommentsHandler);
 
 // Eroor handler
 
