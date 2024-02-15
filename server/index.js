@@ -28,8 +28,7 @@ app.use(bodyParser.json());
 // Mongodb connection
 mongoose
   .connect(
-    `mongodb+srv://EventPlanet:6oNbcueawJevcwOk
-    @proppioneers.pzy67in.mongodb.net/Event-Planet`
+    "mongodb+srv://EventPlanet:6oNbcueawJevcwOk@proppioneers.pzy67in.mongodb.net/Event-Planet?retryWrites=true&w=majority"
   )
   .then(() => {
     console.log("Connected to MongoDB");
