@@ -27,6 +27,7 @@ import PaymentSuccess from "../components/shared/PaymentPage/PaymentSuccess";
 import PaymentFaild from "../components/shared/PaymentPage/PaymentFaild";
 import OurBlogs from "../pages/Demo/OurBlogs/OurBlogs";
 import BlogDetails from "../pages/Demo/OurBlogs/BlogDetails/BlogDetails";
+import MyCart from "../pages/Dashboard/MyCart/MyCart";
 import About from "../pages/About/About";
 
 const Router = createBrowserRouter([
@@ -98,10 +99,6 @@ const Router = createBrowserRouter([
         element: <AllEvent></AllEvent>,
       },
       {
-        path: "editProfile",
-        element: <UpdateProfile></UpdateProfile>,
-      },
-      {
         path: "about",
         element: <About></About>,
       },
@@ -140,6 +137,14 @@ const Router = createBrowserRouter([
       {
         path: "event-requests",
         element: <EventRequests></EventRequests>,
+      },
+      {
+        path: "editProfile",
+        element: <UpdateProfile></UpdateProfile>,
+      },
+      {
+        path: "my-cart",
+        element: <MyCart></MyCart>,
       },
     ],
   },

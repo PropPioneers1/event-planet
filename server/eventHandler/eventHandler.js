@@ -6,20 +6,36 @@ const eventModel = mongoose.model("Event", eventSchema);
 
 // Get all the todo
 router.get("/", async (req, res) => {
-  let query = {};
-  const page = parseInt(req.query.page);
-  const eventCount = await eventModel.countDocuments({});
+  console.log(req.query.title);
+  const eventTitle = req.query.title;
+  const eventCategory = req.query.category;
+  const eventState = req.query.state;
+  const eventCity = req.query.city;
 
-  if (page >= 0) {
-    const limit = 8;
-    const skip = page * limit;
-    query = await eventModel.find({}).skip(skip).limit(limit);
-  } else {
-    query = await eventModel.find({});
+  const page = parseInt(req.query.page);
+  const limit = 8;
+  const skip = page * limit;
+  let query = {};
+
+  if (eventTitle) {
+    query.eventName = eventTitle;
+  }
+  if (eventCategory) {
+    query.category = eventCategory;
+  }
+  if (eventState) {
+    query.state = eventState;
+  }
+  if (eventCity) {
+    query.city = eventCity;
   }
 
+  console.log(query, "<<=============");
+
   try {
-    const result = query;
+    const eventCount = await eventModel.countDocuments(query);
+    const result = await eventModel.find(query).skip(skip).limit(limit);
+
     res.status(200).send({ eventCount, events: result });
   } catch (error) {
     console.log("Not Fount Block");

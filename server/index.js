@@ -16,7 +16,7 @@ const eventHandler = require("./eventHandler/eventHandler");
 const upComingDetailHandler = require("./upComingDetailHandler/detailHandler");
 
 const paymenthandler = require("./paymentHandler/PaymentHandler");
-const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
+// const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
 const usersHandler = require("./usersHandler/usersHandler");
 const LikesCommentsHandler = require("./LikesCommentsHandler/LikesCommentsHandler");
 // middleware
@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 mongoose
   .connect(
     `mongodb+srv://EventPlanet:2LxqUuIzAi3v6496
-@proppioneers.pzy67in.mongodb.net/Event-Planet`
+    @proppioneers.pzy67in.mongodb.net/Event-Planet`
   )
   .then(() => {
     console.log("Connected to MongoDB");
@@ -52,7 +52,7 @@ app.use("/upcomingDetails", upComingDetailHandler);
 app.use("/payment", paymenthandler);
 // send confirmation mail if the user successfully booking a event
 app.get("/sendEmail", sendMail);
-app.use("/token", notificationHandler);
+// app.use("/token", notificationHandler);
 app.use("/users", usersHandler);
 app.use("/likesComments", LikesCommentsHandler);
 

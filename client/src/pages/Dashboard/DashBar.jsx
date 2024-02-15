@@ -3,7 +3,7 @@ import { HiBars3CenterLeft } from "react-icons/hi2";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import useAuth from "../../hooks/useAuth";
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { PiSignOutBold } from 'react-icons/pi';
 import { FaRegEdit } from "react-icons/fa";
 
@@ -65,13 +65,16 @@ const DashBar = ({ dashLinks, isSidebarOpen, setIsSidebarOpen }) => {
 
                     </div>
                     <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                        
-                        <div
-                            className="px-4 py-3 hover:bg-primary hover:text-white border-b flex items-center cursor-pointer transition font-semibold"
-                        >
-                            <FaRegEdit className="w-5 h-5 mr-2"></FaRegEdit>
-                            Edit Profile
-                        </div>
+                        {/* Edit Profile */}
+                        <Link to="/dashboard/editProfile">
+                            <div
+                                className="px-4 py-3 hover:bg-primary hover:text-white border-b flex items-center cursor-pointer transition font-semibold"
+                            >
+                                <FaRegEdit className="w-5 h-5 mr-2"></FaRegEdit>
+                                Edit Profile
+                            </div>
+                        </Link>
+                        {/* Logout */}
                         <div
                             onClick={handleLogOut}
                             className="px-4 py-3 hover:bg-primary hover:text-white  flex items-center  cursor-pointer transition font-semibold"

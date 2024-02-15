@@ -6,10 +6,13 @@ import { Link, useNavigate } from "react-router-dom";
 import '../../pages/Home/HomeComponenets/UpComingEvent/upcoming.scss'
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+
+
 const SignIn = async() => {
 
   const navigate = useNavigate();
   const {loading,signIn,signInGoogle,signInFacebook} = useAuth();
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
