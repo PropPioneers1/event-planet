@@ -17,7 +17,8 @@ const upComingDetailHandler = require("./upComingDetailHandler/detailHandler");
 
 const paymenthandler = require("./paymentHandler/PaymentHandler");
 const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
-const usersHandler = require("./usersHandler/usersHandler")
+const usersHandler = require("./usersHandler/usersHandler");
+const messageHandler = require("./MessageHandler/MessageHandler");
 // middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -25,17 +26,14 @@ app.use(bodyParser.json());
 // console.log(object);
 
 // Mongodb connection
+// console.log(object);
+const dbURI = `mongodb+srv://EventPlanet:6oNbcueawJevcwOk
+@proppioneers.pzy67in.mongodb.net/Event-Planet`;
+// Mongodb connection
 mongoose
-  .connect(
-    `mongodb+srv://EventPlanet:2LxqUuIzAi3v6496
-@proppioneers.pzy67in.mongodb.net/Event-Planet`
-  )
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
-  .catch((error) => {
-    console.error("Error connecting to MongoDB:", error);
-  });
+  .connect(dbURI)
+  .then(() => console.log("MongoDB connected..."))
+  .catch((err) => console.error("Error connecting to MongoDB:", err));
 
 // routes
 app.get("/", (req, res) => {
@@ -53,6 +51,7 @@ app.use("/payment", paymenthandler);
 app.get('/sendEmail',sendMail)
 app.use("/token", notificationHandler);
 app.use('/users',usersHandler);
+app.use("/message",messageHandler);
 
 
 // Eroor handler
