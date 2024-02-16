@@ -60,7 +60,9 @@ const CreateDesForm = () => {
         guestNames &&
         guestProfessions) ||
       (currentQuestion === 7 && venueDetails) ||
-      (currentQuestion === 8 && eventTime) || eventDate || eventEndDate ||
+      (currentQuestion === 8 && eventTime) ||
+      eventDate ||
+      eventEndDate ||
       (currentQuestion === 9 && localImage) ||
       (currentQuestion === 10 && expectedPrice) ||
       (currentQuestion === 11 && userName) ||
@@ -91,10 +93,7 @@ const CreateDesForm = () => {
         console.log(QnaData);
 
         try {
-          await axios.post(
-            "https://event-planet-server.vercel.app/event",
-            QnaData
-          );
+          await axios.post("http://localhost:5000/event", QnaData);
           toast.success("Your Response sent successfully");
           navigate("/");
         } catch (error) {

@@ -44,7 +44,7 @@ const ThemeDetails = () => {
     console.log(userTheme);
 
     axios
-      .post("https://event-planet-server.vercel.app/selectedthm", userTheme)
+      .post("http://localhost:5000/selectedthm", userTheme)
       .then(() => {
         toast.success("Your Response sent successfully");
         navigate("/");

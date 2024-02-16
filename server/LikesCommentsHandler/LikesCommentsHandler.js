@@ -35,4 +35,34 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.patch("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { editComment } = req.body;
+    console.log(editComment, id);
+    const result = await LikesCommentsModel.findByIdAndUpdate(
+      id,
+      { $set: { comments: editComment } },
+      { new: true }
+    );
+    res
+      .status(200)
+      .json({ status: 200, message: "updated the comment", result });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json("Internal Server Error");
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const result = await LikesCommentsModel.deleteOne({ _id: id });
+    res.status(201).json({ message: "Comment deleted", result });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json("Internal Server Error");
+  }
+});
+
 module.exports = router;

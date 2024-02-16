@@ -21,7 +21,7 @@ const CheckOut = () => {
     const paymentMethod = form.paymentMethod.value;
     const data = {
       mobileNUmber: mobile,
-      eventName: "xyz",
+      eventName: user?.displayName,
       // productId: 9999999,
       cus_email: user.email,
       currency: paymentMethod,
@@ -29,7 +29,7 @@ const CheckOut = () => {
       paidstatus: false,
     };
     axios
-      .post("https://event-planet-server.vercel.app/payment", data)
+      .post("http://localhost:5000/payment", data)
       .then((response) => {
         console.log(response.data);
         window.location.replace(response.data.url);

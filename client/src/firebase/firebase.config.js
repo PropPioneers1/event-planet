@@ -28,7 +28,7 @@ export default app;
 //     if (currentToken) {
 //       console.log('Current token for client:', currentToken);
 //       const notificationToken = { token: currentToken };
-//       await axios.post(`https://event-planet-server.vercel.app/token`, notificationToken);
+//       await axios.post(`http://localhost:5000/token`, notificationToken);
 //     } else {
 //       console.log('No registration token available. Request permission to generate one.');
 //     }
