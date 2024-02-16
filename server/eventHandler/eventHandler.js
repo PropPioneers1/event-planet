@@ -6,11 +6,11 @@ const eventModel = mongoose.model("Event", eventSchema);
 
 // Get all the todo
 router.get("/", async (req, res) => {
-  console.log(req.query.title);
   const eventTitle = req.query.title;
   const eventCategory = req.query.category;
   const eventState = req.query.state;
   const eventCity = req.query.city;
+  const email = req.query.email;
 
   const page = parseInt(req.query.page);
   const limit = 8;
@@ -28,6 +28,9 @@ router.get("/", async (req, res) => {
   }
   if (eventCity) {
     query.city = eventCity;
+  }
+  if(email){
+    query.email = email
   }
 
   try {

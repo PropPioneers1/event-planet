@@ -9,10 +9,6 @@ const FeedBackSchema = mongoose.Schema({
         type:String,
         require:true,
     },
-    rating:{
-        type:String,
-        require:true,
-    },
     product_name:{
         type:String,
         require:true
@@ -25,7 +21,7 @@ const FeedBackSchema = mongoose.Schema({
         type:String,
     },
     user_opinion:{
-        type:String,
+        type:Number,
         require:true,
     },
 

@@ -9,6 +9,11 @@ import Swal from "sweetalert2";
 import { useState } from "react";
 import Feedback from "./Feedback/Feedback";
 import toast, { Toaster } from "react-hot-toast";
+
+const image_hosting_key=import.meta.env.VITE_IMAGE_HOSTING_KEY;
+// eslint-disable-next-line no-unused-vars
+const image_hosting_api= `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
+
 const DetailsProduct = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
@@ -16,6 +21,7 @@ const DetailsProduct = () => {
 const [quantity,setQuantity]=useState(0);
 const [feedbacks,setFeedbacks] = useState([])
 const [textCount,setTextCount] = useState(0)
+// eslint-disable-next-line no-unused-vars
 const [rating,setRating] = useState()
 
 const handleIncreaseQuantity=()=>{
@@ -94,7 +100,7 @@ const handleIncreaseQuantity=()=>{
       const textValue = e.target.value
       const count = textValue.length;
       if(count > 20){
-       return toast.error("Besi Latter Not Allow")
+       return toast.error("Please short your write")
       }
       setTextCount(count);
     }
@@ -104,6 +110,10 @@ const handleIncreaseQuantity=()=>{
       setRating(newRating);
     };
     const handleUsersFeedBack = async() => {
+
+      // image upload to imgbb and then get and url
+      // const imageFile={image: data.image[0]}
+      // const res=await axiosSecure.post(image_hosting_api,imageFile)
       const usersFeedBack = {
         email:user?.email,
         name:user?.displayName,
@@ -112,7 +122,7 @@ const handleIncreaseQuantity=()=>{
         user_image:"image",
         user_opinion:textCount,
       }
-      console.log(usersFeedBack)
+      console.log('first',usersFeedBack)
       // post feed back
       const result = await axiosSecure.post("/feedback",usersFeedBack)
       if(result){
@@ -351,16 +361,16 @@ View the store
                 </div>
                 {/* get users ratings */}
                 <div className="text-lg font-semibold border-b-2 my-3 text-center">Rate star </div>
-                <div className="flex justify-center my-3">
+                <di className="flex justify-center my-3">
                 <ReactStars
                 onChange={ratingChanged}
                 size={36}
                 activeColor="#e0218a"
               />,
-              </div>
+              </di>
               <div>
               <label className="form-control w-full mb-5">
-              <input type="file" className="file-input file-input-bordered w-full " />
+              <input name="image" type="file" className="file-input file-input-bordered w-full " />
             </label>
                 <textarea onChange={handleTextCount} className="w-full rounded p-3 border border-secondary" placeholder="Descrive Your Opinion.." cols="30" rows="2"></textarea>
                 <p className="text-right">

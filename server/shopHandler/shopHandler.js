@@ -54,6 +54,28 @@ router.get("/my-cart/:email", async (req, res) => {
   }
 });
 
+//  delete from my cart
+router.delete("/my-cart/:email/:id", async (req, res) => {
+  try {
+    const { email, id } = req.params;
+    const item = await shopCartModel.deleteOne(
+      { _id: id, email: email },
+    );
+
+    if (!item) {
+      return res.status(404).json({ error: "Shopping cart item not found" });
+    }
+
+    res.status(200).json({ result: item });
+  } catch (err) {
+    // ... error handling ...
+  }
+});
+
+
+
+
+
 
 
 router.get("/details-shopCart/:id", async (req, res) => {
