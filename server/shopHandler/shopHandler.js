@@ -9,7 +9,11 @@ const shopCartModel=mongoose.model('shopcart',shopCartSchema)
 // Get all shoItem
 router.get("/", async (req, res) => {
   try {
-    const result = await shopModel.find({});
+   
+    const page=parseInt(req.query.page);
+    const size=parseInt(req.query.size);
+    
+    const result = await shopModel.find({}).skip(page * size).limit(size);
     res.status(200).json({ result });
   } catch (err) {
     res.status(500).json({
@@ -17,6 +21,62 @@ router.get("/", async (req, res) => {
     });
   }
 });
+
+
+// get all cart items
+
+router.get("/my-cart", async (req, res) => {
+  try {
+    const result = await shopCartModel.find({});
+    res.status(200).json({ result });
+  } catch (err) {
+    res.status(500).json({
+      error: "There was a server-side error",
+    });
+  }
+});
+
+
+//  get cart product by email
+router.get("/my-cart/:email", async (req, res) => {
+  try {
+    const { email } = req.params;
+    const result = await shopCartModel.find({ email }); // Use findOne for searching by email
+    if (!result) {
+      return res.status(404).json({ error: "Shopping cart item not found" });
+    }
+    res.status(200).json({ result });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: "There was a server-side error",
+    });
+  }
+});
+
+//  delete from my cart
+router.delete("/my-cart/:email/:id", async (req, res) => {
+  try {
+    const { email, id } = req.params;
+    const item = await shopCartModel.deleteOne(
+      { _id: id, email: email },
+    );
+
+    if (!item) {
+      return res.status(404).json({ error: "Shopping cart item not found" });
+    }
+
+    res.status(200).json({ result: item });
+  } catch (err) {
+    // ... error handling ...
+  }
+});
+
+
+
+
+
+
 
 router.get("/details-shopCart/:id", async (req, res) => {
   try {
@@ -67,20 +127,17 @@ router.post("/shopCart/:id", async (req, res) => {
   }
 });
 
-// Post multiple todos
-router.post("/all", async (req, res) => {});
 
-// Put todo
-router.put("/:id", (req, res) => {});
-
-router.put("/:id", (req, res) => {});
-
-// update many todo
-router.put("/new/:title", (req, res) => {});
-
-// Delete todo
-router.delete("/:id", async (req, res) => {
-  // Implement your logic here
-});
+// for pagination total products get route
+router.get('/totalProducts',async(req,res)=>{
+  try{
+    
+    const count=await shopModel.estimatedDocumentCount();
+    res.status(200).json({ count});
+  }catch(error){
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+})
 
 module.exports = router;
