@@ -2,21 +2,27 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
-import { FaArrowLeft, FaArrowRight, FaSeedling } from "react-icons/fa6";
+import { FaArrowRight, FaSeedling } from "react-icons/fa6";
 import useAuth from "../../../hooks/useAuth";
 import { uploadImage } from "../../../api/utlis";
 import SectionHeading from "../../../components/shared/SectionHeading/SectionHeading";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const CreateDesForm = () => {
   const { label } = useParams();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [currentCategory, setCurrentCategory] = useState(1);
-  // const [localImage, setLocalImage] = useState(null);
-  // const [speakersImages, setSpeakersImages] = useState([]);
+
+  const handleCategoryChange = (categoryNumber) => {
+    setCurrentCategory(categoryNumber);
+  };
+
   const [formData, setFormData] = useState({
     organization: "",
-    userName: "",
+    firstName: "",
+    lastName: "",
     phone: "",
     totalSeat: "",
     eventName: "",
@@ -28,22 +34,28 @@ const CreateDesForm = () => {
     city: "",
     state: "",
     venue: "",
-    startDate: "",
-    endDate: "",
+    startDate: null,
+    endDate: null,
     eventTime: "",
     eventImages: [],
     speakersImages: [],
+    
   });
-
-  // const [guestImages, setGuestImages] = useState([]);// State to track if all images are ready
 
   const handleNext = async () => {
     if (currentCategory === 1) {
-      if (!formData.userName || !formData.organization || !formData.phone) {
+      if (!formData.firstName || !formData.lastName || !formData.organization || !formData.phone) {
         toast.error("Please answer all questions before proceeding.");
         return;
       }
-    } else if (currentCategory === 2) {
+      
+      const userName = `${formData.firstName} ${formData.lastName}`;
+      setFormData(prevState => ({
+        ...prevState,
+        userName: userName.trim() 
+      }));
+    } 
+    else if (currentCategory === 2) {
       if (
         !formData.eventName ||
         !formData.totalSeat ||
@@ -51,12 +63,12 @@ const CreateDesForm = () => {
         !formData.description ||
         !formData.numberOfGuests ||
         formData.speakers.length !== parseInt(formData.numberOfGuests, 10)
-        // !speakersImages.length
       ) {
         toast.error("Please answer all questions before proceeding.");
         return;
       }
-    } else if (currentCategory === 3) {
+    }
+    else if (currentCategory === 3) {
       if (
         !formData.city ||
         !formData.state ||
@@ -76,14 +88,14 @@ const CreateDesForm = () => {
       try {
         const data = {
           ...formData,
-          speakers: formData.speakers.map((item) => item.name),
-          speakersImages: formData.speakers.map((item) => item.image),
+          speakers:formData.speakers.map((item)=>item.name),
+          speakersImages:formData.speakers.map((item)=>item.image),
           email: user.email,
           category: label,
           status: "unpaid",
-          ticketSold: 0,
+          ticketSold:0
         };
-        console.log(data, "her");
+        console.log(data,'her');
         await axios.post("http://localhost:5000/event", data);
         toast.success("Your response has been submitted successfully");
         navigate("/");
@@ -94,14 +106,25 @@ const CreateDesForm = () => {
     }
   };
 
-  const handlePrevious = () => {
-    setCurrentCategory(currentCategory - 1);
+  const handleStartDateChange = (date) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      startDate: date,
+      endDate: date < prevState.endDate ? prevState.endDate : date
+    }));
+  };
+
+  const handleEndDateChange = (date) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      endDate: date
+    }));
   };
 
   const handleInputChange = (field, value) => {
     setFormData({
       ...formData,
-      [field]: value,
+      [field]: value
     });
   };
 
@@ -110,33 +133,31 @@ const CreateDesForm = () => {
       const image = event.target.files[0];
       const response = await uploadImage(image);
       const imageUrl = response.data.display_url;
-
-      // Update the eventImages array with the new image URL
-      setFormData((prevState) => ({
+    
+      setFormData(prevState => ({
         ...prevState,
-        eventImages: [...prevState.eventImages, imageUrl],
+        eventImages: [...prevState.eventImages, imageUrl]
       }));
     } catch (error) {
       console.error("Error uploading event image:", error);
       toast.error("Error uploading event image. Please try again.");
     }
   };
-
+  
   const handleGuestImageUpload = async (event, index) => {
     try {
       const image = event.target.files[0];
       const response = await uploadImage(image);
       const imageUrl = response.data.display_url;
-
-      // Update the speakersImages array with the new image URL
+  
       const updatedSpeakers = [...formData.speakers];
       updatedSpeakers[index] = {
         ...updatedSpeakers[index],
-        image: imageUrl,
+        image: imageUrl
       };
-      setFormData((prevState) => ({
+      setFormData(prevState => ({
         ...prevState,
-        speakers: updatedSpeakers,
+        speakers: updatedSpeakers
       }));
     } catch (error) {
       console.error("Error uploading guest image:", error);
@@ -144,15 +165,11 @@ const CreateDesForm = () => {
     }
   };
 
+
   return (
-    <div className="">
-      <div
-        className="min-h-[60vh] hero py-8 bg-cover bg-no-repeat bg-[#050410cd] bg-blend-overlay items-center bg-fixed"
-        style={{
-          backgroundImage:
-            "url(https://i.ibb.co/SJRm756/pexels-min-an-1157557.jpg)",
-        }}
-      >
+   <div>
+
+<div className="min-h-[60vh] hero py-8 bg-cover bg-no-repeat bg-[#050410cd] bg-blend-overlay items-center bg-fixed" style={{ backgroundImage: "url(https://i.ibb.co/SJRm756/pexels-min-an-1157557.jpg)" }}>
         <div className="text-2xl bg-transparent font-bold">
           <SectionHeading
             colortitle="text-white"
@@ -165,381 +182,365 @@ const CreateDesForm = () => {
           />
         </div>
       </div>
-      <div className="mb-10">
-        <div className="text-center p-10 rounded-xl bg-neutral shadow-2xl shadow-blue-200 mx-auto mt-6 md:w-[650px] w-[320px] lg:w-[800px]">
+
+
+
+
+    <div className="grid mx-4 md:grid-cols-3  grid-cols-2 ">
+ <div className="">
+ <div className="md:grid md
+ 
+lg:ml-20  flex w-96 h-10 md:grid-cols-1 mt-10 md:pl-10 md:h-44">
+          <button className={`w-44 border-2 border-black ${currentCategory === 1 ? 'bg-gray-300' : ''}`} onClick={() => handleCategoryChange(1)}>About
+           you</button>
+          <button
+  disabled={!formData.firstName || !formData.lastName || !formData.organization || !formData.phone}
+  className={`w-44 border-2 border-black ${currentCategory === 2 ? 'bg-gray-300' : '' }
+  ${(!formData.firstName || !formData.lastName || !formData.organization || !formData.phone) ? 'border-slate-100 text-slate-200' : 'border'}`}
+  onClick={() => handleCategoryChange(2)}
+>
+  event info
+</button>
+
+          <button className={`w-64 md:w-44 border-black border-2 ${currentCategory === 3 ? 'bg-gray-300' : ''}
+          ${(!formData.eventName || !formData.totalSeat || !formData.ticketPrice || !formData.description || 
+            !formData.numberOfGuests || formData.speakers.length !== parseInt(formData.numberOfGuests, 10))?'border-slate-100 text-slate-200' : 'border'}
+          
+          `
+          
+        } onClick={() => handleCategoryChange(3)} 
+          disabled={!formData.eventName || !formData.totalSeat || !formData.ticketPrice || !formData.description || 
+          !formData.numberOfGuests || formData.speakers.length !== parseInt(formData.numberOfGuests, 10)}>Time and location</button>
+     
+        </div>
+ </div>
+     
+      <div className="mb-10 col-span-2 justify-start 
+      align-middle  items-start">
+        <div className="">
           {currentCategory === 1 && (
-            <div>
-              <h1
-                className={`text-xl md:text-2xl mb-10 md:tracking-[0.2rem] tracking-[0.1rem] uppercase font-semibold `}
-              >
-                {" "}
-                About you
-              </h1>
-              <div
-                className="grid grid-cols-1 gap-2 justify-center align-middle items-center mx-auto"
-                data-aos="fade-right"
-              >
-                <div className="grid">
-                  <label
-                    htmlFor="userName"
-                    className=" text-middle tracking-[0.09rem] font-semibold text-xl"
-                  >
-                    What is your name?
-                  </label>
-                  <input
-                    type="text"
-                    id="userName"
-                    value={formData.userName}
-                    placeholder="Enter Your  name"
-                    onChange={(e) =>
-                      handleInputChange("userName", e.target.value)
-                    }
-                    className="w-44 md:w-96  h-11 text-center shadow-2xl mx-auto shadow-blue-50 mt-2 rounded-lg"
-                  />
-                </div>
-                <div className="grid">
-                  <label
-                    htmlFor="organization"
-                    className=" text-center tracking-[0.09rem] font-semibold text-xl"
-                  >
-                    What is your organization name?
-                  </label>
-                  <input
-                    type="text"
-                    id="organization"
-                    value={formData.organization}
-                    placeholder="Enter Your organization name"
-                    onChange={(e) =>
-                      handleInputChange("organization", e.target.value)
-                    }
-                    className="w-44 md:w-96  h-11 text-center shadow-2xl mx-auto shadow-blue-50 mt-2 rounded-lg"
-                  />
-                </div>
-                <div className="grid">
-                  <label
-                    htmlFor="phone"
-                    className=" text-center tracking-[0.09rem] font-semibold text-xl"
-                  >
-                    What is your phone number?
-                  </label>
-                  <input
-                    type="text"
-                    id="phone"
-                    value={formData.phone}
-                    placeholder="Enter Your phoneNumber"
-                    onChange={(e) => handleInputChange("phone", e.target.value)}
-                    className=" w-44 md:w-96 h-11 text-center shadow-2xl mx-auto shadow-blue-50 mt-2 rounded-lg"
-                  />
-                </div>
-              </div>
+          <div>
+             <div>
+             <h1 className={`text-xl md:text-2xl mb-10 md:tracking-[0.2rem] tracking-[0.1rem] uppercase font-semibold `}> About you</h1>
+             </div>
+             <div className="grid grid-cols-1 gap-4 " data-aos="fade-right">
+             
+<div className="flex">
+      <div className="grid">
+      <label htmlFor="firstName" className="text-start tracking-[0.09rem]"> Your first name*</label>
+        <input
+          type="text"
+          id="firstName"
+          value={formData.firstName}
+          placeholder="Enter Your First Name"
+          onChange={(e) => handleInputChange('firstName', e.target.value)}
+          className="w-44 mr-2 bg-white border-black border h-11 text-center shadow-2xl shadow-blue-50 mt-2 rounded-lg"
+        />
+      </div>
+      <div className="grid">
+      <label htmlFor="lastName" className="text-start tracking-[0.09rem]"> Your last name*</label>
+        <input
+          type="text"
+          id="lastName"
+          value={formData.lastName}
+          placeholder="Enter Your Last Name"
+          onChange={(e) => handleInputChange('lastName', e.target.value)}
+          className="w-44  bg-white border-black border h-11 text-center shadow-2xl shadow-blue-50 mt-2 rounded-lg"
+        />
+      </div>
+      </div>
+  
+   
+
+
+
+
+
+
+
+
+
+             
+            <div className="grid">
+            <label htmlFor="organization"
+className=" text-start tracking-[0.09rem]">Your organization name*</label>
+               <input type="text" id="organization" value={formData.organization} placeholder="Enter Your organization name" onChange={(e) => 
+                 handleInputChange('organization', e.target.value)} 
+                 className="w-44 md:w-96 bg-white border-black border h-11 text-center 
+                 shadow-2xl  shadow-blue-50 mt-2 rounded-lg"/>
             </div>
+         <div className="grid">
+         <label htmlFor="phone" 
+className=" text-start tracking-[0.09rem]">  Give your phone number*</label>
+               <input type="text" id="phone" value={formData.phone} placeholder="Enter Your phoneNumber" onChange={(e) => 
+                 handleInputChange('phone', e.target.value)}
+                 className="w-44 md:w-96 bg-white border-black border h-11 text-center 
+                 shadow-2xl  shadow-blue-50 mt-2 rounded-lg" />
+         </div>
+             </div>
+          </div>
           )}
           {currentCategory === 2 && (
-            <div>
-              <h1
-                className={`text-xl md:text-2xl mb-10 md:tracking-[0.2rem] tracking-[0.1rem] uppercase font-semibold `}
-              >
-                {" "}
-                About Your event{" "}
-              </h1>
-              <div
-                className="grid  grid-cols-1 gap-2 justify-center align-middle items-center mx-auto"
-                data-aos="fade-right"
-              >
-                <label
-                  htmlFor="eventName"
-                  className=" text-center 
-              text-xs md:text-xl tracking-[0.09rem] font-semibold "
-                >
-                  What is your event name?
-                </label>
-                <input
-                  type="text"
-                  id="eventName"
-                  value={formData.eventName}
-                  placeholder="Enter Your Event name"
-                  onChange={(e) =>
-                    handleInputChange("eventName", e.target.value)
-                  }
-                  className="w-44 md:w-96  h-11 text-center shadow-2xl mx-auto shadow-blue-50 mt-2 rounded-lg"
-                />
-                <label
-                  htmlFor="totalSeat"
-                  className=" text-center tracking-[0.09rem] font-semibold text-xs md:text-xl"
-                >
-                  How many people do you want as the audience in your event?
-                </label>
-                <input
-                  type="number"
-                  id="totalSeat"
-                  value={formData.totalSeat}
-                  placeholder="minimum 20 people"
-                  className="w-44 md:w-96  h-11 text-center shadow-2xl mx-auto shadow-blue-50 mt-2 rounded-lg"
-                  onChange={(e) =>
-                    handleInputChange("totalSeat", e.target.value)
-                  }
-                />
-                <label
-                  htmlFor="ticketPrice"
-                  className=" text-center tracking-[0.09rem] font-semibold text-xs md:text-xl"
-                >
-                  Enter your ticket price:
-                </label>
-                <input
-                  type="number"
-                  id="ticketPrice"
-                  value={formData.ticketPrice}
-                  placeholder="Enter a price"
-                  onChange={(e) =>
-                    handleInputChange("ticketPrice", e.target.value)
-                  }
-                  className="w-44 md:w-96  h-11 text-center shadow-2xl mx-auto shadow-blue-50 mt-2 rounded-lg"
-                />
-                <label
-                  htmlFor="description"
-                  className=" text-center tracking-[0.09rem] font-semibold text-xs md:text-xl"
-                >
-                  Do you have any other special demands for your event?
-                </label>
-                <textarea
-                  id="description"
-                  value={formData.description}
-                  placeholder="Enter Your Special Demands"
-                  onChange={(e) =>
-                    handleInputChange("description", e.target.value)
-                  }
-                  className="h-24 p-4 w-76 md:w-96 mx-auto rounded-xl"
-                ></textarea>
-                <label
-                  htmlFor="numberOfGuests"
-                  className=" text-center tracking-[0.09rem] font-semibold text-xs md:text-xl"
-                >
-                  How many guests are you inviting?
-                </label>
-                <input
-                  type="number"
-                  id="numberOfGuests"
-                  value={formData.numberOfGuests}
-                  placeholder="Enter number of guests"
-                  className="bg-white h-12 w-44 md:w-96  text-center mx-auto rounded-full"
-                  onChange={(e) =>
-                    handleInputChange("numberOfGuests", e.target.value)
-                  }
-                />
-                {Array.from({
-                  length: parseInt(formData.numberOfGuests, 10),
-                }).map((_, index) => (
-                  <div
-                    key={index}
-                    className="md:flex items-center justify-center align-middle grid space-x-4 gap-5 mt-4"
-                  >
-                    <input
-                      type="text"
-                      placeholder={`Speaker ${index + 1} Name`}
-                      className="h-12 p-2 md:w-56 w-36 rounded-md border border-gray-300"
-                      value={formData.speakers[index]?.name || ""}
-                      onChange={(e) => {
-                        const updatedSpeakers = [...formData.speakers];
-                        updatedSpeakers[index] = {
-                          ...updatedSpeakers[index],
-                          name: e.target.value,
-                        };
-                        handleInputChange("speakers", updatedSpeakers);
-                      }}
-                    />
-                    <input
-                      onChange={(e) => handleGuestImageUpload(e, index)}
-                      name={`guestImage${index}`}
-                      className="w-96 h-11 text-center shadow-2xl mx-auto shadow-blue-50 mt-2 rounded-lg"
-                      type="file"
-                      id={`guest-image-file-${index}`}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-          {currentCategory === 3 && (
-            <div>
-              <h1
-                className={`text-xl md:text-2xl mb-10 md:tracking-[0.2rem] tracking-[0.1rem] uppercase font-semibold `}
-              >
-                {" "}
-                location and time{" "}
-              </h1>
-              <div
-                className="grid  grid-cols-1 gap-2 justify-center align-middle items-center mx-auto"
-                data-aos="fade-right"
-              >
-                <label
-                  htmlFor="city"
-                  className=" text-center tracking-[0.09rem] font-semibold text-xl"
-                >
-                  Which city will the event take place in?
-                </label>
-                <input
-                  type="text"
-                  id="city"
-                  value={formData.city}
-                  placeholder="Enter City"
-                  className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
-                  onChange={(e) => handleInputChange("city", e.target.value)}
-                />
-                <label
-                  htmlFor="state"
-                  className=" text-center tracking-[0.09rem] font-semibold text-xl"
-                >
-                  Which state will the event take place in?
-                </label>
-                <input
-                  type="text"
-                  id="state"
-                  value={formData.state}
-                  placeholder="Enter State"
-                  className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
-                  onChange={(e) => handleInputChange("state", e.target.value)}
-                />
-                <label
-                  htmlFor="venue"
-                  className=" text-center tracking-[0.09rem] font-semibold text-xl"
-                >
-                  Enter the venue of the event.
-                </label>
-                <input
-                  type="text"
-                  id="venue"
-                  value={formData.venue}
-                  placeholder="Enter Venue"
-                  className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
-                  onChange={(e) => handleInputChange("venue", e.target.value)}
-                />
-                <label
-                  htmlFor="startDate"
-                  className=" text-center tracking-[0.09rem] font-semibold text-xl"
-                >
-                  Add the start date of your event?
-                </label>
-                <input
-                  type="date"
-                  id="startDate"
-                  value={formData.startDate}
-                  className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
-                  onChange={(e) =>
-                    handleInputChange("startDate", e.target.value)
-                  }
-                />
-                <label
-                  htmlFor="endDate"
-                  className=" text-center tracking-[0.09rem] font-semibold text-xl"
-                >
-                  When does your event end? (End Date)
-                </label>
-                <input
-                  type="date"
-                  id="endDate"
-                  value={formData.endDate}
-                  className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
-                  onChange={(e) => handleInputChange("endDate", e.target.value)}
-                />
-                <label
-                  htmlFor="eventTime"
-                  className=" text-center tracking-[0.09rem] font-semibold text-xl"
-                >
-                  At what time will the event start?
-                </label>
-                <input
-                  type="time"
-                  id="eventTime"
-                  value={formData.eventTime}
-                  className="bg-white h-12 w-76 md:w-96 text-center mx-auto rounded-full"
-                  onChange={(e) =>
-                    handleInputChange("eventTime", e.target.value)
-                  }
-                />
-                <label
-                  htmlFor="localImage"
-                  className=" text-center tracking-[0.09rem] font-semibold text-xl"
-                >
-                  Upload event image:
-                </label>
-                <input
-                  onChange={handleEventImageUpload}
-                  name="eventImageFile"
-                  className="file-input file-input-bordered w-full h-16"
-                  type="file"
-                  id="eventImage"
-                />
-                {/* <input type="file"  className="file-input file-input-bordered w-full h-16" onChange={getImageUrl} required /> */}
-              </div>
-            </div>
-          )}
-          <div className="flex-1 my-auto mt-10 mx-4">
-            <div className="relative pt-1">
-              <div className="flex mb-2 items-center justify-between">
-                <div className="text-sm text-black">
-                  <span className="absolute md:ml-2 lg:ml-12 font-bold md:text-2xl text-sm mt-1 text-white md:text-black ml-6">
-                    {Math.round((currentCategory / 3) * 100)}%
-                  </span>
-                </div>
-              </div>
-              <div className="flex h-4 w-44 md:w-96 mb-4 mx-auto overflow-hidden rounded-2xl shadow-lg bg-blue-200">
-                <div
-                  style={{ width: `${(currentCategory / 3) * 100}%` }}
-                  className="flex flex-col justify-center bg-green-950 shadow-lg transition-all duration-300 ease-in"
-                ></div>
-              </div>
+          <div>
+                       <h1 className={`text-xl md:text-2xl mb-10 
+                       md:tracking-[0.2rem] tracking-[0.1rem] 
+                       uppercase font-semibold `}> Event Info </h1>
+              <div className="grid  grid-cols-1 gap-2 justify-center
+               align-middle items-center mx-auto" 
+               data-aos="fade-right">
+              <label htmlFor="eventName" 
+             className=" text-start tracking-[0.09rem]">  event name*</label>
+              <input type="text" id="eventName" value={formData.eventName} placeholder="Enter Your Event name" onChange={(e) =>
+                 handleInputChange('eventName', e.target.value)} 
+                 className="w-44 md:w-96 bg-white border-black border h-11 text-center 
+                 shadow-2xl  shadow-blue-50 mt-2 rounded-lg"/>
+              <label htmlFor="totalSeat" 
+              className=" text-start tracking-[0.09rem]">Quantity of Audience*(total tickets) </label>
+              <input type="number" id="totalSeat" 
+              
+  value={formData.totalSeat} placeholder="minimum 20 people"
+             className="w-44 md:w-96 bg-white border-black border h-11 text-center 
+             shadow-2xl  shadow-blue-50 mt-2 rounded-lg"
+             onChange={(e) => {
+              // Ensure the value is within the range of 20 to 2500
+              const audienceQuantity = Math.min(Math.max(20, parseInt(e.target.value) || 20), 2500);
+              handleInputChange('totalSeat', audienceQuantity.toString());
+            }} />
+              <label htmlFor="ticketPrice"
+              className=" text-start tracking-[0.09rem]">Enter your ticket price:</label>
+              <input type="number" id="ticketPrice"  value={formData.ticketPrice}
+               placeholder="Enter a price" onChange={(e) => {
+                // Ensure the value is at least 10
+                const ticketPrice = Math.max(10, parseInt(e.target.value) || 10);
+                handleInputChange('ticketPrice', ticketPrice.toString());
+              }}
+                className="w-44 md:w-96 bg-white border-black border h-11 text-center 
+                shadow-2xl  shadow-blue-50 mt-2 rounded-lg" />
+              <label htmlFor="description"
+             className=" text-start tracking-[0.09rem]">
+                Additional requirements*</label>
+              <textarea id="description" value={formData.description} placeholder="Enter Your Special Demands" 
+              onChange={(e) => handleInputChange('description', e.target.value)} 
+              className="w-44 md:w-96 bg-white h-28 border-black border  text-center 
+                 shadow-2xl  shadow-blue-50 mt-2 rounded-lg"></textarea>
+             
+             
+             <label htmlFor="localImage"
+            className=" text-start tracking-[0.09rem]">Upload event image:</label>
+              <input
+  onChange={handleEventImageUpload}
+  name="eventImageFile"
+  className="file-input file-input-bordered   h-16 w-64 h-16 md:w-96 bg-white border-black border h-11 text-center 
+  shadow-2xl  shadow-blue-50 mt-2 rounded-lg "
+  type="file"
+  id="eventImage"
+/>
+             
+             
+             
+             
+              <label htmlFor="numberOfGuests"
+               className=" text-start tracking-[0.09rem]">
+                Quantity of speakers</label>
+              <input type="number" id="numberOfGuests" value={formData.numberOfGuests} placeholder="Enter number of guests"
+               className="w-44 md:w-96 bg-white border-black border h-11 text-center 
+               shadow-2xl  shadow-blue-50 mt-2 rounded-lg"onChange={(e) => {
+                // Ensure the value is at least 1
+                const numberOfGuests = Math.max(1, parseInt(e.target.value) || 1);
+                handleInputChange('numberOfGuests', numberOfGuests.toString());
+              }} />
+              {Array.from({ length: parseInt(formData.numberOfGuests, 10) }).map((_, index) => (
+  <div key={index}
+  className=" ">
+     <div className="grid">
+     <label htmlFor="numberOfGuests"
+               className=" text-start tracking-[0.09rem]">
+                 Name and image</label>
+    <input 
+      type="text" 
+      placeholder={`Speaker ${index + 1} Name`} 
+      className="w-44 md:w-96 bg-white border-black border
+       h-11 
+      shadow-2xl text-center shadow-blue-50 mt-2 rounded-lg"
+      value={formData.speakers[index]?.name || ""} 
+      onChange={(e) => {
+        const updatedSpeakers = [...formData.speakers];
+        updatedSpeakers[index] = {
+          ...updatedSpeakers[index],
+          name: e.target.value
+        };
+        handleInputChange('speakers', updatedSpeakers);
+      }} 
+  
+    />
+        <input
+      onChange={(e) => handleGuestImageUpload(e, index)}
+      name={`guestImage${index}`}
+      className="file-input file-input-bordered   h-16 w-64 h-16 md:w-96 bg-white border-black border h-11 text-center 
+      shadow-2xl  shadow-blue-50 mt-2 rounded-lg "
+      type="file"
+      id={`guest-image-file-${index}`}
+    />
+     </div>
+    <div>
+      
+    </div>
+  </div>
+))}
+
             </div>
           </div>
+          )}
+          {currentCategory === 3 && (
+           <div>
+             <h1 className={`text-xl md:text-2xl mb-10 md:tracking-[0.2rem] tracking-[0.1rem] uppercase font-semibold `}> location and time </h1>
+             <div className="grid  grid-cols-1 gap-2 justify-center align-middle items-center mx-auto" data-aos="fade-right">
+          <div className="grid grid-cols-2 w-96 gap-2">
+       <div className="grid">
+       <label htmlFor="city"
+              className=" text-start tracking-[0.09rem]">
+                select your city</label>
+              {/* <input placeholder="Enter City"
+               className="w-44 md:w-96 bg-white border-black border h-11 text-center 
+                 shadow-2xl  shadow-blue-50 mt-2 rounded-lg"
+                */}
+
+<select
+  type="text"
+  id="city"
+  value={formData.city}
+  onChange={(e) => handleInputChange('city', e.target.value)}
+  className="lg:py-1 py-3 mt-2 rounded-[4px] border-2 px-5 lg:px-4"
+>
+            
+              <option value="">All Cities</option>
+              <option value="Molvibazar">Molvibazar</option>
+              <option value="Sylhet">Sylhet</option>
+              <option value="Habigang">Habigang</option>
+              <option value="Sunamgang">Sunamgang</option>
+              <option value="Comilla">Comilla</option>
+              <option value="Rajshahi">Rajshahi</option>
+              <option value="Rangpur">Rangpur </option>
+              <option value="Mymensingh">Mymensingh </option>
+            </select>
+       </div>
+
+<div className="grid">
+  
+
+<label htmlFor="state" 
+            className=" text-start tracking-[0.09rem]">
+          select your state</label>
+              {/* <input type="text" id="state" value={formData.state} placeholder="Enter State"
+               className="w-44 md:w-96 bg-white border-black border h-11 text-center 
+                 shadow-2xl  shadow-blue-50 mt-2 rounded-lg" onChange={(e) => handleInputChange('state', e.target.value)} /> */}
+
+<select
+  onChange={(e) => handleInputChange('state', e.target.value)}
+  type="text"
+  id="state"
+  value={formData.state}
+  className="lg:py-1 py-3 border-2  border-2  rounded-[4px] px-5 lg:px-4"
+>
+              <option value="">All States</option>
+              <option value="Dhaka">Dhaka</option>
+              <option value="Sylhet">Sylhet</option>
+              <option value="Chattogram">Chattogram</option>
+              <option value="Barishal">Barishal</option>
+              <option value="Khulna">Khulna</option>
+              <option value="Rajshahi">Rajshahi</option>
+              <option value="Rangpur">Rangpur </option>
+              <option value="Mymensingh">Mymensingh </option>
+            </select>
+</div>
+<div className="grid">
+<label htmlFor="venue"
+            className=" text-start tracking-[0.09rem]">
+              select our venue</label>
+              {/* <input type="text" id="venue" value={formData.venue} placeholder="Enter Venue"
+               className="w-44 md:w-96 bg-white border-black border h-11 text-center 
+                 shadow-2xl  shadow-blue-50 mt-2 rounded-lg"  /> */}
+  <select
+  type="text"
+  id="venue"
+  value={formData.venue}
+  onChange={(e) => handleInputChange('venue', e.target.value)}
+  className="lg:py-1 py-3  border-2  mt-2 rounded-[4px] px-5 lg:px-4"
+>
+              <option value="">All Venues</option>
+              <option value="Dhaka">Dhaka</option>
+              <option value="Sylhet">Sylhet</option>
+              <option value="Chattogram">Chattogram</option>
+              <option value="Barishal">Barishal</option>
+              <option value="Khulna">Khulna</option>
+              <option value="Rajshahi">Rajshahi</option>
+              <option value="Rangpur">Rangpur </option>
+              <option value="Mymensingh">Mymensingh </option>
+            </select>
+</div>
+          </div>
+            
+
+<div className="flex">
+  
+<div className="grid mr-2">
+<label htmlFor="startDate" 
+           className=" text-start tracking-[0.09rem]">even start date</label>
+              
+                 <DatePicker
+                 type='date'
+              id="startDate"
+              selected={formData.startDate} 
+              onChange={handleStartDateChange}
+              dateFormat="yyyy-MM-dd" 
+              className="w-44  bg-white border-black border h-11 text-center shadow-2xl shadow-blue-50 mt-2 rounded-lg"
+            />
+</div>
+              <div className="grid">
+              <label htmlFor="endDate"
+             className=" text-start tracking-[0.09rem]"> Event end date</label>
+              
+                   <DatePicker
+              id="endDate"
+              selected={formData.endDate} 
+              onChange={handleEndDateChange} 
+              dateFormat="yyyy-MM-dd" 
+              className="w-44 bg-white border-black border h-11 text-center shadow-2xl shadow-blue-50 mt-2 rounded-lg"
+              minDate={formData.startDate}
+            />
+              </div>
+</div>
+              <label htmlFor="eventTime"
+            className=" text-start tracking-[0.09rem]">Event Time</label>
+              <input type="time" id="eventTime" value={formData.eventTime}
+               className="w-44 md:w-96 bg-white border-black border h-11 text-center 
+                 shadow-2xl  shadow-blue-50 mt-2 rounded-lg" onChange={(e) => handleInputChange('eventTime', e.target.value)} />
+ 
+              {/* <input type="file"  className="file-input file-input-bordered w-full h-16" onChange={getImageUrl} required /> */}
+            </div>
+           </div>
+          )}
+          
           <div className="flex justify-between text-black p-4">
-            {currentCategory > 1 && (
-              <button
-                onClick={handlePrevious}
-                className="btn btn-ghost bg-blue-200 p-2 text-center"
-              >
-                <FaArrowLeft /> Previous
-              </button>
-            )}
+           
             {currentCategory === 3 ? (
-              <button
-                className="btn btn-ghost text-black bg-200 p-2 text-center"
-                onClick={handleNext}
-                disabled={
-                  !formData.city ||
-                  !formData.venue ||
-                  !formData.state ||
-                  !formData.startDate ||
-                  !formData.eventTime
-                }
-              >
+              <button className="btn btn-ghost text-black bg-200 p-2 text-center" onClick={handleNext} disabled={!formData.city || !formData.venue || 
+              !formData.state || !formData.startDate || !formData.eventTime }>
                 Submit <FaSeedling />
                 <Toaster />
               </button>
             ) : (
-              <button
-                className="btn btn-ghost text-black text-end bg-blue-200"
-                onClick={handleNext}
-                disabled={
-                  (currentCategory === 1 &&
-                    (!formData.userName ||
-                      !formData.organization ||
-                      !formData.phone)) ||
-                  (currentCategory === 2 &&
-                    (!formData.eventName ||
-                      !formData.totalSeat ||
-                      !formData.ticketPrice ||
-                      !formData.description ||
-                      !formData.numberOfGuests ||
-                      formData.speakers.length !==
-                        parseInt(formData.numberOfGuests, 10)))
-                }
-              >
+              <button className="btn btn-ghost text-black text-end bg-blue-200" onClick={handleNext} disabled={currentCategory === 1 && 
+              (!formData.firstName || !formData.lastName || !formData.organization || !formData.phone) || currentCategory === 2 && (!formData.eventName || !formData.totalSeat || 
+              !formData.ticketPrice || !formData.description || !formData.numberOfGuests ||
+               formData.speakers.length !== parseInt(formData.numberOfGuests, 10))}>
                 Next <FaArrowRight />
               </button>
             )}
           </div>
         </div>
       </div>
-    </div>
+    </div></div>
   );
 };
 
