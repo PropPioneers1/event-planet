@@ -65,7 +65,7 @@ const Router = createBrowserRouter([
       },
 
       {
-        path: "upcomingDetails/:id",
+        path: "/upcomingDetails/:id",
         element: <UpcomingDetails></UpcomingDetails>,
       },
       {
