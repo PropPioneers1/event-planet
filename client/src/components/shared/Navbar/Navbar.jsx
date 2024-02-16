@@ -6,6 +6,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import MenuDropdown from "./MenuDropDown";
+import NotificationMessage from "../../../pages/NotificationMessage/NotificationMessage";
 
 const Navbar = () => {
   const { user } = useAuth();
@@ -69,6 +70,9 @@ const Navbar = () => {
       </NavLink>
       <NavLink onClick={() => setIsMenuTrue(false)} to="/about">
         <li className="font-semibold hover:text-accent py-2 lg:py-5">About</li>
+      </NavLink>
+      <NavLink className="grid place-items-center">
+        <NotificationMessage ></NotificationMessage>
       </NavLink>
     </>
   );

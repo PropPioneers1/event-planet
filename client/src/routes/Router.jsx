@@ -26,6 +26,7 @@ import EventRequests from "../pages/Dashboard/EventRequests/EventRequests";
 import PaymentSuccess from "../components/shared/PaymentPage/PaymentSuccess";
 import PaymentFaild from "../components/shared/PaymentPage/PaymentFaild";
 import About from "../pages/About/About";
+import ContactUs from "../pages/Contact/ContactUs";
 
 const Router = createBrowserRouter([
   {
@@ -98,6 +99,10 @@ const Router = createBrowserRouter([
       {
         path: "about",
         element: <About></About>,
+      },
+      {
+        path: "contact",
+        element: <ContactUs></ContactUs>
       },
     ],
   },
