@@ -4,11 +4,11 @@ import { NavLink, Outlet } from "react-router-dom";
 import { FaHome, FaUserAlt } from "react-icons/fa";
 import { MdPayments } from "react-icons/md";
 import { FiShoppingCart } from "react-icons/fi";
-// import { IoAddCircleOutline, IoCreate } from "react-icons/io5";
+import { IoAddCircleOutline, IoCreate } from "react-icons/io5";
 import { PiSignInBold } from "react-icons/pi";
 import { CgLogOut } from "react-icons/cg";
-// import { MdSummarize } from "react-icons/md";
-// import { FaCodePullRequest } from "react-icons/fa6";
+import { MdSummarize } from "react-icons/md";
+import { FaCodePullRequest } from "react-icons/fa6";
 import { IoMdCart } from "react-icons/io";
 import { FaCalendarAlt } from "react-icons/fa";
 
@@ -25,7 +25,7 @@ const Dashboard = () => {
 
   const dashLinks = (
     <>
-      <NavLink
+      {/* <NavLink
         to="/dashboard/add-product"
         className={({ isActive, isPending }) =>
           isPending ? "pending" : isActive ? activeStyle : inActiveStyle
@@ -33,9 +33,9 @@ const Dashboard = () => {
       >
         <FiShoppingCart className={iconStyle}></FiShoppingCart>
         <li className={isCollapse ? "hidden" : "block"}> Add Product</li>
-      </NavLink>
-      {/* 
-      <NavLink
+      </NavLink> */}
+
+      {/* <NavLink
         to="/dashboard/create-theme"
         className={({ isActive, isPending }) =>
           isPending ? "pending" : isActive ? activeStyle : inActiveStyle
