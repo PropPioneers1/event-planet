@@ -65,7 +65,7 @@ const Router = createBrowserRouter([
       },
 
       {
-        path: "upcomingDetails/:id",
+        path: "/upcomingDetails/:id",
         element: <UpcomingDetails></UpcomingDetails>,
       },
       {
@@ -107,7 +107,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "contact",
-        element: <ContactUs></ContactUs>
+        element: <ContactUs></ContactUs>,
       },
     ],
   },
@@ -150,14 +150,13 @@ const Router = createBrowserRouter([
         element: <UpdateProfile></UpdateProfile>,
       },
       {
-        path: 'my-cart',
-        element: <MyCart></MyCart>
+        path: "my-cart",
+        element: <MyCart></MyCart>,
       },
       {
-        path: 'my-events',
-        element: <MyEvents></MyEvents>
-      }
-
+        path: "my-events",
+        element: <MyEvents></MyEvents>,
+      },
     ],
   },
 ]);

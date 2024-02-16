@@ -71,8 +71,13 @@ const Navbar = () => {
       <NavLink onClick={() => setIsMenuTrue(false)} to="/about">
         <li className="font-semibold hover:text-accent py-2 lg:py-5">About</li>
       </NavLink>
+      <NavLink onClick={() => setIsMenuTrue(false)} to="/contact">
+        <li className="font-semibold hover:text-accent py-2 lg:py-5">
+          Contact Us
+        </li>
+      </NavLink>
       <NavLink className="grid place-items-center">
-        <NotificationMessage ></NotificationMessage>
+        <NotificationMessage></NotificationMessage>
       </NavLink>
     </>
   );
