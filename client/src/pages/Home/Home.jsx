@@ -8,7 +8,7 @@ import Footer from "../../components/shared/Footer";
 import TestMonial from "./HomeComponenets/Testmonial/Testmonial";
 // import TestPlaner from "./HomeComponenets/Event-Planer/TestPlaner";
 import Categories from "./HomeComponenets/Categories/Categories";
-import Chat from "./HomeComponenets/ChatBot/ChatBot";
+// import Chat from "./HomeComponenets/ChatBot/ChatBot";
 
 
 import Notification from "../Notification/Notification";
@@ -18,6 +18,8 @@ import OurNextEvents from "./HomeComponenets/OurNextEvents/OurNextEvents";
 import OurEventPlaners from "./HomeComponenets/OurEventPlaner/OurEventPlaner";
 import OurGallery from "./HomeComponenets/OurGallery/OurGallery";
 import OurBlog from "./HomeComponenets/OurBlog/OurBlog";
+import MessangerChat from "./HomeComponenets/ChatBot/MessangerChat";
+
 
 const Home = () => {
 
@@ -63,8 +65,8 @@ const Home = () => {
       </div>
       {/* made by Rifat */}
       <Footer></Footer>
-      <Chat></Chat>
-      {/* <MessangerChat></MessangerChat> */}
+      {/* <Chat></Chat> */}
+      <MessangerChat></MessangerChat>
       <Notification></Notification>
     </div>
   );
