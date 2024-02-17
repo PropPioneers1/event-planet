@@ -1,18 +1,16 @@
-// import { Navbar } from "@material-tailwind/react";
-// import Container from "../../components/ui/Container";
-// import { Container } from "postcss";
+
 import Footer from "../../components/shared/Footer";
 import SectionHeading from "../../components/shared/SectionHeading/SectionHeading";
 import Container from "../../components/ui/Container";
 
-import { FaAward } from "react-icons/fa6";
-import { FaArrowAltCircleUp, FaArrowCircleDown } from "react-icons/fa";
-import TestMonial from "../Home/HomeComponenets/Testmonial/Testmonial";
+// import { FaAward } from "react-icons/fa6";
+// import { FaArrowAltCircleUp, FaArrowCircleDown } from "react-icons/fa";
+// import TestMonial from "../Home/HomeComponenets/Testmonial/Testmonial";
 import Ourteam from "./Ourteam";
 import WhyChoose from "../Home/HomeComponenets/WhyChooseEventPlanet/WhyChoose";
 const About = () => {
   return (
-    <Container>
+   
       <div className="">
         <div
           id="my-id"
@@ -37,7 +35,8 @@ const About = () => {
         </div>
 
         {/* misson and vission */}
-        <div className="bg-neutral">
+        <Container >       
+        <div className="bg-neutral mt-10">
           <Container>
             <div
               className=" grid py-32 w-full
@@ -325,7 +324,7 @@ h-full bg-neutral lg:grid-cols-3 md:grid-cols-2 grid-cols-1 p-10 px-20 gap-5"
         </Container>
         <div></div>
         <div
-          className=" mx-auto lg:h-[500px] md:h-[580px]  h-[800px] pt-10 bg-cover bg-no-repeat
+          className=" mx-auto lg:h-[500px] md:h-[580px]  h-[610px] pt-10 bg-cover bg-no-repeat
  bg-[hsl(233,24%,93%)]  bg-blend-overlay  "
           style={{
             backgroundImage:
@@ -352,17 +351,20 @@ h-full bg-neutral lg:grid-cols-3 md:grid-cols-2 grid-cols-1 p-10 px-20 gap-5"
           </div>
           <div>
             <button
-              className="btn btn-ghost rounded-3xl w-44 bg-white
-   hover:text-white hover:bg-primary"
+              className="btn btn-ghost rounded-3xl w-24 md:w-44
+               bg-white
+   hover:text-white hover:bg-primary text-xs md:text-lg"
             >
               Contact us
             </button>
           </div>
         </div>
 
+      
+        </Container>
         <Footer></Footer>
       </div>
-    </Container>
+   
   );
 };
 
