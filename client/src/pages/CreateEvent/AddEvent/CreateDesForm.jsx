@@ -284,14 +284,14 @@ className=" text-start tracking-[0.09rem]">  Give your phone number*</label>
              className=" text-start tracking-[0.09rem]">  event name*</label>
               <input type="text" id="eventName" value={formData.eventName} placeholder="Enter Your Event name" onChange={(e) =>
                  handleInputChange('eventName', e.target.value)} 
-                 className="w-44  bg-white border-black border h-8 text-center 
+                 className="w-44 md:w-96  bg-white border-black border h-8 text-center 
                  shadow-2xl  shadow-blue-50 mt-2 rounded-sm"/>
               <label htmlFor="totalSeat" 
               className=" text-start tracking-[0.09rem]">Quantity of Audience*(total tickets) </label>
               <input type="number" id="totalSeat" 
               
   value={formData.totalSeat} placeholder="minimum 20 people"
-             className="w-44  bg-white border-black border h-8 text-center 
+             className="w-44 md:w-96 bg-white border-black border h-8 text-center 
              shadow-2xl  shadow-blue-50 mt-2 rounded-sm"
              onChange={(e) => {
               // Ensure the value is within the range of 20 to 2500
@@ -306,7 +306,7 @@ className=" text-start tracking-[0.09rem]">  Give your phone number*</label>
                 const ticketPrice = Math.max(10, parseInt(e.target.value) || 10);
                 handleInputChange('ticketPrice', ticketPrice.toString());
               }}
-                className="w-44  bg-white border-black border h-8 text-center 
+                className="w-44 md:w-96 bg-white border-black border h-8 text-center 
                 shadow-2xl  shadow-blue-50 mt-2 rounded-sm" />
               <label htmlFor="description"
              className=" text-start tracking-[0.09rem]">
@@ -432,7 +432,7 @@ className=" text-start tracking-[0.09rem]">  Give your phone number*</label>
   type="text"
   id="state"
   value={formData.state}
-  className="lg:py-1 py-3 border-2  border-2  rounded-[4px] px-5 lg:px-4"
+  className="lg:py-1 py-3 border-2  rounded-[4px] px-5 lg:px-4"
 >
               <option value="">All States</option>
               <option value="Dhaka">Dhaka</option>

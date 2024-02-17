@@ -6,7 +6,8 @@ import { FaFacebook, FaInstagram, FaWhatsapp } from "react-icons/fa6";
 function Ourteam() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [teamData, setTeamData] = useState([]);
-
+  const [slidesToShow, setSlidesToShow] = useState(1);
+  const [speed, setspeed] = useState();
   useEffect(() => {
     fetch("/Ourteam.json")
       .then((res) => res.json())
@@ -16,18 +17,39 @@ function Ourteam() {
       .catch((error) => console.error("Error fetching team data:", error));
   }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setSlidesToShow(2);
+        setspeed(3000)
+      } else {
+        setSlidesToShow(1);
+        setspeed(4000)
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const settings = {
     dots: true,
     infinite: true,
     speed: 1000,
-    slidesToShow: 1, 
-    slidesToScroll: 2,
-    centerMode: true, // Center the active slide
+    slidesToShow: slidesToShow,
+    slidesToScroll: 1,
+    centerMode: true, 
     initialSlide: 0,
-    afterChange: current => setActiveSlide(current),
-    autoplay: true, // Enable autoplay
-    autoplaySpeed: 4000,
-    pauseOnHover: true 
+    afterChange: (current) => setActiveSlide(current),
+    autoplay: true, 
+    autoplaySpeed: speed,
+    pauseOnHover: true,
+    rtl: false ,
+    ltr:true
   };
 
   const handleImageClick = (index) => {
@@ -69,7 +91,7 @@ function Ourteam() {
                 <FaWhatsapp></FaWhatsapp>
                </div>
                
-                 <div className="w-[300px] pl-5 lg:w-[300px]  pt-4">
+                 <div className="w-[300px] pl-5 lg:w-[600px]  pt-4">
             <Slider {...settings}>
               {teamData.map((member, index) => (
                 <div key={index} onClick={() => handleImageClick(index)} className="">
