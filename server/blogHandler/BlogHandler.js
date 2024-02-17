@@ -8,10 +8,16 @@ const blogModel = mongoose.model("Blog", BlogSchema);
 // getting all blogs
 router.get("/", async (req, res) => {
   try {
-    const result = await blogModel.find({});
+    const { category } = req.query;
+    let query = {};
+    if (category) {
+      query.category = category;
+    }
+    const result = await blogModel.find(query);
     res.status(200).send(result);
   } catch (error) {
-    console.log("Not Fount Block");
+    // console.log("Not Fount Block");
+    console.log(error);
     res.status(500).json({ error: "internal server error" });
   }
 });

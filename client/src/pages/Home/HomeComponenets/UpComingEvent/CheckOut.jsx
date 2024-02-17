@@ -21,7 +21,7 @@ const CheckOut = () => {
     const paymentMethod = form.paymentMethod.value;
     const data = {
       mobileNUmber: mobile,
-      eventName: "xyz",
+      eventName: user?.displayName,
       // productId: 9999999,
       cus_email: user.email,
       currency: paymentMethod,
