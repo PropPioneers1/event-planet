@@ -57,6 +57,7 @@ const CreateDesForm = () => {
     } 
     else if (currentCategory === 2) {
       if (
+
         !formData.eventName ||
         !formData.totalSeat ||
         !formData.ticketPrice ||
@@ -169,7 +170,7 @@ const CreateDesForm = () => {
   return (
    <div>
 
-<div className="min-h-[60vh] hero py-8 bg-cover bg-no-repeat bg-[#050410cd] bg-blend-overlay items-center bg-fixed" style={{ backgroundImage: "url(https://i.ibb.co/SJRm756/pexels-min-an-1157557.jpg)" }}>
+<div className="min-h-[40vh] hero py-8 bg-cover bg-no-repeat bg-[#050410cd] bg-blend-overlay items-center bg-fixed" style={{ backgroundImage: "url(https://i.ibb.co/SJRm756/pexels-min-an-1157557.jpg)" }}>
         <div className="text-2xl bg-transparent font-bold">
           <SectionHeading
             colortitle="text-white"
@@ -191,20 +192,21 @@ const CreateDesForm = () => {
  <div className="md:grid md
  
 lg:ml-20  flex w-96 h-10 md:grid-cols-1 mt-10 md:pl-10 md:h-44">
-          <button className={`w-44 border-2 border-black ${currentCategory === 1 ? 'bg-gray-300' : ''}`} onClick={() => handleCategoryChange(1)}>About
-           you</button>
+          <button className={`w-44 border-2 border-black ${currentCategory === 1 ? 'bg-gray-300 text-accent  font-semibold' : ''}`} onClick={() => handleCategoryChange(1)}>About
+           You</button>
           <button
   disabled={!formData.firstName || !formData.lastName || !formData.organization || !formData.phone}
-  className={`w-44 border-2 border-black ${currentCategory === 2 ? 'bg-gray-300' : '' }
+  className={`w-44 border-2 border-black ${currentCategory === 2 ? 'bg-gray-300 text-accent  font-semibold' : '' }
   ${(!formData.firstName || !formData.lastName || !formData.organization || !formData.phone) ? 'border-slate-100 text-slate-200' : 'border'}`}
   onClick={() => handleCategoryChange(2)}
 >
-  event info
+  Event Info
 </button>
 
-          <button className={`w-64 md:w-44 border-black border-2 ${currentCategory === 3 ? 'bg-gray-300' : ''}
+          <button className={`w-64 md:w-44 border-black border-2 ${currentCategory === 3 ? 'bg-gray-300 text-accent  font-semibold' : ''}
           ${(!formData.eventName || !formData.totalSeat || !formData.ticketPrice || !formData.description || 
-            !formData.numberOfGuests || formData.speakers.length !== parseInt(formData.numberOfGuests, 10))?'border-slate-100 text-slate-200' : 'border'}
+            !formData.numberOfGuests || formData.speakers.length !== parseInt(formData.numberOfGuests, 10))?'border-slate-100 text-slate-200' : 
+            'border'}
           
           `
           
@@ -221,7 +223,7 @@ lg:ml-20  flex w-96 h-10 md:grid-cols-1 mt-10 md:pl-10 md:h-44">
           {currentCategory === 1 && (
           <div>
              <div>
-             <h1 className={`text-xl md:text-2xl mb-10 md:tracking-[0.2rem] tracking-[0.1rem] uppercase font-semibold `}> About you</h1>
+             <h1 className={`text-xl md:text-2xl mt-5 mb-10 md:tracking-[0.2rem] tracking-[0.1rem] uppercase font-semibold `}> About you</h1>
              </div>
              <div className="grid grid-cols-1 gap-4 " data-aos="fade-right">
              
@@ -234,7 +236,8 @@ lg:ml-20  flex w-96 h-10 md:grid-cols-1 mt-10 md:pl-10 md:h-44">
           value={formData.firstName}
           placeholder="Enter Your First Name"
           onChange={(e) => handleInputChange('firstName', e.target.value)}
-          className="w-44 mr-2 bg-white border-black border h-11 text-center shadow-2xl shadow-blue-50 mt-2 rounded-lg"
+          className="w-44 mr-2 bg-white border-black border 
+          h-8 text-center shadow-2xl shadow-blue-50 mt-2 rounded-sm"
         />
       </div>
       <div className="grid">
@@ -245,44 +248,33 @@ lg:ml-20  flex w-96 h-10 md:grid-cols-1 mt-10 md:pl-10 md:h-44">
           value={formData.lastName}
           placeholder="Enter Your Last Name"
           onChange={(e) => handleInputChange('lastName', e.target.value)}
-          className="w-44  bg-white border-black border h-11 text-center shadow-2xl shadow-blue-50 mt-2 rounded-lg"
+          className="w-44  bg-white border-black border h-8 text-center shadow-2xl shadow-blue-50 mt-2 rounded-sm"
         />
       </div>
       </div>
   
-   
-
-
-
-
-
-
-
-
-
-             
             <div className="grid">
             <label htmlFor="organization"
 className=" text-start tracking-[0.09rem]">Your organization name*</label>
                <input type="text" id="organization" value={formData.organization} placeholder="Enter Your organization name" onChange={(e) => 
                  handleInputChange('organization', e.target.value)} 
-                 className="w-44 md:w-96 bg-white border-black border h-11 text-center 
-                 shadow-2xl  shadow-blue-50 mt-2 rounded-lg"/>
+                 className="w-44 md:w-96 bg-white border-black border h-8 text-center 
+                 shadow-2xl  shadow-blue-50 mt-2 rounded-sm"/>
             </div>
          <div className="grid">
          <label htmlFor="phone" 
 className=" text-start tracking-[0.09rem]">  Give your phone number*</label>
                <input type="text" id="phone" value={formData.phone} placeholder="Enter Your phoneNumber" onChange={(e) => 
                  handleInputChange('phone', e.target.value)}
-                 className="w-44 md:w-96 bg-white border-black border h-11 text-center 
-                 shadow-2xl  shadow-blue-50 mt-2 rounded-lg" />
+                 className="w-44 md:w-96 bg-white border-black border h-8 text-center 
+                 shadow-2xl  shadow-blue-50 mt-2 rounded-sm" />
          </div>
              </div>
           </div>
           )}
           {currentCategory === 2 && (
           <div>
-                       <h1 className={`text-xl md:text-2xl mb-10 
+                       <h1 className={`text-xl md:text-2xl mb-10  mt-5
                        md:tracking-[0.2rem] tracking-[0.1rem] 
                        uppercase font-semibold `}> Event Info </h1>
               <div className="grid  grid-cols-1 gap-2 justify-center
@@ -292,15 +284,15 @@ className=" text-start tracking-[0.09rem]">  Give your phone number*</label>
              className=" text-start tracking-[0.09rem]">  event name*</label>
               <input type="text" id="eventName" value={formData.eventName} placeholder="Enter Your Event name" onChange={(e) =>
                  handleInputChange('eventName', e.target.value)} 
-                 className="w-44 md:w-96 bg-white border-black border h-11 text-center 
-                 shadow-2xl  shadow-blue-50 mt-2 rounded-lg"/>
+                 className="w-44 md:w-96  bg-white border-black border h-8 text-center 
+                 shadow-2xl  shadow-blue-50 mt-2 rounded-sm"/>
               <label htmlFor="totalSeat" 
               className=" text-start tracking-[0.09rem]">Quantity of Audience*(total tickets) </label>
               <input type="number" id="totalSeat" 
               
   value={formData.totalSeat} placeholder="minimum 20 people"
-             className="w-44 md:w-96 bg-white border-black border h-11 text-center 
-             shadow-2xl  shadow-blue-50 mt-2 rounded-lg"
+             className="w-44 md:w-96 bg-white border-black border h-8 text-center 
+             shadow-2xl  shadow-blue-50 mt-2 rounded-sm"
              onChange={(e) => {
               // Ensure the value is within the range of 20 to 2500
               const audienceQuantity = Math.min(Math.max(20, parseInt(e.target.value) || 20), 2500);
@@ -314,15 +306,15 @@ className=" text-start tracking-[0.09rem]">  Give your phone number*</label>
                 const ticketPrice = Math.max(10, parseInt(e.target.value) || 10);
                 handleInputChange('ticketPrice', ticketPrice.toString());
               }}
-                className="w-44 md:w-96 bg-white border-black border h-11 text-center 
-                shadow-2xl  shadow-blue-50 mt-2 rounded-lg" />
+                className="w-44 md:w-96 bg-white border-black border h-8 text-center 
+                shadow-2xl  shadow-blue-50 mt-2 rounded-sm" />
               <label htmlFor="description"
              className=" text-start tracking-[0.09rem]">
                 Additional requirements*</label>
               <textarea id="description" value={formData.description} placeholder="Enter Your Special Demands" 
               onChange={(e) => handleInputChange('description', e.target.value)} 
               className="w-44 md:w-96 bg-white h-28 border-black border  text-center 
-                 shadow-2xl  shadow-blue-50 mt-2 rounded-lg"></textarea>
+                 shadow-2xl  shadow-blue-50 mt-2 rounded-sm"></textarea>
              
              
              <label htmlFor="localImage"
@@ -330,8 +322,8 @@ className=" text-start tracking-[0.09rem]">  Give your phone number*</label>
               <input
   onChange={handleEventImageUpload}
   name="eventImageFile"
-  className="file-input file-input-bordered   h-16 w-64 h-16 md:w-96 bg-white border-black border h-11 text-center 
-  shadow-2xl  shadow-blue-50 mt-2 rounded-lg "
+  className="file-input file-input-bordered   h-16 w-64 h-16 md:w-96 bg-white border-black border h-8 text-center 
+  shadow-2xl  shadow-blue-50 mt-2 rounded-sm "
   type="file"
   id="eventImage"
 />
@@ -343,8 +335,8 @@ className=" text-start tracking-[0.09rem]">  Give your phone number*</label>
                className=" text-start tracking-[0.09rem]">
                 Quantity of speakers</label>
               <input type="number" id="numberOfGuests" value={formData.numberOfGuests} placeholder="Enter number of guests"
-               className="w-44 md:w-96 bg-white border-black border h-11 text-center 
-               shadow-2xl  shadow-blue-50 mt-2 rounded-lg"onChange={(e) => {
+               className="w-44 md:w-96 bg-white border-black border h-8 text-center 
+               shadow-2xl  shadow-blue-50 mt-2 rounded-sm"onChange={(e) => {
                 // Ensure the value is at least 1
                 const numberOfGuests = Math.max(1, parseInt(e.target.value) || 1);
                 handleInputChange('numberOfGuests', numberOfGuests.toString());
@@ -360,8 +352,8 @@ className=" text-start tracking-[0.09rem]">  Give your phone number*</label>
       type="text" 
       placeholder={`Speaker ${index + 1} Name`} 
       className="w-44 md:w-96 bg-white border-black border
-       h-11 
-      shadow-2xl text-center shadow-blue-50 mt-2 rounded-lg"
+       h-8 
+      shadow-2xl text-center shadow-blue-50 mt-2 rounded-sm"
       value={formData.speakers[index]?.name || ""} 
       onChange={(e) => {
         const updatedSpeakers = [...formData.speakers];
@@ -376,8 +368,8 @@ className=" text-start tracking-[0.09rem]">  Give your phone number*</label>
         <input
       onChange={(e) => handleGuestImageUpload(e, index)}
       name={`guestImage${index}`}
-      className="file-input file-input-bordered   h-16 w-64 h-16 md:w-96 bg-white border-black border h-11 text-center 
-      shadow-2xl  shadow-blue-50 mt-2 rounded-lg "
+      className="file-input file-input-bordered   h-16 w-64 h-16 md:w-96 bg-white border-black border h-8 text-center 
+      shadow-2xl  shadow-blue-50 mt-2 rounded-sm "
       type="file"
       id={`guest-image-file-${index}`}
     />
@@ -401,8 +393,8 @@ className=" text-start tracking-[0.09rem]">  Give your phone number*</label>
               className=" text-start tracking-[0.09rem]">
                 select your city</label>
               {/* <input placeholder="Enter City"
-               className="w-44 md:w-96 bg-white border-black border h-11 text-center 
-                 shadow-2xl  shadow-blue-50 mt-2 rounded-lg"
+               className="w-44 md:w-96 bg-white border-black border h-8 text-center 
+                 shadow-2xl  shadow-blue-50 mt-2 rounded-sm"
                 */}
 
 <select
@@ -432,15 +424,15 @@ className=" text-start tracking-[0.09rem]">  Give your phone number*</label>
             className=" text-start tracking-[0.09rem]">
           select your state</label>
               {/* <input type="text" id="state" value={formData.state} placeholder="Enter State"
-               className="w-44 md:w-96 bg-white border-black border h-11 text-center 
-                 shadow-2xl  shadow-blue-50 mt-2 rounded-lg" onChange={(e) => handleInputChange('state', e.target.value)} /> */}
+               className="w-44 md:w-96 bg-white border-black border h-8 text-center 
+                 shadow-2xl  shadow-blue-50 mt-2 rounded-sm" onChange={(e) => handleInputChange('state', e.target.value)} /> */}
 
 <select
   onChange={(e) => handleInputChange('state', e.target.value)}
   type="text"
   id="state"
   value={formData.state}
-  className="lg:py-1 py-3 border-2  border-2  rounded-[4px] px-5 lg:px-4"
+  className="lg:py-1 py-3 border-2  rounded-[4px] px-5 lg:px-4"
 >
               <option value="">All States</option>
               <option value="Dhaka">Dhaka</option>
@@ -458,8 +450,8 @@ className=" text-start tracking-[0.09rem]">  Give your phone number*</label>
             className=" text-start tracking-[0.09rem]">
               select our venue</label>
               {/* <input type="text" id="venue" value={formData.venue} placeholder="Enter Venue"
-               className="w-44 md:w-96 bg-white border-black border h-11 text-center 
-                 shadow-2xl  shadow-blue-50 mt-2 rounded-lg"  /> */}
+               className="w-44 md:w-96 bg-white border-black border h-8 text-center 
+                 shadow-2xl  shadow-blue-50 mt-2 rounded-sm"  /> */}
   <select
   type="text"
   id="venue"
@@ -493,7 +485,7 @@ className=" text-start tracking-[0.09rem]">  Give your phone number*</label>
               selected={formData.startDate} 
               onChange={handleStartDateChange}
               dateFormat="yyyy-MM-dd" 
-              className="w-44  bg-white border-black border h-11 text-center shadow-2xl shadow-blue-50 mt-2 rounded-lg"
+              className="w-44  bg-white border-black border h-8 text-center shadow-2xl shadow-blue-50 mt-2 rounded-sm"
             />
 </div>
               <div className="grid">
@@ -505,7 +497,7 @@ className=" text-start tracking-[0.09rem]">  Give your phone number*</label>
               selected={formData.endDate} 
               onChange={handleEndDateChange} 
               dateFormat="yyyy-MM-dd" 
-              className="w-44 bg-white border-black border h-11 text-center shadow-2xl shadow-blue-50 mt-2 rounded-lg"
+              className="w-44 bg-white border-black border h-8 text-center shadow-2xl shadow-blue-50 mt-2 rounded-sm"
               minDate={formData.startDate}
             />
               </div>
@@ -514,7 +506,7 @@ className=" text-start tracking-[0.09rem]">  Give your phone number*</label>
             className=" text-start tracking-[0.09rem]">Event Time</label>
               <input type="time" id="eventTime" value={formData.eventTime}
                className="w-44 md:w-96 bg-white border-black border h-11 text-center 
-                 shadow-2xl  shadow-blue-50 mt-2 rounded-lg" onChange={(e) => handleInputChange('eventTime', e.target.value)} />
+                 shadow-2xl  shadow-blue-50 mt-2 rounded-sm" onChange={(e) => handleInputChange('eventTime', e.target.value)} />
  
               {/* <input type="file"  className="file-input file-input-bordered w-full h-16" onChange={getImageUrl} required /> */}
             </div>
