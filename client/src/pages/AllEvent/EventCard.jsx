@@ -2,9 +2,9 @@
 import PropTypes from 'prop-types';
 import { IoLocationSharp, IoTimeOutline } from 'react-icons/io5';
 
-const EventCard = ({item}) => {
+const EventCard = ({ item }) => {
     const { eventName, venue, startDate, eventImages, ticketPrice } = item;
-    
+
 
     const month = new Date(startDate).toLocaleString('default', { month: 'long' })
     const eventDate = new Date(startDate).getDate();
@@ -60,7 +60,10 @@ const EventCard = ({item}) => {
                 </div>
                 <div className='md:w-56 sm:w-auto max-w-56'>
                     <button
-                        className="btn rounded-full w-full text-[#636363] text-lg font-bold my-4 hover:bg-primary hover:text-white transition-all duration-300">
+                        className="w-full font-semibold py-3 rounded-full transition-all duration-300 ease-in
+                        bg-gradient-to-tl from-[#861f42]
+                        to-primary hover:bg-gradient-to-tr
+                       text-white">
                         Ticket & Details
                     </button>
                 </div>

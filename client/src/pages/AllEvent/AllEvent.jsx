@@ -39,13 +39,13 @@ const AllEvent = () => {
     queryKey: ["all-events", page, category, eventTitle],
     queryFn: async () => {
       const result = await axiosSecure.get(
-        `/event?page=${page}&&title=${eventTitle}&&category=${category}&&state=${state}`
+        `/event?page=${page}&&title=${eventTitle}&&category=${category}&&state=${state}&&status=${"upcoming"}`
       );
       return result?.data;
     },
   });
 
-  console.log(eventTitle);
+  console.log(events);
 
   const totalPages = Math.ceil(events?.eventCount / 8);
 
@@ -337,12 +337,12 @@ const AllEvent = () => {
               <div className="flex flex-row-reverse items-center">
                 <button
                   onClick={() => setPage(page - 1)}
-                  className="text-2xl font-semibold text-[#878787] mr-4"
+                  className="text-xl  md:text-2xl font-semibold text-[#878787] mr-4"
                 >
                   Prev
                 </button>
 
-                <IoIosArrowBack className="text-2xl font-semibold text-[#878787]" />
+                <IoIosArrowBack className="text-xl  md:text-2xl font-semibold text-[#878787]" />
               </div>
             )}
 
@@ -352,7 +352,7 @@ const AllEvent = () => {
                 onClick={() => setPage(index)}
                 className={`w-10 py-0 font-semibold ${
                   page == index
-                    ? "text-2xl font-bold border-b-4 border-primary	"
+                    ? "text-xl  md:text-2xl font-semibold border-b-4 border-primary	"
                     : "text-xl text-[#878787] "
                 }`}
               >
@@ -364,11 +364,11 @@ const AllEvent = () => {
               <div className="flex items-center">
                 <button
                   onClick={() => setPage(page + 1)}
-                  className="text-2xl font-semibold text-[#878787] ml-4"
+                  className="text-xl  md:text-2xl font-semibold text-[#878787] ml-4"
                 >
                   Next
                 </button>
-                <IoIosArrowForward className="text-2xl font-semibold text-[#878787]" />
+                <IoIosArrowForward className="text-xl md:text-2xl font-semibold text-[#878787]" />
               </div>
             )}
           </div>

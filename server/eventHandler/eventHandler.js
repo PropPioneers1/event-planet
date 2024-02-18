@@ -11,6 +11,7 @@ router.get("/", async (req, res) => {
   const eventState = req.query.state;
   const eventCity = req.query.city;
   const email = req.query.email;
+  const status = req.query.status
 
   const page = parseInt(req.query.page);
   const limit = 8;
@@ -30,8 +31,12 @@ router.get("/", async (req, res) => {
     query.city = eventCity;
   }
   if(email){
-    query.email = email
+    query.email = email;
   }
+  if(status){
+    query.status = status;
+  }
+  
 
   try {
     const eventCount = await eventModel.countDocuments(query);
