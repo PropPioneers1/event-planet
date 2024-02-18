@@ -1,30 +1,56 @@
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+
+import { Autoplay, Pagination } from "swiper/modules";
 
 const ShoppingBanner = () => {
-    var settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1
-      };
+    
       return (
-        <Slider {...settings}>
-          <div>
-            <img src="https://i.ibb.co/PM0dKMj/front-view-woman-with-shopping-bag-concept.jpg" alt="" />
-          </div>
-          <div>
-            <img src="https://i.ibb.co/wYCb8K3/sdsad.jpg" alt="" />
-          </div>
-          <div>
-            <img src="https://i.ibb.co/SRxQRY9/dsd.jpg" alt="" />
-          </div>
-          
-          
-          
-        </Slider>
+        <Swiper
+        spaceBetween={30}
+        centeredSlides={true}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        pagination={{
+          clickable: true,
+        }}
+        // navigation={true}
+        modules={[Autoplay, Pagination]}
+        className="mySwiper mySwiper2 swiper-container h-[1200px]"
+      >
+        <SwiperSlide>
+          <img
+            className="bg-cover"
+            src="https://i.ibb.co/p34c6K4/shopping-bag-cart.jpg"
+            alt=""
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img
+            src="https://i.ibb.co/bPdYtg3/fsdfdsf.jpg"
+            alt=""
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img
+            src="https://i.ibb.co/6vTPyRX/black-friday-elements-assortment.jpg"
+            alt=""
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img
+            src="https://i.ibb.co/230pkLN/shopping-concept-close-up-portrait-young-beautiful-attractive-redhair-girl-smiling-looking-camera.jpg"
+            alt=""
+          />
+        </SwiperSlide>
+        
+      </Swiper>
       );
 };
 
