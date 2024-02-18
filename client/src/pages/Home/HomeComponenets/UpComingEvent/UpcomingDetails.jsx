@@ -28,8 +28,9 @@ import useAuth from "../../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { getTime } from "../../../../utils/getTime";
+import { getDate } from "../../../../utils/getDate";
 
-const UpcomingDetails = async () => {
+const UpcomingDetails = () => {
   const shareUrl = "https://event-planet-9789f.web.app/";
   const img = "https://i.ibb.co/fq6DWhd/Wedding.jpg";
   const { user } = useAuth();
@@ -64,25 +65,8 @@ const UpcomingDetails = async () => {
     },
   });
 
-  // months array
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
+  const date = getDate(eventDetails?.startDate);
 
-  const month = new Date(eventDetails?.startDate).getMonth();
-  const date = new Date(eventDetails?.startDate).getDate();
-  const years = new Date(eventDetails?.startDate).getFullYear();
   const time = getTime(eventDetails?.startDate);
 
   const totalPrice = number * eventDetails?.ticketPrice;
@@ -137,9 +121,7 @@ const UpcomingDetails = async () => {
                         <div className="flex items-center gap-2">
                           <BsCalendar2DateFill className="text-neutral" />
 
-                          <p className="font-semibold">
-                            {months[month]} {date} {years}
-                          </p>
+                          <p className="font-semibold">{date}</p>
                         </div>
                       </div>
                     </div>
