@@ -29,7 +29,7 @@ const CheckOut = () => {
       paidstatus: false,
     };
     axios
-      .post("http://localhost:5000/payment", data)
+      .post("https://event-planet-server.vercel.app/payment", data)
       .then((response) => {
         console.log(response.data);
         window.location.replace(response.data.url);
