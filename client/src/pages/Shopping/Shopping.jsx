@@ -10,13 +10,12 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import useAuth from "../../hooks/useAuth";
-import Swal from "sweetalert2";
 import { useState } from "react";
 import "./Shop.css";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 const Shopping = () => {
-  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  // eslint-disable-next-line no-unused-vars
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -42,50 +41,7 @@ const Shopping = () => {
   const numberOfPages = Math.ceil(totalProductsCount / itemsPerPage);
   const pages = [...Array(numberOfPages).keys()];
 
-  const handleItemsPerPage = (e) => {
-    const value = parseInt(e.target.value);
-    setItemsPerPage(value);
-    setCurrentPage(0);
-  };
 
-  const handlePreviousPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < pages.length - 1) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  // const handleAddToCart = (cart) => {
-  //   if (user) {
-  //     const { _id, image, title, price } = cart;
-
-  //     const cartItem = {
-  //       email: user.email,
-  //       image,
-  //       title,
-  //       price,
-  //     };
-  //     axiosSecure.post(`/shop/shopCart/${_id}`, cartItem).then((res) => {
-  //       if (res.data) {
-  //         Swal.fire({
-  //           title: `${title} added to your cart`,
-  //           icon: "success",
-  //         });
-  //       }
-  //     });
-  //   } else {
-  //     Swal.fire({
-  //       title: "Error",
-  //       text: "You are not logged in",
-  //       icon: "error",
-  //     });
-  //   }
-  // };
 
   return (
     <div>
@@ -143,40 +99,45 @@ const Shopping = () => {
               </div>
             ))}
           </div>
-          <div className="pagination">
-            <button
-              className="btn btn-outline btn-secondary"
-              onClick={handlePreviousPage}
-            >
-              Previous
-            </button>
-            {pages.map((page) => (
+          <div className="flex justify-center gap-2">
+            {currentPage !== 0 && (
+              <div className="flex flex-row-reverse items-center">
+                <button
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                  className="text-2xl font-semibold text-[#878787] mr-4"
+                >
+                  Prev
+                </button>
+
+                <IoIosArrowBack className="text-2xl font-semibold text-[#878787]" />
+              </div>
+            )}
+
+            {pages?.map((item, index) => (
               <button
-                key={page}
-                onClick={() => setCurrentPage(page)}
-                className={currentPage === page && "selected"}
+                key={index}
+                onClick={() =>setCurrentPage(index)}
+                className={`w-10 py-0 font-semibold ${
+                  currentPage == index
+                    ? "text-2xl font-bold border-b-4 border-primary	"
+                    : "text-xl text-[#878787] "
+                }`}
               >
-                {page}
+                {`${index + 1 <= 9 ? "0" : ""}${index + 1}`}
               </button>
             ))}
-            <button
-              className="btn btn-outline btn-secondary"
-              onClick={handleNextPage}
-            >
-              Next
-            </button>
-            <select
-              className="btn btn-outline btn-secondary"
-              value={itemsPerPage}
-              onChange={handleItemsPerPage}
-              name=""
-              id=""
-            >
-              <option value="10">10</option>
-              <option value="20">20</option>
-              <option value="30">30</option>
-              <option value="50">50</option>
-            </select>
+
+            {currentPage !== pages?.length - 1 && (
+              <div className="flex items-center">
+                <button
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                  className="text-2xl font-semibold text-[#878787] ml-4"
+                >
+                  Next
+                </button>
+                <IoIosArrowForward className="text-2xl font-semibold text-[#878787]" />
+              </div>
+            )}
           </div>
         </div>
       </Container>
