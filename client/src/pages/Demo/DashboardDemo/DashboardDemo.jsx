@@ -89,21 +89,23 @@ const DashboardDemo = () => {
     <div className="flex">
       {/* side bar */}
       <div
-        className="fixed h-screen w-[280px] bg-[#17283f] border-r shadow-2xl px-4 pt-10 top-0"
+        className="fixed h-screen w-[280px] bg-[#17283f] border-r shadow-2xl px-4 pt-10 top-0 hidden lg:block"
         style={{ boxShadow: " 6px 0px 5px 0px rgba(79,79,79,0.75);" }}
       >
         {/* logo */}
         <h2 className="text-3xl font-semibold mb-5 text-white">EventPlanet</h2>
         <ul className=" space-y-3">{dashLinks}</ul>
       </div>
-      <div className="w-[343px] "></div>
+      <div className="w-[343px] hidden lg:block"></div>
 
       {/* main */}
       <div className="bg-[#F8F7FA] w-full h-screen col-span-10">
         {/* dashboard nav */}
         <div className="overflow-y-auto w-[95%] mx-auto h-20 shadow-2xl bg-white  my-10 rounded-lg flex justify-between items-center px-4">
-          <AiOutlineMenu className="text-2xl" />
+          <AiOutlineMenu className="text-2xl cursor-pointer block lg:hidden " />
           {/* user */}
+          {/* empty div for large device */}
+          <div></div>
           <div>
             <img
               src={user?.photoURL}
