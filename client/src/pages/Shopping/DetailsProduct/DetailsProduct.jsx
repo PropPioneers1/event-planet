@@ -15,12 +15,12 @@ const DetailsProduct = () => {
   const { id } = useParams();
   const { user } = useAuth();
   const [quantity, setQuantity] = useState(0);
-  const [feedbacks, setFeedbacks] = useState([]);
   const [textCount, setTextCount] = useState(0);
   const [rating, setRating] = useState();
   const [userOpinion, setUserOpinion] = useState();
   const [userImage, setUSerImage] = useState();
-
+  const [totalRating, setTotalRating] = useState(0);
+  console.log(totalRating)
   const handleIncreaseQuantity = () => {
     setQuantity(quantity + 1);
   };
@@ -116,26 +116,35 @@ const DetailsProduct = () => {
       date: formattedDate,
     };
     // post feed back
-    const resultS = await axiosSecure.post("/feedback", usersFeedBack);
-    if (resultS?.status === 200) {
+    const result = await axiosSecure.post("/feedback", usersFeedBack);
+    if (result?.status === 200) {
+      refetch()
       toast.success("Thanks For Your Feedback");
     }
-    console.log(resultS)
+    console.log(result)
   };
+
   
-  useEffect(() => {
-  //  get users feedback data in public folder
- axiosSecure.get(`/feedback/${id}`)
- .then(res=>setFeedbacks(res.data.result))
-  // const findOneStar = feedbacks?.map(oneStar => oneStar.rating);
-  // console.log(findOneStar);
-  // console.log(findOneStar[] === 1);
-}, [axiosSecure,id]);
 
- console.log(feedbacks)
- 
+const { data: feedbackData,refetch } = useQuery({
+  queryKey: ["feedbackData"],
+  queryFn: async () => {
+    const res = await axiosSecure.get(`/feedback/${id}`);
+    return res?.data?.result;
+    
+  },
+});
+console.log(feedbackData)
 
- if(isLoading) return <div>loading..</div>
+useEffect(() => {
+  if (feedbackData?.length > 0) {
+    const total = feedbackData.reduce((acc, feed) => acc + feed.rating, 0);
+    setTotalRating(total);
+  }
+}, [feedbackData]);
+
+
+ if(isLoading) return <span className="loading loading-infinity loading-lg"></span>
  if(isError) return <div>loading..</div>
   return (
     
@@ -287,7 +296,7 @@ const DetailsProduct = () => {
                         activeColor="#e0218a"
                       />
                     </div>
-                    <p>125m reviews</p>
+                    <p> {totalRating} rating star</p>
                   </div>
                   <div className="col-span-1 border text-center">
                     <div>1</div>
@@ -297,17 +306,17 @@ const DetailsProduct = () => {
                     <div>5</div>
                   </div>
                   <div className="col-span-5 border">
-                    {feedbacks && feedbacks.map(rating=><Progress key={rating._id} rating={rating}></Progress>)}
+                    {feedbackData && feedbackData.map(rating=><Progress key={rating._id} rating={rating}></Progress>)}
                   </div>
                 </div>
                 {/* show all users feedback */}
 
                 <div>
                   <div className=" py-7">
-                    {feedbacks &&
-                      feedbacks.map((feedback) => (
+                    {feedbackData &&
+                      feedbackData.map((feedback) => (
                         <Feedback
-                          key={feedback.id}
+                          key={feedback._id}
                           feedback={feedback}
                         ></Feedback>
                       ))}
