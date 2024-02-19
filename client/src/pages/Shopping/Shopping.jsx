@@ -51,54 +51,44 @@ const Shopping = () => {
 
       <Container>
         <div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
-            {shopItem?.map((cart, idx) => (
-              <div key={idx}>
-                <Link to={`/details-shopCart/${cart._id}`}>
-                  <Card className="mt-2">
-                    <CardHeader className=" mt-2 h-56">
-                      <img
-                        src={cart.image}
-                        alt="card-image"
-                        className="object-cover w-full h-full"
-                      />
-                    </CardHeader>
-
-                    <CardBody>
-                      <Typography
-                        variant="h5"
-                        color="blue-gray"
-                        className="mb-2"
-                      >
-                        {cart?.title}
-                      </Typography>
-                      <div className="flex gap-2">
-                      <Typography className="text-pink-500 text-lg font-bold">
-                        $ {cart?.price}{" "}
-                        
-                      </Typography>
-                      <Typography><small
-                          style={{
-                            textDecoration: "line-through",
-                            color: "text-black",
-                          }}
-                        >
-                          $ 200
-                        </small></Typography>
-                      </div>
-                      <Typography>
-                        <span className="flex text-center">
-                        <FaStar className="mt-1 mr-2 text-yellow-500" />  {cart?.rating} /5
-                          
-                        </span>
-                      </Typography>
-                      
-                    </CardBody>
-                  </Card>
-                </Link>
+        <div className="grid mt-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+      {shopItem?.map((cart, idx) => (
+        <div key={idx} className="hover:shadow-lg transition duration-300 ease-in-out">
+          <Link to={`/details-shopCart/${cart._id}`}>
+            <div className="border rounded overflow-hidden">
+              {/* Assuming 'Card' is a div or a container */}
+              <div className=" h-56">
+                <img
+                  src={cart.image}
+                  alt="card-image"
+                  className="object-cover w-full h-full"
+                />
               </div>
-            ))}
-          </div>
+
+              <div className="p-4">
+                <h2 className="text-blue-gray font-semibold mb-2">{cart?.title}</h2>
+                <div className="flex gap-2">
+                  <p className="text-pink-500 text-lg font-bold">${cart?.price}</p>
+                  <p>
+                    <small
+                      style={{
+                        textDecoration: "line-through",
+                        color: "text-black",
+                      }}
+                    >
+                      $ 200
+                    </small>
+                  </p>
+                </div>
+                <p className="flex text-center">
+                <FaStar className="mt-1 mr-2 text-yellow-500" /> {cart?.rating} / 5
+                </p>
+              </div>
+            </div>
+          </Link>
+        </div>
+      ))}
+    </div>
           <div className="flex justify-center gap-2">
             {currentPage !== 0 && (
               <div className="flex flex-row-reverse items-center">
