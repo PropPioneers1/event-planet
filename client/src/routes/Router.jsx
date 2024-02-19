@@ -32,6 +32,8 @@ import About from "../pages/About/About";
 
 import MyEvents from "../pages/Dashboard/MyEvents/MyEvents";
 import ContactUs from "../pages/Contact/ContactUs";
+import DashboardDemo from "../pages/Demo/DashboardDemo/DashboardDemo";
+import MyProfile from "../pages/Demo/DashboardDemo/MyProfile/MyProfile";
 
 const Router = createBrowserRouter([
   {
@@ -114,48 +116,55 @@ const Router = createBrowserRouter([
 
   {
     path: "/dashboard",
-    element: <Dashboard></Dashboard>,
+    // element: <Dashboard></Dashboard>,
+    // children: [
+    //   {
+    //     path: "profile",
+    //     element: <Profile></Profile>,
+    //   },
+    //   {
+    //     path: "add-product",
+    //     element: <AddProduct></AddProduct>,
+    //   },
+    //   {
+    //     path: "create-theme",
+    //     element: <CreateTheme></CreateTheme>,
+    //   },
+
+    //   {
+    //     path: "create-blog",
+    //     element: <CreateBlog></CreateBlog>,
+    //   },
+    //   {
+    //     path: "payment-history",
+    //     element: <PaymentHistory></PaymentHistory>,
+    //   },
+    //   {
+    //     path: "admin-summary",
+    //     element: <AdminSummary></AdminSummary>,
+    //   },
+    //   {
+    //     path: "event-requests",
+    //     element: <EventRequests></EventRequests>,
+    //   },
+    //   {
+    //     path: "editProfile",
+    //     element: <UpdateProfile></UpdateProfile>,
+    //   },
+    //   {
+    //     path: "my-cart",
+    //     element: <MyCart></MyCart>,
+    //   },
+    //   {
+    //     path: "my-events",
+    //     element: <MyEvents></MyEvents>,
+    //   },
+    // ],
+    element: <DashboardDemo />,
     children: [
       {
         path: "profile",
-        element: <Profile></Profile>,
-      },
-      {
-        path: "add-product",
-        element: <AddProduct></AddProduct>,
-      },
-      {
-        path: "create-theme",
-        element: <CreateTheme></CreateTheme>,
-      },
-
-      {
-        path: "create-blog",
-        element: <CreateBlog></CreateBlog>,
-      },
-      {
-        path: "payment-history",
-        element: <PaymentHistory></PaymentHistory>,
-      },
-      {
-        path: "admin-summary",
-        element: <AdminSummary></AdminSummary>,
-      },
-      {
-        path: "event-requests",
-        element: <EventRequests></EventRequests>,
-      },
-      {
-        path: "editProfile",
-        element: <UpdateProfile></UpdateProfile>,
-      },
-      {
-        path: "my-cart",
-        element: <MyCart></MyCart>,
-      },
-      {
-        path: "my-events",
-        element: <MyEvents></MyEvents>,
+        element: <MyProfile />,
       },
     ],
   },
