@@ -53,7 +53,7 @@ const Shopping = () => {
         <div>
         <div className="grid mt-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
       {shopItem?.map((cart, idx) => (
-        <div key={idx} className="hover:shadow-lg transition duration-300 ease-in-out">
+        <div key={idx} className="hover:shadow-xl transition duration-400 ease-in-out">
           <Link to={`/details-shopCart/${cart._id}`}>
             <div className="border rounded overflow-hidden">
               {/* Assuming 'Card' is a div or a container */}
