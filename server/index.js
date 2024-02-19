@@ -25,17 +25,12 @@ app.use(bodyParser.json());
 // console.log(object);
 
 // Mongodb connection
+const dbURI = `mongodb+srv://EventPlanet:6oNbcueawJevcwOk
+@proppioneers.pzy67in.mongodb.net/Event-Planet`;
 mongoose
-  .connect(
-    `mongodb+srv://EventPlanet:2LxqUuIzAi3v6496
-@proppioneers.pzy67in.mongodb.net/Event-Planet`
-  )
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
-  .catch((error) => {
-    console.error("Error connecting to MongoDB:", error);
-  });
+  .connect(dbURI)
+  .then(() => console.log("MongoDB connected..."))
+  .catch((err) => console.error("Error connecting to MongoDB:", err));
 
 // routes
 app.get("/", (req, res) => {
