@@ -26,7 +26,7 @@ router.get("/", async (req, res) => {
   if (eventState) {
     query.state = eventState;
   }
-  if (eventCity) {
+  if (eventCity) { tsque
     query.city = eventCity;
   }
   if(email){
@@ -57,16 +57,27 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Post a todo
-// router.post("/", async (req, res) => {
-//   const newevent = new Event(req.body);
-//   try {
-//     await  newevent.save();
-//     res.status(201).json({ message: "inserted successfully" });
-//   } catch (error) {
-//     res.status(500).json({ error: " Server Error" });
-//   }
-// });
+
+router.get("/:email/:ids", async (req, res) => {
+  try {
+    const { email, ids } = req.params;
+    if (!email || !ids) {
+      return res.status(400).json({ error: "Missing email or ids" });
+    }
+    const idsArray = ids.split(",");
+
+    const result = await eventModel.find({ _id: { $in: idsArray }, email: email });
+
+    // Send the result
+    res.status(200).send(result);
+  } catch (error) {
+    // Handle errors
+    console.error("Error fetching events:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
 router.post("/", async (req, res) => {
   try {
     const newEvent = await eventModel.create(req.body);
@@ -77,11 +88,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Post multiple todos
-router.post("/all", async (req, res) => {});
 
-// Put todo
-router.put("/:id", (req, res) => {});
 
 // Patch todo
 router.patch("/:id", async (req, res) => {

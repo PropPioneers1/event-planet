@@ -58,7 +58,7 @@ router.post("/", async (req, res) => {
       cus_email: datasfront.cus_email,
       currency: datasfront.currency,
       total_amount: datasfront.totalAmount,
-      success_url: `http://localhost:5000/payment/success/${tran_id}`,
+      success_url: `http://localhost:5000/payment/successful/${tran_id}`,
       fail_url: "http://localhost:5173/fail",
       paidstatus: "payment pending",
       tran_id: tran_id,
@@ -133,7 +133,7 @@ router.post("/success/:tran_id", async (req, res) => {
     }
 
     // Redirect to success page once payment status is updated
-    res.redirect(`http://localhost:5173/payment/success/${tran_id}`);
+    res.redirect(`http://localhost:5173/payment/successful/${tran_id}`);
   } catch (error) {
     console.error("Error updating payment status:", error);
     res.status(500).json({ error: "Internal Server Error" });

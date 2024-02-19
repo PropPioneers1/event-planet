@@ -84,7 +84,7 @@ const UpcomingDetails = () => {
       totalPrice: totalPrice,
     };
 
-    navigate(`/checkout`, {
+    navigate(`/checkout/${user.email}/${id}`, {
       state: eventData,
     });
   };
