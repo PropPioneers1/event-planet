@@ -1,14 +1,14 @@
-// import MessengerCustomerChat from "react-messenger-customer-chat";
+import MessengerCustomerChat from "react-messenger-customer-chat";
 
-// const MessangerChat = () => {
-// 	return (
-// 		<div>
-// 			<MessengerCustomerChat
-// 				pageId="110471298034413"
-// 				appId="913705367118400"
-// 			/>
-// 		</div>
-// 	);
-// };
+const MessangerChat = () => {
+  return (
+    <div>
+      <MessengerCustomerChat
+        pageId="105270282246481"
+        appId="1421873558764439"
+      />
+    </div>
+  );
+};
 
-// export default MessangerChat;
+export default MessangerChat;

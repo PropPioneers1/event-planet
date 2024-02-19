@@ -29,7 +29,9 @@ import OurBlogs from "../pages/Demo/OurBlogs/OurBlogs";
 import BlogDetails from "../pages/Demo/OurBlogs/BlogDetails/BlogDetails";
 import MyCart from "../pages/Dashboard/MyCart/MyCart";
 import About from "../pages/About/About";
+
 import MyEvents from "../pages/Dashboard/MyEvents/MyEvents";
+import ContactUs from "../pages/Contact/ContactUs";
 
 const Router = createBrowserRouter([
   {
@@ -63,7 +65,7 @@ const Router = createBrowserRouter([
       },
 
       {
-        path: "upcomingDetails/:id",
+        path: "/upcomingDetails/:id",
         element: <UpcomingDetails></UpcomingDetails>,
       },
       {
@@ -102,6 +104,10 @@ const Router = createBrowserRouter([
       {
         path: "about",
         element: <About></About>,
+      },
+      {
+        path: "contact",
+        element: <ContactUs></ContactUs>,
       },
     ],
   },
@@ -144,14 +150,13 @@ const Router = createBrowserRouter([
         element: <UpdateProfile></UpdateProfile>,
       },
       {
-        path: 'my-cart',
-        element: <MyCart></MyCart>
+        path: "my-cart",
+        element: <MyCart></MyCart>,
       },
       {
-        path: 'my-events',
-        element: <MyEvents></MyEvents>
-      }
-
+        path: "my-events",
+        element: <MyEvents></MyEvents>,
+      },
     ],
   },
 ]);

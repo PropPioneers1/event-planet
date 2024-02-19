@@ -1,35 +1,16 @@
 import { Link, NavLink } from "react-router-dom";
 import Container from "../../ui/Container";
-import { FaSortDown } from "react-icons/fa6";
 import { SlMenu } from "react-icons/sl";
 import { IoCloseOutline } from "react-icons/io5";
 import { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import MenuDropdown from "./MenuDropDown";
+import NotificationMessage from "../../../pages/NotificationMessage/NotificationMessage";
 
 const Navbar = () => {
   const { user } = useAuth();
 
   const [isMenuTrue, setIsMenuTrue] = useState(false);
-  const categories = [
-    "Education",
-    "Business",
-    "Travel",
-    "Conference",
-    "Food Festival",
-    "Sports Event",
-  ];
-
-  // const locations = [
-  //   "Sylhet",
-  //   "Mymensingh",
-  //   "Rangpur",
-  //   "Rajshahi",
-  //   "Khulna",
-  //   "Dhaka",
-  //   "Chattogram",
-  //   "Barishal",
-  // ];
 
   const navLinks = (
     <>
@@ -41,25 +22,6 @@ const Navbar = () => {
           All Event
         </li>
       </NavLink>
-      <NavLink onClick={() => setIsMenuTrue(false)} to="/">
-        <li className="relative group hover:text-accent py-2 lg:py-5">
-          <span className="font-semibold flex  items-center gap-1">
-            Categories <FaSortDown />
-          </span>
-          {/* Drop down menu*/}
-          <ul
-            className={`absolute hidden group-hover:block lg:w-40 bg-[#EEEEEE]
-            text-[#222831] text-sm
-            lg:left-0 lg:top-16 left-20 top-10 z-10 space-y-3 transition-all duration-1000 p-4 shadow-md`}
-          >
-            {categories?.map((category, idx) => (
-              <li key={idx} className="hover:text-accent">
-                {category}
-              </li>
-            ))}
-          </ul>
-        </li>
-      </NavLink>
 
       <NavLink onClick={() => setIsMenuTrue(false)} to="/blogs">
         <li className="font-semibold hover:text-accent py-2 lg:py-5">Blog</li>
@@ -69,6 +31,14 @@ const Navbar = () => {
       </NavLink>
       <NavLink onClick={() => setIsMenuTrue(false)} to="/about">
         <li className="font-semibold hover:text-accent py-2 lg:py-5">About</li>
+      </NavLink>
+      <NavLink onClick={() => setIsMenuTrue(false)} to="/contact">
+        <li className="font-semibold hover:text-accent py-2 lg:py-5">
+          Contact Us
+        </li>
+      </NavLink>
+      <NavLink className="grid place-items-center">
+        <NotificationMessage></NotificationMessage>
       </NavLink>
     </>
   );

@@ -3,11 +3,13 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import { Link } from "react-router-dom";
 import SingleCart from "./SingleCart";
+import { useState } from "react";
 
 
 const MyCart = () => {
 
   const axiosSecure = useAxiosSecure();
+  const [priceCount,setPriceCount]=useState(0);
 
     const {user}=useAuth()
   const { data: myCartItem = [] } = useQuery({
@@ -27,13 +29,13 @@ const MyCart = () => {
             Your Cart
           </h2>
           <div className="mb-10">
-            {myCartItem?.map((cart)=><SingleCart key={cart._id} cart={cart}></SingleCart>)}
+            {myCartItem?.map((cart)=><SingleCart priceCount={priceCount} setPriceCount={setPriceCount} key={cart._id} cart={cart}></SingleCart>)}
           </div>
           <div className="mb-10">
             <div className="px-10 py-3 bg-gray-100 rounded-md dark:bg-gray-800">
               <div className="flex justify-between dark:text-gray-400">
                 <span className="font-medium">Subtotal</span>
-                <span className="font-bold ">$145.79</span>
+                <span className="font-bold ">$ {priceCount}</span>
               </div>
             </div>
             <div className="px-10 py-3 rounded-md">
@@ -42,12 +44,7 @@ const MyCart = () => {
                 <span className="font-bold ">$100.00</span>
               </div>
             </div>
-            <div className="px-10 py-3 bg-gray-100 rounded-md dark:bg-gray-800">
-              <div className="flex justify-between dark:text-gray-400">
-                <span className="font-medium">Tax</span>
-                <span className="font-bold ">$900.00</span>
-              </div>
-            </div>
+            
             <div className="px-10 py-3 rounded-full dark:text-gray-400">
               <div className="flex justify-between">
                 <span className="text-base font-bold md:text-xl ">
