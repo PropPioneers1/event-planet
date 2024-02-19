@@ -6,15 +6,33 @@ const feedBackModal = mongoose.model("feedback",FeedBackSchema);
 
 
 // post route
-router.post("/", async (req, res) => {
-    const feedback = req.body;
-    try {
-      const result = await feedBackModal.send(feedback);
-      res.status(201).json({ message: "inserted successfully", result });
-    } catch (error) {
-      console.error("Error creating event:", error);
-      res.status(500).json({ error: "Server Error" });
-    }
-  });
+router.post("/",async(req,res)=>{
+  try{
+      const data = new feedBackModal(req.body);
+      console.log("feedback data",data)
+      const result = await data.save();
+      res.status(200).json({
+          message:"feedback data succefully inserted",
+          result,
+      })
+  }
+  catch(err){
+      res.status(500).json({
+          error: "There was a server-side error",
+      })
+  }
+})
+router.get("/:id",async(req,res)=>{
+  const id = req.params.id
+  try{
+    const result = await feedBackModal.find({id:id});
+    res.status(200).json({result});
+  }
+  catch(err){
+    res.status(500).json({
+        error: "There was a server-side error",
+    })
+}
+})
   module.exports = router;
   
