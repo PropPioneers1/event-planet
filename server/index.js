@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const express = require("express");
-const sendMail=require('./controller/sendMail')
+const sendMail = require("./controller/sendMail");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
@@ -14,10 +14,17 @@ const shopHandler = require("./shopHandler/shopHandler");
 const blogHandler = require("./blogHandler/BlogHandler");
 const eventHandler = require("./eventHandler/eventHandler");
 const upComingDetailHandler = require("./upComingDetailHandler/detailHandler");
+const feedbackHandler = require("./FeedbackHandler/feedbackHandler");
 
 const paymenthandler = require("./paymentHandler/PaymentHandler");
+
+// const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
+const usersHandler = require("./usersHandler/usersHandler");
+const LikesCommentsHandler = require("./LikesCommentsHandler/LikesCommentsHandler");
+const ContactHandler = require("./ContactHnadler/Contacthandler");
 const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
-const usersHandler = require("./usersHandler/usersHandler")
+const usersHandler = require("./usersHandler/usersHandler");
+const messageHandler = require("./MessageHandler/MessageHandler");
 // middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -25,12 +32,17 @@ app.use(bodyParser.json());
 // console.log(object);
 
 // Mongodb connection
-const dbURI = `mongodb+srv://EventPlanet:6oNbcueawJevcwOk
-@proppioneers.pzy67in.mongodb.net/Event-Planet`;
-mongoose
-  .connect(dbURI)
-  .then(() => console.log("MongoDB connected..."))
-  .catch((err) => console.error("Error connecting to MongoDB:", err));
+
+mongoose.connect(
+  `mongodb+srv://EventPlanet:6oNbcueawJevcwOk
+@proppioneers.pzy67in.mongodb.net/Event-Planet`
+)
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((error) => {
+    console.error("Error connecting to MongoDB:", error);
+  });
 
 // routes
 app.get("/", (req, res) => {
@@ -44,11 +56,18 @@ app.use("/blog", blogHandler);
 app.use("/event", eventHandler);
 app.use("/upcomingDetails", upComingDetailHandler);
 app.use("/payment", paymenthandler);
+app.use("/feedback", feedbackHandler);
 // send confirmation mail if the user successfully booking a event
+
+app.get("/sendEmail", sendMail);
+// app.use("/token", notificationHandler);
+app.use("/users", usersHandler);
+app.use("/likesComments", LikesCommentsHandler);
+app.use("/contact", ContactHandler);
 app.get('/sendEmail',sendMail)
 app.use("/token", notificationHandler);
 app.use('/users',usersHandler);
-
+app.use("/message",messageHandler);
 
 // Eroor handler
 

@@ -1,0 +1,26 @@
+.pagination{
+    text-align: center;
+    margin-top: 20px;
+   
+}
+.pagination button{
+    margin-right: 10px;
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+}
+.pagination .selected{
+    color: red;
+  text-decoration:underline;
+  font-size: x-large;
+}
+.pagination .new{
+    background-color:orange ;
+    color: black;
+}
+
+.pagination select{
+    padding: 10px;
+    border-radius: 5px;
+
+}

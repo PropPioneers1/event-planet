@@ -113,7 +113,7 @@ const Navbar = () => {
     <div className="">
       <div
         className="bg-neutral lg:bg-secondary bg-opacity-100 
-      fixed top-0 z-50  w-full py-4 lg:py-0
+       top-0 z-50  w-full py-4 lg:py-0
       shadow-2xl
       "
       >

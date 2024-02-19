@@ -5,6 +5,9 @@ const EventSchema = mongoose.Schema({
   email: String,
   phone: Number,
   organization: String,
+  numberOfGuests: Number,
+  // guestProfessions:String,j
+  eventTime: String,
   category: String,
   eventName: String,
   totalSeat: Number,
@@ -20,6 +23,7 @@ const EventSchema = mongoose.Schema({
   eventImages: Array,
   speakersImages: Array,
   status: String,
+  ticketSold:Number
 });
 
 module.exports = EventSchema;
