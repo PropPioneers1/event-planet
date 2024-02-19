@@ -3,12 +3,6 @@ import { FaStar } from "react-icons/fa";
 import ShoppingBanner from "./ShoppingBanner/ShoppingBanner";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Typography,
-} from "@material-tailwind/react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useState } from "react";
 import "./Shop.css";

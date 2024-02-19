@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./trending.css";
-import Lottie from "lottie-react";
+// import Lottie from "lottie-react";
 // import shop from '../../../../assets/image/shop.webp'
 // import { IoStar } from "react-icons/io5";
-import lcottievb from "../../../../../public/Animation - 1705432373781.json";
+// import lcottievb from "../../../../../public/Animation - 1705432373781.json";
 import { FaShopify } from "react-icons/fa";
 import Container from "../../../../components/ui/Container";
 import Buttonall from "../../../../components/ui/ButtonAll/Buttonall";
@@ -19,7 +19,7 @@ const Trendingproducts = () => {
   }, []);
 
   return (
-    <div className="shadow-bg bg-slate-400 mt-10">
+    <div className="shadow-bg bg-neutral mt-10">
       <Container>
         <h2 className="text-3xl font-bold text-center pt-10">
           Trending Products
@@ -36,43 +36,36 @@ const Trendingproducts = () => {
 
       <div className="flex ">
         <div>
-          <Lottie
+          {/* <Lottie
             className=" md:w-[350px] 
     hidden md:block  mt-20
     "
             animationData={lcottievb}
-          ></Lottie>
+          ></Lottie> */}
         </div>
         {/* <img className=' h-72  w-96 rounded-badge' src={shop} alt="" /> */}
         <div
           className="slider rounded-r-2xl
           rounded-l-3xl"
         >
-          <div className="slide-track gap-5 ">
+          <div className="slide-track gap-5 pb-5">
             {data.concat(data).map((item, index) => (
               <div
                 key={index}
                 className="slide relative 
-              card 
-              h-[17rem] bg-transparent "
+              rounded-md 
+              h-auto bg-transparent shadow-xl"
               >
                 {/* <p className='flex items-center font-bold text-blue-950 gap-2'><IoStar></IoStar> {item.rating}</p> */}
 
-                <div className="mb-4"></div>
+                {/* <div className="mb-4"></div> */}
 
-                <div className="trendingimg w-44 relative">
-                  <img className="h-20 w-44 mx-auto " src={item.image} alt="" />
-                  <div
-                    className="buy-now-button absolute top-1/2 left-1/2 
-                  transform -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-300 hover:opacity-100"
-                  >
-                    <button
-                      className="  border-2 backdrop-blur-lg font-bold
-                     border-slate-700 text-white px-4 py-2 rounded"
-                    >
-                      Buy Now
-                    </button>
-                  </div>
+                <div className=" relative">
+                  <img
+                    className="h-[100px] w-full mx-auto object-cover rounded-md"
+                    src={item.image}
+                    alt=""
+                  />
                 </div>
 
                 {/* 
@@ -80,10 +73,10 @@ const Trendingproducts = () => {
                 <img className='h-20 w-44 mx-auto ' src={item.image} alt="" /></Link> */}
                 <div className=" h-44 w-56 my-auto">
                   <h2
-                    className=" text-slate-700 text-lg
-                  text-start my-auto border-slate-300  text-ellipsis font-bold mt-4 "
+                    className=" text-secondary text-lg
+                  text-start my-auto border-slate-300   font-bold mt-4 "
                   >
-                    {item.itemName}
+                    {item.itemName?.slice(0, 20)}
                   </h2>
                   <h2 className="font-bold  border-slate-300  text-slate-500 ">
                     Price :{" "}
@@ -111,6 +104,16 @@ const Trendingproducts = () => {
                       ))}
                     </div>
                   </div>
+                  <Link to="shopping">
+                    <button
+                      className=" w-full font-semibold py-3 rounded-md transition-all duration-300 ease-in
+                    bg-gradient-to-tl from-accent
+                    to-accent/70 hover:bg-gradient-to-tr
+                   text-white "
+                    >
+                      Buy Now
+                    </button>
+                  </Link>
                 </div>
               </div>
             ))}
