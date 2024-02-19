@@ -25,6 +25,25 @@ const Dashboard = () => {
 
   const dashLinks = (
     <>
+      <NavLink
+        to="/"
+        className={({ isActive, isPending }) =>
+          isPending ? "pending" : isActive ? activeStyle : inActiveStyle
+        }
+      >
+        <FaHome className={iconStyle}></FaHome>
+        <li className={isCollapse ? "hidden" : "block"}> Home</li>
+      </NavLink>
+      <NavLink
+        to="/dashboard/profile"
+        className={({ isActive, isPending }) =>
+          isPending ? "pending" : isActive ? activeStyle : inActiveStyle
+        }
+      >
+        <FaUserAlt className={iconStyle}></FaUserAlt>
+        <li className={isCollapse ? "hidden" : "block"}>Profile</li>
+      </NavLink>
+
       {/* <NavLink
         to="/dashboard/add-product"
         className={({ isActive, isPending }) =>
@@ -103,26 +122,6 @@ const Dashboard = () => {
       </NavLink>
 
       <hr />
-
-      <NavLink
-        to="/"
-        className={({ isActive, isPending }) =>
-          isPending ? "pending" : isActive ? activeStyle : inActiveStyle
-        }
-      >
-        <FaHome className={iconStyle}></FaHome>
-        <li className={isCollapse ? "hidden" : "block"}> Home</li>
-      </NavLink>
-
-      <NavLink
-        to="/dashboard/profile"
-        className={({ isActive, isPending }) =>
-          isPending ? "pending" : isActive ? activeStyle : inActiveStyle
-        }
-      >
-        <FaUserAlt className={iconStyle}></FaUserAlt>
-        <li className={isCollapse ? "hidden" : "block"}>Profile</li>
-      </NavLink>
     </>
   );
 

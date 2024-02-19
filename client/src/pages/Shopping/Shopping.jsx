@@ -13,30 +13,29 @@ import {
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
-import {  useState } from "react";
-import './Shop.css'
+import { useState } from "react";
+import "./Shop.css";
 const Shopping = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [itemsPerPage, setItemsPerPage] = useState(12);
-  const [currentPage,setCurrentPage]=useState(0)
+  const [currentPage, setCurrentPage] = useState(0);
 
-  const { data: shopItem = []} = useQuery({
-    queryKey: ["shopItems",{currentPage,itemsPerPage}],
+  const { data: shopItem = [] } = useQuery({
+    queryKey: ["shopItems", { currentPage, itemsPerPage }],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/shop?page=${currentPage}&size=${itemsPerPage}`);
+      const res = await axiosSecure.get(
+        `/shop?page=${currentPage}&size=${itemsPerPage}`
+      );
       return res.data.result;
     },
   });
-  
-  
- 
 
   // get total products
   const { data: totalProductsCount = [] } = useQuery({
     queryKey: ["totalProductsCounts"],
     queryFn: async () => {
-      const res = await axiosSecure.get('/shop/totalProducts');
+      const res = await axiosSecure.get("/shop/totalProducts");
       return res.data.count;
     },
   });
@@ -50,22 +49,17 @@ const Shopping = () => {
     setCurrentPage(0);
   };
 
-const handlePreviousPage=()=>{
-  if(currentPage>0){
-    setCurrentPage(currentPage-1)
-  }
-}
+  const handlePreviousPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
-const handleNextPage=()=>{
-  if(currentPage<pages.length-1){
-    setCurrentPage(currentPage+1)
-  }
-}
-
-
-
-
-
+  const handleNextPage = () => {
+    if (currentPage < pages.length - 1) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   const handleAddToCart = (cart) => {
     if (user) {
@@ -94,7 +88,6 @@ const handleNextPage=()=>{
     }
   };
 
-  
   return (
     <Container>
       <div className="h-96">
@@ -111,6 +104,7 @@ const handleNextPage=()=>{
                   src={cart.image}
                   alt="card-image"
                   className="object-cover w-full h-full"
+                  title={cart?.title}
                 />
               </CardHeader>
 
@@ -122,11 +116,9 @@ const handleNextPage=()=>{
                 <Typography>
                   <span className="flex text-center">
                     {cart?.rating} <FaStar className="mt-1 ml-2" />
-                     <FaStar className="mt-1" />
-                     <FaStar className="mt-1" />
-                     <FaStar className="mt-1" />
-                     
-                     
+                    <FaStar className="mt-1" />
+                    <FaStar className="mt-1" />
+                    <FaStar className="mt-1" />
                   </span>
                 </Typography>
                 <Typography>{cart?.description.slice(0, 50)}.......</Typography>
@@ -149,14 +141,27 @@ const handleNextPage=()=>{
           ))}
         </div>
         <div className="pagination">
-          
-          <button className="btn btn-outline btn-secondary" onClick={handlePreviousPage}>Previous</button>
+          <button
+            className="btn btn-outline btn-secondary"
+            onClick={handlePreviousPage}
+          >
+            Previous
+          </button>
           {pages.map((page) => (
-            <button key={page} onClick={()=>setCurrentPage(page)} className={currentPage===page && 'selected'}>
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={currentPage === page && "selected"}
+            >
               {page}
             </button>
           ))}
-          <button className="btn btn-outline btn-secondary" onClick={handleNextPage}>Next</button>
+          <button
+            className="btn btn-outline btn-secondary"
+            onClick={handleNextPage}
+          >
+            Next
+          </button>
           <select
             className="btn btn-outline btn-secondary"
             value={itemsPerPage}

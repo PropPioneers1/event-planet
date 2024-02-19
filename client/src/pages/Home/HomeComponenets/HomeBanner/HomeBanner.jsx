@@ -25,7 +25,7 @@ const HomeBanner = () => {
             </p>
           </div>
           {/* Search */}
-          <form
+          {/* <form
             className="lg:bg-neutral lg:rounded-full flex flex-col 
           lg:flex-row justify-between item-center overflow-hidden lg:px-4 px-0 lg:py-4 gap-2
           "
@@ -103,7 +103,7 @@ const HomeBanner = () => {
             >
               Search
             </button>
-          </form>
+          </form> */}
           {/* more features buttons */}
           <div className="text-neutral">
             <h3 className="text-left md:text-center pb-4">

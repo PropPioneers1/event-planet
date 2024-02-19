@@ -10,6 +10,7 @@ router.get("/", async (req, res) => {
   const eventCategory = req.query.category;
   const eventState = req.query.state;
   const eventCity = req.query.city;
+  const eventVenue = req.query.venue;
   const email = req.query.email;
 
   const page = parseInt(req.query.page);
@@ -18,7 +19,7 @@ router.get("/", async (req, res) => {
   let query = {};
 
   if (eventTitle) {
-    query.eventName = eventTitle;
+    query.eventName = { $regex: new RegExp(eventTitle, "i") };
   }
   if (eventCategory) {
     query.category = eventCategory;
@@ -29,8 +30,11 @@ router.get("/", async (req, res) => {
   if (eventCity) {
     query.city = eventCity;
   }
-  if(email){
-    query.email = email
+  if (eventVenue) {
+    query.venue = eventCity;
+  }
+  if (email) {
+    query.email = email;
   }
 
   try {
