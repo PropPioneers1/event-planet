@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import useAuth from "../../../../hooks/useAuth";
 import ReactStars from "react-rating-stars-component";
@@ -6,38 +7,33 @@ import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 
 // eslint-disable-next-line react/prop-types
 const Feedback = ({feedback}) => {
-    const {user} = useAuth();
-    const axiosSecure = useAxiosSecure();
-    // eslint-disable-next-line react/prop-types
     const {_id,user_name,rating,feedback_date,user_opinion} = feedback;
-    console.log(_id)
-    const [yes,setYes] = useState();
-    // like dislike
-    // Inside your likeDislikeHandler function
-const likeDislikeHandler = async (e) => { 
-    console.log("parammiter",e)
-    if (e === 'yes') {
-      setYes("yes");
-    } else {
-      setYes("no");
-    }
-    try {
-      const sendData = {
-        yes:e
-      };
+
+    const { user } = useAuth();
+    const axiosSecure = useAxiosSecure();
   
-      // Assuming feedback._id is the ID of the feedback document
-     const result =  await axiosSecure.put(`/${_id}`, sendData);
-     console.log(result)
-      // Handle success
-    } catch (error) {
-      console.error('Error updating vote:', error);
-      // Handle error
-    }
-  };
-        // console.log(data)
-    // rating change handler
-      
+    const [yesCount, setYesCount] = useState(0);
+    const [noCount, setNoCount] = useState(0);
+    const [voted, setVoted] = useState(false);
+
+    const likeDislikeHandler = async (vote) => {
+        if (voted) return;
+    
+        try {
+          const sendData = { yes: vote };
+    
+          const result = await axiosSecure.put(`/feedback/${_id}`, sendData);
+          console.log("like",result)
+          if (result.data.yesCount !== undefined && result.data.noCount !== undefined) {
+            setYesCount(result.data.yesCount);
+            setNoCount(result.data.noCount);
+            setVoted(true);
+          }
+        } catch (error) {
+          console.error('Error updating vote:', error);
+        }
+      };
+    
     return (
         <div className="mb-12">
             <div className=" flex items-center gap-3 mb-4">
@@ -64,28 +60,19 @@ const likeDislikeHandler = async (e) => {
             <div className="my-3">
                 <p className="text-secondary">103 people found this review helpful</p>
             </div>
-            {
-                yes ? <>
-                <div className="">
                 <div className="flex items-center gap-3">
                 <p>Did you find this helpful?</p>
                 <div className="flex items-center gap-3">
                     <button onClick={()=>likeDislikeHandler("yes")} className="btn rounded btn-sm">Yes</button>
                     <button onClick={()=>likeDislikeHandler("no")} className="btn rounded btn-sm">No</button>               
                 </div>
-                </div>
-                </div>
-                </> : <>
-                <div className="flex items-center gap-3">
-                <p>Did you find this helpful?</p>
-                <div className="flex items-center gap-3">
-                    <button onClick={()=>likeDislikeHandler("yes")} className="btn rounded btn-sm">Yes</button>
-                    <button onClick={()=>likeDislikeHandler("no")} className="btn rounded btn-sm">No</button>               
-                </div>
+                
             </div>
-                </>
-            }
-
+            <div className="flex items-center gap-3 my-3">
+                <div><img src={user?.photoURL} alt="" /></div>
+                <div><img src={user?.photoURL} alt="" /></div>
+                <div><img src={user?.photoURL} alt="" /></div>
+            </div>
         </div>
     );
 };

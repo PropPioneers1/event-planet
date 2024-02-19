@@ -29,6 +29,9 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { getTime } from "../../../../utils/getTime";
 import { getDate } from "../../../../utils/getDate";
+import UpComingBanner from "./UpComingBanner";
+import SectionHeading from "../../../../components/shared/SectionHeading/SectionHeading";
+import { BiArea } from "react-icons/bi";
 
 const UpcomingDetails = () => {
   const shareUrl = "https://event-planet-9789f.web.app/";
@@ -90,19 +93,25 @@ const UpcomingDetails = () => {
   };
 
   return (
-    <>
+    <>  
+      <UpComingBanner eventDetails={eventDetails}></UpComingBanner>
       <Container>
-        <div className="py-[100px]">
+        <div className="py-[50px]">
           {/* heading */}
           {/* upcoming details: */}
           <div>
-            <div className="grid grid-cols-1 md:grid-cols-6 lg:gap-16 gap-12 ">
+            <div className="grid grid-cols-1 md:grid-cols-6 lg:gap-12 gap-5 ">
               {/* left side */}
               <div className="md:col-span-4 col-span-1">
                 <div className="left-side">
                   <div>
                     <h2 className=" text-5xl mb-5">
-                      {eventDetails?.eventName}
+                      
+                    <SectionHeading
+                    title="Upcoming Event"
+                    normalSubTitleWord="Book Your"
+                    boldSubTitleWord="Ticket Early"
+                  />
                     </h2>
                   </div>
                   <div>
@@ -112,9 +121,9 @@ const UpcomingDetails = () => {
                       alt=""
                     />
                   </div>
-                  <div className="md:flex items-center justify-around gap-4 py-5 space-y-4 md:space-y-0">
-                    <div className="py-3 px-10 bg-secondary shadow-lg flex items-center gap-3 text-white">
-                      <div>
+                  <div className="md:flex items-center justify-around gap-2 lg:gap-4 py-5 space-y-4 md:space-y-0">
+                    <div className="lg:py-3 lg:px-10 py-2 px-5 bg-secondary shadow-lg flex items-center justify-center gap-3 text-white">
+                      <div className="text-center">
                         <h2 className="md:text-lg font-semibold text-center pb-1">
                           Event Date
                         </h2>
@@ -125,109 +134,111 @@ const UpcomingDetails = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="py-3 px-10 bg-secondary shadow-lg  gap-3 text-white">
+                    <div className="lg:py-3 lg:px-10 py-2 px-4 bg-secondary shadow-lg  gap-3 text-white">
                       <h2 className="text-lg font-semibold text-center">
                         Event Time
                       </h2>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center justify-center gap-2">
                         <IoMdTime className="text-neutral" />
                         <p className="font-semibold">{time}</p>
                       </div>
                     </div>
-                    <div className="py-3 px-10 bg-secondary shadow-lg  gap-3 text-white">
+                    <div className="lg:py-3 lg:px-10 py-2 px-4 bg-secondary shadow-lg  gap-3 text-white">
                       <h2 className="text-lg font-semibold text-center">
                         Event Location
                       </h2>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 justify-center">
                         <FaLocationDot className="text-neutral"></FaLocationDot>
                         <p className="font-semibold">{eventDetails?.city}</p>
                       </div>
                     </div>
                   </div>
                   {/* descriptions */}
-                  <div>
+                  <div className="mb-5">
                     <p>{eventDetails?.description}</p>
                   </div>
 
                   {/* Register now */}
                   <div className="md:p-5 bg-neutral">
-                    <div>
-                      <h2 className="font-medium text-2xl mb-4">
-                        Book Your Event👍
-                      </h2>
-                      <div className="bg-white">
-                        <div className="grid grid-cols-3 place-content-center border bg-white">
-                          <div className="bg-white">
-                            <h2 className="py-4 text-center bg-secondary text-white font-medium">
-                              Event Name
-                            </h2>
-                            <div className="bg-white overflow-hidden text-black p-3">
-                              <div className="mb-4">
-                                {/* <h2 className="font-bold">VIP</h2> */}
-                                <p className="text-lg md:text-xl font-semibold">
-                                  {eventDetails?.eventName}
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="bg-white border-l border-r">
-                            <h2 className="py-4 text-center bg-secondary text-white font-medium">
-                              Event Ticket
-                            </h2>
-                            <div className="bg-white text-secondary p-3">
-                              <div className="mb-8 text-center">
-                                <h2 className="mb-4 font-semibold">VIP</h2>
-                                {/* decrement */}
-                                <button
-                                  onClick={() => decrement()}
-                                  className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
-                                >
-                                  -
-                                </button>
-                                {/* increment */}
-                                <span className="border px-4 py-2 border-gray-600 mx-2 p-3 rounded">
-                                  {number}
-                                </span>
-                                <button
-                                  onClick={() => increment()}
-                                  className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
-                                >
-                                  +
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="bg-white">
-                            <h2 className="py-4 text-center bg-secondary text-white font-medium">
-                              Total Price
-                            </h2>
-                            <div className="bg-white flex-col items-center text-center text-black p-3">
-                              <div className=" font-medium">
-                                <p className="font-semibold">
-                                  Price: ${totalPrice}
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="bg-secondary flex items-center justify-around p-5">
-                          <div className="text-white font-medium">
-                            <p>Quantity: {number}</p>
-                          </div>
-                          <div className="text-white font-medium">
-                            <p>Total: {totalPrice}</p>
-                          </div>
-                          <div>
-                            <button
-                              onClick={handleCheckOut}
-                              className="button flex items-center gap-3"
-                            >
-                              <FaCartPlus></FaCartPlus>Register Now
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                  <div>
+    
+    <h2 className="font-medium text-2xl mb-4">
+      Book Your Event👍
+    </h2>
+    <div className="bg-white">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <div className="bg-white">
+          <h2 className="py-4 text-center bg-secondary text-white font-medium">
+            Event Name
+          </h2>
+          <div className="bg-white overflow-hidden text-black p-3">
+            <div className="mb-4">
+              <p className="text-lg md:text-xl font-semibold">
+                {eventDetails?.eventName}
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div className="bg-white border-l border-r">
+          <h2 className="py-4 text-center bg-secondary text-white font-medium">
+            Event Ticket
+          </h2>
+          <div className="bg-white text-secondary p-3">
+            <div className="mb-8 text-center">
+              <h2 className="mb-4 font-semibold">VIP</h2>
+              <div className="flex justify-center items-center">
+                <button
+                  onClick={() => decrement()}
+                  className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
+                >
+                  -
+                </button>
+                <span className="border px-4 py-2 border-gray-600 mx-2 p-3 rounded">
+                  {number}
+                </span>
+                <button
+                  onClick={() => increment()}
+                  className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div className="bg-white">
+          <h2 className="py-4 text-center bg-secondary text-white font-medium">
+            Total Price
+          </h2>
+          <div className="bg-white flex-col items-center text-center text-black p-3">
+            <div className=" font-medium">
+              <p className="font-semibold">
+                Price: ${totalPrice}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div className="bg-secondary flex flex-col md:flex-row items-center justify-between p-5">
+        <div className="text-white font-medium mb-3 md:mb-0">
+          <p>Quantity: {number}</p>
+        </div>
+        <div className="text-white font-medium">
+          <p>Total: {totalPrice}</p>
+        </div>
+        <button
+          onClick={handleCheckOut}
+          className="button flex items-center gap-3 mt-3 md:mt-0"
+        >
+          <FaCartPlus></FaCartPlus>Register Now
+        </button>
+      </div>
+    </div>
+  </div>
                     {/* evetn FAQ */}
                     <div className="bg-secondary p-4 mt-4 font-medium text-white text-xl">
                       Event FAQ
@@ -338,13 +349,16 @@ const UpcomingDetails = () => {
                 </div>
               </div>
               {/* right side */}
-              <div className="md:col-span-2 col-span-1 mt-16">
+              <div className="md:col-span-2 col-span-1 mt-16 md:mt-36">
                 <div className="bg-neutral p-3">
                   <div>
-                    <div className="py-4">
-                      <h2 className="my-3 text-xl font-semibold">
+                    <div className="py-2">
+                      <div className=" flex items-center gap-3">
+                      <BiArea className="text-2xl"></BiArea>
+                      <h2 className="my-3 text-2xl font-semibold">
                         Show Event Area
                       </h2>
+                      </div>
                       <EventMap></EventMap>
                     </div>
                     <h2 className="border-b border-b-gray-300 pb-2 text-xl">
@@ -420,8 +434,8 @@ const UpcomingDetails = () => {
                       <h2 className=" font-semibold text-lg pt-3">
                         Social Share Event
                       </h2>
-                      <div className="p-3">
-                        <div className="flex items-center gap-4">
+                      <div className="py-4">
+                        <div className="flex items-center gap-4 md:gap-2">
                           <FacebookShareButton
                             url={shareUrl}
                             quote={"Share our event"}
@@ -431,6 +445,7 @@ const UpcomingDetails = () => {
                             <FacebookIcon round={true} size={40}></FacebookIcon>
                           </FacebookShareButton>
                           <TwitterShareButton
+                            className="md:hidden"
                             url={shareUrl}
                             quote={"Share our event"}
                             title="Share Event"

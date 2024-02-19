@@ -6,7 +6,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Link, useParams } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Feedback from "./Feedback/Feedback";
 import toast, { Toaster } from "react-hot-toast";
 import Progress from "./Progress/Progress";
@@ -19,8 +19,7 @@ const DetailsProduct = () => {
   const [rating, setRating] = useState();
   const [userOpinion, setUserOpinion] = useState();
   const [userImage, setUSerImage] = useState();
-  const [totalRating, setTotalRating] = useState(0);
-  console.log(totalRating)
+
   const handleIncreaseQuantity = () => {
     setQuantity(quantity + 1);
   };
@@ -134,15 +133,6 @@ const { data: feedbackData,refetch } = useQuery({
     
   },
 });
-console.log(feedbackData)
-
-useEffect(() => {
-  if (feedbackData?.length > 0) {
-    const total = feedbackData.reduce((acc, feed) => acc + feed.rating, 0);
-    setTotalRating(total);
-  }
-}, [feedbackData]);
-
 
  if(isLoading) return <span className="loading loading-infinity loading-lg"></span>
  if(isError) return <div>loading..</div>
@@ -296,7 +286,7 @@ useEffect(() => {
                         activeColor="#e0218a"
                       />
                     </div>
-                    <p> {totalRating} rating star</p>
+                    <p> 12k rating star</p>
                   </div>
                   <div className="col-span-1 border text-center">
                     <div>1</div>
