@@ -6,24 +6,21 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Link, useParams } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Feedback from "./Feedback/Feedback";
 import toast, { Toaster } from "react-hot-toast";
-
-const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
-// eslint-disable-next-line no-unused-vars
-const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
-
+import Progress from "./Progress/Progress";
 const DetailsProduct = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const { user } = useAuth();
   const [quantity, setQuantity] = useState(0);
-  const [feedbacks, setFeedbacks] = useState([]);
   const [textCount, setTextCount] = useState(0);
-  // eslint-disable-next-line no-unused-vars
   const [rating, setRating] = useState();
-
+  const [userOpinion, setUserOpinion] = useState();
+  const [userImage, setUSerImage] = useState();
+  const [totalRating, setTotalRating] = useState(0);
+  console.log(totalRating);
   const handleIncreaseQuantity = () => {
     setQuantity(quantity + 1);
   };
@@ -47,15 +44,10 @@ const DetailsProduct = () => {
       console.error("Error fetching data:", error);
     },
   });
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
 
-  if (isError) {
-    return <p>Error fetching data</p>;
-  }
-
-  const { title, image, description, price } = productDetails.result || {};
+  const { title, image, description, price } = productDetails
+    ? productDetails.result || {}
+    : {};
 
   const handleAddToCart = (productDetails) => {
     if (user) {
@@ -84,19 +76,13 @@ const DetailsProduct = () => {
     }
   };
 
-  // get users feedback data in public folder
-  fetch("../../../../public/Feedback.json")
-    .then((res) => res.json())
-    .then((data) => {
-      setFeedbacks(data);
-    });
-
   // handle text count
   const handleTextCount = (e) => {
     const textValue = e.target.value;
+    setUserOpinion(textValue);
     const count = textValue.length;
-    if (count > 20) {
-      return toast.error("Please short your write");
+    if (count > 500) {
+      return toast.error("Besi Latter Not Allow");
     }
     setTextCount(count);
   };
@@ -105,26 +91,57 @@ const DetailsProduct = () => {
   const ratingChanged = (newRating) => {
     setRating(newRating);
   };
-  const handleUsersFeedBack = async () => {
-    // image upload to imgbb and then get and url
-    // const imageFile={image: data.image[0]}
-    // const res=await axiosSecure.post(image_hosting_api,imageFile)
+  // get image
+  const handleImageChnage = (e) => {
+    const image = e.target.files[0];
+    setUSerImage(image);
+  };
+  // gat date
+  const currentDate = new Date();
+  const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+  const formattedDate = currentDate.toLocaleDateString("en-US", options);
+
+  const handleUsersFeedBack = async (e) => {
+    e.preventDefault();
     const usersFeedBack = {
+      id: id,
       email: user?.email,
       name: user?.displayName,
       product_name: title,
       product_image: image,
-      user_image: "image",
-      user_opinion: textCount,
+      user_image: userImage.name,
+      user_opinion: userOpinion,
+      rating: rating,
+      date: formattedDate,
     };
-    console.log("first", usersFeedBack);
     // post feed back
     const result = await axiosSecure.post("/feedback", usersFeedBack);
-    if (result) {
+    if (result?.status === 200) {
+      refetch();
       toast.success("Thanks For Your Feedback");
     }
     console.log(result);
   };
+
+  const { data: feedbackData, refetch } = useQuery({
+    queryKey: ["feedbackData"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/feedback/${id}`);
+      return res?.data?.result;
+    },
+  });
+  console.log(feedbackData);
+
+  useEffect(() => {
+    if (feedbackData?.length > 0) {
+      const total = feedbackData.reduce((acc, feed) => acc + feed.rating, 0);
+      setTotalRating(total);
+    }
+  }, [feedbackData]);
+
+  if (isLoading)
+    return <span className="loading loading-infinity loading-lg"></span>;
+  if (isError) return <div>loading..</div>;
   return (
     <section className="py-10 mt-14 font-poppins dark:bg-gray-800">
       <div className="max-w-6xl px-4 mx-auto">
@@ -274,7 +291,7 @@ const DetailsProduct = () => {
                         activeColor="#e0218a"
                       />
                     </div>
-                    <p>125m reviews</p>
+                    <p> {totalRating} rating star</p>
                   </div>
                   <div className="col-span-1 border text-center">
                     <div>1</div>
@@ -284,41 +301,20 @@ const DetailsProduct = () => {
                     <div>5</div>
                   </div>
                   <div className="col-span-5 border">
-                    <progress
-                      className="progress progress-secondary"
-                      value={0}
-                      max="100"
-                    ></progress>
-                    <progress
-                      className="progress progress-secondary"
-                      value="10"
-                      max="100"
-                    ></progress>
-                    <progress
-                      className="progress progress-secondary"
-                      value="40"
-                      max="100"
-                    ></progress>
-                    <progress
-                      className="progress progress-secondary"
-                      value="70"
-                      max="100"
-                    ></progress>
-                    <progress
-                      className="progress progress-secondary"
-                      value="100"
-                      max="100"
-                    ></progress>
+                    {feedbackData &&
+                      feedbackData.map((rating) => (
+                        <Progress key={rating._id} rating={rating}></Progress>
+                      ))}
                   </div>
                 </div>
                 {/* show all users feedback */}
 
                 <div>
                   <div className=" py-7">
-                    {feedbacks &&
-                      feedbacks.map((feedback) => (
+                    {feedbackData &&
+                      feedbackData.map((feedback) => (
                         <Feedback
-                          key={feedback.id}
+                          key={feedback._id}
                           feedback={feedback}
                         ></Feedback>
                       ))}
@@ -451,12 +447,13 @@ const DetailsProduct = () => {
                     Give a Review
                   </button>
                 </div>
+
                 <dialog
                   id="my_modal_5"
                   className="modal modal-bottom sm:modal-middle"
                 >
                   <div className="modal-box">
-                    <form className="mb-6">
+                    <div className="mb-6">
                       <div className="py-2 px-4 mb-4 relative bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                         {/*todo:  */}
                         <div className="flex sticky -top-5 bg-white justify-between py-2 items-center">
@@ -520,43 +517,44 @@ const DetailsProduct = () => {
                         <div className="text-lg font-semibold border-b-2 my-3 text-center">
                           Rate star{" "}
                         </div>
-                        <di className="flex justify-center my-3">
-                          <ReactStars
-                            onChange={ratingChanged}
-                            size={36}
-                            activeColor="#e0218a"
-                          />
-                          ,
-                        </di>
-                        <div>
-                          <label className="form-control w-full mb-5">
-                            <input
-                              name="image"
-                              type="file"
-                              className="file-input file-input-bordered w-full "
+
+                        {/* todo: */}
+                        <form onSubmit={handleUsersFeedBack}>
+                          <div className="flex justify-center my-3">
+                            <ReactStars
+                              onChange={ratingChanged}
+                              size={36}
+                              activeColor="#e0218a"
                             />
-                          </label>
-                          <textarea
-                            onChange={handleTextCount}
-                            className="w-full rounded p-3 border border-secondary"
-                            placeholder="Descrive Your Opinion.."
-                            cols="30"
-                            rows="2"
-                          ></textarea>
-                          <p className="text-right">
-                            <span>{textCount}</span>/500
-                          </p>
-                        </div>
+                            ,
+                          </div>
+                          <div>
+                            <label className="form-control w-full mb-5">
+                              <input
+                                onChange={handleImageChnage}
+                                type="file"
+                                className="file-input file-input-bordered w-full"
+                              />
+                            </label>
+                            <textarea
+                              onChange={handleTextCount}
+                              className="w-full rounded p-3 border border-secondary"
+                              placeholder="Descrive Your Opinion.."
+                              cols="30"
+                              rows="2"
+                            ></textarea>
+                            <p className="text-right">
+                              <span>{textCount}</span>/500
+                            </p>
+                          </div>
+                          <div className="text-right">
+                            <button className="btn btn-outline btn-secondary">
+                              Post Review
+                            </button>
+                          </div>
+                        </form>
                       </div>
-                      <div className="text-right">
-                        <button
-                          onClick={handleUsersFeedBack}
-                          className="btn btn-outline btn-secondary"
-                        >
-                          Post Review
-                        </button>
-                      </div>
-                    </form>
+                    </div>
                   </div>
                 </dialog>
 

@@ -12,6 +12,7 @@ router.get("/", async (req, res) => {
   const eventCity = req.query.city;
   const eventVenue = req.query.venue;
   const email = req.query.email;
+  const status = req.query.status;
 
   const page = parseInt(req.query.page);
   const limit = 8;
@@ -33,8 +34,12 @@ router.get("/", async (req, res) => {
   if (eventVenue) {
     query.venue = eventCity;
   }
+
   if (email) {
     query.email = email;
+  }
+  if (status) {
+    query.status = status;
   }
 
   try {

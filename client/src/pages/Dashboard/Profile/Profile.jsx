@@ -3,29 +3,7 @@ import userImg from "../../../assets/image/user.png";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
-
 const Profile = () => {
-
-  const { user } = useAuth();
-  const axiosSecure = useAxiosSecure()
-
-  const { data: currentUser, isPending } = useQuery({
-    queryKey: ["pendingEvents", user?.email],
-    queryFn: async () => {
-      const result = await axiosSecure.get(`/users/${user?.email}`);
-      return result?.data;
-    },
-  });
-
-  console.log(currentUser);
-
-
-  if (isPending) {
-    return <h3>loading...</h3>
-  }
-
-
-
   return (
     <div className=" flex  justify-center  bg-white rounded-md">
       {/* <h2 className="text-2xl font-bold  py-4">
@@ -71,8 +49,7 @@ const Profile = () => {
                 <p className="text-lg font-normal">Phone Number:</p>
               </div>
               <div className="col-span-1 ">
-                <p
-                  className="text-lg font-semibold">
+                <p className="text-lg font-semibold">
                   {currentUser?.phone ? currentUser.phone : "N/A"}
                 </p>
               </div>
@@ -84,8 +61,7 @@ const Profile = () => {
                 <p className="text-lg font-normal">Gender:</p>
               </div>
               <div className="col-span-1 ">
-                <p
-                  className="text-lg font-semibold">
+                <p className="text-lg font-semibold">
                   {currentUser?.gender ? currentUser.gender : "N/A"}
                 </p>
               </div>
@@ -97,8 +73,7 @@ const Profile = () => {
                 <p className="text-lg font-normal">Language:</p>
               </div>
               <div className="col-span-1 text-lg font-semibold">
-                <p
-                  className="text-lg font-semibold">
+                <p className="text-lg font-semibold">
                   {currentUser?.language ? currentUser.language : "N/A"}
                 </p>
               </div>
@@ -110,8 +85,7 @@ const Profile = () => {
                 <p className="text-lg font-normal">Address:</p>
               </div>
               <div className=" text-lg font-semibold">
-                <p
-                  className="text-lg font-semibold">
+                <p className="text-lg font-semibold">
                   {currentUser?.address ? currentUser.address : "N/A"}
                 </p>
               </div>
