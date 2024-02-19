@@ -1,18 +1,15 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { MdNotificationsActive } from "react-icons/md";
+import useMessage from "../../hooks/useMessage";
 
 
 const NotificationMessage = () => {
 
-    const [message, setMessage] = useState([]);
+    // const [message, setMessage] = useState([]);
 
-    useEffect(()=>{
-        fetch('http://localhost:5000/message')
-        .then(res => res.json())
-        .then(data =>{
-            setMessage(data.result);
-        })
-    },[])
+    const [message] = useMessage();
+
+    
 
     return (
         <div>
