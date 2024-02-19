@@ -18,7 +18,7 @@ import OurNextEvents from "./HomeComponenets/OurNextEvents/OurNextEvents";
 import OurEventPlaners from "./HomeComponenets/OurEventPlaner/OurEventPlaner";
 import OurGallery from "./HomeComponenets/OurGallery/OurGallery";
 import OurBlog from "./HomeComponenets/OurBlog/OurBlog";
-import MessangerChat from "./HomeComponenets/ChatBot/MessangerChat";
+// import MessangerChat from "./HomeComponenets/ChatBot/MessangerChat";
 
 
 const Home = () => {
@@ -66,7 +66,7 @@ const Home = () => {
       {/* made by Rifat */}
       <Footer></Footer>
       {/* <Chat></Chat> */}
-      <MessangerChat></MessangerChat>
+      {/* <MessangerChat></MessangerChat> */}
       <Notification></Notification>
     </div>
   );
