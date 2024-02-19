@@ -26,6 +26,7 @@ const ContactHandler = require("./ContactHnadler/Contacthandler");
 const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
 const usersHandler = require("./usersHandler/usersHandler");
 const messageHandler = require("./MessageHandler/MessageHandler");
+const likeDislikeHandler = require("./FeedbackHandler/likeDislikeHandler");
 // middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -62,6 +63,7 @@ app.use("/contact", ContactHandler);
 app.get("/sendEmail", sendMail);
 app.use("/token", notificationHandler);
 app.use("/message", messageHandler);
+app.use("/likeDislike",likeDislikeHandler);
 
 // Eroor handler
 
