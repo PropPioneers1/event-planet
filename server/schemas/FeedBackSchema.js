@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const FeedBackSchema = mongoose.Schema({
+    id:{
+        type:String,
+        require:true
+    },
     email:{
         type:String,
         require:true,
