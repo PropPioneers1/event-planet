@@ -7,7 +7,7 @@ import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 
 // eslint-disable-next-line react/prop-types
 const Feedback = ({feedback}) => {
-    const {_id,user_name,rating,feedback_date,user_opinion} = feedback;
+    const {_id,user_name,rating,date,user_opinion} = feedback;
 
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
@@ -52,7 +52,7 @@ const Feedback = ({feedback}) => {
                 color="#fe019a"
                 />
                 </div>
-                <div><p className="text-secondary">{feedback_date}</p></div>
+                <div><p className="text-secondary">{date}</p></div>
             </div>
             <div>
                 <p className="text-secondary">{user_opinion}</p>

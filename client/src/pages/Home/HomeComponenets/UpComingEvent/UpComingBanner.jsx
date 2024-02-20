@@ -28,7 +28,7 @@ const UpComingBanner = ({eventDetails}) => {
             words={['Education', 'Business', 'Sport', 'Fasion','Food Festival']}
             loop={false}
             cursor
-            cursorStyle='|'
+            cursorStyle='_'
             typeSpeed={150}
             deleteSpeed={150}
             delaySpeed={500}

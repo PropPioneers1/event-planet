@@ -109,7 +109,7 @@ const DetailsProduct = () => {
       name: user?.displayName,
       product_name: title,
       product_image: image,
-      user_image: userImage.name,
+      user_image: userImage,
       user_opinion: userOpinion,
       rating: rating,
       date: formattedDate,

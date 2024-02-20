@@ -483,8 +483,8 @@ const UpcomingDetails = () => {
                       </div>
                     </div>
                     {/* add calander  */}
-                    <div className="bg-secondary cursor-pointer hover:bg-black p-4 text-center mt-4 font-medium text-white">
-                      Add Calender
+                    <div className="button text-center mt-4  "> 
+                     <a href="https://calendar.google.com/calendar/u/0/r">Add Calender</a>
                     </div>
                   </div>
                 </div>
