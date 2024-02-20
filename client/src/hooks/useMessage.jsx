@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 
-// import axiosSecure from '../hooks/useAxiosSecure'
 import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const useMessage = () => {
