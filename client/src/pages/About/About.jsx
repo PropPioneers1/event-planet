@@ -6,7 +6,7 @@ import Container from "../../components/ui/Container";
 // import { FaAward } from "react-icons/fa6";
 // import { FaArrowAltCircleUp, FaArrowCircleDown } from "react-icons/fa";
 // import TestMonial from "../Home/HomeComponenets/Testmonial/Testmonial";
-import Ourteam from "./Ourteam";
+// import Ourteam from "./Ourteam";
 import WhyChoose from "../Home/HomeComponenets/WhyChooseEventPlanet/WhyChoose";
 const About = () => {
   return (
@@ -323,7 +323,7 @@ h-full bg-neutral lg:grid-cols-3 md:grid-cols-2 grid-cols-1 p-10 px-20 gap-5"
           {/* scrooll */}
         </Container>
         <div></div>
-        <div
+        {/* <div
           className=" mx-auto lg:h-[500px] md:h-[580px]  h-[610px] pt-10 bg-cover bg-no-repeat
  bg-[hsl(233,24%,93%)]  bg-blend-overlay  "
           style={{
@@ -334,7 +334,7 @@ h-full bg-neutral lg:grid-cols-3 md:grid-cols-2 grid-cols-1 p-10 px-20 gap-5"
           <Container>
             <Ourteam></Ourteam>
           </Container>
-        </div>
+        </div> */}
 
         <div className="w-full p-4 mb-20 bg-accent h-44 grid grid-cols-4 justify-center align-middle items-center">
           <div className="col-span-3 pl-6">

@@ -36,6 +36,12 @@ const PaymentSchema = new mongoose.Schema({
     default: 'payment pending'
   },
   tran_id: String,
+  username:String,
+  paymentDate:String,
+  ticketquantity:Number,
+  eventid:String,
+  userAddres:String,
+
   from:String
 });
 

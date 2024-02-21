@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import {   useNavigate, useParams } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaCartPlus } from "react-icons/fa";
 import { FaCircleArrowRight } from "react-icons/fa6";
@@ -24,21 +24,27 @@ import {
 import Footer from "../../../../components/shared/Footer";
 import "./upcoming.scss";
 import EventMap from "./EventMap";
-import useAuth from "../../../../hooks/useAuth";
+// import useAuth from "../../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { getTime } from "../../../../utils/getTime";
 import { getDate } from "../../../../utils/getDate";
+import useAuth from "../../../../hooks/useAuth";
 
 const UpcomingDetails = () => {
+  const {user}=useAuth()
   const shareUrl = "https://event-planet-9789f.web.app/";
   const img = "https://i.ibb.co/fq6DWhd/Wedding.jpg";
-  const { user } = useAuth();
-  const { id } = useParams();
+  // const { user } = useAuth();
+  const params = useParams();
+  const ids=params.id
+  // const [isTicketBooked, setIsTicketBooked] = useState(false);
   const [number, setNumber] = useState(0);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [paymentdata, setPaymentData] = useState(false);
+  console.log(user?.email);
   // decrement
   const decrement = () => {
     if (number === 0) {
@@ -52,15 +58,12 @@ const UpcomingDetails = () => {
     setNumber(number + 1);
   };
 
-  // const totalVipPrice = adultCount * cards.price;
-  // const totalNormalPrice = childCount * cards.price;
-  // const totalTicketQuantity = adultCount + childCount;
-  // const totalAdultChildTicketPrice = totalVipPrice + totalNormalPrice;
+
 
   const { data: eventDetails } = useQuery({
     queryKey: ["event-details"],
     queryFn: async () => {
-      const result = await axiosSecure.get(`/event/${id}`);
+      const result = await axiosSecure.get(`/event/${ids}`);
       return result?.data;
     },
   });
@@ -70,27 +73,62 @@ const UpcomingDetails = () => {
   const time = getTime(eventDetails?.startDate);
 
   const totalPrice = number * eventDetails?.ticketPrice;
-
-  const handleCheckOut = async () => {
-    const eventData = {
-      eventId: eventDetails?._id,
-      guestName: user?.displayName,
-      guestEmail: user?.email,
-      eventName: eventDetails?.eventName,
-      eventDate: eventDetails?.startDate,
-      // eventTime: cards?.time,
-      eventLocation: `${eventDetails?.state} ${eventDetails?.city}`,
-      ticketQuantity: number,
-      totalPrice: totalPrice,
+  useEffect(() => {
+    const checkIfRegistered = async () => {
+      try {
+        const response = await axiosSecure.get(`/ticketpay/${user?.email}/${ids}`);
+        if (response.data.result) { 
+          setIsRegistered(true);
+          setPaymentData(response.data)
+        }
+      } catch (error) {
+        console.error("Error checking registration:", error.message);
+      }
     };
+    if (user && eventDetails) {
+      checkIfRegistered();
+    }
+  }, [axiosSecure, ids, user, eventDetails]);
+  console.log(paymentdata);
+const handletickepay=async()=>{
+  // const eventDetails=eventDetails.map(item => item.id===ids?item:{});
+  const datasfront={
 
-    navigate(`/checkout/${user.email}/${id}`, {
-      state: eventData,
-    });
-  };
+  mobileNumber: 0,
+  eventName: eventDetails.eventName,
 
+  cus_email: user?.email,
+  currency: 'none',
+  total_amount:totalPrice,
+  ticketquantity:number,
+  success_url: 'http://localhost:5000/payment/successful/${tran_id}',
+  fail_url:'http://localhost:5000/payment/failed/${tran_id}',
+  paidstatus: 'pending',
+  tran_id: '',
+  username:user?.displayName,
+  paymentDate:'',
+  eventid:ids,
+  from:'Booking',
+  userAddres: '',
+
+};
+
+
+  
+
+const result=await axiosSecure.post("/ticketpay",datasfront);
+// if(result.success)
+
+  console.log(result);
+  if(result.status==200){
+    
+navigate(`/checkout/${'boking'}/${ids}`)
+  }else(console.log('sorry'))
+
+}
   return (
     <>
+
       <Container>
         <div className="py-[100px]">
           {/* heading */}
@@ -218,12 +256,56 @@ const UpcomingDetails = () => {
                             <p>Total: {totalPrice}</p>
                           </div>
                           <div>
-                            <button
-                              onClick={handleCheckOut}
-                              className="button flex items-center gap-3"
-                            >
-                              <FaCartPlus></FaCartPlus>Register Now
-                            </button>
+   
+
+                          <div>
+                          {number > 0 ? (
+  <>
+    {isRegistered ? (
+      <>
+        {/* Button to open the modal */}
+        <button className="button flex items-center gap-3" onClick={() => document.getElementById('my_modal_1').showModal()}>
+          Open Modal
+        </button>
+        
+        {/* Modal dialog */}
+        <dialog id="my_modal_1" className="modal">
+          <div className="modal-box">
+          <h3 className="font-bold text-lg">Hello {paymentdata.result.username}</h3>
+            <p className="py-4">You have already booked {paymentdata.result.ticketquantity} ticket(s) for this event on
+             {paymentdata.result.paymentDate}</p>
+            <p className="py-4">Enjoy your event on {date}</p>
+            <div className="modal-action">
+              <form method="dialog">
+                {/* if there is a button in form, it will close the modal */}
+                <button className="btn">Close</button>
+              </form>
+            </div>
+          </div>
+        </dialog>
+      </>
+    ) : (
+      <button onClick={handletickepay} className={`button flex items-center gap-3`}>
+        Register Now <FaCartPlus />
+      </button>
+    )}
+  </>
+) : (
+  <button className={`button flex items-center gap-3 ${isRegistered ? 'disabled' : ''}`} disabled={isRegistered}>
+    <FaCartPlus />
+    Register Now
+  </button>
+)}
+
+
+      </div>
+
+
+
+
+
+
+
                           </div>
                         </div>
                       </div>

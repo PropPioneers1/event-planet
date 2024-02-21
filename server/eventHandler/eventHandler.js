@@ -63,15 +63,15 @@ router.get("/:id", async (req, res) => {
 });
 
 
-router.get("/:email/:ids", async (req, res) => {
+router.get("/:ids", async (req, res) => {
   try {
-    const { email, ids } = req.params;
-    if (!email || !ids) {
+    const {  ids } = req.params;
+    if ( !ids) {
       return res.status(400).json({ error: "Missing email or ids" });
     }
     const idsArray = ids.split(",");
 
-    const result = await eventModel.find({ _id: { $in: idsArray }, email: email });
+    const result = await eventModel.find({ _id: { $in: idsArray } });
 
     // Send the result
     res.status(200).send(result);
