@@ -1,0 +1,32 @@
+.signUp-bg{
+    background-image: url('../../assets//Register-image/register-img.jpg');
+    background-color: #302f2f17;
+    background-blend-mode: overlay;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center; 
+    background-attachment: fixed;
+}
+.signUp-bg span{
+color: wheat;
+}
+/* default input style */
+.input-style {
+    background-color: transparent;
+    border: 2px solid rgba(150, 149, 149, 0.719);
+    transition: background-color 0.3s ease, border 0.3s ease;
+    color: white;
+    border-radius: 4px;
+  }
+  .border-none{
+    border: none !important;
+  }
+  /* when not focus on input */
+  .input-style:not(:focus):not(:placeholder-shown) {
+    border: 2px solid #b1afaf;
+  }
+  /* when focus on input style */
+  .input-style:focus {
+    background-color: #ffffff28;  
+  }
+  

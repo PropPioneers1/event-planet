@@ -1,0 +1,106 @@
+[
+    {
+      "id": 1,
+      "eventName": "Summer Beats Music Festival",
+      "date": "2024-08-20",
+      "time": "18:00",
+      "venue": "Sunshine Park",
+      "eventType": "Music Festival",
+      "price": "150",
+      "performers": ["Artist A", "Band B", "DJ C"],
+      "ticketPurchaseLink": "https://example.com/tickets",
+      "seatingMap": "https://example.com/seating-map",
+      "description": "Experience a day of music, fun, and good vibes with top artists from around the world.",
+      "countdownTimer": "38 days left",
+      "socialMediaHashtag": "#SummerBeatsFest",
+      "weatherForecast": "Sunny, 28°C",
+      "sponsors": ["MusicMasters", "CitySounds"],
+      "eventStatus": "In-person",
+      "organizerContact": {
+        "name": "EventX Productions",
+        "email": "info@eventx.com",
+        "phone": "+1 (555) 123-4567"
+      }
+    },
+    {
+      "id": 2,
+      "eventName": "Tech Summit 2024",
+      "date": "2024-09-15",
+      "time": "09:00",
+      "venue": "TechHub Convention Center",
+      "eventType": "Tech Conference",
+      "price": "70",
+      "speakers": ["Tech Guru A", "Innovator B", "Developer C"],
+      "ticketPurchaseLink": "https://example.com/tickets",
+      "description": "Join industry leaders and innovators for a day of tech talks, workshops, and networking.",
+      "countdownTimer": "65 days left",
+      "socialMediaHashtag": "#TechSummit2024",
+      "eventStatus": "Hybrid",
+      "organizerContact": {
+        "name": "TechWorld Events",
+        "email": "info@techworld.com",
+        "phone": "+1 (555) 987-6543"
+      }
+    },
+    {
+      "id": 3,
+      "eventName": "Taste of the City Food Festival",
+      "date": "2024-07-08",
+      "time": "12:00",
+      "venue": "Culinary Square",
+      "eventType": "Food Festival",
+      "price": "100",
+      "featuredChefs": ["Chef X", "Chef Y", "Chef Z"],
+      "ticketPurchaseLink": "https://example.com/tickets",
+      "description": "Savor the flavors of the city with delicious dishes from renowned chefs and local eateries.",
+      "countdownTimer": "15 days left",
+      "socialMediaHashtag": "#TasteCityFest",
+      "eventStatus": "In-person",
+      "organizerContact": {
+        "name": "FoodFest Events",
+        "email": "info@foodfest.com",
+        "phone": "+1 (555) 789-0123"
+      }
+    },
+    {
+      "id": 4,
+      "eventName": "Vivid Canvas Art Exhibition",
+      "date": "2024-10-05",
+      "time": "15:00",
+      "venue": "Art Gallery Space",
+      "eventType": "Art Exhibition",
+      "price": "30",
+      "featuredArtists": ["Artist P", "Sculptor Q", "Photographer R"],
+      "ticketPurchaseLink": "https://example.com/tickets",
+      "description": "Immerse yourself in a world of creativity with captivating artworks from diverse artists.",
+      "countdownTimer": "95 days left",
+      "socialMediaHashtag": "#VividCanvasExhibit",
+      "eventStatus": "In-person",
+      "organizerContact": {
+        "name": "ArtGallery Events",
+        "email": "info@artgallery.com",
+        "phone": "+1 (555) 456-7890"
+      }
+    },
+    {
+      "id": 5,
+      "eventName": "Vivid Canvas Art Exhibition",
+      "date": "2024-10-05",
+      "time": "15:00",
+      "venue": "Art Gallery Space",
+      "eventType": "Art Exhibition",
+      "price": "30",
+      "featuredArtists": ["Artist P", "Sculptor Q", "Photographer R"],
+      "ticketPurchaseLink": "https://example.com/tickets",
+      "description": "Immerse yourself in a world of creativity with captivating artworks from diverse artists.",
+      "countdownTimer": "95 days left",
+      "socialMediaHashtag": "#VividCanvasExhibit",
+      "eventStatus": "In-person",
+      "organizerContact": {
+        "name": "ArtGallery Events",
+        "email": "info@artgallery.com",
+        "phone": "+1 (555) 456-7890"
+      }
+    }
+  ]
+  

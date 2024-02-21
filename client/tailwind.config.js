@@ -5,14 +5,15 @@ export default {
     extend: {
       fontFamily: {
         title: "Lora, serif",
+        heading: "Quattrocento Sans, sans-serif",
       },
-
-      color: {
-        natural: "#EEEEEE",
-        primary: "#3F72AF",
+      colors: {
+        neutral: "#EEEEEE",
+        primary: "#F53F7B",
+        accent: "#3F72AF",
         secondary: "#222831",
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 };
