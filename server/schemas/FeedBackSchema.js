@@ -19,10 +19,12 @@ const FeedBackSchema = mongoose.Schema({
     },
    product_image: {
         type:String,
-        require:true,
+        require:false,
+
     },
     user_image:{
         type:String,
+        require:false,
     },
     user_opinion:{
         type:String,
@@ -34,7 +36,13 @@ const FeedBackSchema = mongoose.Schema({
     },
     date:{
         type:String,
-        require:true
+        require:false,
+    },
+    yes:{
+        type:Number,
+    },
+    no:{
+        type:Number
     }
 
 })

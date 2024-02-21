@@ -6,10 +6,11 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Link, useParams } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Feedback from "./Feedback/Feedback";
-import toast, { Toaster } from "react-hot-toast";
 import Progress from "./Progress/Progress";
+import { uploadImage } from "../../../api/utlis";
+import toast from "react-hot-toast";
 const DetailsProduct = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
@@ -18,7 +19,7 @@ const DetailsProduct = () => {
   const [textCount, setTextCount] = useState(0);
   const [rating, setRating] = useState();
   const [userOpinion, setUserOpinion] = useState();
-  const [userImage, setUSerImage] = useState();
+  // const [userImage, setUSerImage] = useState();
 
   const handleIncreaseQuantity = () => {
     setQuantity(quantity + 1);
@@ -91,11 +92,6 @@ const DetailsProduct = () => {
   const ratingChanged = (newRating) => {
     setRating(newRating);
   };
-  // get image
-  const handleImageChnage = (e) => {
-    const image = e.target.files[0];
-    setUSerImage(image);
-  };
   // gat date
   const currentDate = new Date();
   const options = { year: "numeric", month: "2-digit", day: "2-digit" };
@@ -103,16 +99,22 @@ const DetailsProduct = () => {
 
   const handleUsersFeedBack = async (e) => {
     e.preventDefault();
+    const form = e.target;
+    const imagebb = form.image.files[0];
+    const {data} = await uploadImage(imagebb);
+    console.log("image",data)
     const usersFeedBack = {
       id:id,
       email: user?.email,
       name: user?.displayName,
       product_name: title,
       product_image: image,
-      user_image: userImage,
+      user_image: data?.display_url,
       user_opinion: userOpinion,
       rating: rating,
       date: formattedDate,
+      yes:0,
+      no:0
     };
     // post feed back
     const result = await axiosSecure.post("/feedback", usersFeedBack);
@@ -120,12 +122,10 @@ const DetailsProduct = () => {
       refetch()
       toast.success("Thanks For Your Feedback");
     }
-    console.log(result)
+    console.log("post feedback",result)
   };
-
-  
-
-const { data: feedbackData,refetch } = useQuery({
+// get feedback
+  const { data: feedbackData,refetch } = useQuery({
   queryKey: ["feedbackData"],
   queryFn: async () => {
     const res = await axiosSecure.get(`/feedback/${id}`);
@@ -133,6 +133,41 @@ const { data: feedbackData,refetch } = useQuery({
     
   },
 });
+
+const { data: progressData } = useQuery({
+  queryKey: ["progressData"],
+  queryFn: async () => {
+    if (title) {
+      const res = await axiosSecure.get(`/feedback/${title}/${id}`);
+      return res?.data?.result;
+      
+    }
+    // Return null or empty array if title is not defined or falsy
+    return null;
+  },
+});
+
+console.log("get data->",progressData)
+console.log("get data>",title)
+
+// calculate total rating the specific product 
+
+const [totalRatingStars, setTotalRatingStars] = useState(0);
+useEffect(() => {
+    calculateTotalRatingStars();
+}, [feedbackData]);
+
+const calculateTotalRatingStars = () => {
+    if (!feedbackData || !feedbackData.length) {
+        // If feedbackData is not available or empty, set totalRatingStars to 0
+        setTotalRatingStars(0);
+        return;
+    }
+
+    const totalStars = feedbackData.reduce((sum, feedback) => sum + feedback.rating, 0);
+    setTotalRatingStars(totalStars);
+};
+const averageStar = (totalRatingStars / feedbackData?.length).toFixed(1);
 
  if(isLoading) return <span className="loading loading-infinity loading-lg"></span>
  if(isError) return <div>loading..</div>
@@ -276,27 +311,33 @@ const { data: feedbackData,refetch } = useQuery({
                 </div>
                 {/* todo: */}
                 <div className="grid grid-cols-8 gap-5">
-                  <div className="col-span-2 border text-center">
-                    <h2 className="text-5xl font-semibold mb-2">4.2</h2>
+                  <div className="col-span-2 text-center">
+                    <h2 className="text-5xl font-semibold mb-2"> {averageStar} </h2>
                     <div className="flex justify-center">
                       <ReactStars
+                        edit={false}
                         count={5}
                         onChange={ratingChanged}
                         size={25}
-                        activeColor="#e0218a"
+                        color="#fe019a"
                       />
                     </div>
-                    <p> 12k rating star</p>
+                    {totalRatingStars > 1000 ? (
+                    <p>{totalRatingStars / 1000}k Rating Star</p>
+                    ) : (
+                        <p>{totalRatingStars} Rating Star</p>
+                    )}
+                    
                   </div>
-                  <div className="col-span-1 border text-center">
+                  <div className="col-span-1 text-center">
                     <div>1</div>
                     <div>2</div>
                     <div>3</div>
                     <div>4</div>
                     <div>5</div>
                   </div>
-                  <div className="col-span-5 border">
-                    {feedbackData && feedbackData.map(rating=><Progress key={rating._id} rating={rating}></Progress>)}
+                  <div className="col-span-5">
+                    {progressData && progressData.map(rating=><Progress key={rating._id} rating={rating}></Progress>)}
                   </div>
                 </div>
                 {/* show all users feedback */}
@@ -308,6 +349,7 @@ const { data: feedbackData,refetch } = useQuery({
                         <Feedback
                           key={feedback._id}
                           feedback={feedback}
+                          refetch={refetch}
                         ></Feedback>
                       ))}
                   </div>
@@ -448,7 +490,7 @@ const { data: feedbackData,refetch } = useQuery({
                     <div className="mb-6">
                       <div className="py-2 px-4 mb-4 relative bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                         {/*todo:  */}
-                        <div className="flex sticky -top-5 bg-white justify-between py-2 items-center">
+                        <div className="flex sticky -top-6 bg-white justify-between py-2 items-center shadow">
                           <div className="flex items-center gap-3">
                             <img
                               className="w-14 h-14 rounded-full"
@@ -506,7 +548,7 @@ const { data: feedbackData,refetch } = useQuery({
                           </div>
                         </div>
                         {/* get users ratings */}
-                        <div className="text-lg font-semibold border-b-2 my-3 text-center">
+                        <div className="text-lg font-semibold border-b-2 my-3 text-center w-20 mx-auto">
                           Rate star{" "}
                         </div>
 
@@ -523,15 +565,15 @@ const { data: feedbackData,refetch } = useQuery({
                           <div>
                             <label className="form-control w-full mb-5">
                               <input
-                                onChange={handleImageChnage}
                                 type="file"
+                                name="image"
                                 className="file-input file-input-bordered w-full"
                               />
                             </label>
                             <textarea
                               onChange={handleTextCount}
-                              className="w-full rounded p-3 border border-secondary"
-                              placeholder="Descrive Your Opinion.."
+                              className="w-full rounded p-3 border border-slate-400"
+                              placeholder="Descrive your opinion (optional)"
                               cols="30"
                               rows="2"
                             ></textarea>
@@ -619,7 +661,6 @@ const { data: feedbackData,refetch } = useQuery({
           </div>
         </div>
       </div>
-      <Toaster position="top-right" reverseOrder={false} />
     </section>
   );
 };

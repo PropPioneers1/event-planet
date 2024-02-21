@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import { IoLocationSharp, IoTimeOutline } from 'react-icons/io5';
 
 const EventCard = ({ item }) => {
-    const { eventName, venue, startDate, eventImages, ticketPrice } = item;
+    const { eventName, venue, startDate, eventImages, ticketPrice,totalSeat } = item;
 
 
     const month = new Date(startDate).toLocaleString('default', { month: 'long' })
     const eventDate = new Date(startDate).getDate();
     const time = new Date(startDate).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-
 
     return (
         <div
@@ -35,9 +34,11 @@ const EventCard = ({ item }) => {
                     </p>
                 </div>
                 {/* for right side border style */}
-                <div className="absolute top-4 -right-1 w-2 h-16 bg-primary">
-
+                <div className="absolute top-0 right-0 w-7 h-40 bg-gradient-to-tr from-primary to-rose-800" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 52%, 100% 100%, 48% 92%, 0 100%)' }}>
                 </div>
+
+
+                <h4 className='absolute top-16 font-semibold -right-[42px] text-white -rotate-90 '>Tickets Left {totalSeat}</h4>
             </div>
             {/* div for content */}
             <div>

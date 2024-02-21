@@ -35,9 +35,6 @@ const UpComingBanner = ({eventDetails}) => {
           />
         </span>
       </h1>
-              <div className="text-center pt-10">
-                <button className="button">Register Now</button>
-              </div>
             </div>
           </Container>
         </div>

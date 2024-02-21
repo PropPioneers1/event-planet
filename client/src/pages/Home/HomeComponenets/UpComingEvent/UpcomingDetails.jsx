@@ -35,7 +35,7 @@ import { BiArea } from "react-icons/bi";
 
 const UpcomingDetails = () => {
   const shareUrl = "https://event-planet-9789f.web.app/";
-  const img = "https://i.ibb.co/fq6DWhd/Wedding.jpg";
+  // const img = "https://i.ibb.co/fq6DWhd/Wedding.jpg";
   const { user } = useAuth();
   const { id } = useParams();
   const [number, setNumber] = useState(0);
@@ -67,7 +67,7 @@ const UpcomingDetails = () => {
       return result?.data;
     },
   });
-
+console.log(eventDetails)
   const date = getDate(eventDetails?.startDate);
 
   const time = getTime(eventDetails?.startDate);
@@ -81,6 +81,7 @@ const UpcomingDetails = () => {
       guestEmail: user?.email,
       eventName: eventDetails?.eventName,
       eventDate: eventDetails?.startDate,
+      totalSeat: eventDetails?.totalSeat,
       // eventTime: cards?.time,
       eventLocation: `${eventDetails?.state} ${eventDetails?.city}`,
       ticketQuantity: number,
@@ -473,13 +474,38 @@ const UpcomingDetails = () => {
                         <MdSettingsVoice></MdSettingsVoice>
                         <h2 className="font-semibold">Event Speaker</h2>
                       </div>
-                      <div className="flex items-center flex-col">
-                        <img
-                          src={img}
-                          className="rounded-full w-24 h-24"
-                          alt=""
-                        />
-                        <h2 className="font-medium mt-3">Arijit Singh</h2>
+                      <div className="">
+                        
+                       <div className="flex items-center gap-3">
+                      {eventDetails && eventDetails.speakersImages.map((imgs) => 
+                        imgs ? <> <img
+                            key={imgs._id}
+                            src={imgs}
+                            className="rounded-full w-20 h-20"
+                            alt="speaker"
+                            
+                          /></> :
+                          <>
+                           <img
+                            key={imgs._id}
+                            src={imgs}
+                            className="rounded-full w-20 h-20 hidden"
+                            alt="speaker"
+                            
+                          />
+                          </>
+                         
+                        
+                      )}
+                    </div>
+
+                        
+                        <div className="flex items-center gap-3">
+                          {
+                          eventDetails && eventDetails?.speakers.map(names=><h2
+                          key={names?._id} className="font-medium mt-3 w-20 text-center"> {names} </h2>)
+                          }
+                        </div>
                       </div>
                     </div>
                     {/* add calander  */}
