@@ -28,10 +28,7 @@ const AddProduct = () => {
     };
 
     try {
-      const { data } = await axios.post(
-        "https://event-planet-server.vercel.app/shop",
-        product
-      );
+      const { data } = await axios.post("http://localhost:5000/shop", product);
       toast.success(data?.message);
     } catch (error) {
       console.error(error);

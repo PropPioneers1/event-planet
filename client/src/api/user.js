@@ -26,3 +26,9 @@ export const getSingleUsers = async(email) => {
     const {data} = await axiosSecure.get(`/users/${email}`)
     return data;
 }
+
+// get user role 
+export const getRole = async(email) => {
+    const {data} = await axiosSecure.get(`/users/role/${email}`);
+    return data;
+}

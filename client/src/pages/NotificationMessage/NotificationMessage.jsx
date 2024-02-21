@@ -2,7 +2,6 @@
 import { MdNotificationsActive } from "react-icons/md";
 import useMessage from "../../hooks/useMessage";
 
-
 const NotificationMessage = () => {
 
     // const [message, setMessage] = useState([]);

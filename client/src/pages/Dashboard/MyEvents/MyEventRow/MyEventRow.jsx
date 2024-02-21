@@ -1,11 +1,13 @@
 
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import useAuth from '../../../../hooks/useAuth';
 
-const MyEventRow = ({ item, idx }) => {
-
+const MyEventRow = ({ item, idx,ids }) => {
+const {user}=useAuth()
     const date = new Date(item?.startDate).toDateString();
     const time = new Date(item?.startDate).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-
+console.log(user,'kkkkkkkkkkkk');
     return (
         <>
             <tr>
@@ -43,9 +45,19 @@ const MyEventRow = ({ item, idx }) => {
                 <td>{item?.venue}</td>
                 <td>{item?.status}</td>
                 <td>
-                    <button className={`btn text-white text-base bg-primary ${item?.status !== "unpaid" ? "btn-disabled" : "block"}`} > 
-                    Pay to Proceed
-                    </button>
+                <Link 
+  to={{
+    pathname: `/checkout/${user.email}/${ids}`,
+    state: { type: "creation" } // Ensure the type is properly set in the state object
+  }}
+>
+  <button 
+    className={`btn text-white text-base bg-primary ${item?.status !== "unpaid" ? "btn-disabled" : "block"}`} 
+    disabled={item?.status !== "unpaid"} // Disable button based on status
+  > 
+    Pay to Proceed
+  </button>
+</Link>
                 </td>
             </tr>
         </>
@@ -54,7 +66,8 @@ const MyEventRow = ({ item, idx }) => {
 
 MyEventRow.propTypes = {
     item: PropTypes.object,
-    idx: PropTypes.number
+    idx: PropTypes.number,
+    ids: PropTypes.number
 };
 
 export default MyEventRow;

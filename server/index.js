@@ -17,6 +17,7 @@ const upComingDetailHandler = require("./upComingDetailHandler/detailHandler");
 const feedbackHandler = require("./FeedbackHandler/feedbackHandler");
 
 const paymenthandler = require("./paymentHandler/PaymentHandler");
+// const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
 
 // const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
 const usersHandler = require("./usersHandler/usersHandler");
@@ -24,12 +25,14 @@ const LikesCommentsHandler = require("./LikesCommentsHandler/LikesCommentsHandle
 const ContactHandler = require("./ContactHnadler/Contacthandler");
 const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
 const messageHandler = require("./MessageHandler/MessageHandler");
+const likeDislikeHandler = require("./FeedbackHandler/likeDislikeHandler");
 // middleware
 app.use(cors());
 app.use(bodyParser.json());
 
 // console.log(object);
-
+const dbURI = `mongodb+srv://EventPlanet:6oNbcueawJevcwOk
+@proppioneers.pzy67in.mongodb.net/Event-Planet`;
 // Mongodb connection
 
 mongoose.connect(
@@ -59,14 +62,14 @@ app.use("/feedback", feedbackHandler);
 // send confirmation mail if the user successfully booking a event
 
 app.get("/sendEmail", sendMail);
-// app.use("/token", notificationHandler);
+app.use("/token", notificationHandler);
 app.use("/users", usersHandler);
 app.use("/likesComments", LikesCommentsHandler);
 app.use("/contact", ContactHandler);
-app.get('/sendEmail',sendMail)
+app.get("/sendEmail", sendMail);
 app.use("/token", notificationHandler);
-app.use('/users',usersHandler);
-app.use("/message",messageHandler);
+app.use("/message", messageHandler);
+app.use("/likeDislike",likeDislikeHandler);
 
 // Eroor handler
 

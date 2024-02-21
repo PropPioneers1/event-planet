@@ -56,7 +56,9 @@ const MyEvents = () => {
                                 events?.map((item, idx) => <MyEventRow 
                                 key={item?._id} 
                                 item={item}
+                                ids={item?._id} 
                                 idx={idx}>
+                                   
 
                                 </MyEventRow> )
                             }

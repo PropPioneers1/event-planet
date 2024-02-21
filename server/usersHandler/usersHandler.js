@@ -50,4 +50,18 @@ router.get('/:email', async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 })
+
+// get role
+router.get('/role/:email', async (req, res) => {
+  const email = req.params.email;
+  // const query = { email: email }
+  try {
+    const result = await usersModal.findOne({email});
+    res.status(200).json(result);
+  }
+  catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+})
 module.exports = router;

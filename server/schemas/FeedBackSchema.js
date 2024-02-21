@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const FeedBackSchema = mongoose.Schema({
+    id:{
+        type:String,
+        require:true
+    },
     email:{
         type:String,
         require:true,
@@ -21,9 +25,17 @@ const FeedBackSchema = mongoose.Schema({
         type:String,
     },
     user_opinion:{
+        type:String,
+        require:true,
+    },
+    rating:{
         type:Number,
         require:true,
     },
+    date:{
+        type:String,
+        require:true
+    }
 
 })
 module.exports = FeedBackSchema;
