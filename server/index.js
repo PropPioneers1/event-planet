@@ -23,7 +23,6 @@ const usersHandler = require("./usersHandler/usersHandler");
 const LikesCommentsHandler = require("./LikesCommentsHandler/LikesCommentsHandler");
 const ContactHandler = require("./ContactHnadler/Contacthandler");
 const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
-const usersHandler = require("./usersHandler/usersHandler");
 const messageHandler = require("./MessageHandler/MessageHandler");
 // middleware
 app.use(cors());
