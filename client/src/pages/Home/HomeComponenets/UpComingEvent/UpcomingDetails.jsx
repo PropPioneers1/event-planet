@@ -77,23 +77,34 @@ const UpcomingDetails = () => {
   const time = getTime(eventDetails?.startDate);
 
   const totalPrice = number * eventDetails?.ticketPrice;
+  
   useEffect(() => {
     const checkIfRegistered = async () => {
       try {
         const response = await axiosSecure.get(`/ticketpay/${user?.email}/${ids}`);
-        if (response.data.result && response.data.result.paidstatus==='TicketPayment succeed') { 
+        if (response.data.result && response.data.result.paidstatus === 'TicketPayment succeed') { 
           setIsRegistered(true);
-          setPaymentData(response.data)
+          setPaymentData(response.data);
+          const newTotalPrice = number * eventDetails?.ticketPrice;
+          const updateResponse = await axiosSecure.put(`/ticketpay/${user?.email}/${ids}`, {
+            ticketquantity: number,
+            total_amount: newTotalPrice,
+          });
+  console.log(updateResponse);
+          // Handle update response as needed
         }
       } catch (error) {
         console.error("Error checking registration:", error.message);
       }
     };
+  
     if (user && eventDetails) {
       checkIfRegistered();
     }
-  }, [axiosSecure, ids, user, eventDetails]);
+  }, [axiosSecure, ids, number, user, eventDetails]);
+  
   console.log(paymentdata);
+
 const handletickepay=async()=>{
   // const eventDetails=eventDetails.map(item => item.id===ids?item:{});
   const datasfront={
@@ -124,9 +135,18 @@ const result=await axiosSecure.post("/ticketpay",datasfront);
 
   console.log(result);
   if(result.status==200){
-    
-navigate(`/checkout/${'boking'}/${ids}`)
-  }else(console.log('sorry'))
+    const ticketLeft=eventDetails.totalSeat-number
+  axiosSecure.patch(`/event/ticketleft/${ids}`, { ticketLeft: ticketLeft})
+      .then(response => {
+        console.log("Ticket left count updated successfully:", response.data);
+      })
+      .catch(error => {
+        console.error("Error updating ticket left count:", error);
+      });
+ 
+  navigate(`/checkout/${'boking'}/${ids}`)
+  }
+  else(console.log('sorry'))
 
 }
   return (
@@ -272,25 +292,9 @@ navigate(`/checkout/${'boking'}/${ids}`)
     {isRegistered ? (
       <>
         {/* Button to open the modal */}
-        <button className="button flex items-center gap-3" onClick={() => document.getElementById('my_modal_1').showModal()}>
-          Open Modal
-        </button>
-        
-        {/* Modal dialog */}
-        <dialog id="my_modal_1" className="modal">
-          <div className="modal-box">
-          <h3 className="font-bold text-lg">Hello {paymentdata.result.username}</h3>
-            <p className="py-4">You have already booked {paymentdata.result.ticketquantity} ticket(s) for this event on
-             {paymentdata.result.paymentDate}</p>
-            <p className="py-4">Enjoy your event on {date}</p>
-            <div className="modal-action">
-              <form method="dialog">
-                {/* if there is a button in form, it will close the modal */}
-                <button className="btn">Close</button>
-              </form>
-            </div>
-          </div>
-        </dialog>
+        <button onClick={handletickepay} className={`button flex items-center gap-3`}>
+        Register Now <FaCartPlus />
+      </button>
       </>
     ) : (
       <button onClick={handletickepay} className={`button flex items-center gap-3`}>
@@ -307,12 +311,6 @@ navigate(`/checkout/${'boking'}/${ids}`)
 
 
       </div>
-
-
-
-
-
-
 
                           </div>
                         </div>

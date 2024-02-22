@@ -63,7 +63,7 @@ router.get("/:id", async (req, res) => {
 });
 
 
-router.get("/:ids", async (req, res) => {
+router.get("/data/:ids", async (req, res) => {
   try {
     const {  ids } = req.params;
     if ( !ids) {
@@ -96,31 +96,54 @@ router.post("/", async (req, res) => {
 
 
 // Patch todo
-router.patch("/:id", async (req, res) => {
-  const { id } = req.params;
-  const updateStatus = req.body;
-
+// Patch todo
+router.put("/:id", async (req, res) => {
+  const { id } = req.params; 
+  const { status } = req.body;
+console.log(id,status);
   try {
-    // Find the document by ID and update the specified property
-    const updatedEvent = await eventModel.findByIdAndUpdate(
-      id,
-      { $set: { status: updateStatus.status } }, // Use $set operator to update a specific property
-      { new: true } // Return the updated document
-    );
+      const updatedEvent = await eventModel.findByIdAndUpdate({_id:id}, // Use id instead of ids
+          { $set: { status } },
+          { new: true }
+      );
 
-    if (!updatedEvent) {
-      return res.status(404).json({ error: "Event not found" });
-    }
+      if (!updatedEvent) {
+          return res.status(404).json({ error: "Event not found" });
+      }
 
-    res.status(200).json(updatedEvent);
+      res.status(200).json({ message: "updated successfully",updatedEvent});
   } catch (error) {
-    console.error("Error updating event:", error);
-    res.status(500).json({ error: "Internal server error" });
+      console.error("Error updating event:", error);
+      res.status(500).json({ error: "Internal server error" });
   }
 });
 
+
+
 // update many todo
-router.put("/new/:title", (req, res) => {});
+// Patch ticket left for an event
+// router.patch("/ticketleft/:id", async (req, res) => {
+//   const { ids } = req.params;
+//   const { ticketLeft } = req.body;
+
+//   try {
+//     const updatedEvent = await eventModel.findByIdAndUpdate(
+//       ids ,
+//       { $set: { ticketleft: ticketLeft } },
+//       { new: true }
+//     );
+
+//     if (!updatedEvent) {
+//       return res.status(404).json({ error: "Event not found" });
+//     }
+
+//     res.status(200).json({ message: "Ticket left updated successfully", event: updatedEvent });
+//   } catch (error) {
+//     console.error("Error updating ticket left:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
+
 
 // Delete todo
 router.delete("/:id", async (req, res) => {

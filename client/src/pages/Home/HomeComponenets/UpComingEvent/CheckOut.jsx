@@ -71,12 +71,14 @@ const CheckOut = () => {
     const data = {
       mobileNUmber: mobile,
       Name: user?.displayName,
+      eventid:ids,
       cus_email: user.email,
       currency: paymentMethod,
       totalAmount: paymentdata.eventPrice,
       eventName: paymentdata.eventName,
       paidstatus: false,
       paymentdate: formattedDate,
+      // eventid:paymentdata._id,
       from:from,
     };
     console.log(data);

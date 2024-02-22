@@ -4,6 +4,8 @@ const SSLCommerzPayment = require("sslcommerz-lts");
 const TicketpayShceema = require("../schemas/TicketScheemapay");
 const mongoose = require("mongoose");
 const TicketPayment= mongoose.model("Ticketpay", TicketpayShceema);
+const eventSchema = require("../schemas/eventSchema");
+const eventModel = mongoose.model("Event", eventSchema);
 
 const router = express.Router();
 const store_id = "event65c08b7004f38";
@@ -44,43 +46,41 @@ router.get("/initiate-refund", (req, res) => {
     });
 });
 router.post("/", async (req, res) => {
-  const tran_id = new mongoose.Types.ObjectId().toString();
- 
-  try{
- 
-      const datasfront = req.body;
-    // console.log(datasfront); 
-    const datasfronts={
-      mobileNumber: 0,
-      eventName: datasfront.eventName,
-    
-      cus_email: datasfront.cus_email,
-      currency: 'none',
-      total_amount:datasfront.total_amount,
-      ticketquantity:datasfront.ticketquantity,
-      success_url: `http://localhost:5173/payment/successful/${tran_id}`,
-      fail_url:'http://localhost:5000/payment/failed/${tran_id}',
-      paidstatus: datasfront.paidstatus,
-      username:datasfront.username,
-      paymentDate:datasfront.paymentDate,
-      eventid:datasfront.eventid,
-      from:datasfront.from,
-      userAddres: datasfront.userAddres,
-      tran_id:tran_id}
+  try {
+    const datasfront = req.body;
+    const existingTicketPayment = await TicketPayment.findOne({
+      eventid: datasfront.eventid,
+      cus_email: datasfront.cus_email
+    });
 
-    const data = new TicketPayment(datasfronts);
-    console.log("feedback data",data)
-    const result = await data.save();
-    res.status(200).json({
-        message:"Data received successfully",
-        result,
-    })
-}
-  catch (error) {
-    console.error("Error initializing payment:", error);
+    if (existingTicketPayment) {
+      // If the user has previously booked a ticket, update the ticket quantity and total
+      const updatedTicketQuantity = datasfront.ticketquantity;
+      const updatedTotalAmount = datasfront.total_amount;
+
+      // Update the existing ticket payment record
+      await TicketPayment.findOneAndUpdate(
+        { eventid: datasfront.eventid, cus_email: datasfront.cus_email },
+        {
+          $set: {
+            ticketquantity: updatedTicketQuantity,
+            total_amount: updatedTotalAmount
+          }
+        }
+      );
+
+      // Send success response
+      return res.status(200).json({ message: "Ticket quantity and total updated successfully" });
+    } else {
+      // If the user is booking a ticket for the first time, return an error
+      return res.status(400).json({ error: "Ticket not found for updating" });
+    }
+  } catch (error) {
+    console.error("Error updating ticket payment:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
 
 router.post("/paymentticket", async (req, res) => {
   const datasfront = req.body;
@@ -158,28 +158,46 @@ router.post("/paymentticket", async (req, res) => {
 router.post("/success/:tran_id", async (req, res) => {
   try {
     const { tran_id } = req.params;
-    // console.log("Transaction ID:", tran_id);
 
-    // Update the payment document
+    // Update the payment document to mark it as successful
     const payment = await TicketPayment.findOneAndUpdate(
-      { tran_id: tran_id ||  paidstatus==='payment failed'},
+      { tran_id: tran_id },
       { $set: { paidstatus: "TicketPayment succeed" } },
       { new: true }
     );
-
-    // console.log("Updated TicketPayment:", payment); 
 
     if (!payment) {
       return res.status(404).json({ error: "Payment not found" });
     }
 
-    // Redirect to success page once payment status is updated
+    // Get the ticket information from the payment document
+    const { eventid, ticketquantity } = payment;
+
+    // Update the event's total seat by subtracting ticketquantity
+    const event = await eventModel.findOneAndUpdate(
+      { _id: eventid },
+      { $inc: { totalSeat: -ticketquantity } },
+      { new: true }
+    );
+
+    if (!event) {
+      // Rollback the payment status update if event is not found
+      await TicketPayment.findOneAndUpdate(
+        { tran_id: tran_id },
+        { $set: { paidstatus: "payment failed" } }
+      );
+      
+      return res.status(404).json({ error: "Event not found" });
+    }
+
+    // Redirect to success page once payment status is updated and event seat is updated
     res.redirect(`http://localhost:5173/payment/successful/${tran_id}`);
   } catch (error) {
-    console.error("Error updating payment status:", error);
+    console.error("Error updating payment status or event seat:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
 
 
 router.post("/failure/:tran_id", async (req, res) => {
