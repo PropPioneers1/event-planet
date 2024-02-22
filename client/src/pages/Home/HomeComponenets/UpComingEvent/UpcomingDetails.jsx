@@ -30,6 +30,10 @@ import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { getTime } from "../../../../utils/getTime";
 import { getDate } from "../../../../utils/getDate";
 import useAuth from "../../../../hooks/useAuth";
+// import UpComingBanner from "./UpComingBanner";
+import SectionHeading from "../../../../components/shared/SectionHeading/SectionHeading";
+import { BiArea } from "react-icons/bi";
+import UpComingBanner from "./UpComingBanner";
 
 const UpcomingDetails = () => {
   const {user}=useAuth()
@@ -77,7 +81,7 @@ const UpcomingDetails = () => {
     const checkIfRegistered = async () => {
       try {
         const response = await axiosSecure.get(`/ticketpay/${user?.email}/${ids}`);
-        if (response.data.result) { 
+        if (response.data.result && response.data.result.paidstatus==='TicketPayment succeed') { 
           setIsRegistered(true);
           setPaymentData(response.data)
         }
@@ -104,12 +108,11 @@ const handletickepay=async()=>{
   success_url: 'http://localhost:5000/payment/successful/${tran_id}',
   fail_url:'http://localhost:5000/payment/failed/${tran_id}',
   paidstatus: 'pending',
-  tran_id: '',
   username:user?.displayName,
   paymentDate:'',
   eventid:ids,
   from:'Booking',
-  userAddres: '',
+  userAddres: ''
 
 };
 
@@ -128,19 +131,24 @@ navigate(`/checkout/${'boking'}/${ids}`)
 }
   return (
     <>
-
+<UpComingBanner></UpComingBanner>
       <Container>
-        <div className="py-[100px]">
+        <div className="py-[50px]">
           {/* heading */}
           {/* upcoming details: */}
           <div>
-            <div className="grid grid-cols-1 md:grid-cols-6 lg:gap-16 gap-12 ">
+            <div className="grid grid-cols-1 md:grid-cols-6 lg:gap-12 gap-5 ">
               {/* left side */}
               <div className="md:col-span-4 col-span-1">
                 <div className="left-side">
                   <div>
                     <h2 className=" text-5xl mb-5">
-                      {eventDetails?.eventName}
+                      
+                    <SectionHeading
+                    title="Upcoming Event"
+                    normalSubTitleWord="Book Your"
+                    boldSubTitleWord="Ticket Early"
+                  />
                     </h2>
                   </div>
                   <div>
@@ -150,9 +158,9 @@ navigate(`/checkout/${'boking'}/${ids}`)
                       alt=""
                     />
                   </div>
-                  <div className="md:flex items-center justify-around gap-4 py-5 space-y-4 md:space-y-0">
-                    <div className="py-3 px-10 bg-secondary shadow-lg flex items-center gap-3 text-white">
-                      <div>
+                  <div className="md:flex items-center justify-around gap-2 lg:gap-4 py-5 space-y-4 md:space-y-0">
+                    <div className="lg:py-3 lg:px-10 py-2 px-5 bg-secondary shadow-lg flex items-center justify-center gap-3 text-white">
+                      <div className="text-center">
                         <h2 className="md:text-lg font-semibold text-center pb-1">
                           Event Date
                         </h2>
@@ -163,27 +171,27 @@ navigate(`/checkout/${'boking'}/${ids}`)
                         </div>
                       </div>
                     </div>
-                    <div className="py-3 px-10 bg-secondary shadow-lg  gap-3 text-white">
+                    <div className="lg:py-3 lg:px-10 py-2 px-4 bg-secondary shadow-lg  gap-3 text-white">
                       <h2 className="text-lg font-semibold text-center">
                         Event Time
                       </h2>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center justify-center gap-2">
                         <IoMdTime className="text-neutral" />
                         <p className="font-semibold">{time}</p>
                       </div>
                     </div>
-                    <div className="py-3 px-10 bg-secondary shadow-lg  gap-3 text-white">
+                    <div className="lg:py-3 lg:px-10 py-2 px-4 bg-secondary shadow-lg  gap-3 text-white">
                       <h2 className="text-lg font-semibold text-center">
                         Event Location
                       </h2>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 justify-center">
                         <FaLocationDot className="text-neutral"></FaLocationDot>
                         <p className="font-semibold">{eventDetails?.city}</p>
                       </div>
                     </div>
                   </div>
                   {/* descriptions */}
-                  <div>
+                  <div className="mb-5">
                     <p>{eventDetails?.description}</p>
                   </div>
 
@@ -420,13 +428,16 @@ navigate(`/checkout/${'boking'}/${ids}`)
                 </div>
               </div>
               {/* right side */}
-              <div className="md:col-span-2 col-span-1 mt-16">
+              <div className="md:col-span-2 col-span-1 mt-16 md:mt-36">
                 <div className="bg-neutral p-3">
                   <div>
-                    <div className="py-4">
-                      <h2 className="my-3 text-xl font-semibold">
+                    <div className="py-2">
+                      <div className=" flex items-center gap-3">
+                      <BiArea className="text-2xl"></BiArea>
+                      <h2 className="my-3 text-2xl font-semibold">
                         Show Event Area
                       </h2>
+                      </div>
                       <EventMap></EventMap>
                     </div>
                     <h2 className="border-b border-b-gray-300 pb-2 text-xl">
@@ -502,8 +513,8 @@ navigate(`/checkout/${'boking'}/${ids}`)
                       <h2 className=" font-semibold text-lg pt-3">
                         Social Share Event
                       </h2>
-                      <div className="p-3">
-                        <div className="flex items-center gap-4">
+                      <div className="py-4">
+                        <div className="flex items-center gap-4 md:gap-2">
                           <FacebookShareButton
                             url={shareUrl}
                             quote={"Share our event"}
@@ -513,6 +524,7 @@ navigate(`/checkout/${'boking'}/${ids}`)
                             <FacebookIcon round={true} size={40}></FacebookIcon>
                           </FacebookShareButton>
                           <TwitterShareButton
+                            className="md:hidden"
                             url={shareUrl}
                             quote={"Share our event"}
                             title="Share Event"
@@ -550,8 +562,8 @@ navigate(`/checkout/${'boking'}/${ids}`)
                       </div>
                     </div>
                     {/* add calander  */}
-                    <div className="bg-secondary cursor-pointer hover:bg-black p-4 text-center mt-4 font-medium text-white">
-                      Add Calender
+                    <div className="button text-center mt-4  "> 
+                     <a href="https://calendar.google.com/calendar/u/0/r">Add Calender</a>
                     </div>
                   </div>
                 </div>

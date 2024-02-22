@@ -122,12 +122,12 @@ router.post("/success/:tran_id", async (req, res) => {
 
     // Update the payment document
     const payment = await Payment.findOneAndUpdate(
-      { tran_id: tran_id },
+      { tran_id: tran_id, $or: [{ paidstatus: 'payment pending' }, { paidstatus: 'payment failed' }] },
       { $set: { paidstatus: "payment succeed" } },
       { new: true }
     );
 
-    console.log("Updated Payment:", payment); // Check if the payment document is updated
+    // console.log("Updated Payment:", payment); // Check if the payment document is updated
 
     if (!payment) {
       return res.status(404).json({ error: "Payment not found" });
