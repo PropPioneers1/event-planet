@@ -1,4 +1,4 @@
-// paymentHandler.js
+
 
 const express = require('express')
 const SSLCommerzPayment = require('sslcommerz-lts')
@@ -113,6 +113,7 @@ router.post('/success/:tran_id', async (req, res) => {
       const { tran_id } = req.params; // Extract the transaction ID from req.params
       console.log('Transaction ID:', tran_id); // Check if the transaction ID is correct
 
+   
       // Update the payment document
       const payment = await Payment.findOneAndUpdate(
           { tran_id: tran_id },
@@ -120,6 +121,7 @@ router.post('/success/:tran_id', async (req, res) => {
           { new: true }
       );
 
+    // console.log("Updated Payment:", payment); // Check if the payment document is updated
       console.log('Updated Payment:', payment); // Check if the payment document is updated
 
       if (!payment) {
@@ -160,6 +162,25 @@ router.post('/failure/:tran_id', async (req, res) => {
 });
 
 // get success data
+router.get("/:tran_id", async (req, res) => {
+  const tran_id = req.params.tran_id;
+  try {
+    const result = await Payment.findOne({ tran_id: tran_id });
+    if (!result) {
+      return res.status(404).json({
+        error: "Transaction not found",
+      });
+    }
+    res.status(200).json({ result });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: "There was a server-side error",
+    });
+  }
+});
+
+
 router.get("/:tran_id", async (req, res) => {
     const tran_id = req.params.tran_id;
     try {

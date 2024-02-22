@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 const Successrout = () => {
 
     const { tranid } = useParams();
+    
     const axiosSecure = useAxiosSecure();
 
     const { data: paymentData = [], isPending: loading, refetch } = useQuery({

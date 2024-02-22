@@ -64,6 +64,7 @@ const OurNextEvents = () => {
           ))}
         </Slider>
         {/* </div> */}
+       
       </Container>
     </div>
   );
