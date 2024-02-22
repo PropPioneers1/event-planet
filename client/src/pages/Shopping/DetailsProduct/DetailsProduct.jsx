@@ -75,8 +75,6 @@ const DetailsProduct = () => {
     }
   };
 
- 
-
   // handle text count
   const handleTextCount = (e) => {
     const textValue = e.target.value;
