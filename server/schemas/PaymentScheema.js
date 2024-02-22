@@ -36,7 +36,8 @@ const PaymentSchema = new mongoose.Schema({
     default: 'payment pending'
   },
   tran_id: String,
-  from:String
+  from:String,
+  eventid:String
 });
 
 module.exports = PaymentSchema;

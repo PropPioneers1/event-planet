@@ -55,6 +55,7 @@ router.post("/", async (req, res) => {
     const paymentData = {
       mobileNumber: datasfront.mobileNUmber,
       eventName: datasfront.eventName,
+      eventid:datasfront.eventid,
       cus_email: datasfront.cus_email,
       currency: datasfront.currency,
       total_amount: datasfront.totalAmount,
@@ -184,6 +185,26 @@ router.get("/:tran_id", async (req, res) => {
     });
   }
 });
+router.get("/status/:ids", async (req, res) => {
+  const { ids } = req.params; // Correctly extract the 'ids' parameter
+  try {
+    const result = await Payment.findOne({ eventid: ids }, 'eventid paidstatus');
+    if (!result) {
+      return res.status(404).json({
+        error: "Event not found",
+      });
+    }
+    res.status(200).json({ eventid: result.eventid, paidstatus: result.paidstatus });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: "There was a server-side error",
+    });
+  }
+});
+
+
+
 
 
 

@@ -149,7 +149,7 @@ const CreateDesForm = () => {
           email: user.email,
           category: label,
           eventPrice: totalPrice,
-          status: "upcoming",
+          status: "unpaid",
           ticketSold: 0,
         };
         console.log(data, "her");
