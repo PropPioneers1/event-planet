@@ -1,4 +1,4 @@
-// paymentHandler.js
+
 
 const express = require("express");
 const SSLCommerzPayment = require("sslcommerz-lts");
@@ -58,6 +58,7 @@ router.post("/", async (req, res) => {
       cus_email: datasfront.cus_email,
       currency: datasfront.currency,
       total_amount: datasfront.totalAmount,
+      from:datasfront.from,
       success_url: `http://localhost:5000/payment/successful/${tran_id}`,
       fail_url: "http://localhost:5173/fail",
       paidstatus: "payment pending",
@@ -121,12 +122,12 @@ router.post("/success/:tran_id", async (req, res) => {
 
     // Update the payment document
     const payment = await Payment.findOneAndUpdate(
-      { tran_id: tran_id },
+      { tran_id: tran_id, $or: [{ paidstatus: 'payment pending' }, { paidstatus: 'payment failed' }] },
       { $set: { paidstatus: "payment succeed" } },
       { new: true }
     );
 
-    console.log("Updated Payment:", payment); // Check if the payment document is updated
+    // console.log("Updated Payment:", payment); // Check if the payment document is updated
 
     if (!payment) {
       return res.status(404).json({ error: "Payment not found" });
@@ -166,16 +167,24 @@ router.post("/failure/:tran_id", async (req, res) => {
 });
 
 // get success data
-router.get("/:id", async (req, res) => {
-  const id = req.params.id;
+router.get("/:tran_id", async (req, res) => {
+  const tran_id = req.params.tran_id;
   try {
-    const result = await Payment.findById(id);
+    const result = await Payment.findOne({ tran_id: tran_id });
+    if (!result) {
+      return res.status(404).json({
+        error: "Transaction not found",
+      });
+    }
     res.status(200).json({ result });
   } catch (err) {
+    console.error(err);
     res.status(500).json({
       error: "There was a server-side error",
     });
   }
 });
+
+
 
 module.exports = router;

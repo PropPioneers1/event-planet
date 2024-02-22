@@ -149,7 +149,7 @@ const CreateDesForm = () => {
           email: user.email,
           category: label,
           eventPrice: totalPrice,
-          status: "unpaid",
+          status: "upcoming",
           ticketSold: 0,
         };
         console.log(data, "her");
@@ -533,7 +533,7 @@ const CreateDesForm = () => {
                   <input
                     onChange={handleEventImageUpload}
                     name="eventImageFile"
-                    className="file-input file-input-bordered   h-16 w-64 h-16 md:w-72 lg:w-96 bg-white border-black border h-8 text-center 
+                    className="file-input file-input-bordered    w-64  md:w-72 lg:w-96 bg-white border-black border h-8 text-center 
   shadow-2xl  shadow-blue-50 mt-2 rounded-sm "
                     type="file"
                     id="eventImage"
@@ -594,7 +594,7 @@ const CreateDesForm = () => {
                         <input
                           onChange={(e) => handleGuestImageUpload(e, index)}
                           name={`guestImage${index}`}
-                          className="file-input file-input-bordered   h-16 w-64 h-16 md:w-72 lg:w-96 bg-white border-black border h-8 text-center 
+                          className="file-input file-input-bordered    w-64  md:w-72 lg:w-96 bg-white border-black border h-8 text-center 
       shadow-2xl  shadow-blue-50 mt-2 rounded-sm "
                           type="file"
                           id={`guest-image-file-${index}`}

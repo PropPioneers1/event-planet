@@ -46,10 +46,7 @@ console.log(user,'kkkkkkkkkkkk');
                 <td>{item?.status}</td>
                 <td>
                 <Link 
-  to={{
-    pathname: `/checkout/${user.email}/${ids}`,
-    state: { type: "creation" } // Ensure the type is properly set in the state object
-  }}
+ to={`/checkout/${'creation'}/${ids}`}
 >
   <button 
     className={`btn text-white text-base bg-primary ${item?.status !== "unpaid" ? "btn-disabled" : "block"}`} 
