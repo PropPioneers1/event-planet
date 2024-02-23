@@ -28,6 +28,8 @@ const Successrout = () => {
 
 
                     <div className="text-lg font-title">
+                        <p>Transaction Id: {allData?.total_amount} {allData?.tranid
+                        }</p>
                         <p>Total Amount: {allData?.total_amount} {allData?.currency
                         }</p>
                         <p>Your Email    : {allData?.
