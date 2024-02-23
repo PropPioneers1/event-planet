@@ -15,6 +15,7 @@ const shopCartSchema = mongoose.Schema({
         max: 999,
         required: true
     },
+    quantity:Number,
     email: String
 
 

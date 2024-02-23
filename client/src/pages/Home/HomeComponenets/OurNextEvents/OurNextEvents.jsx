@@ -43,11 +43,12 @@ const OurNextEvents = () => {
     ],
   };
 
+  
+
   return (
     <div className="">
       <Container>
-        {/* <div className="border-2 border-red-400 grid grid-cols-12 gap-10 "> */}
-        {/* heading */}
+        
         <div>
           <SectionHeading
             title="Upcoming Event"
@@ -56,6 +57,7 @@ const OurNextEvents = () => {
           />
         </div>
         <Slider {...settings}>
+          
           {nextEvents?.map((event, idx) => (
             <OurNextEventCard
               key={idx}
@@ -66,7 +68,6 @@ const OurNextEvents = () => {
           ))}
         </Slider>
         {/* </div> */}
-       
       </Container>
     </div>
   );
