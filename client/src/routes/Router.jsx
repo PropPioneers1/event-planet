@@ -23,7 +23,7 @@ import AdminSummary from "../pages/Dashboard/AdminSummary/AdminSummary";
 import CheckOut from "../pages/Home/HomeComponenets/UpComingEvent/CheckOut";
 import DetailsProduct from "../pages/Shopping/DetailsProduct/DetailsProduct";
 import EventRequests from "../pages/Dashboard/EventRequests/EventRequests";
-import PaymentSuccess from "../components/shared/PaymentPage/PaymentSuccess";
+
 import PaymentFaild from "../components/shared/PaymentPage/PaymentFaild";
 import OurBlogs from "../pages/Demo/OurBlogs/OurBlogs";
 import BlogDetails from "../pages/Demo/OurBlogs/BlogDetails/BlogDetails";
@@ -32,6 +32,7 @@ import About from "../pages/About/About";
 
 import MyEvents from "../pages/Dashboard/MyEvents/MyEvents";
 import ContactUs from "../pages/Contact/ContactUs";
+import Successrout from "../components/shared/PaymentPage/Successrout";
 
 const Router = createBrowserRouter([
   {
@@ -65,16 +66,16 @@ const Router = createBrowserRouter([
       },
 
       {
-        path: "/upcomingDetails/:id",
+        path: "event/upcomingDetails/:id",
         element: <UpcomingDetails></UpcomingDetails>,
       },
       {
-        path: "checkout",
+        path: "checkout/:from/:ids",
         element: <CheckOut></CheckOut>,
       },
       {
-        path: "payment/success/:tran_id",
-        element: <PaymentSuccess></PaymentSuccess>,
+        path: "payment/successful/:tranid",
+        element: <Successrout></Successrout>
       },
       {
         path: "payment/failure/:tran_id",

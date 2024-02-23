@@ -10,6 +10,7 @@ const SingleCart = ({ cart, setPriceCount, priceCount }) => {
   const [quantity, setQuantity] = useState(0);
   const axiosSecure = useAxiosSecure();
   const {user}=useAuth();
+  const [totalPrice, setTotalPrice] = useState(cart?.price || 5);
 
   // eslint-disable-next-line no-unused-vars
   const { data: singleCart = [], refetch } = useQuery({
@@ -48,11 +49,17 @@ const SingleCart = ({ cart, setPriceCount, priceCount }) => {
 
 
   const increaseQuantity = () => {
-    setQuantity(quantity + 1);
-    setPriceCount((prevPriceCount) => prevPriceCount + quantity * cart?.price);
+    setQuantity((prevQuantity) => prevQuantity + 1);
+    setPriceCount((prevPriceCount) => (prevPriceCount) + (cart?.price));
+    updateTotalPrice();
   };
+  const updateTotalPrice = () => {
+    setTotalPrice((cart?.price || 5) * quantity);
+  };
+  
   const decreaseQuantity = () => {
     if (quantity > 0) setQuantity(quantity - 1);
+    setPriceCount((prevPriceCount) => (prevPriceCount ) - (cart?.price));
   };
   return (
     <div className="relative flex flex-wrap items-center pb-8 mb-8 -mx-4 border-b border-gray-200 dark:border-gray-500 xl:justify-between border-opacity-40">
@@ -87,7 +94,7 @@ const SingleCart = ({ cart, setPriceCount, priceCount }) => {
                 <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"></path>
               </svg>
             </button>
-            <p className="ml-2 mr-2">{quantity}</p>
+            <p className="ml-2 mr-2">{quantity +1}</p>
             <button
               onClick={increaseQuantity}
               className="py-2 pl-2 border-l border-gray-300 dark:border-gray-600 hover:text-gray-700 dark:text-gray-400"
@@ -118,7 +125,7 @@ const SingleCart = ({ cart, setPriceCount, priceCount }) => {
         <span className="text-xl font-medium text-pink-500 dark:text-blue-400">
           <span className="text-sm">$</span>
 
-          <span>{cart?.price * quantity}</span>
+          <span>{totalPrice}</span>
         </span>
       </div>
     </div>

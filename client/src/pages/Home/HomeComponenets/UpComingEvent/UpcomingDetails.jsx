@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import {   useNavigate, useParams } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaCartPlus } from "react-icons/fa";
 import { FaCircleArrowRight } from "react-icons/fa6";
@@ -24,21 +24,31 @@ import {
 import Footer from "../../../../components/shared/Footer";
 import "./upcoming.scss";
 import EventMap from "./EventMap";
-import useAuth from "../../../../hooks/useAuth";
+// import useAuth from "../../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { getTime } from "../../../../utils/getTime";
 import { getDate } from "../../../../utils/getDate";
+import useAuth from "../../../../hooks/useAuth";
+// import UpComingBanner from "./UpComingBanner";
+import SectionHeading from "../../../../components/shared/SectionHeading/SectionHeading";
+import { BiArea } from "react-icons/bi";
+import UpComingBanner from "./UpComingBanner";
 
 const UpcomingDetails = () => {
+  const {user}=useAuth()
   const shareUrl = "https://event-planet-9789f.web.app/";
   const img = "https://i.ibb.co/fq6DWhd/Wedding.jpg";
-  const { user } = useAuth();
-  const { id } = useParams();
+  // const { user } = useAuth();
+  const params = useParams();
+  const ids=params.id
+  // const [isTicketBooked, setIsTicketBooked] = useState(false);
   const [number, setNumber] = useState(0);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [paymentdata, setPaymentData] = useState(false);
+  console.log(user?.email);
   // decrement
   const decrement = () => {
     if (number === 0) {
@@ -52,15 +62,12 @@ const UpcomingDetails = () => {
     setNumber(number + 1);
   };
 
-  // const totalVipPrice = adultCount * cards.price;
-  // const totalNormalPrice = childCount * cards.price;
-  // const totalTicketQuantity = adultCount + childCount;
-  // const totalAdultChildTicketPrice = totalVipPrice + totalNormalPrice;
+
 
   const { data: eventDetails } = useQuery({
     queryKey: ["event-details"],
     queryFn: async () => {
-      const result = await axiosSecure.get(`/event/${id}`);
+      const result = await axiosSecure.get(`/event/${ids}`);
       return result?.data;
     },
   });
@@ -70,39 +77,98 @@ const UpcomingDetails = () => {
   const time = getTime(eventDetails?.startDate);
 
   const totalPrice = number * eventDetails?.ticketPrice;
-
-  const handleCheckOut = async () => {
-    const eventData = {
-      eventId: eventDetails?._id,
-      guestName: user?.displayName,
-      guestEmail: user?.email,
-      eventName: eventDetails?.eventName,
-      eventDate: eventDetails?.startDate,
-      // eventTime: cards?.time,
-      eventLocation: `${eventDetails?.state} ${eventDetails?.city}`,
-      ticketQuantity: number,
-      totalPrice: totalPrice,
+  
+  useEffect(() => {
+    const checkIfRegistered = async () => {
+      try {
+        const response = await axiosSecure.get(`/ticketpay/${user?.email}/${ids}`);
+        if (response.data.result && response.data.result.paidstatus === 'TicketPayment succeed') { 
+          setIsRegistered(true);
+          setPaymentData(response.data);
+          const newTotalPrice = number * eventDetails?.ticketPrice;
+          const updateResponse = await axiosSecure.put(`/ticketpay/${user?.email}/${ids}`, {
+            ticketquantity: number,
+            total_amount: newTotalPrice,
+          });
+  console.log(updateResponse);
+          // Handle update response as needed
+        }
+      } catch (error) {
+        console.error("Error checking registration:", error.message);
+      }
     };
+  
+    if (user && eventDetails) {
+      checkIfRegistered();
+    }
+  }, [axiosSecure, ids, number, user, eventDetails]);
+  
+  console.log(paymentdata);
 
-    navigate(`/checkout`, {
-      state: eventData,
-    });
-  };
+const handletickepay=async()=>{
+  // const eventDetails=eventDetails.map(item => item.id===ids?item:{});
+  const datasfront={
 
+  mobileNumber: 0,
+  eventName: eventDetails.eventName,
+
+  cus_email: user?.email,
+  currency: 'none',
+  total_amount:totalPrice,
+  ticketquantity:number,
+  success_url: 'http://localhost:5000/payment/successful/${tran_id}',
+  fail_url:'http://localhost:5000/payment/failed/${tran_id}',
+  paidstatus: 'pending',
+  username:user?.displayName,
+  paymentDate:'',
+  eventid:ids,
+  from:'Booking',
+  userAddres: ''
+
+};
+
+
+  
+
+const result=await axiosSecure.post("/ticketpay",datasfront);
+// if(result.success)
+
+  console.log(result);
+  if(result.status==200){
+    const ticketLeft=eventDetails.totalSeat-number
+  axiosSecure.patch(`/event/ticketleft/${ids}`, { ticketLeft: ticketLeft})
+      .then(response => {
+        console.log("Ticket left count updated successfully:", response.data);
+      })
+      .catch(error => {
+        console.error("Error updating ticket left count:", error);
+      });
+ 
+  navigate(`/checkout/${'boking'}/${ids}`)
+  }
+  else(console.log('sorry'))
+
+}
   return (
     <>
+<UpComingBanner></UpComingBanner>
       <Container>
-        <div className="py-[100px]">
+        <div className="py-[50px]">
           {/* heading */}
           {/* upcoming details: */}
           <div>
-            <div className="grid grid-cols-1 md:grid-cols-6 lg:gap-16 gap-12 ">
+            <div className="grid grid-cols-1 md:grid-cols-6 lg:gap-12 gap-5 ">
               {/* left side */}
               <div className="md:col-span-4 col-span-1">
                 <div className="left-side">
                   <div>
                     <h2 className=" text-5xl mb-5">
-                      {eventDetails?.eventName}
+                      
+                    <SectionHeading
+                    title="Upcoming Event"
+                    normalSubTitleWord="Book Your"
+                    boldSubTitleWord="Ticket Early"
+                  />
                     </h2>
                   </div>
                   <div>
@@ -112,9 +178,9 @@ const UpcomingDetails = () => {
                       alt=""
                     />
                   </div>
-                  <div className="md:flex items-center justify-around gap-4 py-5 space-y-4 md:space-y-0">
-                    <div className="py-3 px-10 bg-secondary shadow-lg flex items-center gap-3 text-white">
-                      <div>
+                  <div className="md:flex items-center justify-around gap-2 lg:gap-4 py-5 space-y-4 md:space-y-0">
+                    <div className="lg:py-3 lg:px-10 py-2 px-5 bg-secondary shadow-lg flex items-center justify-center gap-3 text-white">
+                      <div className="text-center">
                         <h2 className="md:text-lg font-semibold text-center pb-1">
                           Event Date
                         </h2>
@@ -125,27 +191,27 @@ const UpcomingDetails = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="py-3 px-10 bg-secondary shadow-lg  gap-3 text-white">
+                    <div className="lg:py-3 lg:px-10 py-2 px-4 bg-secondary shadow-lg  gap-3 text-white">
                       <h2 className="text-lg font-semibold text-center">
                         Event Time
                       </h2>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center justify-center gap-2">
                         <IoMdTime className="text-neutral" />
                         <p className="font-semibold">{time}</p>
                       </div>
                     </div>
-                    <div className="py-3 px-10 bg-secondary shadow-lg  gap-3 text-white">
+                    <div className="lg:py-3 lg:px-10 py-2 px-4 bg-secondary shadow-lg  gap-3 text-white">
                       <h2 className="text-lg font-semibold text-center">
                         Event Location
                       </h2>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 justify-center">
                         <FaLocationDot className="text-neutral"></FaLocationDot>
                         <p className="font-semibold">{eventDetails?.city}</p>
                       </div>
                     </div>
                   </div>
                   {/* descriptions */}
-                  <div>
+                  <div className="mb-5">
                     <p>{eventDetails?.description}</p>
                   </div>
 
@@ -218,12 +284,34 @@ const UpcomingDetails = () => {
                             <p>Total: {totalPrice}</p>
                           </div>
                           <div>
-                            <button
-                              onClick={handleCheckOut}
-                              className="button flex items-center gap-3"
-                            >
-                              <FaCartPlus></FaCartPlus>Register Now
-                            </button>
+   
+
+                          <div>
+                          {number > 0 ? (
+  <>
+    {isRegistered ? (
+      <>
+        {/* Button to open the modal */}
+        <button onClick={handletickepay} className={`button flex items-center gap-3`}>
+        Register Now <FaCartPlus />
+      </button>
+      </>
+    ) : (
+      <button onClick={handletickepay} className={`button flex items-center gap-3`}>
+        Register Now <FaCartPlus />
+      </button>
+    )}
+  </>
+) : (
+  <button className={`button flex items-center gap-3 ${isRegistered ? 'disabled' : ''}`} disabled={isRegistered}>
+    <FaCartPlus />
+    Register Now
+  </button>
+)}
+
+
+      </div>
+
                           </div>
                         </div>
                       </div>
@@ -338,13 +426,16 @@ const UpcomingDetails = () => {
                 </div>
               </div>
               {/* right side */}
-              <div className="md:col-span-2 col-span-1 mt-16">
+              <div className="md:col-span-2 col-span-1 mt-16 md:mt-36">
                 <div className="bg-neutral p-3">
                   <div>
-                    <div className="py-4">
-                      <h2 className="my-3 text-xl font-semibold">
+                    <div className="py-2">
+                      <div className=" flex items-center gap-3">
+                      <BiArea className="text-2xl"></BiArea>
+                      <h2 className="my-3 text-2xl font-semibold">
                         Show Event Area
                       </h2>
+                      </div>
                       <EventMap></EventMap>
                     </div>
                     <h2 className="border-b border-b-gray-300 pb-2 text-xl">
@@ -420,8 +511,8 @@ const UpcomingDetails = () => {
                       <h2 className=" font-semibold text-lg pt-3">
                         Social Share Event
                       </h2>
-                      <div className="p-3">
-                        <div className="flex items-center gap-4">
+                      <div className="py-4">
+                        <div className="flex items-center gap-4 md:gap-2">
                           <FacebookShareButton
                             url={shareUrl}
                             quote={"Share our event"}
@@ -431,6 +522,7 @@ const UpcomingDetails = () => {
                             <FacebookIcon round={true} size={40}></FacebookIcon>
                           </FacebookShareButton>
                           <TwitterShareButton
+                            className="md:hidden"
                             url={shareUrl}
                             quote={"Share our event"}
                             title="Share Event"
@@ -468,8 +560,8 @@ const UpcomingDetails = () => {
                       </div>
                     </div>
                     {/* add calander  */}
-                    <div className="bg-secondary cursor-pointer hover:bg-black p-4 text-center mt-4 font-medium text-white">
-                      Add Calender
+                    <div className="button text-center mt-4  "> 
+                     <a href="https://calendar.google.com/calendar/u/0/r">Add Calender</a>
                     </div>
                   </div>
                 </div>

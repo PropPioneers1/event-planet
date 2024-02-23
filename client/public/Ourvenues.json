@@ -1,0 +1,349 @@
+[
+  {
+    "division": "Chittagong",
+    "districts": [
+      {
+        "district": "Chittagong",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      },
+      {
+        "district": "Cox's Bazar",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      },
+      {
+        "district": "Comilla",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      },
+      {
+        "district": "Feni",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      },
+      {
+        "district": "Noakhali",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      }
+    ]
+  },
+  {
+    "division": "Khulna",
+    "districts": [
+      {
+        "district": "Khulna",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      },
+      {
+        "district": "Jessore",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      },
+      {
+        "district": "Satkhira",
+        "venues": []
+      },
+      {
+        "district": "Bagerhat",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      }
+    ]
+  },
+  {
+    "division": "Rajshahi",
+    "districts": [
+      {
+        "district": "Rajshahi",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      },
+      {
+        "district": "Bogra",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      },
+      {
+        "district": "Pabna",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      },
+      {
+        "district": "Naogaon",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      }
+    ]
+  },
+  {
+    "division": "Barisal",
+    "districts": [
+      {
+        "district": "Bhola",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      },
+      {
+        "district": "Jhalokathi",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      },
+      {
+        "district": "Patuakhali",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      },
+      {
+        "district": "Pirojpur",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      }
+    ]
+  },
+  {
+    "division": "Sylhet",
+    "districts": [
+      {
+        "district": "Sylhet",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      },
+      {
+        "district": "Moulvibazar",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      },
+      {
+        "district": "Habiganj",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      },
+      {
+        "district": "Sunamganj",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      }
+    ]
+  },
+  {
+    "division": "Rangpur",
+    "districts": [
+      {
+        "district": "Rangpur",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      },
+      {
+        "district": "Dinajpur",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      },
+      {
+        "district": "Panchagarh",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      },
+      {
+        "district": "Kurigram",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      }
+    ]
+  },
+  {
+    "division": "Mymensingh",
+    "districts": [
+      {
+        "district": "Mymensingh",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      },
+      {
+        "district": "Jamalpur",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      },
+      {
+        "district": "Netrokona",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      },
+      {
+        "district": "Sherpur",
+        "venues": [
+          { "name": "Stadium", "price": 100 },
+          { "name": "Saifur Rahman Auditorium", "price": 150 },
+          { "name": "Mbazar Govt School field", "price": 200 },
+          { "name": "Bismilla Community Center", "price": 250 },
+          { "name": "Gulf Community Center", "price": 300 },
+          { "name": "Bengal Convention Hall", "price": 350 }
+        ]
+      }
+    ]
+  }
+]

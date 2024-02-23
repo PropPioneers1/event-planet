@@ -36,15 +36,24 @@ router.put("/:id", async (req, res) => {
   const updateStatus = req.body;
 
   try {
+    let updateQuery = {};
+    if (updateStatus.yes === 'yes') {
+      updateQuery = { $inc: { yesCount: 1 } };
+    } else if (updateStatus.yes === 'no') {
+      updateQuery = { $inc: { noCount: 1 } };
+    } else {
+      return res.status(400).json({ error: "Invalid update status" });
+    }
+
     // Find the document by ID and update the specified property
     const updatedEvent = await likeDislikeModal.findByIdAndUpdate(
       id,
-      { $set: { yes: updateStatus.yes } }, // Use $set operator to update a specific property
+      updateQuery,
       { new: true } // Return the updated document
     );
 
     if (!updatedEvent) {
-      return res.status(404).json({ error: "Event not found" });
+      return res.status(404).json({ error: "like not found" });
     }
 
     res.status(200).json(updatedEvent);
@@ -53,5 +62,6 @@ router.put("/:id", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
 
 module.exports = router;

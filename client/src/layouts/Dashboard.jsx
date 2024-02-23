@@ -3,8 +3,7 @@ import { useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { FaHome, FaUserAlt } from "react-icons/fa";
 import { MdPayments } from "react-icons/md";
-import { FiShoppingCart } from "react-icons/fi";
-import { IoAddCircleOutline, IoCreate } from "react-icons/io5";
+
 import { PiSignInBold } from "react-icons/pi";
 import { CgLogOut } from "react-icons/cg";
 import { MdSummarize } from "react-icons/md";
@@ -13,6 +12,7 @@ import { IoMdCart } from "react-icons/io";
 import { FaCalendarAlt } from "react-icons/fa";
 
 const Dashboard = () => {
+  
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isCollapse, setIsCollapse] = useState(false);
 
