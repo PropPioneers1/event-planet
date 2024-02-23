@@ -19,7 +19,29 @@ const MyCart = () => {
       return res.data.result;
     },
   });
- 
+ console.log(myCartItem[1],'j');
+ const handlepay=()=>{
+  const data={
+    email:user?.email,
+    totalAmount: priceCount,
+    name:myCartItem[0].name ||'mina',
+    phone:parseInt(myCartItem[0].phone)||parseInt('012555'),
+    address:myCartItem[0].address || 'hello',
+    currency:'BDT',
+    status:'unpaid',
+    from:'shop',
+    // poductid:myCartItem._id ||parseInt('000555')
+  }
+  axiosSecure.post('/productpay',data)
+  .then((response) => {
+    console.log(response.data);
+    window.location.replace(response.data.url);
+  })
+  .catch((error) => {
+    console.error(error.message);
+  });
+  console.log(data);
+ }
 
   return (
     <div>
@@ -58,7 +80,7 @@ const MyCart = () => {
             <Link to='/shopping'><button className="btn  rounded-md bg-primary text-white text-lg">
               Continue Shopping
             </button></Link>
-            <button className="btn  rounded-md bg-primary text-white text-lg">
+            <button onClick={handlepay} className="btn  rounded-md bg-primary text-white text-lg">
               Go To checkout
             </button>
           </div>

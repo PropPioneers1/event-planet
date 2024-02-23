@@ -42,6 +42,7 @@ router.get('/initiate-refund', (req, res) => {
 });
 
 router.post("/", async (req, res) => {
+
     try {
         const datasfront = req.body;
         const tran_id= new mongoose.Types.ObjectId().toString();
@@ -179,6 +180,26 @@ router.get("/:tran_id", async (req, res) => {
     });
   }
 });
+router.get("/status/:ids", async (req, res) => {
+  const { ids } = req.params; // Correctly extract the 'ids' parameter
+  try {
+    const result = await Payment.findOne({ eventid: ids }, 'eventid paidstatus');
+    if (!result) {
+      return res.status(404).json({
+        error: "Event not found",
+      });
+    }
+    res.status(200).json({ eventid: result.eventid, paidstatus: result.paidstatus });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: "There was a server-side error",
+    });
+  }
+});
+
+
+
 
 
 router.get("/:tran_id", async (req, res) => {
