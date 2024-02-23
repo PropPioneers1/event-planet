@@ -87,7 +87,7 @@ const { refetch } = useQuery({
                 <td>
                     <Link to={`/checkout/${'creation'}/${ids}`}>
                         <button
-                            className={`btn text-white text-base bg-primary ${item?.status !== "unpaid" ? "btn-disabled" : "block"}`}
+                            className={`btn text-white text-base bg-primary ${item?.status !== "unpaid" ? "hidden" : "block"}`}
                             disabled={item?.status !== "unpaid"} // Disable button based on status
                         >
                             Pay to Proceed
