@@ -58,9 +58,9 @@ const MyCart = () => {
             <Link to='/shopping'><button className="btn  rounded-md bg-primary text-white text-lg">
               Continue Shopping
             </button></Link>
-            <button className="btn  rounded-md bg-primary text-white text-lg">
+            <Link to='/checkout'><button className="btn  rounded-md bg-primary text-white text-lg">
               Go To checkout
-            </button>
+            </button></Link>
           </div>
         </div>
       </section>
