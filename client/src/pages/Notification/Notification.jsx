@@ -1,6 +1,7 @@
 import  {useState, useEffect} from 'react'
 import toast, { Toaster } from 'react-hot-toast';
 import { onMessageListener, requestForToken } from './TestNotification';
+import axios from 'axios';
 // import { onMessageListener, requestForToken } from '../../firebase/firebase.config';
 
 
@@ -25,6 +26,13 @@ const Notification = () => {
   requestForToken();
 
   console.log(requestForToken)
+
+  console.log(notification?.body)
+  
+  // if(notification?.body){
+  //   // const message = notification?.body;
+  //   axios.post(`http://localhost:5000/message`,notification?.body);
+  // }
 
   onMessageListener()
     .then((payload) => {

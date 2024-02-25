@@ -19,7 +19,7 @@ const MyCart = () => {
       return res.data.result;
     },
   });
- console.log(myCartItem[1],'j');
+ 
  const handlepay=()=>{
   const data={
     email:user?.email,
@@ -30,7 +30,7 @@ const MyCart = () => {
     currency:'BDT',
     status:'unpaid',
     from:'shop',
-    // poductid:myCartItem._id ||parseInt('000555')
+   
   }
   axiosSecure.post('/productpay',data)
   .then((response) => {

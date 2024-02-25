@@ -10,7 +10,7 @@ const Profile = () => {
   const axiosSecure = useAxiosSecure()
 
   const { data: currentUser, isPending } = useQuery({
-    queryKey: ["pendingEvents", user?.email],
+    queryKey: ["currentUser", user?.email],
     queryFn: async () => {
       const result = await axiosSecure.get(`/users/${user?.email}`);
       return result?.data;
