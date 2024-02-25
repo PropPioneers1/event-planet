@@ -11,7 +11,7 @@ const MyEvents = () => {
     const {user} = useAuth()
  
 
-    const { data: events } = useQuery({
+    const { data: events ,refetch} = useQuery({
         queryKey: ["userEvents",user?.email],
         queryFn: async () => {
             const result = await axiosSecure.get(`/event?email=${user?.email}`);
@@ -56,7 +56,10 @@ const MyEvents = () => {
                                 events?.map((item, idx) => <MyEventRow 
                                 key={item?._id} 
                                 item={item}
-                                idx={idx}>
+                                ids={item?._id} 
+                                idx={idx}
+                                reload={refetch}>
+                                   
 
                                 </MyEventRow> )
                             }

@@ -34,6 +34,7 @@ const UpComingEvent = () => {
               <SingleCard key={card.id} card={card}></SingleCard>
             ))}
         </div>
+        {/* <h1>hello/</h1> */}
       </Container>
     </div>
   );
