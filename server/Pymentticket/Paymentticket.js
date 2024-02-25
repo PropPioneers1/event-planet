@@ -52,7 +52,7 @@ router.post("/", async (req, res) => {
       eventid: datasfront.eventid,
       cus_email: datasfront.cus_email
     });
-
+console.log(datasfront);
     if (existingTicketPayment) {
       // If the user has previously booked a ticket, update the ticket quantity and total
       const updatedTicketQuantity = datasfront.ticketquantity;
@@ -60,7 +60,7 @@ router.post("/", async (req, res) => {
 
       // Update the existing ticket payment record
       await TicketPayment.findOneAndUpdate(
-        { eventid: datasfront.eventid, cus_email: datasfront.cus_email },
+        { eventid: datasfront.eventid},
         {
           $set: {
             ticketquantity: updatedTicketQuantity,
@@ -116,7 +116,7 @@ router.post("/paymentticket", async (req, res) => {
     ship_state: "Dhaka",
     ship_postcode: 1000,
     ship_country: "Bangladesh",
-  };
+  };console.log(datasfront);
   const payment = await TicketPayment.findOneAndUpdate(
     { tran_id: datasfront.tran_id},
     {
@@ -176,9 +176,17 @@ router.post("/success/:tran_id", async (req, res) => {
     // Update the event's total seat by subtracting ticketquantity
     const event = await eventModel.findOneAndUpdate(
       { _id: eventid },
-      { $inc: { totalSeat: -ticketquantity } },
+      { 
+        $inc: { 
+          totalSeat: -ticketquantity
+        },
+        $set: {
+          ticketsSold: ticketquantity
+        }
+      },
       { new: true }
     );
+    
 
     if (!event) {
       // Rollback the payment status update if event is not found
