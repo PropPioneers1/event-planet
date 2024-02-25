@@ -54,7 +54,7 @@ router.post("/", async (req, res) => {
 console.log(datasfront);
     const paymentData = {
       mobileNumber: datasfront.phone,
-      eventName: datasfront.name,
+      product_name: datasfront.name,
       // eventid:datasfront.poductid,
       cus_email: datasfront.email,
       currency: datasfront.currency,
@@ -64,6 +64,7 @@ console.log(datasfront);
       fail_url: "http://localhost:5173/fail",
       paidstatus: "payment pending",
       tran_id: tran_id,
+      
       
     };
 
@@ -79,7 +80,7 @@ console.log(datasfront);
       cancel_url: "http://localhost:5173/cancel",
       ipn_url: "http://localhost:5173/ipn",
       shipping_method: "Courier",
-      product_name:paymentData.eventName,
+      product_name:paymentData. product_name,
       cus_email:paymentData.cus_email,
       product_category: "Electronic",
       product_profile: "general",
@@ -118,56 +119,56 @@ console.log(datasfront);
   }
 });
 
-// router.post("/success/:tran_id", async (req, res) => {
-//   try {
-//     const { tran_id } = req.params; // Extract the transaction ID from req.params
-//     console.log("Transaction ID:", tran_id); // Check if the transaction ID is correct
+router.post("/success/:tran_id", async (req, res) => {
+  try {
+    const { tran_id } = req.params; // Extract the transaction ID from req.params
+    console.log("Transaction ID:", tran_id); // Check if the transaction ID is correct
 
-//     // Update the payment document
-//     const payment = await Payment.findOneAndUpdate(
-//       { tran_id: tran_id, $or: [{ paidstatus: 'payment pending' }, { paidstatus: 'payment failed' }] },
-//       { $set: { paidstatus: "payment succeed" } },
-//       { new: true }
-//     );
+    // Update the payment document
+    const payment = await Productpay.findOneAndUpdate(
+      { tran_id: tran_id, $or: [{ paidstatus: 'payment pending' }, { paidstatus: 'payment failed' }] },
+      { $set: { paidstatus: "payment succeed" } },
+      { new: true }
+    );
 
-//     // console.log("Updated Payment:", payment); // Check if the payment document is updated
+    // console.log("Updated Payment:", payment); // Check if the payment document is updated
 
-//     if (!payment) {
-//       return res.status(404).json({ error: "Payment not found" });
-//     }
+    if (!payment) {
+      return res.status(404).json({ error: "Payment not found" });
+    }
 
-//     // Redirect to success page once payment status is updated
-//     res.redirect(`http://localhost:5173/payment/successful/${tran_id}`);
-//   } catch (error) {
-//     console.error("Error updating payment status:", error);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });
-// router.post("/failure/:tran_id", async (req, res) => {
-//   try {
-//     const { tran_id } = req.params; // Extract the transaction ID from req.params
-//     console.log("Transaction ID:", tran_id); // Check if the transaction ID is correct
+    // Redirect to success page once payment status is updated
+    res.redirect(`http://localhost:5173/payment/successful/${tran_id}`);
+  } catch (error) {
+    console.error("Error updating payment status:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+router.post("/failure/:tran_id", async (req, res) => {
+  try {
+    const { tran_id } = req.params; // Extract the transaction ID from req.params
+    console.log("Transaction ID:", tran_id); // Check if the transaction ID is correct
 
-//     // Update the payment document
-//     const payment = await Payment.findOneAndUpdate(
-//       { tran_id: tran_id },
-//       { $set: { paidstatus: "payment failed" } },
-//       { new: true }
-//     );
+    // Update the payment document
+    const payment = await Payment.findOneAndUpdate(
+      { tran_id: tran_id },
+      { $set: { paidstatus: "payment failed" } },
+      { new: true }
+    );
 
-//     console.log("Updated Payment:", payment); // Check if the payment document is updated
+    console.log("Updated Payment:", payment); // Check if the payment document is updated
 
-//     if (!payment) {
-//       return res.status(404).json({ error: "Payment not found" });
-//     }
+    if (!payment) {
+      return res.status(404).json({ error: "Payment not found" });
+    }
 
-//     // Redirect to success page once payment status is updated
-//     res.redirect(`http://localhost:5173/payment/failure/${tran_id}`);
-//   } catch (error) {
-//     console.error("Error updating payment status:", error);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });
+    // Redirect to success page once payment status is updated
+    res.redirect(`http://localhost:5173/payment/failure/${tran_id}`);
+  } catch (error) {
+    console.error("Error updating payment status:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 // get success data
 // router.get("/:tran_id", async (req, res) => {

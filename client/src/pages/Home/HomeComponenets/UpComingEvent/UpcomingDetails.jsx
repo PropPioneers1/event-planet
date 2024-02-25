@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {   useNavigate, useParams } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaCartPlus } from "react-icons/fa";
@@ -46,8 +46,8 @@ const UpcomingDetails = () => {
   const [number, setNumber] = useState(0);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-  const [isRegistered, setIsRegistered] = useState(false);
-  const [paymentdata, setPaymentData] = useState(false);
+  // const [isRegistered, setIsRegistered] = useState(false);
+  // const [paymentdata, setPaymentData] = useState(false);
   console.log(user?.email);
   // decrement
   const decrement = () => {
@@ -78,75 +78,64 @@ const UpcomingDetails = () => {
 
   const totalPrice = number * eventDetails?.ticketPrice;
   
-  useEffect(() => {
-    const checkIfRegistered = async () => {
-      try {
-        const response = await axiosSecure.get(`/ticketpay/${user?.email}/${ids}`);
-        if (response.data.result && response.data.result.paidstatus === 'TicketPayment succeed') { 
-          setIsRegistered(true);
-          setPaymentData(response.data);
-          const newTotalPrice = number * eventDetails?.ticketPrice;
-          const updateResponse = await axiosSecure.put(`/ticketpay/${user?.email}/${ids}`, {
-            ticketquantity: number,
-            total_amount: newTotalPrice,
-          });
-  console.log(updateResponse);
-          // Handle update response as needed
-        }
-      } catch (error) {
-        console.error("Error checking registration:", error.message);
-      }
-    };
+  // useEffect(() => {
+  //   const checkIfRegistered = async () => {
+  //     try {
+  //       const response = await axiosSecure.get(`/ticketpay/${user?.email}/${ids}`);
+  //       if (response?.data?.result && response?.data?.result?.paidstatus === 'TicketPayment succeed') { 
+        
+  //         setPaymentData(response?.data);
+  //         const newTotalPrice = number * eventDetails?.ticketPrice;
+  //         const updateResponse = await axiosSecure.put(`/ticketpay/${user?.email}/${ids}`, {
+  //           ticketquantity: number,
+  //           total_amount: newTotalPrice,
+  //         });
+  // console.log(updateResponse);
+  //         // Handle update response as needed
+  //       }
+  //     } catch (error) {
+  //       console.error("Error checking registration:", error.message);
+  //     }
+  //   };
   
-    if (user && eventDetails) {
-      checkIfRegistered();
-    }
-  }, [axiosSecure, ids, number, user, eventDetails]);
+  //   if (user && eventDetails) {
+  //     checkIfRegistered();
+  //   }
+  // }, [axiosSecure, ids, number, user, eventDetails]);
   
-  console.log(paymentdata);
+  // console.log(paymentdata);
 
-const handletickepay=async()=>{
-  // const eventDetails=eventDetails.map(item => item.id===ids?item:{});
+const hannavgate=async()=>{
+  
   const datasfront={
-
-  mobileNumber: 0,
   eventName: eventDetails.eventName,
-
   cus_email: user?.email,
-  currency: 'none',
   total_amount:totalPrice,
   ticketquantity:number,
-  success_url: 'http://localhost:5000/payment/successful/${tran_id}',
-  fail_url:'http://localhost:5000/payment/failed/${tran_id}',
-  paidstatus: 'pending',
-  username:user?.displayName,
-  paymentDate:'',
-  eventid:ids,
-  from:'Booking',
-  userAddres: ''
-
+  
 };
 
+navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront})
 
   
 
-const result=await axiosSecure.post("/ticketpay",datasfront);
-// if(result.success)
+// const result=await axiosSecure.post("/ticketpay",datasfront);
+// // if(result.success)
 
-  console.log(result);
-  if(result.status==200){
-    const ticketLeft=eventDetails.totalSeat-number
-  axiosSecure.patch(`/event/ticketleft/${ids}`, { ticketLeft: ticketLeft})
-      .then(response => {
-        console.log("Ticket left count updated successfully:", response.data);
-      })
-      .catch(error => {
-        console.error("Error updating ticket left count:", error);
-      });
+//   console.log(result);
+//   if(result.status==200){
+//     const ticketLeft=eventDetails.totalSeat-number
+//   axiosSecure.patch(`/event/ticketleft/${ids}`, { ticketLeft: ticketLeft})
+//       .then(response => {
+//         console.log("Ticket left count updated successfully:", response.data);
+//       })
+//       .catch(error => {
+//         console.error("Error updating ticket left count:", error);
+//       });
  
-  navigate(`/checkout/${'boking'}/${ids}`)
-  }
-  else(console.log('sorry'))
+ 
+//   }
+//   else(console.log('sorry'))
 
 }
   return (
@@ -289,25 +278,17 @@ const result=await axiosSecure.post("/ticketpay",datasfront);
                           <div>
                           {number > 0 ? (
   <>
-    {isRegistered ? (
+  
       <>
         {/* Button to open the modal */}
-        <button onClick={handletickepay} className={`button flex items-center gap-3`}>
+        <button onClick={hannavgate} 
+        className={`button flex items-center gap-3`}>
         Register Now <FaCartPlus />
       </button>
       </>
-    ) : (
-      <button onClick={handletickepay} className={`button flex items-center gap-3`}>
-        Register Now <FaCartPlus />
-      </button>
-    )}
-  </>
-) : (
-  <button className={`button flex items-center gap-3 ${isRegistered ? 'disabled' : ''}`} disabled={isRegistered}>
-    <FaCartPlus />
-    Register Now
-  </button>
-)}
+   
+  </>  ):''
+  }
 
 
       </div>

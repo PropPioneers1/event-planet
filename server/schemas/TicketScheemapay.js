@@ -4,8 +4,9 @@ const mongoose = require('mongoose');
 
 const PaymentSchema = new mongoose.Schema({
   mobileNumber: {
-
+    type: String
   },
+  
   eventName: {
     type: String,
 
