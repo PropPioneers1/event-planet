@@ -57,6 +57,7 @@ const DetailsProduct = () => {
         image,
         title,
         price,
+        quantity: 1
       };
       axiosSecure.post(`/shop/shopCart/${_id}`, cartItem).then((res) => {
         if (res.data) {

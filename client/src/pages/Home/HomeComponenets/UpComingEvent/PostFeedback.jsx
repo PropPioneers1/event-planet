@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import useAuth from "../../../../hooks/useAuth";
 import ReactStars from "react-rating-stars-component";
@@ -5,11 +6,11 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { uploadImage } from "../../../../api/utlis";
+import { useQuery } from "@tanstack/react-query";
 
-const PostFeedback = ({title,image, refetch,id}) => {
+const PostFeedback = ({title,image,id}) => {
     const {user} = useAuth();
     const axiosSecure = useAxiosSecure();
-    // const [quantity, setQuantity] = useState(0);
     const [textCount, setTextCount] = useState(0);
     const [rating, setRating] = useState();
     const [userOpinion, setUserOpinion] = useState();
@@ -30,6 +31,20 @@ const PostFeedback = ({title,image, refetch,id}) => {
     setRating(newRating);
   };
 
+  const { data: progressData,refetch} = useQuery({
+    queryKey: ["progressData"],
+    queryFn: async () => {
+      if (title) {
+        const res = await axiosSecure.get(`/feedback/${title}/${id}`);
+        return res?.data?.result;
+        
+      }
+      // Return null or empty array if title is not defined or falsy
+      return null;
+    },
+  });
+  console.log(progressData)
+
   // gat date
   const currentDate = new Date();
   const options = { year: "numeric", month: "2-digit", day: "2-digit" };
@@ -39,7 +54,6 @@ const PostFeedback = ({title,image, refetch,id}) => {
     const form = e.target;
     const imagebb = form.image.files[0];
     const {data} = await uploadImage(imagebb);
-    console.log("image",data)
     const usersFeedBack = {
       id:id,
       email: user?.email,
@@ -59,8 +73,8 @@ const PostFeedback = ({title,image, refetch,id}) => {
       refetch()
       toast.success("Thanks For Your Feedback");
     }
-    console.log("post feedback",result)
   };
+  
     return (
         <div className="py-6 mb-6 border-t border-b border-gray-200 dark:border-gray-700">
                 {/* modal review */}
@@ -78,7 +92,6 @@ const PostFeedback = ({title,image, refetch,id}) => {
                       size={36}
                       activeColor="#e0218a"
                     />
-                    ,
                   </div>
                   <button
                     className="btn btn-outline btn-secondary"
@@ -168,7 +181,6 @@ const PostFeedback = ({title,image, refetch,id}) => {
                               size={36}
                               activeColor="#e0218a"
                             />
-                            ,
                           </div>
                           <div>
                             <label className="form-control w-full mb-5">
@@ -201,16 +213,6 @@ const PostFeedback = ({title,image, refetch,id}) => {
                 </dialog>
 
                 {/* modal end */}
-                <br />
-                <span className="text-base text-gray-600 dark:text-gray-400">
-                  In Stock
-                </span>
-                <p className="mt-2 text-sm text-blue-500 dark:text-blue-200">
-                  Ships from china.
-                  <span className="text-gray-600 dark:text-gray-400">
-                    Most customers receive within 3-31 days.
-                  </span>
-                </p>
               </div>
     );
 };

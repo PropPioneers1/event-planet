@@ -27,13 +27,7 @@ const AllEvent = () => {
   const [city, setCity] = useState("");
   const [venue, setVenue] = useState("");
   const [eventTitle, setEventTitle] = useState("");
-  const [division, setDivision] = useState("");
-
-  //   useEffect(() => {
-  //     axiosSecure.get(`/event?page=${page}`).then((res) => {
-  //       setEvents(res?.data);
-  //     });
-  //   }, [axiosSecure, page]);
+  const [ setDivision] = useState("");
 
   const { data: events = { eventCount: 0, events: [] }, isPending } = useQuery({
     queryKey: ["all-events", page, category, eventTitle],

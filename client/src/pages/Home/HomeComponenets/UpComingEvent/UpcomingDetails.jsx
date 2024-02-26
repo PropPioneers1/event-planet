@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import {   useNavigate, useParams } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaCartPlus } from "react-icons/fa";
 import { FaCircleArrowRight } from "react-icons/fa6";
@@ -24,26 +24,28 @@ import {
 import Footer from "../../../../components/shared/Footer";
 import "./upcoming.scss";
 import EventMap from "./EventMap";
-import useAuth from "../../../../hooks/useAuth";
+// import useAuth from "../../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { getTime } from "../../../../utils/getTime";
 import { getDate } from "../../../../utils/getDate";
-import UpComingBanner from "./UpComingBanner";
+import useAuth from "../../../../hooks/useAuth";
+// import UpComingBanner from "./UpComingBanner";
 import SectionHeading from "../../../../components/shared/SectionHeading/SectionHeading";
 import { BiArea } from "react-icons/bi";
 import PostFeedback from "./PostFeedback";
 import ShowFeedback from "./ShowFeedback";
+import UpComingBanner from "./UpComingBanner";
 
 const UpcomingDetails = () => {
+  const {user}=useAuth()
   const shareUrl = "https://event-planet-9789f.web.app/";
-  // const img = "https://i.ibb.co/fq6DWhd/Wedding.jpg";
-  const { user } = useAuth();
-  const { id } = useParams();
+  const params = useParams();
+  const ids=params.id
   const [number, setNumber] = useState(0);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-
+  console.log(user?.email);
   // decrement
   const decrement = () => {
     if (number === 0) {
@@ -57,44 +59,36 @@ const UpcomingDetails = () => {
     setNumber(number + 1);
   };
 
-  // const totalVipPrice = adultCount * cards.price;
-  // const totalNormalPrice = childCount * cards.price;
-  // const totalTicketQuantity = adultCount + childCount;
-  // const totalAdultChildTicketPrice = totalVipPrice + totalNormalPrice;
+
 
   const { data: eventDetails, refetch } = useQuery({
     queryKey: ["event-details"],
     queryFn: async () => {
-      const result = await axiosSecure.get(`/event/${id}`);
+      const result = await axiosSecure.get(`/event/${ids}`);
       return result?.data;
     },
   });
-  console.log(eventDetails);
+  console.log("event details",eventDetails);
+  
   const date = getDate(eventDetails?.startDate);
 
   const time = getTime(eventDetails?.startDate);
 
   const totalPrice = number * eventDetails?.ticketPrice;
 
-  const handleCheckOut = async () => {
-    const eventData = {
-      eventId: eventDetails?._id,
-      guestName: user?.displayName,
-      guestEmail: user?.email,
-      eventName: eventDetails?.eventName,
-      eventDate: eventDetails?.startDate,
-      totalSeat: eventDetails?.totalSeat,
-      // eventTime: cards?.time,
-      eventLocation: `${eventDetails?.state} ${eventDetails?.city}`,
-      ticketQuantity: number,
-      totalPrice: totalPrice,
-    };
+const handleNavigate=async()=>{
+  
+  const datasfront={
+  eventName: eventDetails.eventName,
+  cus_email: user?.email,
+  total_amount:totalPrice,
+  ticketquantity:number,
+  
+};
 
-    navigate(`/checkout`, {
-      state: eventData,
-    });
-  };
+navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
 
+}
   return (
     <>
       <UpComingBanner eventDetails={eventDetails}></UpComingBanner>
@@ -180,7 +174,6 @@ const UpcomingDetails = () => {
                               </div>
                             </div>
                           </div>
-
                           <div className="bg-white border-l border-r">
                             <h2 className="py-4 text-center bg-secondary text-white font-medium">
                               Event Ticket
@@ -230,19 +223,26 @@ const UpcomingDetails = () => {
                           <div className="text-white font-medium">
                             <p>Total: {totalPrice}</p>
                           </div>
-                          <button
-                            onClick={handleCheckOut}
+                          {
+                            number > 0 ?  <><button
+                            onClick={handleNavigate}
                             className="button flex items-center gap-3 mt-3 md:mt-0"
                           >
                             <FaCartPlus></FaCartPlus>Register Now
-                          </button>
+                          </button></> : <><button
+                            className="button flex items-center gap-3 mt-3 md:mt-0 disabled"
+                          >
+                            <FaCartPlus></FaCartPlus>Register Now
+                          </button></>
+                          }
+                         
                         </div>
                       </div>
                     </div>
 
                     {/* show feed back */}
                     <div>
-                      <ShowFeedback title={eventDetails?.eventName} id={id}></ShowFeedback>
+                      <ShowFeedback title={eventDetails?.eventName} id={ids}></ShowFeedback>
                     </div>
 
                     {/* evetn FAQ */}
@@ -530,7 +530,7 @@ const UpcomingDetails = () => {
                       <PostFeedback
                         title={eventDetails?.eventName}
                         image={eventDetails?.eventImages[0]}
-                        id={id}
+                        id={ids}
                         refetch={refetch}
                       ></PostFeedback>
                     </div>

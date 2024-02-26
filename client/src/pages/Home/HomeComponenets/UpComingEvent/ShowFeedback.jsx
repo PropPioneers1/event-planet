@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useQuery } from "@tanstack/react-query";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { MdOutlineInfo } from "react-icons/md";
@@ -20,7 +21,7 @@ const ShowFeedback = ({title,id}) => {
     },
   });
 //   get progress data
-const { data: progressData } = useQuery({
+const { data: progressData} = useQuery({
     queryKey: ["progressData"],
     queryFn: async () => {
       if (title) {

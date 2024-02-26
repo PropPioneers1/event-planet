@@ -20,13 +20,14 @@ const paymenthandler = require("./paymentHandler/PaymentHandler");
 // const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
 
 // const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
-// const usersHandler = require("./usersHandler/usersHandler");
+const usersHandler = require("./usersHandler/usersHandler");
 const LikesCommentsHandler = require("./LikesCommentsHandler/LikesCommentsHandler");
 const ContactHandler = require("./ContactHnadler/Contacthandler");
 const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
-const usersHandler = require("./usersHandler/usersHandler");
 const messageHandler = require("./MessageHandler/MessageHandler");
 const likeDislikeHandler = require("./FeedbackHandler/likeDislikeHandler");
+const Pymentticket=require ('./Pymentticket/Paymentticket.js')
+const Productpay=require ('./Productpayment/Productpay.js')
 // middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -35,10 +36,17 @@ app.use(bodyParser.json());
 const dbURI = `mongodb+srv://EventPlanet:6oNbcueawJevcwOk
 @proppioneers.pzy67in.mongodb.net/Event-Planet`;
 // Mongodb connection
-mongoose
-  .connect(dbURI)
-  .then(() => console.log("MongoDB connected..."))
-  .catch((err) => console.error("Error connecting to MongoDB:", err));
+
+mongoose.connect(
+  `mongodb+srv://EventPlanet:6oNbcueawJevcwOk
+@proppioneers.pzy67in.mongodb.net/Event-Planet`
+)
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((error) => {
+    console.error("Error connecting to MongoDB:", error);
+  });
 
 // routes
 app.get("/", (req, res) => {
@@ -64,6 +72,8 @@ app.get("/sendEmail", sendMail);
 app.use("/token", notificationHandler);
 app.use("/message", messageHandler);
 app.use("/likeDislike",likeDislikeHandler);
+app.use("/ticketpay",Pymentticket);
+app.use("/productpay",Productpay);
 
 // Eroor handler
 
