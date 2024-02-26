@@ -26,7 +26,7 @@ const Feedback = ({feedback,refetch}) => {
         }
     };
     return (
-        <div className="">
+        <div className="border-b pb-5 border-slate-300">
             <div className=" flex items-center gap-3 mb-5 mt-14">
                 <div className="flex  items-center gap-4">
                     <img src={user?.photoURL} className="rounded-full w-12" alt="" />
