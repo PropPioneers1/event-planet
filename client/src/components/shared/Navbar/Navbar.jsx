@@ -53,7 +53,7 @@ const Navbar = () => {
         </>
       ) : (
         <>
-          <NavLink onClick={() => setIsMenuTrue(false)} to="/sign-in">
+          <NavLink onClick={() => setIsMenuTrue(false)} to="signIn">
             <button
               className="font-semibold border-2 border-accent
          rounded-md py-2 px-4 transition-all duration-500 ease-out hover:bg-accent"

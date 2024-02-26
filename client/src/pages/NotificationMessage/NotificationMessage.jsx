@@ -1,5 +1,5 @@
 import  { useEffect, useState } from "react";
-import { MdNotificationsActive } from "react-icons/md";
+import { RiNotification4Fill } from "react-icons/ri";
 import useMessage from "../../hooks/useMessage";
 
 const NotificationMessage = () => {
@@ -31,11 +31,11 @@ const NotificationMessage = () => {
                 <div tabIndex={0} role="button" className="m-1" onClick={handleNotificationClick}>
                     {showNotification ? (
                         <div className="flex items-center relative">
-                            <MdNotificationsActive className="h-8 w-7" />
-                            <span className="bg-red-500 text-white rounded-full px-1 py-1 ml-1 absolute -top-2 -right-2">{unreadCount}</span>
+                            <RiNotification4Fill className="h-9 w-8" />
+                            <span className="bg-red-400 text-white  flex justify-center items-center h-6 w-6 rounded-2xl ml-1 absolute -top-1 -right-2 shadow-xl">{unreadCount}</span>
                         </div>
                     ) : (
-                        <MdNotificationsActive className="h-8 w-7" />
+                        <RiNotification4Fill className="h-9 w-8" />
                     )}
                 </div>
                 <ul tabIndex={0} className="dropdown-content text-black z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">

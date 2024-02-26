@@ -5,9 +5,14 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
+import useRole from "../../../../hooks/useRole";
 
 const TestMonial = () => {
 	const [testmonial, setTestmonial] = useState([]);
+
+	const [data ] = useRole();
+	console.log(data)
+
 	useEffect(() => {
 		fetch("Testmonial.json")
 			.then((res) => res.json())
