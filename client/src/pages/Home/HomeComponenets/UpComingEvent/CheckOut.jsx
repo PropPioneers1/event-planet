@@ -56,7 +56,7 @@ console.log(datasfront);
     // Add ticketSold or ticketQuantity based on the 'from' value
     if (from === 'creation') {
       data.ticketSold = datasfront.totalSeat;
-    } else {
+    } else if(from==='boking'){
       data.ticketQuantity = datasfront?.ticketquantity;
     }
    console.log(data);

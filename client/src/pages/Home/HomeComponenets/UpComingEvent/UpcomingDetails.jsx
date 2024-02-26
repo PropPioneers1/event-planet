@@ -78,33 +78,7 @@ const UpcomingDetails = () => {
 
   const totalPrice = number * eventDetails?.ticketPrice;
   
-  // useEffect(() => {
-  //   const checkIfRegistered = async () => {
-  //     try {
-  //       const response = await axiosSecure.get(`/ticketpay/${user?.email}/${ids}`);
-  //       if (response?.data?.result && response?.data?.result?.paidstatus === 'TicketPayment succeed') { 
-        
-  //         setPaymentData(response?.data);
-  //         const newTotalPrice = number * eventDetails?.ticketPrice;
-  //         const updateResponse = await axiosSecure.put(`/ticketpay/${user?.email}/${ids}`, {
-  //           ticketquantity: number,
-  //           total_amount: newTotalPrice,
-  //         });
-  // console.log(updateResponse);
-  //         // Handle update response as needed
-  //       }
-  //     } catch (error) {
-  //       console.error("Error checking registration:", error.message);
-  //     }
-  //   };
   
-  //   if (user && eventDetails) {
-  //     checkIfRegistered();
-  //   }
-  // }, [axiosSecure, ids, number, user, eventDetails]);
-  
-  // console.log(paymentdata);
-
 const hannavgate=async()=>{
   
   const datasfront={
