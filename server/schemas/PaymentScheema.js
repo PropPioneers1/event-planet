@@ -40,11 +40,12 @@ const PaymentSchema = new mongoose.Schema({
   eventid:String,
   total_amount:{
     type:Number,
-    required:false
+    // required:false
   },
-  ticketquantity:{
+  ticketQuantity:{
     type:Number,
-    required:false
+    required:true,
+    // default:1
   }
 });
 

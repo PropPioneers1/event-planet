@@ -117,30 +117,34 @@ router.post("/successful/:tran_id", async (req, res) => {
       console.error("Payment not found for transaction ID:", tran_id);
       return res.status(404).json({ error: "Payment not found" });
     }
-
+  //  const {tickequantity}=
     // Update event data
-    // const event = await eventModel.findOneAndUpdate(
-    //   { _id: payment.eventid },
-    //   {
-    //     $set: {
-    //       totalSeat:-2,
-    //       ticketSold: +payment.ticketquantity
-    //     }},
-    //   { new: true }
-    // );
+    const event = await eventModel.findOneAndUpdate(
+      { _id: payment.eventid }, // Find the document by its _id
+      {
+        $inc: {
+          totalSeat: -payment.ticketQuantity, // Decrement totalSeat by ticketQuantity
+          ticketSold: +payment.ticketQuantity // Increment ticketSold by ticketQuantity
+        }
+      },
+      { new: true } // Return the updated document
+    );
+    
+    
+    
 
-    // console.log("Payment status updated successfully.", payment);
-    // console.log("Event updated successfully.", event);
+    console.log("Payment status updated successfully.", payment);
+    console.log("Event updated successfully.", event);
 
-    // if (!event) {
-    //   // Rollback the payment status update if event is not found
-    //   await Payment.findOneAndUpdate(
-    //     { tran_id: tran_id },
-    //     { $set: { paidstatus: "payment failed" } }
-    //   );
+    if (!event) {
+      // Rollback the payment status update if event is not found
+      await Payment.findOneAndUpdate(
+        { tran_id: tran_id },
+        { $set: { paidstatus: "payment failed" } }
+      );
 
-      // return res.status(404).json({ error: "Event not found" });
-    // }
+      return res.status(404).json({ error: "Event not found" });
+    }
 
     // Redirect to success page once payment status is updated and event data is updated
     res.redirect(`http://localhost:5173/payment/successful/${tran_id}`);
