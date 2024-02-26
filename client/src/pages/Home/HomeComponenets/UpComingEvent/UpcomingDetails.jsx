@@ -33,21 +33,18 @@ import useAuth from "../../../../hooks/useAuth";
 // import UpComingBanner from "./UpComingBanner";
 import SectionHeading from "../../../../components/shared/SectionHeading/SectionHeading";
 import { BiArea } from "react-icons/bi";
+import PostFeedback from "./PostFeedback";
+import ShowFeedback from "./ShowFeedback";
 import UpComingBanner from "./UpComingBanner";
 
 const UpcomingDetails = () => {
   const {user}=useAuth()
   const shareUrl = "https://event-planet-9789f.web.app/";
-  const img = "https://i.ibb.co/fq6DWhd/Wedding.jpg";
-  // const { user } = useAuth();
   const params = useParams();
   const ids=params.id
-  // const [isTicketBooked, setIsTicketBooked] = useState(false);
   const [number, setNumber] = useState(0);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-  // const [isRegistered, setIsRegistered] = useState(false);
-  // const [paymentdata, setPaymentData] = useState(false);
   console.log(user?.email);
   // decrement
   const decrement = () => {
@@ -64,48 +61,22 @@ const UpcomingDetails = () => {
 
 
 
-  const { data: eventDetails } = useQuery({
+  const { data: eventDetails, refetch } = useQuery({
     queryKey: ["event-details"],
     queryFn: async () => {
       const result = await axiosSecure.get(`/event/${ids}`);
       return result?.data;
     },
   });
-
+  console.log("event details",eventDetails);
+  
   const date = getDate(eventDetails?.startDate);
 
   const time = getTime(eventDetails?.startDate);
 
   const totalPrice = number * eventDetails?.ticketPrice;
-  
-  // useEffect(() => {
-  //   const checkIfRegistered = async () => {
-  //     try {
-  //       const response = await axiosSecure.get(`/ticketpay/${user?.email}/${ids}`);
-  //       if (response?.data?.result && response?.data?.result?.paidstatus === 'TicketPayment succeed') { 
-        
-  //         setPaymentData(response?.data);
-  //         const newTotalPrice = number * eventDetails?.ticketPrice;
-  //         const updateResponse = await axiosSecure.put(`/ticketpay/${user?.email}/${ids}`, {
-  //           ticketquantity: number,
-  //           total_amount: newTotalPrice,
-  //         });
-  // console.log(updateResponse);
-  //         // Handle update response as needed
-  //       }
-  //     } catch (error) {
-  //       console.error("Error checking registration:", error.message);
-  //     }
-  //   };
-  
-  //   if (user && eventDetails) {
-  //     checkIfRegistered();
-  //   }
-  // }, [axiosSecure, ids, number, user, eventDetails]);
-  
-  // console.log(paymentdata);
 
-const hannavgate=async()=>{
+const handleNavigate=async()=>{
   
   const datasfront={
   eventName: eventDetails.eventName,
@@ -115,32 +86,12 @@ const hannavgate=async()=>{
   
 };
 
-navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront})
-
-  
-
-// const result=await axiosSecure.post("/ticketpay",datasfront);
-// // if(result.success)
-
-//   console.log(result);
-//   if(result.status==200){
-//     const ticketLeft=eventDetails.totalSeat-number
-//   axiosSecure.patch(`/event/ticketleft/${ids}`, { ticketLeft: ticketLeft})
-//       .then(response => {
-//         console.log("Ticket left count updated successfully:", response.data);
-//       })
-//       .catch(error => {
-//         console.error("Error updating ticket left count:", error);
-//       });
- 
- 
-//   }
-//   else(console.log('sorry'))
+navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
 
 }
   return (
     <>
-<UpComingBanner></UpComingBanner>
+      <UpComingBanner eventDetails={eventDetails}></UpComingBanner>
       <Container>
         <div className="py-[50px]">
           {/* heading */}
@@ -152,12 +103,11 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront})
                 <div className="left-side">
                   <div>
                     <h2 className=" text-5xl mb-5">
-                      
-                    <SectionHeading
-                    title="Upcoming Event"
-                    normalSubTitleWord="Book Your"
-                    boldSubTitleWord="Ticket Early"
-                  />
+                      <SectionHeading
+                        title="Upcoming Event"
+                        normalSubTitleWord="Book Your"
+                        boldSubTitleWord="Ticket Early"
+                      />
                     </h2>
                   </div>
                   <div>
@@ -211,14 +161,13 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront})
                         Book Your Event👍
                       </h2>
                       <div className="bg-white">
-                        <div className="grid grid-cols-3 place-content-center border bg-white">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                           <div className="bg-white">
                             <h2 className="py-4 text-center bg-secondary text-white font-medium">
                               Event Name
                             </h2>
                             <div className="bg-white overflow-hidden text-black p-3">
                               <div className="mb-4">
-                                {/* <h2 className="font-bold">VIP</h2> */}
                                 <p className="text-lg md:text-xl font-semibold">
                                   {eventDetails?.eventName}
                                 </p>
@@ -232,26 +181,27 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront})
                             <div className="bg-white text-secondary p-3">
                               <div className="mb-8 text-center">
                                 <h2 className="mb-4 font-semibold">VIP</h2>
-                                {/* decrement */}
-                                <button
-                                  onClick={() => decrement()}
-                                  className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
-                                >
-                                  -
-                                </button>
-                                {/* increment */}
-                                <span className="border px-4 py-2 border-gray-600 mx-2 p-3 rounded">
-                                  {number}
-                                </span>
-                                <button
-                                  onClick={() => increment()}
-                                  className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
-                                >
-                                  +
-                                </button>
+                                <div className="flex justify-center items-center">
+                                  <button
+                                    onClick={() => decrement()}
+                                    className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
+                                  >
+                                    -
+                                  </button>
+                                  <span className="border px-4 py-2 border-gray-600 mx-2 p-3 rounded">
+                                    {number}
+                                  </span>
+                                  <button
+                                    onClick={() => increment()}
+                                    className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
+                                  >
+                                    +
+                                  </button>
+                                </div>
                               </div>
                             </div>
                           </div>
+
                           <div className="bg-white">
                             <h2 className="py-4 text-center bg-secondary text-white font-medium">
                               Total Price
@@ -265,40 +215,38 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront})
                             </div>
                           </div>
                         </div>
-                        <div className="bg-secondary flex items-center justify-around p-5">
-                          <div className="text-white font-medium">
+
+                        <div className="bg-secondary flex flex-col md:flex-row items-center justify-between p-5">
+                          <div className="text-white font-medium mb-3 md:mb-0">
                             <p>Quantity: {number}</p>
                           </div>
                           <div className="text-white font-medium">
                             <p>Total: {totalPrice}</p>
                           </div>
-                          <div>
-   
-
-                          <div>
-                          {number > 0 ? (
-  <>
-  
-      <>
-        {/* Button to open the modal */}
-        <button onClick={hannavgate} 
-        className={`button flex items-center gap-3`}>
-        Register Now <FaCartPlus />
-      </button>
-      </>
-   
-  </>  ):''
-  }
-
-
-      </div>
-
-                          </div>
+                          {
+                            number > 0 ?  <><button
+                            onClick={handleNavigate}
+                            className="button flex items-center gap-3 mt-3 md:mt-0"
+                          >
+                            <FaCartPlus></FaCartPlus>Register Now
+                          </button></> : <><button
+                            className="button flex items-center gap-3 mt-3 md:mt-0 disabled"
+                          >
+                            <FaCartPlus></FaCartPlus>Register Now
+                          </button></>
+                          }
+                         
                         </div>
                       </div>
                     </div>
+
+                    {/* show feed back */}
+                    <div>
+                      <ShowFeedback title={eventDetails?.eventName} id={ids}></ShowFeedback>
+                    </div>
+
                     {/* evetn FAQ */}
-                    <div className="bg-secondary p-4 mt-4 font-medium text-white text-xl">
+                    <div className="bg-secondary p-4 mt-10 font-medium text-white text-xl">
                       Event FAQ
                     </div>
                     <div className="collapse collapse-plus bg-base-200">
@@ -412,10 +360,10 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront})
                   <div>
                     <div className="py-2">
                       <div className=" flex items-center gap-3">
-                      <BiArea className="text-2xl"></BiArea>
-                      <h2 className="my-3 text-2xl font-semibold">
-                        Show Event Area
-                      </h2>
+                        <BiArea className="text-2xl"></BiArea>
+                        <h2 className="my-3 text-2xl font-semibold">
+                          Show Event Area
+                        </h2>
                       </div>
                       <EventMap></EventMap>
                     </div>
@@ -531,18 +479,60 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront})
                         <MdSettingsVoice></MdSettingsVoice>
                         <h2 className="font-semibold">Event Speaker</h2>
                       </div>
-                      <div className="flex items-center flex-col">
-                        <img
-                          src={img}
-                          className="rounded-full w-24 h-24"
-                          alt=""
-                        />
-                        <h2 className="font-medium mt-3">Arijit Singh</h2>
+                      <div className="">
+                        <div className="flex items-center gap-3">
+                          {eventDetails &&
+                            eventDetails.speakersImages.map((imgs) =>
+                              imgs ? (
+                                <>
+                                  {" "}
+                                  <img
+                                    key={imgs._id}
+                                    src={imgs}
+                                    className="rounded-full w-20 h-20"
+                                    alt="speaker"
+                                  />
+                                </>
+                              ) : (
+                                <>
+                                  <img
+                                    key={imgs._id}
+                                    src={imgs}
+                                    className="rounded-full w-20 h-20 hidden"
+                                    alt="speaker"
+                                  />
+                                </>
+                              )
+                            )}
+                        </div>
+
+                        <div className="flex items-center gap-3">
+                          {eventDetails &&
+                            eventDetails?.speakers.map((names) => (
+                              <h2
+                                key={names?._id}
+                                className="font-medium mt-3 w-20 text-center"
+                              >
+                                {" "}
+                                {names}{" "}
+                              </h2>
+                            ))}
+                        </div>
                       </div>
                     </div>
                     {/* add calander  */}
-                    <div className="button text-center mt-4  "> 
-                     <a href="https://calendar.google.com/calendar/u/0/r">Add Calender</a>
+                    <div className="button text-center mt-4  ">
+                      <a href="https://calendar.google.com/calendar/u/0/r">
+                        Add Calender
+                      </a>
+                    </div>
+                    <div>
+                      <PostFeedback
+                        title={eventDetails?.eventName}
+                        image={eventDetails?.eventImages[0]}
+                        id={ids}
+                        refetch={refetch}
+                      ></PostFeedback>
                     </div>
                   </div>
                 </div>
