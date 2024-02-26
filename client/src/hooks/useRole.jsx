@@ -14,7 +14,6 @@ const useRole = () => {
       return result?.data?.role;
     },
   })
-
   return {role, isRolePending}
 }
 

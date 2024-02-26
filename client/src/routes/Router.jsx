@@ -3,7 +3,6 @@ import MainLayout from "../layouts/MainLayout";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home/Home";
 import SignUp from "../pages/SignUp/SignUp";
-import SignIn from "../pages/SignIn/SignIn";
 import UpcomingDetails from "../pages/Home/HomeComponenets/UpComingEvent/UpcomingDetails";
 import AllEvent from "../pages/AllEvent/AllEvent";
 import Dashboard from "../layouts/Dashboard";
@@ -33,6 +32,8 @@ import About from "../pages/About/About";
 import MyEvents from "../pages/Dashboard/MyEvents/MyEvents";
 import ContactUs from "../pages/Contact/ContactUs";
 import Successrout from "../components/shared/PaymentPage/Successrout";
+import SignIn from "../pages/SignIn/SignIn";
+// import LogIn from "../pages/SignIn/LogIn";
 
 const Router = createBrowserRouter([
   {
@@ -49,7 +50,7 @@ const Router = createBrowserRouter([
         element: <SignUp></SignUp>,
       },
       {
-        path: "sign-in",
+        path: "/signIn",
         element: <SignIn></SignIn>,
       },
       {
