@@ -3,24 +3,36 @@ const mongoose = require("mongoose");
 const router = express.Router();
 const EventTaskSchema = require("../schemas/EventTaskSchema/EventTaskSchema");
 
-const eventModel = mongoose.model("EventTask",EventTaskSchema);
+const eventTaskModel = mongoose.model("EventTask", EventTaskSchema);
 
 
 // getting all the boards
-
+router.get("/", async (req, res) => {
+    try {
+        const { email } = req.query;
+        let query = {};
+        if (email) {
+            query["planer.email"] = email;
+        }
+        const result = await eventTaskModel.find(query);
+        res.status(200).send(result);
+    } catch (error) {
+        res.status(500).json({ error: "internal server error" });
+    }
+})
 
 // Posting board data 
 router.post("/", async (req, res) => {
     const board = req.body;
     console.log(board);
     try {
-      const result = await eventModel.create(board);
-      res.status(201).json({ message: "Board posted successfully", result });
+        const result = await eventTaskModel.create(board);
+        res.status(201).json({ message: "Board posted successfully", result });
     } catch (error) {
-      console.error("Error posting board:", error);
-      res.status(500).json({ error: "Internal Server Error" });
+        console.error("Error posting board:", error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
-  });
+});
 
 
 
