@@ -29,10 +29,10 @@ const Notification = () => {
 
   console.log(notification?.body)
   
-  // if(notification?.body){
-  //   // const message = notification?.body;
-  //   axios.post(`http://localhost:5000/message`,notification?.body);
-  // }
+  if(notification?.body){
+    const body = notification?.body;
+    axios.post(`http://localhost:5000/message`,{body});
+  }
 
   onMessageListener()
     .then((payload) => {
