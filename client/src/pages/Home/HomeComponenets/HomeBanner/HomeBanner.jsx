@@ -29,7 +29,7 @@ const HomeBanner = () => {
           <div className="text-center">
             <Link to="event">
               <button
-                className="text-xl bg-gradient-to-tl hover:bg-gradient-to-tr text-white py-3 px-5 rounded-md from-[#121e2d]
+                className="text-base md:text-xl font-semibold bg-gradient-to-tl hover:bg-gradient-to-tr text-white py-3 px-5 rounded-md from-[#121e2d]
                         to-accent mr-4"
               >
                 Explore Events
@@ -37,7 +37,7 @@ const HomeBanner = () => {
             </Link>
             <Link to="sign-up">
               <button
-                className="text-xl bg-gradient-to-tl hover:bg-gradient-to-tr text-white py-3 px-5 rounded-md from-[#121e2d]
+                className="text-base md:text-xl font-semibold bg-gradient-to-tl hover:bg-gradient-to-tr text-white py-3 px-5 rounded-md from-[#121e2d]
               to-accent"
               >
                 Register Now
