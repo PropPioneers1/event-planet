@@ -177,7 +177,7 @@ const OurNextEventCard = ({ event, activeSlide, idx }) => {
               </p>
             </div>
           </div>
-          <Link to={`/upcomingDetails/${event?._id}`}>
+          <Link to={`upcomingDetails/${event?._id}`}>
             <button
               className=" w-full font-semibold py-3 rounded-full transition-all duration-300 ease-in
                     bg-gradient-to-tl from-[#861f42]
