@@ -15,7 +15,6 @@ const ErrorPage = () => {
             <p className="text-center text-2xl mb-2 font-semibold">Page not found 
             </p><img src={imagesad}className='w-8 h-8' alt="" />
             </div>
-            {/* Use Link component to navigate */}
             <Link to="/" className=''>
               <button
                 className="w-full font-semibold py-3 rounded-md transition-all duration-300 ease-in

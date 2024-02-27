@@ -1,28 +1,91 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-
+import  { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./trending.css";
-import { FaShopify } from "react-icons/fa";
+import { FaShopify, FaStar } from "react-icons/fa";
 import Container from "../../../../components/ui/Container";
 import Buttonall from "../../../../components/ui/ButtonAll/Buttonall";
+import SectionHeading from "../../../../components/shared/SectionHeading/SectionHeading";
+import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+
 const Trendingproducts = () => {
   const [data, setData] = useState([]);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const sliderRef = useRef(null);
+  const axioSecure = useAxiosSecure();
+  const navigate = useNavigate();
+
+  const handleMouseDown = (e) => {
+    setStartX(e.pageX - sliderRef.current.offsetLeft);
+    setScrollLeft(sliderRef.current.scrollLeft);
+  };
 
   useEffect(() => {
-    fetch("/trendprod.json")
-      .then((res) => res.json())
-      .then((dat) => setData(dat));
-  }, []);
+    axioSecure.get('/shop/trending/data')
+      .then((response) => {
+        setData(response.data.result);
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  }, [data]);
+
+  useEffect(() => {
+    const handleScrollEnd = () => {
+      if (sliderRef.current.scrollLeft === sliderRef.current.scrollWidth - sliderRef.current.offsetWidth) {
+        // Calculate the width of a single item
+        const itemWidth = sliderRef.current.children[0].offsetWidth;
+        // Calculate the width of all items including duplicates
+        const totalWidth = sliderRef.current.scrollWidth;
+        // Set scrollLeft to the beginning of the duplicate items
+        setScrollLeft(totalWidth - itemWidth * data.length);
+      }
+    };
+  
+    sliderRef.current.addEventListener('scroll', handleScrollEnd);
+
+      sliderRef.current.removeEventListener('scroll', handleScrollEnd);
+  
+  }, [data]);
+  
+
+  const handleMouseMove = (e) => {
+    if (!startX) return;
+    const x = e.pageX - sliderRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    sliderRef.current.scrollLeft = scrollLeft + walk;
+  
+    // Check if the slider reaches the end
+    if (sliderRef.current.scrollLeft >= sliderRef.current.scrollWidth - sliderRef.current.offsetWidth) {
+      // Scroll back to the beginning
+      sliderRef.current.scrollLeft = 0;
+      setScrollLeft(0);
+    }
+  };
+  
+  const handleMouseUp = () => {
+    setStartX(0);
+  };
+
+  const handleNavigate = () => {
+    navigate('/shopping');
+  };
 
   return (
-    <div className="shadow-bg bg-neutral mt-10">
+    <div className="shadow-bg bg-neutral mt-10 pt-4">
       <Container>
-        <h2 className="text-3xl font-bold text-center pt-10">
-          Trending Products
-        </h2>
+        <SectionHeading
+          colortitle='text-[rgb(255 255 255 / var(--tw-text-opacity))]'
+          align="text-center"
+          title="Visit Our Shop"
+          normalSubTitleWord="OUR "
+          boldSubTitleWord=" SHOP PRODUCTS"
+          colorboldmrsub='text-accent'
+          colornormrsub='text-black'
+        />
         <div>
-          <p className="text-center mb-10 text-gray-700 text-xl p-8">
-            Hello Human! We{`'`}re here to make your special moments even more
+          <p className="text-center mb-10 text-gray-700 text-xl px-4">
+            Hello Human! We're here to make your special moments even more
             memorable. Explore our curated collection of essential products for
             various events and find the perfect items to elevate your
             experiences.
@@ -30,23 +93,25 @@ const Trendingproducts = () => {
         </div>
       </Container>
 
-      <div className="flex ">
-        <div>
-        </div>
+      <div className="flex">
+        <div></div>
         <div
           className="slider rounded-r-2xl
           rounded-l-3xl"
+          ref={sliderRef}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
         >
-          <div className="slide-track gap-5 pb-5">
+          <div className="slide-track gap-5 pb-5" style={{ display: "flex" }}>
             {data.concat(data).map((item, index) => (
               <div
                 key={index}
-                className="slide relative 
-              rounded-md 
-              h-auto bg-transparent shadow-xl"
+                className="slide relative rounded-md h-auto bg-transparent shadow-xl"
+                style={{ flex: "0 0 auto" }}
               >
 
-                <div className=" relative">
+                <div className="relative">
                   <img
                     className="h-[100px] w-full mx-auto object-cover rounded-md"
                     src={item.image}
@@ -55,12 +120,11 @@ const Trendingproducts = () => {
                 </div>
                 <div className=" h-44 w-56 my-auto">
                   <h2
-                    className=" text-secondary text-lg
-                  text-start my-auto border-slate-300   font-bold mt-4 "
+                    className=" text-secondary text-lg text-start my-auto border-slate-300   font-bold mt-4 "
                   >
-                    {item.itemName?.slice(0, 20)}
+                    {item.title.slice(0, 20)}
                   </h2>
-                  <h2 className="font-bold  border-slate-300  text-slate-500 ">
+                  <h2 className="font-bold border-slate-300 text-slate-500 ">
                     Price :{" "}
                     <span className="text-pink-500 font-bold text-xl">
                       ${item.price}
@@ -68,27 +132,24 @@ const Trendingproducts = () => {
                   </h2>
                   <h3 className="text-slate-600  border-slate-300 ">
                     {" "}
-                    Brand : {item.brandName}
+                  Name : {item.title.slice(0, 20)}
                   </h3>
-                  <div className="flex gap-2 pb-4 border-slate-300  ">
-                    <p className="text-start  text-slate-700"> Rating :</p>
-                    <div className="rating rating-sm mt-1 ">
-                      {Array.from({ length: 5 }, (_, i) => (
-                        <input
-                          key={i}
-                          type="radio"
-                          name={`rating-${item.id}`}
-                          className={`mask mask-star-2 bg-pink-600 
-                      ${i < item.rating ? "checked" : ""}`}
-                          checked={i < item.rating}
-                          readOnly
-                        />
-                      ))}
+                  <div className="flex gap-2 pb-4 border-slate-300">
+                    <p className="text-start text-slate-700"> Rating :</p>
+                    <div className="rating rating-sm mt-1">
+                      {item.rating && typeof item.rating === 'number' && item.rating > 0 && item.rating <= 5 ? (
+                        [...Array(Math.floor(item.rating))].map((_, i) => (
+                          <FaStar className="text-primary" key={i} />
+                        ))
+                      ) : (
+                        <span>No rating available</span>
+                      )}
                     </div>
                   </div>
-                  <Link to="shopping">
+
+                  <Link to={`details-shopCart/${item._id}`}>
                     <button
-                      className=" w-full font-semibold py-3 rounded-md transition-all duration-300 ease-in
+                      className="w-full font-semibold py-3 rounded-md transition-all duration-300 ease-in
                     bg-gradient-to-tl from-accent
                     to-accent/70 hover:bg-gradient-to-tr
                    text-white "
@@ -103,12 +164,9 @@ const Trendingproducts = () => {
         </div>
       </div>
 
-      <Link to="/shopping">
-        <Buttonall>
-          {" "}
-          Visit Our Shop <FaShopify></FaShopify>{" "}
-        </Buttonall>
-      </Link>
+      <Buttonall onClick={handleNavigate}>
+        Shop Now <FaShopify />
+      </Buttonall>
     </div>
   );
 };

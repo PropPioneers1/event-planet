@@ -37,7 +37,7 @@ const WhyChoose = () => {
                     align="text-center"
                     title="Why Choose US"
                     normalSubTitleWord="OUR "
-                    boldSubTitleWord=" ANVANTAGES"
+                    boldSubTitleWord=" ADVANTAGES"
                     colorboldmrsub='text-accent'
                     colornormrsub='text-black'
                 />
