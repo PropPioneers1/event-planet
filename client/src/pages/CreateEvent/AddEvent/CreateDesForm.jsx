@@ -153,7 +153,7 @@ const CreateDesForm = () => {
           ticketSold: 0,
         };
         console.log(data, "her");
-        await axios.post("http://localhost:5000/event", data);
+        await axios.post("https://server-orpin-alpha.vercel.app/event", data);
         toast.success("Your response has been submitted successfully");
         navigate("/");
       } catch (error) {

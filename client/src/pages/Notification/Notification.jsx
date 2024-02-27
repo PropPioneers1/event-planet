@@ -31,7 +31,7 @@ const Notification = () => {
   
   // if(notification?.body){
   //   // const message = notification?.body;
-  //   axios.post(`http://localhost:5000/message`,notification?.body);
+  //   axios.post(`https://server-orpin-alpha.vercel.app/message`,notification?.body);
   // }
 
   onMessageListener()

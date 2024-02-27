@@ -58,8 +58,8 @@ router.post("/", async (req, res) => {
       total_amount: datasfront.totalAmount,
       currency: datasfront.currency,
       tran_id: tran_id,
-      success_url: `http://localhost:5000/payment/successful/${tran_id}`, 
-      fail_url: `http://localhost:5000/payment/failure/${tran_id}`, 
+      success_url: `https://server-orpin-alpha.vercel.app/payment/successful/${tran_id}`, 
+      fail_url: `https://server-orpin-alpha.vercel.app/payment/failure/${tran_id}`, 
       cancel_url: "http://localhost:5173/cancel",
       ipn_url: "http://localhost:5173/ipn",
       shipping_method: "Courier",
@@ -143,7 +143,7 @@ router.post("/successful/:tran_id", async (req, res) => {
     // }
 
     // Redirect to success page once payment status is updated and event data is updated
-    res.redirect(`http://localhost:5173/payment/successful/${tran_id}`);
+    res.redirect(`https://event-planet-9789f.web.app/payment/successful/${tran_id}`);
 
   } catch (error) {
     console.error("Error updating payment status:", error);
@@ -176,7 +176,7 @@ router.post("/failure/:tran_id", async (req, res) => {
     }
 
     // Redirect to failure page once payment status is updated
-    res.redirect(`http://localhost:5173/payment/failure/${tran_id}`);
+    res.redirect(`https://event-planet-9789f.web.app/payment/failure/${tran_id}`);
   } catch (error) {
     console.error("Error updating payment status:", error);
     res.status(500).json({ error: "Internal Server Error" });

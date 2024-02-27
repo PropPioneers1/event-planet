@@ -33,6 +33,7 @@ import About from "../pages/About/About";
 import MyEvents from "../pages/Dashboard/MyEvents/MyEvents";
 import ContactUs from "../pages/Contact/ContactUs";
 import Successrout from "../components/shared/PaymentPage/Successrout";
+import ManageEvents from "../pages/Dashboard/ManageEvents/ManageEvents";
 
 const Router = createBrowserRouter([
   {
@@ -158,6 +159,10 @@ const Router = createBrowserRouter([
         path: "my-events",
         element: <MyEvents></MyEvents>,
       },
+      {
+        path:"manage-events",
+        element:<ManageEvents></ManageEvents>
+      }
     ],
   },
 ]);
