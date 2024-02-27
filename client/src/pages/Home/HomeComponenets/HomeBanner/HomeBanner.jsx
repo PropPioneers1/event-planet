@@ -5,7 +5,7 @@ import Container from "../../../../components/ui/Container";
 const HomeBanner = () => {
   return (
     <div
-      className="h-[300px] md:min-h-screen grid place-items-center
+      className="h-[400px] md:min-h-screen grid place-items-center
       bg-cover bg-no-repeat bg-[#000000cd] bg-blend-overlay "
       style={{
         backgroundImage: `url(${bannerBg})`,
