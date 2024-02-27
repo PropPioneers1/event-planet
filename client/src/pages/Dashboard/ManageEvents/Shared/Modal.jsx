@@ -21,20 +21,23 @@ const Modal = () => {
             const board = {
                 boardName,
                 boardBgImg: imageData?.data?.display_url,
-                planerName: user?.displayName,
-                task:{
-                    toDo:[],
-                    progress:[],
-                    completed:[]
+                planer: {
+                    name: user?.displayName,
+                    email: user?.email
+                },
+                task: {
+                    toDo: [],
+                    progress: [],
+                    completed: []
                 }
 
             };
             console.log(board);
             //   Send data to the Database
-            const { data } = await axiosSecure.post("/create-projects", board);
+            const { data } = await axiosSecure.post("/eventTask", board);
             console.log(data);
-            if (data?.insertedId) {
-                toast.success("Successfully Created A Project!");
+            if (data?.result) {
+                toast.success("Successfully Created A Board");
                 form.reset();
             }
         } catch (err) {

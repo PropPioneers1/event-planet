@@ -28,6 +28,7 @@ const messageHandler = require("./MessageHandler/MessageHandler");
 const likeDislikeHandler = require("./FeedbackHandler/likeDislikeHandler");
 const Pymentticket=require ('./Pymentticket/Paymentticket.js')
 const Productpay=require ('./Productpayment/Productpay.js')
+const EventTaskHandler = require('./EventTaskHandler/EventTaskHandler.js')
 // middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -74,6 +75,7 @@ app.use("/message", messageHandler);
 app.use("/likeDislike",likeDislikeHandler);
 app.use("/ticketpay",Pymentticket);
 app.use("/productpay",Productpay);
+app.use("/eventTask",EventTaskHandler)
 
 // Eroor handler
 
