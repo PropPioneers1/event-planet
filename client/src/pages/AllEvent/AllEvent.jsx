@@ -39,8 +39,6 @@ const AllEvent = () => {
     },
   });
 
-  console.log(events);
-
   const totalPages = Math.ceil(events?.eventCount / 8);
 
   const pages = [...new Array(totalPages).fill(0)];

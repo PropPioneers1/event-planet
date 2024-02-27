@@ -4,7 +4,7 @@ import { uploadImage } from "../../../../api/utlis";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useAuth from "../../../../hooks/useAuth";
 
-const Modal = () => {
+const Modal = ({ refetch, setIsModal }) => {
 
     const { user } = useAuth()
     const axiosSecure = useAxiosSecure();
@@ -39,6 +39,8 @@ const Modal = () => {
             if (data?.result) {
                 toast.success("Successfully Created A Board");
                 form.reset();
+                setIsModal(false)
+                refetch()
             }
         } catch (err) {
             toast.error(err.message);
@@ -57,7 +59,7 @@ const Modal = () => {
                         placeholder="Select Image"
                         name="photo"
                         className="border border-gray-300 rounded-md hover:outline-1 outline-gray-400 p-3"
-                        required
+
                     />
                 </div>
                 <div className="form-control">
@@ -84,6 +86,7 @@ const Modal = () => {
 
 Modal.propTypes = {
     refetch: PropTypes.func,
+    setIsModal:PropTypes.func
 };
 
 export default Modal;

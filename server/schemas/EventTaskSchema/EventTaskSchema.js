@@ -7,7 +7,6 @@ const EventTaskSchema = new mongoose.Schema({
     },
     boardBgImg: {
         type: String,
-        required: true
     },
     planer: {
         type: Object,
