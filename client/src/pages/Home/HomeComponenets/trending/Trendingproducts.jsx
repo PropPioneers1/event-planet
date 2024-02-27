@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import  { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./trending.css";
 import { FaShopify, FaStar } from "react-icons/fa";
@@ -21,22 +21,48 @@ const Trendingproducts = () => {
   };
 
   useEffect(() => {
-    axioSecure.get('/shop/trending')
+    axioSecure.get('/shop/trending/data')
       .then((response) => {
         setData(response.data.result);
       })
       .catch((error) => {
         console.error(error.message);
       });
-  }, []);
+  }, [data]);
+
+  useEffect(() => {
+    const handleScrollEnd = () => {
+      if (sliderRef.current.scrollLeft === sliderRef.current.scrollWidth - sliderRef.current.offsetWidth) {
+        // Calculate the width of a single item
+        const itemWidth = sliderRef.current.children[0].offsetWidth;
+        // Calculate the width of all items including duplicates
+        const totalWidth = sliderRef.current.scrollWidth;
+        // Set scrollLeft to the beginning of the duplicate items
+        setScrollLeft(totalWidth - itemWidth * data.length);
+      }
+    };
+  
+    sliderRef.current.addEventListener('scroll', handleScrollEnd);
+
+      sliderRef.current.removeEventListener('scroll', handleScrollEnd);
+  
+  }, [data]);
+  
 
   const handleMouseMove = (e) => {
     if (!startX) return;
     const x = e.pageX - sliderRef.current.offsetLeft;
     const walk = (x - startX) * 2;
-    sliderRef.current.scrollLeft = scrollLeft - walk;
+    sliderRef.current.scrollLeft = scrollLeft + walk;
+  
+    // Check if the slider reaches the end
+    if (sliderRef.current.scrollLeft >= sliderRef.current.scrollWidth - sliderRef.current.offsetWidth) {
+      // Scroll back to the beginning
+      sliderRef.current.scrollLeft = 0;
+      setScrollLeft(0);
+    }
   };
-
+  
   const handleMouseUp = () => {
     setStartX(0);
   };
@@ -77,16 +103,15 @@ const Trendingproducts = () => {
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
         >
-          <div className="slide-track gap-5 pb-5">
+          <div className="slide-track gap-5 pb-5" style={{ display: "flex" }}>
             {data.concat(data).map((item, index) => (
               <div
                 key={index}
-                className="slide relative 
-              rounded-md 
-              h-auto bg-transparent shadow-xl"
+                className="slide relative rounded-md h-auto bg-transparent shadow-xl"
+                style={{ flex: "0 0 auto" }}
               >
 
-                <div className=" relative">
+                <div className="relative">
                   <img
                     className="h-[100px] w-full mx-auto object-cover rounded-md"
                     src={item.image}
@@ -95,12 +120,11 @@ const Trendingproducts = () => {
                 </div>
                 <div className=" h-44 w-56 my-auto">
                   <h2
-                    className=" text-secondary text-lg
-                  text-start my-auto border-slate-300   font-bold mt-4 "
+                    className=" text-secondary text-lg text-start my-auto border-slate-300   font-bold mt-4 "
                   >
                     {item.title.slice(0, 20)}
                   </h2>
-                  <h2 className="font-bold  border-slate-300  text-slate-500 ">
+                  <h2 className="font-bold border-slate-300 text-slate-500 ">
                     Price :{" "}
                     <span className="text-pink-500 font-bold text-xl">
                       ${item.price}

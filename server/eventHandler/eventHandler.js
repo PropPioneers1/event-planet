@@ -120,29 +120,6 @@ console.log(id,status);
 
 
 
-// update many todo
-// Patch ticket left for an event
-// router.patch("/ticketleft/:id", async (req, res) => {
-//   const { ids } = req.params;
-//   const { ticketLeft } = req.body;
-
-//   try {
-//     const updatedEvent = await eventModel.findByIdAndUpdate(
-//       ids ,
-//       { $set: { ticketleft: ticketLeft } },
-//       { new: true }
-//     );
-
-//     if (!updatedEvent) {
-//       return res.status(404).json({ error: "Event not found" });
-//     }
-
-//     res.status(200).json({ message: "Ticket left updated successfully", event: updatedEvent });
-//   } catch (error) {
-//     console.error("Error updating ticket left:", error);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// });
 
 
 // Delete todo

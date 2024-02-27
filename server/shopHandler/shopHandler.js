@@ -25,9 +25,9 @@ router.get("/", async (req, res) => {
 
 
 
-router.get("/trending", async (req, res) => {
+router.get("/trending/data", async (req, res) => {
   try {
-    const result = await shopModel.find({ rating: { $gt: 4.5 } });
+    const result = await shopModel.find({ rating: { $gt: 4.5 } }).limit(12);
     res.status(200).json({ result });
   } catch (err) {
     res.status(500).json({
