@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="shortcut icon"
+      href="./src/assets/image/brandIcon.png"
+      type="image/x-icon"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Planet</title>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="shortcut icon" href="./public//eventlogo.jpg" type="image/x-icon" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Event Planet</title>
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
 
-</head>
-
-<body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.jsx"></script>
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script>
-    AOS.init();
-  </script>
-
-  <!-- email js  -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-  </script>
-  <script type="text/javascript">
-    (function () {
-      emailjs.init({
-        publicKey: "levwNTMWimh6iO1DX",
-      });
-    })();
-  </script>
-  
-
-</body>
-
+    <!-- email js  -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
+    <script type="text/javascript">
+      (function() {
+        emailjs.init({
+          publicKey: "levwNTMWimh6iO1DX",
+        });
+      })();
+    </script>
+  </body>
 </html>

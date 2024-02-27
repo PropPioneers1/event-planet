@@ -6,7 +6,7 @@ const HomeBanner = () => {
   return (
     <div
       className="h-[400px] md:min-h-screen grid place-items-center
-      bg-cover bg-no-repeat bg-[#000000cd] bg-blend-overlay "
+      bg-cover bg-no-repeat bg-[#000000cf] bg-blend-overlay "
       style={{
         backgroundImage: `url(${bannerBg})`,
       }}
@@ -22,7 +22,7 @@ const HomeBanner = () => {
               Welcome To Our Event Planet
             </h1>
             <p className="text-xl md:text-2xl lg:text-4xl text-neutral pb-2 md:pb-4">
-              Explore top-rated attractions, activities and more!
+              Explore top-rated events, activities and more!
             </p>
           </div>
           {/* Button */}
