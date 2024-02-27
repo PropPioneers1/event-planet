@@ -54,7 +54,7 @@ const Home = () => {
       <div className="md:py-28 py-20">{/* <TestMonial></TestMonial> */}</div>
       {/* <HotDeals></HotDeals> */}
       {/* Our Event Planer */}
-      <div className="md:pb-28 pb:20">
+      <div className="md:pb-28 pb-20">
         {/* <TestPlaner></TestPlaner> */}
         <OurEventPlaners />
       </div>
