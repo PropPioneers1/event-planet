@@ -93,23 +93,6 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront})
 
   
 
-// const result=await axiosSecure.post("/ticketpay",datasfront);
-// // if(result.success)
-
-//   console.log(result);
-//   if(result.status==200){
-//     const ticketLeft=eventDetails.totalSeat-number
-//   axiosSecure.patch(`/event/ticketleft/${ids}`, { ticketLeft: ticketLeft})
-//       .then(response => {
-//         console.log("Ticket left count updated successfully:", response.data);
-//       })
-//       .catch(error => {
-//         console.error("Error updating ticket left count:", error);
-//       });
- 
- 
-//   }
-//   else(console.log('sorry'))
 
 }
   return (

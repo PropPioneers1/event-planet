@@ -37,28 +37,36 @@ console.log(datasfront);
     const form = e.target;
     const mobile = form.mobile.value;
     const paymentMethod = form.paymentMethod.value;
-    const useraddress = from === "boking" ? form.useraddress.value : "";
+    const useraddress = (from === "boking" ||from === 'shop') ? form.useraddress.value : "";
     console.log(useraddress);
   
     const data = {
       mobileNumber: mobile,
       Name: user?.displayName,
-      eventid: ids,
+      productid: ids,
       cus_email: user.email,
       currency: paymentMethod,
-      totalAmount:  datasfront.total_amount,
-      eventName: datasfront.eventName,
+      totalAmount: datasfront.total_amount,
       paidstatus: 'payment pending',
       paymentdate: formattedDate,
       from: from,
     };
     
+    if (from === 'shop') {
+      data.productName = datasfront.productname;
+    } else {
+      data.productName = datasfront.eventName;
+    }
+    
     // Add ticketSold or ticketQuantity based on the 'from' value
     if (from === 'creation') {
-      data.ticketSold = datasfront.totalSeat;
-    } else if(from==='boking'){
+      data.ticketSold = 0;
+    } else if (from === 'boking') {
       data.ticketQuantity = datasfront?.ticketquantity;
+    }else if(from==='shop'){
+      data.productQuantity=datasfront.productQuantity
     }
+    
    console.log(data);
    axiosSecure.post('/payment',data)
    .then((response) => {
@@ -118,13 +126,18 @@ console.log(datasfront);
                   <div className="col-span-1">
                     <div className="border-gray-400 border-r border-b p-4 min-h-[150px]">
                       <div>Date: {formattedDate}</div>
-                      <div>Event Name: { datasfront?.eventName}</div>
+                      <div>Name {from=='shop'?datasfront.productname: datasfront?.eventName}</div>
                       <div>order Number: {orderNumber()}</div>
-                      {from === 'creation' ? (
-                        'This is a new order.'
-                      ) : (
-                        <div>ticket Quantity: {datasfront?.ticketquantity}</div>
-                      )}
+                      {
+  from === 'creation' ? (
+    'This is a new order.'
+  ) : from === 'boking' ? (
+    <div>ticket Quantity: {datasfront?.ticketquantity}</div>
+  ) : (
+    'Product Quantity: ' + datasfront?.productQuantity
+  )
+}
+
                     </div>
                     <div className="p-4 border-gray-400 border-r border-b">
                       Total:{datasfront.total_amount }
@@ -142,14 +155,15 @@ console.log(datasfront);
                   <div className="col-span-1">
                     <div className=" border-gray-400 border-l">
                       <form className="max-w-[300px] p-4" onSubmit={handleSubmit}>
-                        {from === 'boking' && (
-                          <input
-                            placeholder="Enter your address"
-                            type="text"
-                            className="appearance-none mb-3 w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                            name="useraddress"
-                          />
-                        )}
+                      {(from === 'boking' || from === 'shop') && (
+  <input
+    placeholder="Enter your address"
+    type="text"
+    className="appearance-none mb-3 w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+    name="useraddress"
+  />
+)}
+
                         <input
                           placeholder="Enter Your Mobile.."
                           type="text"

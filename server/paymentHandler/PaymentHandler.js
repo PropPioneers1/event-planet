@@ -63,7 +63,7 @@ router.post("/", async (req, res) => {
       cancel_url: "http://localhost:5173/cancel",
       ipn_url: "http://localhost:5173/ipn",
       shipping_method: "Courier",
-      product_name: datasfront.eventName,
+      product_name: datasfront.productName,
       cus_email: datasfront.cus_email,
       product_category: "Electronic",
       product_profile: "general",
@@ -117,36 +117,58 @@ router.post("/successful/:tran_id", async (req, res) => {
       console.error("Payment not found for transaction ID:", tran_id);
       return res.status(404).json({ error: "Payment not found" });
     }
-  //  const {tickequantity}=
-    // Update event data
-    const event = await eventModel.findOneAndUpdate(
-      { _id: payment.eventid }, // Find the document by its _id
-      {
-        $inc: {
-          totalSeat: -payment.ticketQuantity, // Decrement totalSeat by ticketQuantity
-          ticketSold: +payment.ticketQuantity // Increment ticketSold by ticketQuantity
-        }
-      },
-      { new: true } // Return the updated document
-    );
-    
-    
-    
 
-    console.log("Payment status updated successfully.", payment);
-    console.log("Event updated successfully.", event);
-
-    if (!event) {
-      // Rollback the payment status update if event is not found
-      await Payment.findOneAndUpdate(
-        { tran_id: tran_id },
-        { $set: { paidstatus: "payment failed" } }
+    // Check if payment.from is 'booking'
+    if (payment.from === 'booking') {
+      // Update event data only if payment.from is 'booking'
+      const event = await eventModel.findOneAndUpdate(
+        { _id: payment.productid }, // Find the document by its _id
+        {
+          $inc: {
+            totalSeat: -payment.ticketQuantity, // Decrement totalSeat by ticketQuantity
+            ticketSold: +payment.ticketQuantity // Increment ticketSold by ticketQuantity
+          }
+        },
+        { new: true } // Return the updated document
       );
 
-      return res.status(404).json({ error: "Event not found" });
+      console.log("Event updated successfully for booking:", event);
+
+      if (!event) {
+        // Rollback the payment status update if event is not found
+        await Payment.findOneAndUpdate(
+          { tran_id: tran_id },
+          { $set: { paidstatus: "payment failed" } }
+        );
+
+        return res.status(404).json({ error: "Event not found" });
+      }
+    } else if (payment.from === 'creation') {
+      // Update event data only if payment.from is 'creation'
+      const event = await eventModel.findOneAndUpdate(
+        { _id: payment.productid }, // Find the document by its _id
+        {
+          $set: { status: 'upcoming' } // Set status to 'upcoming'
+        },
+        { new: true } // Return the updated document
+      );
+
+      console.log("Event updated successfully for creation:", event);
+
+      if (!event) {
+        // Rollback the payment status update if event is not found
+        await Payment.findOneAndUpdate(
+          { tran_id: tran_id },
+          { $set: { paidstatus: "payment failed" } }
+        );
+
+        return res.status(404).json({ error: "Event not found" });
+      }
     }
 
-    // Redirect to success page once payment status is updated and event data is updated
+    console.log("Payment status updated successfully.", payment);
+
+    // Redirect to success page once payment status is updated
     res.redirect(`http://localhost:5173/payment/successful/${tran_id}`);
 
   } catch (error) {
@@ -154,6 +176,8 @@ router.post("/successful/:tran_id", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
 
 
 

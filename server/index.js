@@ -26,8 +26,7 @@ const ContactHandler = require("./ContactHnadler/Contacthandler");
 const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
 const messageHandler = require("./MessageHandler/MessageHandler");
 const likeDislikeHandler = require("./FeedbackHandler/likeDislikeHandler");
-const Pymentticket=require ('./Pymentticket/Paymentticket.js')
-const Productpay=require ('./Productpayment/Productpay.js')
+const Productpay=require("./paymentHandler/PaymentHandler")
 // middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -56,23 +55,19 @@ app.use("/shop", shopHandler);
 app.use("/qna", QnaHandler);
 app.use("/selectedthm", selecthemeHandler);
 app.use("/blog", blogHandler);
-
 app.use("/event", eventHandler);
 app.use("/upcomingDetails", upComingDetailHandler);
 app.use("/payment", paymenthandler);
 app.use("/feedback", feedbackHandler);
-// send confirmation mail if the user successfully booking a event
-
 app.get("/sendEmail", sendMail);
 app.use("/token", notificationHandler);
-app.use("/users", usersHandler);
+// app.use("/users", usersHandler);
 app.use("/likesComments", LikesCommentsHandler);
 app.use("/contact", ContactHandler);
 app.get("/sendEmail", sendMail);
 app.use("/token", notificationHandler);
 app.use("/message", messageHandler);
 app.use("/likeDislike",likeDislikeHandler);
-app.use("/ticketpay",Pymentticket);
 app.use("/productpay",Productpay);
 
 // Eroor handler
