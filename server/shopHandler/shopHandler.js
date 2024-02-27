@@ -23,8 +23,18 @@ router.get("/", async (req, res) => {
 });
 
 
-// get all cart items
 
+
+router.get("/trending", async (req, res) => {
+  try {
+    const result = await shopModel.find({ rating: { $gt: 4.5 } });
+    res.status(200).json({ result });
+  } catch (err) {
+    res.status(500).json({
+      error: "There was a server-side error",
+    });
+  }
+});
 router.get("/my-cart", async (req, res) => {
   try {
     const result = await shopCartModel.find({});
