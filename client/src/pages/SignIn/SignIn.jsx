@@ -1,50 +1,52 @@
-
-import { TbLoaderQuarter } from "react-icons/tb";
-import "../SignUp/signup.css";
-import Container from "../../components/ui/Container";
 import { Link, useNavigate } from "react-router-dom";
-import '../../pages/Home/HomeComponenets/UpComingEvent/upcoming.scss'
+import Container from "../../components/ui/Container";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import { TbLoaderQuarter } from "react-icons/tb";
 
 
-const SignIn = async() => {
+const SignIn = () => {
 
-  const navigate = useNavigate();
-  const {loading,signIn,signInGoogle,signInFacebook} = useAuth();
-  
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const email = form.email.value;
-    const password = form.password.value;
-    const termsAndConditionCheck = form.termsAndCondition.checked;
+    const navigate = useNavigate();
+    const {loading,signIn,signInGoogle,signInFacebook} = useAuth();
 
-    if(!termsAndConditionCheck){
-      return toast.error('Please agree to the terms and conditions.');
-    }
+
+    // Handle submit function
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        const termsAndConditionCheck = form.termsAndCondition.checked;
     
-    try{
-      await signIn(email,password)
-      toast.success('Successfully Sign In')
-    }
-    catch(err){
-      toast.error(err?.message)
-    }
+        if(!termsAndConditionCheck){
+          return toast.error('Please agree to the terms and conditions.');
+        }
+        
+        try{
+          await signIn(email,password)
+          toast.success('Successfully Sign In')
+          navigate('/');
+        }
+        catch(err){
+          toast.error(err?.message)
+        }
+    
+      };
 
-  };
-  // sign in with google
-  const handleSignInWithGoogle = async () => {
-    try{
-      await signInGoogle()
-      navigate("/")
-      toast.success('Sign In Successfully')
-    }
-    catch(err){
-      toast.error(err?.message)
-    }
-  }
-  // sign in facebook
+    // Google sign in 
+    const handleSignInWithGoogle = async () => {
+        try{
+          await signInGoogle()
+          navigate("/")
+          toast.success('Sign In Successfully')
+        }
+        catch(err){
+          toast.error(err?.message)
+        }
+      }
+
+       // sign in facebook
   const handleSignInWithFacebook = async() => {
     try{
      const result = await signInFacebook();
@@ -56,8 +58,10 @@ const SignIn = async() => {
       toast.error(error?.message)
     }
   }
-  return (
-    <div className="signUp-bg">
+
+
+    return (
+        <div className="signUp-bg">
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-5 ld:gap-20 gap-12 min-h-screen place-items-center">
             {/* Left Section */}
@@ -157,7 +161,7 @@ const SignIn = async() => {
           </div>
         </Container>
     </div>
-  );
+    );
 };
 
 export default SignIn;

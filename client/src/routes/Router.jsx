@@ -3,7 +3,6 @@ import MainLayout from "../layouts/MainLayout";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home/Home";
 import SignUp from "../pages/SignUp/SignUp";
-import SignIn from "../pages/SignIn/SignIn";
 import UpcomingDetails from "../pages/Home/HomeComponenets/UpComingEvent/UpcomingDetails";
 import AllEvent from "../pages/AllEvent/AllEvent";
 import Dashboard from "../layouts/Dashboard";
@@ -23,7 +22,7 @@ import AdminSummary from "../pages/Dashboard/AdminSummary/AdminSummary";
 import CheckOut from "../pages/Home/HomeComponenets/UpComingEvent/CheckOut";
 import DetailsProduct from "../pages/Shopping/DetailsProduct/DetailsProduct";
 import EventRequests from "../pages/Dashboard/EventRequests/EventRequests";
-import PaymentSuccess from "../components/shared/PaymentPage/PaymentSuccess";
+
 import PaymentFaild from "../components/shared/PaymentPage/PaymentFaild";
 import OurBlogs from "../pages/Demo/OurBlogs/OurBlogs";
 import BlogDetails from "../pages/Demo/OurBlogs/BlogDetails/BlogDetails";
@@ -32,8 +31,9 @@ import About from "../pages/About/About";
 
 import MyEvents from "../pages/Dashboard/MyEvents/MyEvents";
 import ContactUs from "../pages/Contact/ContactUs";
-import DashboardDemo from "../pages/Demo/DashboardDemo/DashboardDemo";
-import MyProfile from "../pages/Demo/DashboardDemo/MyProfile/MyProfile";
+import Successrout from "../components/shared/PaymentPage/Successrout";
+import SignIn from "../pages/SignIn/SignIn";
+// import LogIn from "../pages/SignIn/LogIn";
 
 const Router = createBrowserRouter([
   {
@@ -50,12 +50,12 @@ const Router = createBrowserRouter([
         element: <SignUp></SignUp>,
       },
       {
-        path: "sign-in",
+        path: "/signIn",
         element: <SignIn></SignIn>,
       },
       {
         path: "blogs",
-        element: <OurBlogs />,
+        element:<OurBlogs />,
       },
       {
         path: "/blog-details/:id",
@@ -67,16 +67,16 @@ const Router = createBrowserRouter([
       },
 
       {
-        path: "/upcomingDetails/:id",
+        path: "event/upcomingDetails/:id",
         element: <UpcomingDetails></UpcomingDetails>,
       },
       {
-        path: "checkout",
+        path: "checkout/:from/:ids",
         element: <CheckOut></CheckOut>,
       },
       {
-        path: "payment/success/:tran_id",
-        element: <PaymentSuccess></PaymentSuccess>,
+        path: "payment/successful/:tranid",
+        element: <Successrout></Successrout>
       },
       {
         path: "payment/failure/:tran_id",
@@ -116,55 +116,48 @@ const Router = createBrowserRouter([
 
   {
     path: "/dashboard",
-    // element: <Dashboard></Dashboard>,
-    // children: [
-    //   {
-    //     path: "profile",
-    //     element: <Profile></Profile>,
-    //   },
-    //   {
-    //     path: "add-product",
-    //     element: <AddProduct></AddProduct>,
-    //   },
-    //   {
-    //     path: "create-theme",
-    //     element: <CreateTheme></CreateTheme>,
-    //   },
-
-    //   {
-    //     path: "create-blog",
-    //     element: <CreateBlog></CreateBlog>,
-    //   },
-    //   {
-    //     path: "payment-history",
-    //     element: <PaymentHistory></PaymentHistory>,
-    //   },
-    //   {
-    //     path: "admin-summary",
-    //     element: <AdminSummary></AdminSummary>,
-    //   },
-    //   {
-    //     path: "event-requests",
-    //     element: <EventRequests></EventRequests>,
-    //   },
-    //   {
-    //     path: "editProfile",
-    //     element: <UpdateProfile></UpdateProfile>,
-    //   },
-    //   {
-    //     path: "my-cart",
-    //     element: <MyCart></MyCart>,
-    //   },
-    //   {
-    //     path: "my-events",
-    //     element: <MyEvents></MyEvents>,
-    //   },
-    // ],
-    element: <DashboardDemo />,
+    element: <Dashboard></Dashboard>,
     children: [
       {
         path: "profile",
-        element: <MyProfile />,
+        element: <Profile></Profile>,
+      },
+      {
+        path: "add-product",
+        element: <AddProduct></AddProduct>,
+      },
+      {
+        path: "create-theme",
+        element: <CreateTheme></CreateTheme>,
+      },
+
+      {
+        path: "create-blog",
+        element: <CreateBlog></CreateBlog>,
+      },
+      {
+        path: "payment-history",
+        element: <PaymentHistory></PaymentHistory>,
+      },
+      {
+        path: "admin-summary",
+        element: <AdminSummary></AdminSummary>,
+      },
+      {
+        path: "event-requests",
+        element: <EventRequests></EventRequests>,
+      },
+      {
+        path: "editProfile",
+        element: <UpdateProfile></UpdateProfile>,
+      },
+      {
+        path: "my-cart",
+        element: <MyCart></MyCart>,
+      },
+      {
+        path: "my-events",
+        element: <MyEvents></MyEvents>,
       },
     ],
   },

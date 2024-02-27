@@ -4,6 +4,23 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Profile = () => {
+  const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
+
+  const { data: currentUser, isPending } = useQuery({
+    queryKey: ["currentUser", user?.email],
+    queryFn: async () => {
+      const result = await axiosSecure.get(`/users/${user?.email}`);
+      return result?.data;
+    },
+  });
+
+  console.log(currentUser);
+
+  if (isPending) {
+    return <h3>loading...</h3>;
+  }
+
   return (
     <div className=" flex  justify-center  bg-white rounded-md">
       {/* <h2 className="text-2xl font-bold  py-4">

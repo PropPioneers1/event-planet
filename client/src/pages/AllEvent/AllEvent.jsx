@@ -30,6 +30,7 @@ const AllEvent = () => {
 
   const [city, setCity] = useState("");
   const [venues, setVenues] = useState("");
+  // const [setDivision] = useState("");
 
   // handle state change
   const handleStateChange = (selectedState) => {

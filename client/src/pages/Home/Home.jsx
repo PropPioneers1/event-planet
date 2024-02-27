@@ -5,7 +5,7 @@ import WhyChoose from "./HomeComponenets/WhyChooseEventPlanet/WhyChoose";
 // import HotDeals from "./HomeComponenets/HotDeals/HotDeals";
 import Footer from "../../components/shared/Footer";
 
-import TestMonial from "./HomeComponenets/Testmonial/Testmonial";
+// import TestMonial from "./HomeComponenets/Testmonial/Testmonial";
 // import TestPlaner from "./HomeComponenets/Event-Planer/TestPlaner";
 import Categories from "./HomeComponenets/Categories/Categories";
 // import Chat from "./HomeComponenets/ChatBot/ChatBot";
@@ -51,9 +51,7 @@ const Home = () => {
       </div>
       {/* hot deals and footer by rifat */}
       {/* Testmonial Section */}
-      <div className="md:py-28 py-20">
-        <TestMonial></TestMonial>
-      </div>
+      <div className="md:py-28 py-20">{/* <TestMonial></TestMonial> */}</div>
       {/* <HotDeals></HotDeals> */}
       {/* Our Event Planer */}
       <div className="md:pb-28 pb:20">

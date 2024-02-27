@@ -3,7 +3,15 @@ import { IoLocationSharp, IoTimeOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
 const EventCard = ({ item }) => {
-  const { eventName, venue, startDate, eventImages, ticketPrice } = item;
+  const {
+    eventName,
+    venue,
+    startDate,
+    eventImages,
+    ticketPrice,
+    totalSeat,
+    _id,
+  } = item;
 
   const month = new Date(startDate).toLocaleString("default", {
     month: "long",
@@ -32,7 +40,17 @@ const EventCard = ({ item }) => {
           </p>
         </div>
         {/* for right side border style */}
-        <div className="absolute top-4 -right-1 w-2 h-16 bg-primary"></div>
+        <div
+          className="absolute top-0 right-0 w-7 h-40 bg-gradient-to-tr from-primary to-rose-800"
+          style={{
+            clipPath:
+              "polygon(0 0, 100% 0, 100% 52%, 100% 100%, 48% 92%, 0 100%)",
+          }}
+        ></div>
+
+        <h4 className="absolute top-16 font-semibold -right-[42px] text-white -rotate-90 ">
+          Tickets Left {totalSeat}
+        </h4>
       </div>
       {/* div for content */}
       <div>
@@ -54,8 +72,13 @@ const EventCard = ({ item }) => {
           </div>
         </div>
         <div className="md:w-56 sm:w-auto max-w-56">
-          <Link to={`/upcomingDetails/${item?._id}`}>
-            <button className="btn rounded-full w-full text-[#636363] text-lg font-bold my-4 hover:bg-primary hover:text-white transition-all duration-300">
+          <Link to={`upcomingDetails/${_id}`}>
+            <button
+              className="w-full font-semibold py-3 rounded-full transition-all duration-300 ease-in
+                        bg-gradient-to-tl from-[#861f42]
+                        to-primary hover:bg-gradient-to-tr
+                       text-white"
+            >
               Ticket & Details
             </button>
           </Link>

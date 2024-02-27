@@ -13,7 +13,7 @@ const EventMap = () => {
     style={{height: 300,overflow:'hidden',borderRadius:8}}
     mapboxAccessToken='pk.eyJ1IjoiYXJpZmtoYW4yMzAiLCJhIjoiY2xwanlvbWRkMDRsczJrb3A5cjU4b3BmcSJ9.VvUKZhn5vO4D4Ptnwx7Gaw'
     mapStyle="mapbox://styles/mapbox/streets-v9"
-  />;
+  />
     
   </>
   );

@@ -91,7 +91,7 @@ function Ourteam() {
                 <FaWhatsapp></FaWhatsapp>
                </div>
                
-                 <div className="w-[300px] pl-5 lg:w-[600px]  pt-4">
+               <div className="w-[300px] pl-5 lg:w-[600px]  pt-4">
             <Slider {...settings}>
               {teamData.map((member, index) => (
                 <div key={index} onClick={() => handleImageClick(index)} className="">

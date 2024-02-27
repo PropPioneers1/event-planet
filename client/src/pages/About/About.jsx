@@ -2,10 +2,9 @@
 import Footer from "../../components/shared/Footer";
 import SectionHeading from "../../components/shared/SectionHeading/SectionHeading";
 import Container from "../../components/ui/Container";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-// import { FaAward } from "react-icons/fa6";
-// import { FaArrowAltCircleUp, FaArrowCircleDown } from "react-icons/fa";
-// import TestMonial from "../Home/HomeComponenets/Testmonial/Testmonial";
 import Ourteam from "./Ourteam";
 import WhyChoose from "../Home/HomeComponenets/WhyChooseEventPlanet/WhyChoose";
 const About = () => {

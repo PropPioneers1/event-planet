@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import SectionHeading from "../../../../components/shared/SectionHeading/SectionHeading";
 import Container from "../../../../components/ui/Container";
@@ -43,11 +45,12 @@ const OurNextEvents = () => {
     ],
   };
 
+  
+
   return (
     <div className="">
       <Container>
-        {/* <div className="border-2 border-red-400 grid grid-cols-12 gap-10 "> */}
-        {/* heading */}
+        
         <div>
           <SectionHeading
             title="Upcoming Event"
@@ -56,6 +59,7 @@ const OurNextEvents = () => {
           />
         </div>
         <Slider {...settings}>
+          
           {nextEvents?.map((event, idx) => (
             <OurNextEventCard
               key={idx}

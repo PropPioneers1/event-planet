@@ -1,11 +1,10 @@
-// paymentHandler.js
-
 const express = require("express");
 const SSLCommerzPayment = require("sslcommerz-lts");
-const PaymentSchema = require("../schemas/PaymentScheema");
+const PaymentSchema = require("../schemas/PaymentScheema"); // Corrected the spelling of "Schema"
 const mongoose = require("mongoose");
 const Payment = mongoose.model("Payment", PaymentSchema);
-
+const eventSchema = require("../schemas/eventSchema");
+const eventModel = mongoose.model("Event", eventSchema);
 const store_id = "event65c08b7004f38";
 const store_passwd = "event65c08b7004f38@ssl";
 const is_live = false;
@@ -51,28 +50,16 @@ router.post("/", async (req, res) => {
   try {
     const datasfront = req.body;
     const tran_id = new mongoose.Types.ObjectId().toString();
-
-    const paymentData = {
-      mobileNumber: datasfront.mobileNUmber,
-      eventName: datasfront.eventName,
-      cus_email: datasfront.cus_email,
-      currency: datasfront.currency,
-      total_amount: datasfront.totalAmount,
-      success_url: `http://localhost:5000/payment/success/${tran_id}`,
-      fail_url: "http://localhost:5173/fail",
-      paidstatus: "payment pending",
-      tran_id: tran_id,
-    };
-
-    const payment = new Payment(paymentData);
+    datasfront.tran_id = tran_id;
+    const payment = new Payment(datasfront);
     await payment.save();
 
     const sslczData = {
       total_amount: datasfront.totalAmount,
       currency: datasfront.currency,
       tran_id: tran_id,
-      success_url: `http://localhost:5000/payment/success/${tran_id}`,
-      fail_url: `http://localhost:5000/payment/failure/${tran_id}`,
+      success_url: `http://localhost:5000/payment/successful/${tran_id}`, 
+      fail_url: `http://localhost:5000/payment/failure/${tran_id}`, 
       cancel_url: "http://localhost:5173/cancel",
       ipn_url: "http://localhost:5173/ipn",
       shipping_method: "Courier",
@@ -114,10 +101,10 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.post("/success/:tran_id", async (req, res) => {
+router.post("/successful/:tran_id", async (req, res) => {
   try {
-    const { tran_id } = req.params; // Extract the transaction ID from req.params
-    console.log("Transaction ID:", tran_id); // Check if the transaction ID is correct
+    const { tran_id } = req.params;
+    console.log("Transaction ID:", tran_id);
 
     // Update the payment document
     const payment = await Payment.findOneAndUpdate(
@@ -126,19 +113,50 @@ router.post("/success/:tran_id", async (req, res) => {
       { new: true }
     );
 
-    console.log("Updated Payment:", payment); // Check if the payment document is updated
-
     if (!payment) {
+      console.error("Payment not found for transaction ID:", tran_id);
       return res.status(404).json({ error: "Payment not found" });
     }
 
-    // Redirect to success page once payment status is updated
-    res.redirect(`http://localhost:5173/payment/success/${tran_id}`);
+    // Update event data
+    // const event = await eventModel.findOneAndUpdate(
+    //   { _id: payment.eventid },
+    //   {
+    //     $set: {
+    //       totalSeat:-2,
+    //       ticketSold: +payment.ticketquantity
+    //     }},
+    //   { new: true }
+    // );
+
+    // console.log("Payment status updated successfully.", payment);
+    // console.log("Event updated successfully.", event);
+
+    // if (!event) {
+    //   // Rollback the payment status update if event is not found
+    //   await Payment.findOneAndUpdate(
+    //     { tran_id: tran_id },
+    //     { $set: { paidstatus: "payment failed" } }
+    //   );
+
+      // return res.status(404).json({ error: "Event not found" });
+    // }
+
+    // Redirect to success page once payment status is updated and event data is updated
+    res.redirect(`http://localhost:5173/payment/successful/${tran_id}`);
+
   } catch (error) {
     console.error("Error updating payment status:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
+
+
+
+
+
 router.post("/failure/:tran_id", async (req, res) => {
   try {
     const { tran_id } = req.params; // Extract the transaction ID from req.params
@@ -157,7 +175,7 @@ router.post("/failure/:tran_id", async (req, res) => {
       return res.status(404).json({ error: "Payment not found" });
     }
 
-    // Redirect to success page once payment status is updated
+    // Redirect to failure page once payment status is updated
     res.redirect(`http://localhost:5173/payment/failure/${tran_id}`);
   } catch (error) {
     console.error("Error updating payment status:", error);
@@ -166,12 +184,36 @@ router.post("/failure/:tran_id", async (req, res) => {
 });
 
 // get success data
-router.get("/:id", async (req, res) => {
-  const id = req.params.id;
+router.get("/:tran_id", async (req, res) => {
+  const tran_id = req.params.tran_id;
   try {
-    const result = await Payment.findById(id);
+    const result = await Payment.findOne({ tran_id: tran_id });
+    if (!result) {
+      return res.status(404).json({
+        error: "Transaction not found",
+      });
+    }
     res.status(200).json({ result });
   } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: "There was a server-side error",
+    });
+  }
+});
+
+router.get("/status/:ids", async (req, res) => {
+  const { ids } = req.params; // Correctly extract the 'ids' parameter
+  try {
+    const result = await Payment.findOne({ eventid: ids }, 'eventid paidstatus');
+    if (!result) {
+      return res.status(404).json({
+        error: "Event not found",
+      });
+    }
+    res.status(200).json({ eventid: result.eventid, paidstatus: result.paidstatus });
+  } catch (err) {
+    console.error(err);
     res.status(500).json({
       error: "There was a server-side error",
     });
