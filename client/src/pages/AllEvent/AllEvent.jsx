@@ -75,7 +75,7 @@ const AllEvent = () => {
   console.log(eventTitle, category, state, city, venues);
 
   return (
-    <div className="mt-16">
+    <div>
       {/* Slider */}
       <Swiper
         spaceBetween={30}

@@ -95,7 +95,7 @@ const Navbar = () => {
   return (
     <div className="">
       <div
-        className="bg-[#16181c] bg-opacity-100 
+        className=" bg-[#16181c] bg-opacity-100 
        top-0 z-50  w-full 
       shadow-2xl
       "
