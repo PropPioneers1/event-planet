@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import userProfile from "../../assets/image/user.png";
 
 const UpdateProfile = () => {
   const { user, loading } = useAuth();
@@ -52,15 +53,13 @@ const UpdateProfile = () => {
     const userInfo = {
       name,
       email,
-      userImage: userImage?.data?.display_url,
+      userImage: userImage?.data?.display_url || userProfile,
       phone,
       language,
       address,
       gender,
       about,
     };
-
-    console.log(userInfo);
 
     // saving user to database
     const result = await saveUser(userInfo);
@@ -129,7 +128,7 @@ const UpdateProfile = () => {
                 placeholder="Enter Your name"
                 className="input input-bordered focus:outline-none"
                 name="name"
-                defaultValue={userData && userData?.name}
+                defaultValue={user?.displayName}
               />
             </div>
             {/* Email */}
@@ -142,7 +141,7 @@ const UpdateProfile = () => {
                 placeholder="Enter Your Display Name"
                 className="input input-bordered focus:outline-none"
                 name="email"
-                defaultValue={userData && userData?.email}
+                defaultValue={user?.email}
                 readOnly
               />
             </div>

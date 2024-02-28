@@ -10,10 +10,15 @@ import { IoCreate } from "react-icons/io5";
 import logo from "../../../assets/image/logo.png";
 import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
+import useRole from "../../../hooks/useRole";
 
 const DashboardDemo = () => {
   const { user } = useAuth();
   const [isMenuTrue, setIsMenuTrue] = useState(false);
+  const { role } = useRole();
+
+  console.log(role, "rouleeeee");
+
   const iconStyle = `text-[19px] flex items-center  gap-2.5  py-2 px-4 rounded-md  hover:shadow-md hover:shadow-accent text-white transition-all duration-300`;
 
   const dashLinks = (
@@ -27,37 +32,49 @@ const DashboardDemo = () => {
         <FaUserAlt></FaUserAlt>
         <li>My Profile</li>
       </NavLink>
-      <NavLink to="/dashboard/add-product" className={iconStyle}>
-        <FiShoppingCart></FiShoppingCart>
-        <li> Add Product</li>
-      </NavLink>
 
       <NavLink to="/dashboard/create-blog" className={iconStyle}>
         <IoCreate></IoCreate>
         <li> Create Blog</li>
       </NavLink>
 
-      <NavLink to="/dashboard/my-cart" className={iconStyle}>
-        <IoMdCart></IoMdCart>
-        <li> My Cart</li>
-      </NavLink>
+      {role && role === "admin" ? (
+        <>
+          {" "}
+          {/* admin routes */}
+          <NavLink to="/dashboard/add-product" className={iconStyle}>
+            <FiShoppingCart></FiShoppingCart>
+            <li> Add Product</li>
+          </NavLink>
+          <NavLink to="/dashboard/event-requests" className={iconStyle}>
+            <FaCodePullRequest></FaCodePullRequest>
+            <li> Event Requests</li>
+          </NavLink>
+          <NavLink to="/dashboard/admin-summary" className={iconStyle}>
+            <MdSummarize></MdSummarize>
+            <li> Admin Summary</li>
+          </NavLink>
+        </>
+      ) : (
+        <>
+          {/* user Routes */}
 
-      <NavLink to="/dashboard/payment-history" className={iconStyle}>
-        <MdPayments></MdPayments>
-        <li> Payment History</li>
-      </NavLink>
-      <NavLink to="/dashboard/event-requests" className={iconStyle}>
-        <FaCodePullRequest></FaCodePullRequest>
-        <li> Event Requests</li>
-      </NavLink>
-      <NavLink to="/dashboard/admin-summary" className={iconStyle}>
-        <MdSummarize></MdSummarize>
-        <li> Admin Summary</li>
-      </NavLink>
-      <NavLink to="/dashboard/my-events" className={iconStyle}>
-        <FaCalendarAlt></FaCalendarAlt>
-        <li>My Events</li>
-      </NavLink>
+          <NavLink to="/dashboard/my-events" className={iconStyle}>
+            <FaCalendarAlt></FaCalendarAlt>
+            <li>My Events</li>
+          </NavLink>
+
+          <NavLink to="/dashboard/my-cart" className={iconStyle}>
+            <IoMdCart></IoMdCart>
+            <li> My Cart</li>
+          </NavLink>
+
+          <NavLink to="/dashboard/payment-history" className={iconStyle}>
+            <MdPayments></MdPayments>
+            <li> Payment History</li>
+          </NavLink>
+        </>
+      )}
     </>
   );
 

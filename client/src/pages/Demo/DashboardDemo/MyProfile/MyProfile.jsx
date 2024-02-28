@@ -74,7 +74,7 @@ const MyProfile = () => {
       </div>
       {/* user all info */}
       <div className="flex flex-col-reverse md:flex-row gap-8 my-10">
-        <div className=" bg-white shadow-lg shadow-gray-300 rounded-lg border">
+        <div className=" bg-white shadow-lg shadow-gray-300 rounded-lg border w-full md:w-1/2 ">
           {/* Name */}
           <div className="grid grid-cols-2 py-4 px-4">
             <div className="col-span-1 ">
@@ -148,7 +148,7 @@ const MyProfile = () => {
           </div>
         </div>
         {/* about */}
-        <div className="bg-white shadow-lg shadow-gray-300 rounded-lg p-4 border">
+        <div className="bg-white shadow-lg shadow-gray-300 rounded-lg p-4 border w-full md:w-1/2 ">
           <h2 className="text-xl font-semibold text-gray-500 pb-5">About</h2>
           <p>{currentUser?.about}</p>
         </div>
