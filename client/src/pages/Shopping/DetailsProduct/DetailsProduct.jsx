@@ -15,7 +15,7 @@ const DetailsProduct = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const { user } = useAuth();
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [textCount, setTextCount] = useState(0);
   const [rating, setRating] = useState();
   const [userOpinion, setUserOpinion] = useState();
