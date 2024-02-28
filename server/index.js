@@ -26,8 +26,7 @@ const ContactHandler = require("./ContactHnadler/Contacthandler");
 const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
 const messageHandler = require("./MessageHandler/MessageHandler");
 const likeDislikeHandler = require("./FeedbackHandler/likeDislikeHandler");
-const Pymentticket=require ('./Pymentticket/Paymentticket.js')
-const Productpay=require ('./Productpayment/Productpay.js')
+const Productpay = require("./paymentHandler/PaymentHandler");
 // middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -37,10 +36,11 @@ const dbURI = `mongodb+srv://EventPlanet:6oNbcueawJevcwOk
 @proppioneers.pzy67in.mongodb.net/Event-Planet`;
 // Mongodb connection
 
-mongoose.connect(
-  `mongodb+srv://EventPlanet:6oNbcueawJevcwOk
+mongoose
+  .connect(
+    `mongodb+srv://EventPlanet:6oNbcueawJevcwOk
 @proppioneers.pzy67in.mongodb.net/Event-Planet`
-)
+  )
   .then(() => {
     console.log("Connected to MongoDB");
   })
@@ -56,13 +56,10 @@ app.use("/shop", shopHandler);
 app.use("/qna", QnaHandler);
 app.use("/selectedthm", selecthemeHandler);
 app.use("/blog", blogHandler);
-
 app.use("/event", eventHandler);
 app.use("/upcomingDetails", upComingDetailHandler);
 app.use("/payment", paymenthandler);
 app.use("/feedback", feedbackHandler);
-// send confirmation mail if the user successfully booking a event
-
 app.get("/sendEmail", sendMail);
 app.use("/token", notificationHandler);
 app.use("/users", usersHandler);
@@ -71,9 +68,8 @@ app.use("/contact", ContactHandler);
 app.get("/sendEmail", sendMail);
 app.use("/token", notificationHandler);
 app.use("/message", messageHandler);
-app.use("/likeDislike",likeDislikeHandler);
-app.use("/ticketpay",Pymentticket);
-app.use("/productpay",Productpay);
+app.use("/likeDislike", likeDislikeHandler);
+app.use("/productpay", Productpay);
 
 // Eroor handler
 

@@ -34,6 +34,8 @@ import ContactUs from "../pages/Contact/ContactUs";
 import Successrout from "../components/shared/PaymentPage/Successrout";
 import SignIn from "../pages/SignIn/SignIn";
 // import LogIn from "../pages/SignIn/LogIn";
+import DashboardDemo from "./../pages/Demo/DashboardDemo/DashboardDemo";
+import MyProfile from "./../pages/Demo/DashboardDemo/MyProfile/MyProfile";
 
 const Router = createBrowserRouter([
   {
@@ -55,7 +57,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "blogs",
-        element:<OurBlogs />,
+        element: <OurBlogs />,
       },
       {
         path: "/blog-details/:id",
@@ -76,7 +78,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "payment/successful/:tranid",
-        element: <Successrout></Successrout>
+        element: <Successrout></Successrout>,
       },
       {
         path: "payment/failure/:tran_id",
@@ -116,11 +118,11 @@ const Router = createBrowserRouter([
 
   {
     path: "/dashboard",
-    element: <Dashboard></Dashboard>,
+    element: <DashboardDemo />,
     children: [
       {
         path: "profile",
-        element: <Profile></Profile>,
+        element: <MyProfile />,
       },
       {
         path: "add-product",
