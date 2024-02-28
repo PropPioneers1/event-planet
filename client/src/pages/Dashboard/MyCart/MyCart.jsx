@@ -3,7 +3,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 import { Link } from "react-router-dom";
 import SingleCart from "./SingleCart";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 const MyCart = () => {
@@ -12,7 +12,7 @@ const MyCart = () => {
   const [priceCount,setPriceCount]=useState(0);
 
     const {user}=useAuth()
-  const { data: myCartItem = [] } = useQuery({
+  const { data: myCartItem = [] ,refetch} = useQuery({
     queryKey: ["myCartItems",user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/shop/my-cart/${user?.email}`);
@@ -20,6 +20,19 @@ const MyCart = () => {
     },
   });
  
+  useEffect(() => {
+    if (myCartItem && myCartItem.length > 0) {
+      const initialPriceCount = myCartItem.reduce((sum, cartItem) => sum + (cartItem.price * (cartItem.quantity || 1)), 0);
+      setPriceCount(initialPriceCount);
+    }
+  }, [myCartItem]);
+
+
+  const updatePriceCount = (amount) => {
+    // Implement logic to update the priceCount in the parent component
+    setPriceCount(amount);
+  };
+
  const handlepay=()=>{
   const data={
     email:user?.email,
@@ -51,7 +64,7 @@ const MyCart = () => {
             Your Cart
           </h2>
           <div className="mb-10">
-            {myCartItem?.map((cart)=><SingleCart priceCount={priceCount} setPriceCount={setPriceCount} key={cart._id} cart={cart}></SingleCart>)}
+            {myCartItem?.map((cart)=><SingleCart refetch={refetch} updatePriceCount={updatePriceCount} priceCount={priceCount} setPriceCount={setPriceCount} key={cart._id} cart={cart}></SingleCart>)}
           </div>
           <div className="mb-10">
             <div className="px-10 py-3 bg-gray-100 rounded-md dark:bg-gray-800">
