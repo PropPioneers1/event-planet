@@ -34,6 +34,7 @@ import MyEvents from "../pages/Dashboard/MyEvents/MyEvents";
 import ContactUs from "../pages/Contact/ContactUs";
 import Successrout from "../components/shared/PaymentPage/Successrout";
 import ManageEvents from "../pages/Dashboard/ManageEvents/ManageEvents";
+import Tasks from "../pages/Dashboard/ManageEvents/Tasks/Tasks";
 
 const Router = createBrowserRouter([
   {
@@ -162,6 +163,10 @@ const Router = createBrowserRouter([
       {
         path:"manage-events",
         element:<ManageEvents></ManageEvents>
+      },
+      {
+        path:"tasks/:id",
+        element:<Tasks></Tasks>
       }
     ],
   },

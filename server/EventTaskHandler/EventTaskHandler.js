@@ -21,6 +21,18 @@ router.get("/", async (req, res) => {
     }
 })
 
+router.get("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        let query = {_id: id};
+        const result = await eventTaskModel.findOne(query);
+        res.status(200).send(result);
+    } catch (error) {
+        res.status(500).json({ error: "internal server error" });
+    }
+})
+
+
 // Posting board data 
 router.post("/", async (req, res) => {
     const board = req.body;
