@@ -30,7 +30,7 @@ const Dashboard = () => {
     },
   });
 
-  console.log(currentUser);
+  // console.log(currentUser);
 
 
   useEffect(() => {
@@ -39,8 +39,8 @@ const Dashboard = () => {
     }
   }, [currentUser?.role])
 
-  console.log(currentUser);
-  console.log(isAdmin);
+  // console.log(currentUser);
+  // console.log(isAdmin);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isCollapse, setIsCollapse] = useState(false);

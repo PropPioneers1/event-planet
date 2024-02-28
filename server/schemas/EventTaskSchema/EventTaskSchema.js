@@ -14,13 +14,24 @@ const EventTaskSchema = new mongoose.Schema({
         name: String,
         email: String
     },
+
     task: {
-        type: Object,
-        required: true,
-        todo: Array,
-        progress: Array,
-        completed: Array
-    }
+        type:Object,
+        required:true,
+        toDo: {
+            type: Object,
+            required: true,
+        },
+        progress: {
+            type: Array,
+            required: true,
+        },
+        completed: {
+            type: Array,
+            required: true,
+        },
+    },
+
 });
 
 
