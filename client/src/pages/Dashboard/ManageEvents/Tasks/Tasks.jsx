@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useParams } from "react-router-dom";
 import { GoPlus } from "react-icons/go";
 import { RxCross2 } from "react-icons/rx";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 
 const Tasks = () => {
 
-    const { user } = useAuth();
+
     const axiosSecure = useAxiosSecure();
     const { id } = useParams();
 
@@ -17,7 +17,7 @@ const Tasks = () => {
 
     // fetching single board
     const { data: board = {}, isPending } = useQuery({
-        queryKey: ["board", user?.email],
+        queryKey: ["board"],
         queryFn: async () => {
             const result = await axiosSecure.get(
                 `/eventTask/${id}`
@@ -26,22 +26,43 @@ const Tasks = () => {
         },
     });
 
-    // function for creating new TODO
-    const handleAddTodo = async(e) => {
-        e.preventDefault();
-        const description= e.target.todo.value;
+    // fetching all todo
+    const { data: todo = [], refetch } = useQuery({
+        queryKey: ["todo"],
+        queryFn: async () => {
+            const result = await axiosSecure.get(
+                `/eventTodo/${id}`
+            );
+            return result?.data;
+        },
+    });
+    console.log(todo);
+    console.log(id);
 
-        const todo ={
+
+
+    // function for creating new TODO
+    const handleAddTodo = async (e) => {
+        e.preventDefault();
+        const description = e.target.todo.value;
+
+        const todo = {
             description,
-            data: new Date()
+            date: new Date(),
+            boardId: id,
+            status: "todo"
         }
 
         // sending todo to server
-        const result = await axiosSecure.put(`/eventTask/${id}`, todo);
-        console.log(result);
+        const result = await axiosSecure.post(`/eventTodo`, todo);
+        if (result) {
+            toast.success("Todo Added Successfully")
+            refetch();
+            setIsCard(false)
+        }
     }
 
-    if(isPending){
+    if (isPending) {
         return <h2>Loading....</h2>
     }
 
@@ -60,6 +81,18 @@ const Tasks = () => {
                 {/* Todo */}
                 <div className="bg-neutral p-4 rounded-md ">
                     <h2 className="text-xl font-semibold">{board?.boardName}: Todo</h2>
+
+                    {/* Showing previous toDos */}
+                    <div className="mt-4">
+                        {
+                            todo?.map((item, idx) =>
+                                <div key={idx}
+                                    className="bg-white mt-2 py-4 px-2 rounded-md shadow"
+                                    draggable>
+                                    <h2>{item?.description}</h2>
+                                </div>)
+                        }
+                    </div>
                     {/* add a new card */}
                     {
                         !isCard &&
@@ -79,7 +112,7 @@ const Tasks = () => {
                                     placeholder="Add Todo"
                                     name="todo"
                                     className="textarea resize-none textarea-bordered min-h-[36px]  h-auto w-full focus:outline-none"
-                                    
+
                                 ></textarea>
                                 <div className="flex items-center gap-2">
                                     {/* Add card button */}

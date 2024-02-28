@@ -1,24 +1,23 @@
 const mongoose = require('mongoose');
 
-const EventTaskSchema = new mongoose.Schema({
-    boardName: {
-        type: String,
-        required: true
-    },
-    boardBgImg: {
-        type: String,
-    },
-    plannerName: {
+const EventToDoSchema = new mongoose.Schema({
+    description: {
         type: String,
         required: true,
     },
-    plannerEmail: {
+    boardId: {
+        type: String,
+        required:true,
+    },
+    date: {
         type: String,
         required: true,
     },
-
+    status: {
+        type: String,
+        required: true,
+    },
+    
 });
 
-
-
-module.exports = EventTaskSchema
+module.exports = EventToDoSchema

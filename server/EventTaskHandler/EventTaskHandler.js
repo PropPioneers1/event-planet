@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
         const { email } = req.query;
         let query = {};
         if (email) {
-            query["planer.email"] = email;
+            query.plannerEmail = email;
         }
         const result = await eventTaskModel.find(query);
         res.status(200).send(result);
@@ -47,21 +47,7 @@ router.post("/", async (req, res) => {
     }
 });
 
-// updating todo
-router.put("/:id", async (req, res) => {
-    const { id } = req.params;
-    const todo  = req.body;
-    try {
-        const result = await eventTaskModel.findByIdAndUpdate({_id:id},
-            { $push: { "task.toDo": todo }}, // Push new items to the todo array
-            { new: true }
-        );
-        res.json(result);
-    } catch (error) {
-        console.log("Error Adding Todo", error);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-});
+
 
 
 module.exports = router;

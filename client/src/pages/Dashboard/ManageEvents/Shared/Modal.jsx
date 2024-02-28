@@ -21,15 +21,8 @@ const Modal = ({ refetch, setIsModal }) => {
             const board = {
                 boardName,
                 boardBgImg: imageData?.data?.display_url,
-                planer: {
-                    name: user?.displayName,
-                    email: user?.email
-                },
-                task: {
-                    toDo: [],
-                    progress: [],
-                    completed: []
-                }
+                plannerName:user?.displayName ,
+                plannerEmail:user?.email,
 
             };
             console.log(board);
