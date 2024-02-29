@@ -70,11 +70,13 @@ const UpcomingDetails = () => {
     },
   });
   console.log(eventDetails)
+  
+  const fullDescription = eventDetails?.description;
+  const shortDescription = fullDescription ? fullDescription.substring(0, 120) : "";
+
   const toggleDescription = () => {
       setShowDescription(!showDescription)
   }
-  const fullDescription = eventDetails?.description;
-  const shortDescription = fullDescription.substring(0, 120);
   
   const date = getDate(eventDetails?.startDate);
 
@@ -160,13 +162,13 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                   <div className="mb-5 md:px-3 px-2">
                       {
                          showDescription ? (
-                          <p className="text-slate-700 inline">{fullDescription}</p>
+                          <p className="text-slate-700 inline">{eventDetails?.description}</p>
                          ):(
                           <p className="text-slate-700 inline">{shortDescription} </p>
                          )
                       }
                        {
-                       fullDescription.length > 120 &&(
+                       eventDetails?.description.length > 120 &&(
                         <button onClick={toggleDescription} className="text-primary font-semibold ml-2 underline">Learn More</button>
                        )
                         }

@@ -69,7 +69,7 @@ const PostFeedback = ({title,image,id}) => {
     // post feed back
     const result = await axiosSecure.post("/feedback", usersFeedBack);
     if (result?.status === 200) {
-      refetch()
+      refetch();
       toast.success("Thanks For Your Feedback");
     }
   };
@@ -110,7 +110,7 @@ const PostFeedback = ({title,image,id}) => {
                     <div className="mb-6">
                       <div className="py-2 px-4 mb-4 relative bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                         {/*todo:  */}
-                        <div className="flex sticky -top-6 bg-white justify-between py-2 items-center shadow">
+                        <div className="flex sticky -top-6 bg-white justify-between py-2 items-center shadow z-10">
                           <div className="flex items-center gap-3">
                             <img
                               className="w-14 h-14 rounded-full"

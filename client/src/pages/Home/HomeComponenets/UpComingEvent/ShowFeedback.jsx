@@ -26,6 +26,7 @@ const { data: progressData} = useQuery({
     queryFn: async () => {
       if (title) {
         const res = await axiosSecure.get(`/feedback/${title}/${id}`);
+        refetch()
         return res?.data?.result;
         
       }
@@ -52,7 +53,8 @@ const calculateTotalRatingStars = () => {
     setTotalRatingStars(totalStars);
 };
 const averageStar = (totalRatingStars / feedbackData?.length).toFixed(1);
-console.log(averageStar.length)
+const totalStr = (totalRatingStars / feedbackData?.length);
+console.log(" star",totalStr)
     return (
         <>
             {/* Show All users feedback here */}
@@ -102,7 +104,7 @@ console.log(averageStar.length)
                 <div className="grid grid-cols-8 gap-5">
                   <div className="md:col-span-2 col-span-3 text-center">
                   <div>
-                    {averageStar && averageStar.length > 0 ? (
+                    {feedbackData?.length > 0 ? (
                       <h2 className="text-5xl font-semibold mb-2">{averageStar}</h2>
                     ) : (
                       <h2 className="text-5xl font-semibold mb-2">0.0</h2>
