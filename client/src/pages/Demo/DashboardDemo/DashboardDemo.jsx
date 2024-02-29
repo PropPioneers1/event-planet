@@ -50,10 +50,15 @@ const DashboardDemo = () => {
             <FaCodePullRequest></FaCodePullRequest>
             <li> Event Requests</li>
           </NavLink>
+          <NavLink to="/dashboard/manage-events" className={iconStyle}>
+            <MdSummarize></MdSummarize>
+            <li>Manage Events</li>
+          </NavLink>
           <NavLink to="/dashboard/admin-summary" className={iconStyle}>
             <MdSummarize></MdSummarize>
             <li> Admin Summary</li>
           </NavLink>
+         
         </>
       ) : (
         <>
