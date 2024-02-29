@@ -14,21 +14,12 @@ const DetailsProduct = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const { user } = useAuth();
-  const [quantity, setQuantity] = useState(1);
   const [textCount, setTextCount] = useState(0);
   const [rating, setRating] = useState();
   const [userOpinion, setUserOpinion] = useState();
   const [userImage, setUSerImage] = useState();
 
-  const handleIncreaseQuantity = () => {
-    setQuantity(quantity + 1);
-  };
-
-  const handleDecreaseQuantity = () => {
-    if (quantity > 0) {
-      setQuantity(quantity - 1);
-    }
-  };
+ 
 
   const { data: productDetails, isLoading, isError } = useQuery({
     queryKey: ["productDetails"],
@@ -44,19 +35,20 @@ const DetailsProduct = () => {
     },
   });
 
-  const { title, image, description, price } = productDetails ? productDetails.result || {} : {};
-
+  const { title, image, description, price } = productDetails
+    ? productDetails.result || {}
+    : {};
 
   const handleAddToCart = (productDetails) => {
     if (user) {
-      const { _id, image, title, price } =  productDetails.result;
+      const { _id, image, title, price } = productDetails.result;
 
       const cartItem = {
         email: user.email,
         image,
         title,
         price,
-        quantity: 1
+        quantity: 1,
       };
       axiosSecure.post(`/shop/shopCart/${_id}`, cartItem).then((res) => {
         if (res.data) {
@@ -74,8 +66,6 @@ const DetailsProduct = () => {
       });
     }
   };
-
- 
 
   // handle text count
   const handleTextCount = (e) => {
@@ -105,7 +95,7 @@ const DetailsProduct = () => {
   const handleUsersFeedBack = async (e) => {
     e.preventDefault();
     const usersFeedBack = {
-      id:id,
+      id: id,
       email: user?.email,
       name: user?.displayName,
       product_name: title,
@@ -118,27 +108,24 @@ const DetailsProduct = () => {
     // post feed back
     const result = await axiosSecure.post("/feedback", usersFeedBack);
     if (result?.status === 200) {
-      refetch()
+      refetch();
       toast.success("Thanks For Your Feedback");
     }
-    console.log(result)
+    console.log(result);
   };
 
-  
+  const { data: feedbackData, refetch } = useQuery({
+    queryKey: ["feedbackData"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/feedback/${id}`);
+      return res?.data?.result;
+    },
+  });
 
-const { data: feedbackData,refetch } = useQuery({
-  queryKey: ["feedbackData"],
-  queryFn: async () => {
-    const res = await axiosSecure.get(`/feedback/${id}`);
-    return res?.data?.result;
-    
-  },
-});
-
- if(isLoading) return <span className="loading loading-infinity loading-lg"></span>
- if(isError) return <div>loading..</div>
+  if (isLoading)
+    return <span className="loading loading-infinity loading-lg"></span>;
+  if (isError) return <div>loading..</div>;
   return (
-    
     <section className="py-10 mt-14 font-poppins dark:bg-gray-800">
       <div className="max-w-6xl px-4 mx-auto">
         <div className="flex flex-wrap mb-24 -mx-4">
@@ -297,7 +284,10 @@ const { data: feedbackData,refetch } = useQuery({
                     <div>5</div>
                   </div>
                   <div className="col-span-5 border">
-                    {feedbackData && feedbackData.map(rating=><Progress key={rating._id} rating={rating}></Progress>)}
+                    {feedbackData &&
+                      feedbackData.map((rating) => (
+                        <Progress key={rating._id} rating={rating}></Progress>
+                      ))}
                   </div>
                 </div>
                 {/* show all users feedback */}
@@ -567,42 +557,11 @@ const { data: feedbackData,refetch } = useQuery({
               <div className="flex flex-wrap items-center mb-6">
                 <div className="mb-4 mr-4 lg:mb-0">
                   <div className="w-28">
-                    <div className="relative flex flex-row w-full h-10 bg-transparent rounded-lg">
-                      <button className="w-20 h-full text-gray-600 bg-gray-100 border-r rounded-l outline-none cursor-pointer dark:border-gray-700 dark:hover:bg-gray-700 dark:text-gray-400 hover:text-gray-700 dark:bg-gray-900 hover:bg-gray-300">
-                        <button
-                          className="m-auto text-2xl font-thin"
-                          onClick={handleDecreaseQuantity}
-                        >
-                          -
-                        </button>
-                      </button>
-                      <p className="text-center py-2 items-center w-full font-semibold bg-gray-100 dark:text-gray-400 dark:placeholder-gray-400 dark:bg-gray-900 focus:outline-none text-md hover:text-black">
-                        {quantity}
-                      </p>
-                      <button className="w-20 h-full text-gray-600 bg-gray-100 border-l rounded-r outline-none cursor-pointer dark:border-gray-700 dark:hover:bg-gray-700 dark:text-gray-400 dark:bg-gray-900 hover:text-gray-700 hover:bg-gray-300">
-                        <button
-                          className="m-auto text-2xl font-thin"
-                          onClick={handleIncreaseQuantity}
-                        >
-                          +
-                        </button>
-                      </button>
-                    </div>
+                    
                   </div>
                 </div>
                 <div className="mb-4 lg:mb-0">
-                  <button className="flex items-center justify-center w-full h-10 p-2 mr-4 text-gray-700 border border-gray-300 lg:w-11 hover:text-gray-50 dark:text-gray-200 dark:border-blue-600 hover:bg-pink-600 hover:border-blue-600 dark:bg-pink-600 dark:hover:bg-pink-600 dark:hover:border-pink-500 dark:hover:text-gray-100">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      className=" bi bi-heart"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
-                    </svg>
-                  </button>
+                  
                 </div>
                 <button
                   onClick={() => handleAddToCart(productDetails)}
