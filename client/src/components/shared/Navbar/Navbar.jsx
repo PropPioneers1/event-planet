@@ -37,7 +37,7 @@ const Navbar = () => {
           Contact Us
         </li>
       </NavLink>
-      <NavLink className="grid place-items-center">
+      <NavLink className="grid lg:place-items-center">
         <NotificationMessage></NotificationMessage>
       </NavLink>
     </>

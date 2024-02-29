@@ -6,18 +6,18 @@ import { FaLocationDot, FaPhone } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import Footer from "../../components/shared/Footer";
 import toast from 'react-hot-toast';
-const ContactUs = () => {
 
+const ContactUs = () => {
     const form = useRef();
     const [selectedCategory, setSelectedCategory] = useState('');
     const [jsonData, setJsonData] = useState([]);
     const [meetData, setMeetData] = useState([]);
     const [formSubmitted, setFormSubmitted] = useState(false);
     const [currentTime, setCurrentTime] = useState(new Date());
-
+    const [timeSlots, setTimeSlots] = useState([]);
+    const [selectedSlot, setSelectedSlot] = useState('');
 
     // Time related
-
     useEffect(() => {
         const timerID = setInterval(() => tick(), 1000);
         return () => clearInterval(timerID);
@@ -26,24 +26,7 @@ const ContactUs = () => {
     function tick() {
         setCurrentTime(new Date());
     }
-
-    // Function to check if current time is between 9:00 PM and 11:00 PM
-    const isTimeInRange = () => {
-        const currentHour = currentTime.getHours();
-        return currentHour >= 21 && currentHour < 23;
-    };
-
-
-    const handleSubmitClick = () => {
-        if (!isTimeInRange()) {
-            toast.error("This time is not for the meeting.")
-        } else {
-            toast.success('Online Video Call Support Are Running!')
-        }
-    };
-
-    // Time Related 
-
+    
     useEffect(() => {
         fetch('Ourteam.json')
             .then(res => res.json())
@@ -60,16 +43,42 @@ const ContactUs = () => {
             })
     }, [])
 
+    // Function to check if current time is between 9:00 PM and 11:00 PM
+    const isTimeInRange = () => {
+        const currentHour = currentTime.getHours();
+        return currentHour >= 21 && currentHour < 23;
+    };
 
+    // Generate time slots from startTime to endTime with a specified interval
+    const generateTimeSlots = (startTime, endTime, interval) => {
+        const slots = [];
+        let currentTime = new Date(startTime);
 
+        while (currentTime <= endTime) {
+            const timeString = currentTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            slots.push(timeString);
+            currentTime.setMinutes(currentTime.getMinutes() + interval);
+        }
+
+        return slots;
+    };
+
+    useEffect(() => {
+        const startTime = new Date();
+        startTime.setHours(21, 0, 0); // 9:00 PM
+        const endTime = new Date();
+        endTime.setHours(23, 0, 0); // 11:00 PM
+        const interval = 20; // 20 minutes
+
+        const slots = generateTimeSlots(startTime, endTime, interval);
+        setTimeSlots(slots);
+    }, []);
+
+    // Remaining code...
 
     const handleCategoryChange = (event) => {
         setSelectedCategory(event.target.value);
     };
-
-
-    const filteredData = jsonData?.filter(event => event?.category === selectedCategory);
-    const filteredMeetData = meetData?.filter(item => item?.category === selectedCategory);
 
     const formData = (e) => {
         e.preventDefault();
@@ -81,7 +90,7 @@ const ContactUs = () => {
         console.log(meetData);
         setFormSubmitted(true);
         form.reset();
-    }
+    };
 
     const sendEmail = (e) => {
         e.preventDefault();
@@ -99,6 +108,13 @@ const ContactUs = () => {
             );
     };
 
+    const handleSubmitClick = () => {
+        if (!isTimeInRange()) {
+            toast.error("This time is not for the meeting.")
+        } else {
+            toast.success('Online Video Call Support Are Running!')
+        }
+    };
 
     return (
         <div>
@@ -108,24 +124,20 @@ const ContactUs = () => {
                     <div className="max-w-xl">
                         <h1 className="mb-5 text-3xl font-bold">CONTACT US NOW</h1>
                         <h1 className="mb-5 text-5xl font-bold">KEEP IN TOUCH</h1>
-
                     </div>
                 </div>
             </div>
             <Container>
-
                 <div>
                     <div>
-                        <SectionHeading title="Meet Support" normalSubTitleWord="Contact With Our " boldSubTitleWord="Event Planer"></SectionHeading>
+                        <SectionHeading title="Meet Support" normalSubTitleWord="Contact With Our " boldSubTitleWord="Event Planner"></SectionHeading>
                         <div className="flex justify-center text-white">
-
-                            <div style={{ backgroundImage: 'url(https://i.ibb.co/51qN9bn/image.png) ', backgroundSize: `cover`, backgroundPosition: `center` }} className=" rounded-md   md:w-[600px] bg-base-100 shadow-xl p-20">
-
+                            <div style={{ backgroundImage: 'url(https://i.ibb.co/51qN9bn/image.png) ', backgroundSize: `cover`, backgroundPosition: `center` }} className="rounded-md md:w-[600px] bg-base-100 shadow-xl p-20">
                                 <form onSubmit={formData} className="max-w-xl mx-auto">
                                     <div className="py-4">
                                         <div id="eventDetails">
-                                            <h1 className="text-lg text-center font-title">Contact with our event planer 9:00 PM to 11:00 PM</h1>
-                                            {filteredData.map(event => (
+                                            <h1 className="text-lg text-center font-title">Contact with our event planner 9:00 PM to 11:00 PM</h1>
+                                            {jsonData?.filter(event => event?.category === selectedCategory).map(event => (
                                                 <div className="text-center text-lg space-y-1" key={event.id}>
                                                     <h1 className="text-xl mb-3 font-title">Your Meet Supporter</h1>
                                                     <div className="flex justify-center">
@@ -138,13 +150,18 @@ const ContactUs = () => {
                                             ))}
                                         </div>
                                         <div className="py-4 space-y-3">
-                                            <select value={selectedCategory} onChange={handleCategoryChange} name="optionCategory" className="bg-gray-50 border  text-gray-900 border-primary rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-lg">
-                                                <option  >Select Category</option>
-                                                {
-                                                    jsonData?.map((item, idx) => (<option key={idx}>
-                                                        {item?.category}
-                                                    </option>))
-                                                }
+                                            <select value={selectedCategory} onChange={handleCategoryChange} name="optionCategory" className="bg-gray-50 border text-gray-900 border-primary rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-lg">
+                                                <option>Select Category</option>
+                                                {jsonData?.map((item, idx) => (
+                                                    <option key={idx}>{item?.category}</option>
+                                                ))}
+                                            </select>
+
+                                            <select value={selectedSlot} onChange={(e) => setSelectedSlot(e.target.value)} name="optionCategory" className="bg-gray-50 border text-gray-900 border-primary rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-lg">
+                                                <option>Select Time Slot</option>
+                                                {timeSlots.map((slot, index) => (
+                                                    <option key={index}>{slot}</option>
+                                                ))}
                                             </select>
 
                                             <textarea name="question" placeholder="Your Question" className="textarea textarea-bordered textarea- w-full max-w-full border-primary text-black" required></textarea>
@@ -158,7 +175,7 @@ const ContactUs = () => {
                                             />
                                             {selectedCategory ? (
                                                 <div>
-                                                    {filteredMeetData.map((event, idx) => (
+                                                    {meetData?.filter(item => item?.category === selectedCategory).map((event, idx) => (
                                                         <a
                                                             key={idx}
                                                             className={`btn ${formSubmitted ? 'bg-primary' : 'bg-gray-300'} border text-white hover:bg-primary`}
@@ -184,11 +201,7 @@ const ContactUs = () => {
                                         </div>
                                     </div>
                                 </form>
-
                             </div>
-
-
-
                         </div>
                     </div>
                 </div>
@@ -198,13 +211,12 @@ const ContactUs = () => {
                     <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">Contact Us</h2>
                     <p className="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">Got a technical issue? Want to send feedback about a beta feature? Need details about our Business plan? Let us know.</p>
                     {/* Main div */}
-                    <div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-5 md:p-7 rounded-lg text-white" style={{ backgroundImage: 'url(https://i.ibb.co/MG2RBj3/image-2.png)' }} >
+                    <div className="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-5 md:p-7 rounded-lg text-white" style={{ backgroundImage: 'url(https://i.ibb.co/MG2RBj3/image-2.png)' }}>
                         <div>
                             <form ref={form} onSubmit={sendEmail} className="space-y-8 ">
                                 <div>
                                     <label htmlFor="subject" className="block mb-2 text-sm font-medium text-white dark:text-gray-300">Your Name</label>
                                     <input type="text" name="from_name" id="subject" className="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Enter your name" required />
-
                                 </div>
                                 <div>
                                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-white dark:text-gray-300">Your email</label>
@@ -220,7 +232,6 @@ const ContactUs = () => {
                         <div className=" p-5 space-y-3">
                             <iframe className="sm:mb-10 w-full "
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57903.062360049844!2d91.81983580698456!3d24.89998049301974!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x375054d3d270329f%3A0xf58ef93431f67382!2sSylhet!5e0!3m2!1sen!2sbd!4v1708321918956!5m2!1sen!2sbd"
-                                // width="360"
                                 height="280"
                                 style={{ border: 0 }}
                                 allowFullScreen=""
@@ -240,11 +251,8 @@ const ContactUs = () => {
                             </div>
                         </div>
                     </div>
-
-                    {/* MAin div end */}
                 </div>
             </section>
-
             <Footer></Footer>
         </div>
     );

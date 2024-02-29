@@ -27,7 +27,7 @@ const NotificationMessage = () => {
 
     return (
         <div>
-            <div className="dropdown dropdown-bottom dropdown-end">
+            <div className="dropdown dropdown-bottom sm:dropdown-center md:dropdown-end">
                 <div tabIndex={0} role="button" className="m-1" onClick={handleNotificationClick}>
                     {showNotification ? (
                         <div className="flex items-center relative">
@@ -38,9 +38,9 @@ const NotificationMessage = () => {
                         <RiNotification4Fill className="h-9 w-8" />
                     )}
                 </div>
-                <ul tabIndex={0} className="dropdown-content text-black z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                <ul tabIndex={0} className="dropdown-content  text-black z-[1] menu p-2 shadow bg-base-100 rounded-box w-56">
                     {message.map((messageInfo, id) => (
-                        <li className="mb-2 mt-2 border p-3" key={id}>{messageInfo.body}</li>
+                        <li className="mb-2 mt-2  border-b-2 rounded-xl p-2" key={id}>{messageInfo.body}</li>
                     ))}
                 </ul>
             </div>
