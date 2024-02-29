@@ -13,7 +13,7 @@ const axiosSecure=useAxiosSecure();
 
 
     //   total users
-const { data: totalUser } = useQuery({
+const { data: totalUser,isLoading,isError } = useQuery({
     queryKey: ["totalUsers"],
     queryFn: async () => {
       const res = await axiosSecure.get('/users/userCount');
@@ -27,54 +27,52 @@ const { data: totalUser } = useQuery({
     },
   });
 
-  console.log('totalUsers',totalUser)
 
 
   const [state, setState] = useState({
-    series: [totalUser, 55],
+    series: [totalUser || 0, 55, 13, 43, 22],
+    chart: {
+    width: 380,
+    type: 'pie',
+  },
+  options: {
+    chart: {
+      width: 380,
+      type: 'pie',
+    },
+  labels: ['Users', 'Team B', 'Team C', 'Team D', 'Team E'],
+  responsive: [{
+    breakpoint: 480,
     options: {
-        chart: {
-          width: 380,
-          type: 'pie',
-        },
-        labels: ['Total Users', 'Tickets Sell',],
-  plotOptions: {
-    radialBar: {
-      dataLabels: {
-        name: {
-          fontSize: '22px',
-        },
-        value: {
-          fontSize: '16px',
-        },
-        total: {
-          show: true,
-          label: 'Total',
-          formatter: function (w) {
-            return 249
-          }
-        }
+      chart: {
+        width: 200
+      },
+      legend: {
+        position: 'bottom'
       }
     }
-}
-  },
-
- 
-  });
+  }]
+  }});
  
 
   
 
     return (
         <div>
-      <div id="chart">
-        <ReactApexChart 
-          options={state.options}
-          series={state.series}
-          type="donut"
-        />
-      </div>
-      <div id="html-dist"></div>
+      {isLoading && <p>Loading...</p>}
+      {isError && <p>Error fetching data</p>}
+      {!isLoading && !isError && (
+        <div>
+          <div id="chart">
+            <ReactApexChart 
+              options={state.options}
+              series={state.series}
+              type="donut"
+            />
+          </div>
+          <div id="html-dist"></div>
+        </div>
+      )}
     </div>
     );
 };

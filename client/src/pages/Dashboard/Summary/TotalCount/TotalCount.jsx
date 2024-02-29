@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import ReactApexChart from "react-apexcharts";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 /* eslint-disable no-unused-vars */
 
 const TotalCount = () => {
 const axiosSecure=useAxiosSecure();
 
 //   total products
-const { data: totalEvent } = useQuery({
+const { data: totalEvent,isError: eventError, isLoading: eventLoading } = useQuery({
   queryKey: ["totalEvents"],
   queryFn: async () => {
     const res = await axiosSecure.get('/event/eventCount');
@@ -25,7 +25,7 @@ const { data: totalEvent } = useQuery({
 
 // total tickets
 
-const { data: totalTicket } = useQuery({
+const { data: totalTicket, isError: ticketError, isLoading: ticketLoading } = useQuery({
   queryKey: ["totalTickets"],
   queryFn: async () => {
     const res = await axiosSecure.get('/payment/ticketsCount');
@@ -41,15 +41,11 @@ const { data: totalTicket } = useQuery({
 });
 
 
-
-
-
-
  
 
   const [state, setState] = useState({
           
-    series: [ totalEvent, totalTicket],
+    series: [ totalEvent ||0, totalTicket ||0],
     options: {
       chart: {
         width: 380,
@@ -71,6 +67,23 @@ const { data: totalTicket } = useQuery({
   
   
   });
+
+
+
+  useEffect(() => {
+    setState({
+      ...state,
+      series: [totalEvent || 0, totalTicket || 0],
+    });
+  }, [totalEvent, totalTicket]);
+
+  if (eventLoading || ticketLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (eventError || ticketError) {
+    return <p>Error fetching data</p>;
+  }
 
   return (
     <div>
