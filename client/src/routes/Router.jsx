@@ -5,8 +5,6 @@ import Home from "../pages/Home/Home";
 import SignUp from "../pages/SignUp/SignUp";
 import UpcomingDetails from "../pages/Home/HomeComponenets/UpComingEvent/UpcomingDetails";
 import AllEvent from "../pages/AllEvent/AllEvent";
-import Dashboard from "../layouts/Dashboard";
-import Profile from "../pages/Dashboard/Profile/Profile";
 import PaymentHistory from "../pages/Dashboard/Payment/PaymentHistory";
 import AddProduct from "../pages/Dashboard/AddProduct/AddProduct";
 import CreateBlog from "../pages/Dashboard/CreateBlog/CreateBlog";
@@ -36,6 +34,7 @@ import SignIn from "../pages/SignIn/SignIn";
 // import LogIn from "../pages/SignIn/LogIn";
 import DashboardDemo from "./../pages/Demo/DashboardDemo/DashboardDemo";
 import MyProfile from "./../pages/Demo/DashboardDemo/MyProfile/MyProfile";
+import Summary from "../pages/Dashboard/Summary/Summary";
 
 const Router = createBrowserRouter([
   {
@@ -144,6 +143,10 @@ const Router = createBrowserRouter([
       {
         path: "admin-summary",
         element: <AdminSummary></AdminSummary>,
+      },
+      {
+        path:"summary",
+        element:<Summary></Summary>
       },
       {
         path: "event-requests",
