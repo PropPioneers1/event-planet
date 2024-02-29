@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@tanstack/react-query": "^5.22.2",
-    "react-hot-toast": "^2.4.1",
-    "react-slick": "^0.30.2"
-  }
-}

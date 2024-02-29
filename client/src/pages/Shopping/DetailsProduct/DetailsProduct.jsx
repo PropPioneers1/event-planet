@@ -11,16 +11,24 @@ import Feedback from "./Feedback/Feedback";
 import Progress from "./Progress/Progress";
 import { uploadImage } from "../../../api/utlis";
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  decrementProduct,
+  incrementProduct,
+} from "./../../../redux/actions/actions";
 
 const DetailsProduct = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const { user } = useAuth();
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
   const [textCount, setTextCount] = useState(0);
   const [rating, setRating] = useState();
   const [userOpinion, setUserOpinion] = useState();
   // const [userImage, setUSerImage] = useState();
+
+  const cartProduct = useSelector((state) => state.cartProduct);
+  const dispatch = useDispatch();
 
   const handleIncreaseQuantity = () => {
     setQuantity(quantity + 1);
@@ -31,6 +39,11 @@ const DetailsProduct = () => {
       setQuantity(quantity - 1);
     }
   };
+
+  // Update local storage when cartProduct changes
+  useEffect(() => {
+    localStorage.setItem("cartProduct", JSON.stringify(cartProduct));
+  }, [cartProduct]);
 
   const { data: productDetails, isLoading, isError } = useQuery({
     queryKey: ["productDetails"],
@@ -59,7 +72,7 @@ const DetailsProduct = () => {
         image,
         title,
         price,
-        quantity: 1,
+        quantity: quantity ? quantity : 1,
       };
       axiosSecure.post(`/shop/shopCart/${_id}`, cartItem).then((res) => {
         if (res.data) {
@@ -67,6 +80,7 @@ const DetailsProduct = () => {
             title: `${title} added to your cart`,
             icon: "success",
           });
+          dispatch(incrementProduct(quantity));
         }
       });
     } else {
