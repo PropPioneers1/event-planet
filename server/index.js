@@ -39,10 +39,11 @@ const dbURI = `mongodb+srv://EventPlanet:6oNbcueawJevcwOk
 @proppioneers.pzy67in.mongodb.net/Event-Planet`;
 // Mongodb connection
 
-mongoose.connect(
-  `mongodb+srv://EventPlanet:6oNbcueawJevcwOk
+mongoose
+  .connect(
+    `mongodb+srv://EventPlanet:6oNbcueawJevcwOk
 @proppioneers.pzy67in.mongodb.net/Event-Planet`
-)
+  )
   .then(() => {
     console.log("Connected to MongoDB");
   })
@@ -58,13 +59,10 @@ app.use("/shop", shopHandler);
 app.use("/qna", QnaHandler);
 app.use("/selectedthm", selecthemeHandler);
 app.use("/blog", blogHandler);
-
 app.use("/event", eventHandler);
 app.use("/upcomingDetails", upComingDetailHandler);
 app.use("/payment", paymenthandler);
 app.use("/feedback", feedbackHandler);
-// send confirmation mail if the user successfully booking a event
-
 app.get("/sendEmail", sendMail);
 app.use("/token", notificationHandler);
 app.use("/users", usersHandler);

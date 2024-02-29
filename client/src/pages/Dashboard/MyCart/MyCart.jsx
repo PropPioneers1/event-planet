@@ -1,18 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SingleCart from "./SingleCart";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 const MyCart = () => {
 
   const axiosSecure = useAxiosSecure();
   const [priceCount,setPriceCount]=useState(0);
-
+  const navigate = useNavigate(); 
     const {user}=useAuth()
-  const { data: myCartItem = [] } = useQuery({
+  const { data: myCartItem = [] ,refetch} = useQuery({
     queryKey: ["myCartItems",user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/shop/my-cart/${user?.email}`);
@@ -20,27 +20,28 @@ const MyCart = () => {
     },
   });
  
+  useEffect(() => {
+    if (myCartItem && myCartItem.length > 0) {
+      const initialPriceCount = myCartItem.reduce((sum, cartItem) => sum + (cartItem.price * (cartItem.quantity || 1)), 0);
+      setPriceCount(initialPriceCount);
+    }
+  }, [myCartItem]);
+
+
+  const updatePriceCount = (amount) => {
+    // Implement logic to update the priceCount in the parent component
+    setPriceCount(amount);
+  };
+
  const handlepay=()=>{
   const data={
     email:user?.email,
-    totalAmount: priceCount,
-    name:myCartItem[0].name ||'mina',
-    phone:parseInt(myCartItem[0].phone)||parseInt('012555'),
-    address:myCartItem[0].address || 'hello',
-    currency:'BDT',
-    status:'unpaid',
-    from:'shop',
-   
+    total_amount: priceCount?`Rs ${priceCount}`:200,
+    productname:'xyz',
+    productQuantity:1,
+    from:'shop'
   }
-  axiosSecure.post('/productpay',data)
-  .then((response) => {
-    console.log(response.data);
-    window.location.replace(response.data.url);
-  })
-  .catch((error) => {
-    console.error(error.message);
-  });
-  console.log(data);
+  navigate(`/checkout/${'shop'}/${123}`,{state:data})
  }
 
   return (
@@ -51,7 +52,7 @@ const MyCart = () => {
             Your Cart
           </h2>
           <div className="mb-10">
-            {myCartItem?.map((cart)=><SingleCart priceCount={priceCount} setPriceCount={setPriceCount} key={cart._id} cart={cart}></SingleCart>)}
+            {myCartItem?.map((cart)=><SingleCart refetch={refetch} updatePriceCount={updatePriceCount} priceCount={priceCount} setPriceCount={setPriceCount} key={cart._id} cart={cart}></SingleCart>)}
           </div>
           <div className="mb-10">
             <div className="px-10 py-3 bg-gray-100 rounded-md dark:bg-gray-800">

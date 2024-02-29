@@ -14,6 +14,7 @@ const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")).render(
   <QueryClientProvider client={queryClient}>
     {/* <React.StrictMode> */}
+  
     <AuthProvider>
       <DndProvider backend={HTML5Backend}>
         <Toaster />

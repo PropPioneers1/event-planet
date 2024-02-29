@@ -7,7 +7,7 @@ const PaymentSchema = new mongoose.Schema({
     type: String,
     // required: true
   },
-  eventName: {
+  productName: {
     type: String,
     required: true
   },
@@ -23,29 +23,22 @@ const PaymentSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  // success_url: {
-  //   type: String,
-  //   required: true
-  // },
-  // fail_url: {
-  //   type: String,
-  //   required: true
-  // },
   paidstatus: {
     type: String,
     default: 'payment pending'
   },
   tran_id: String,
   from:String,
-  eventid:String,
+  productid:String,
   total_amount:{
     type:Number,
-    required:false
   },
-  ticketquantity:{
+  ticketQuantity:{
     type:Number,
-    required:false
-  }
+    required:true,
+    default:0
+  },
+  productQuantity:String
 });
 
 module.exports = PaymentSchema;
