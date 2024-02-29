@@ -27,6 +27,18 @@ router.put("/", async (req, res) => {
   }
 });
 
+
+router.get('/userCount',async(req,res)=>{
+  try {
+    const userCount = await usersModal.countDocuments({});
+
+    res.status(200).send({ userCount });
+  } catch (error) {
+    console.log("Not Fount Block");
+    res.status(500).json({ error: "internal server error" });
+  }
+})
+
 // Get all users
 router.get("/", async (req, res) => {
   try {
