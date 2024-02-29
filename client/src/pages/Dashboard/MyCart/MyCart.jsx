@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SingleCart from "./SingleCart";
 import { useEffect, useState } from "react";
 
@@ -10,7 +10,7 @@ const MyCart = () => {
 
   const axiosSecure = useAxiosSecure();
   const [priceCount,setPriceCount]=useState(0);
-
+  const navigate = useNavigate(); 
     const {user}=useAuth()
   const { data: myCartItem = [] ,refetch} = useQuery({
     queryKey: ["myCartItems",user?.email],
@@ -36,24 +36,12 @@ const MyCart = () => {
  const handlepay=()=>{
   const data={
     email:user?.email,
-    totalAmount: priceCount,
-    name:myCartItem[0].name ||'mina',
-    phone:parseInt(myCartItem[0].phone)||parseInt('012555'),
-    address:myCartItem[0].address || 'hello',
-    currency:'BDT',
-    status:'unpaid',
-    from:'shop',
-   
+    total_amount: priceCount?`Rs ${priceCount}`:200,
+    productname:'xyz',
+    productQuantity:1,
+    from:'shop'
   }
-  axiosSecure.post('/productpay',data)
-  .then((response) => {
-    console.log(response.data);
-    window.location.replace(response.data.url);
-  })
-  .catch((error) => {
-    console.error(error.message);
-  });
-  console.log(data);
+  navigate(`/checkout/${'shop'}/${123}`,{state:data})
  }
 
   return (

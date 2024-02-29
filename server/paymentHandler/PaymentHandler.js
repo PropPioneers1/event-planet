@@ -1,11 +1,10 @@
-
-
 const express = require("express");
 const SSLCommerzPayment = require("sslcommerz-lts");
-const PaymentSchema = require("../schemas/PaymentScheema");
+const PaymentSchema = require("../schemas/PaymentScheema"); // Corrected the spelling of "Schema"
 const mongoose = require("mongoose");
 const Payment = mongoose.model("Payment", PaymentSchema);
-
+const eventSchema = require("../schemas/eventSchema");
+const eventModel = mongoose.model("Event", eventSchema);
 const store_id = "event65c08b7004f38";
 const store_passwd = "event65c08b7004f38@ssl";
 const is_live = false;
@@ -51,34 +50,20 @@ router.post("/", async (req, res) => {
   try {
     const datasfront = req.body;
     const tran_id = new mongoose.Types.ObjectId().toString();
-
-    const paymentData = {
-      mobileNumber: datasfront.mobileNUmber,
-      eventName: datasfront.eventName,
-      eventid:datasfront.eventid,
-      cus_email: datasfront.cus_email,
-      currency: datasfront.currency,
-      total_amount: datasfront.totalAmount,
-      from:datasfront.from,
-      success_url: `http://localhost:5000/payment/successful/${tran_id}`,
-      fail_url: "http://localhost:5173/fail",
-      paidstatus: "payment pending",
-      tran_id: tran_id,
-    };
-
-    const payment = new Payment(paymentData);
+    datasfront.tran_id = tran_id;
+    const payment = new Payment(datasfront);
     await payment.save();
 
     const sslczData = {
       total_amount: datasfront.totalAmount,
       currency: datasfront.currency,
       tran_id: tran_id,
-      success_url: `http://localhost:5000/payment/success/${tran_id}`,
-      fail_url: `http://localhost:5000/payment/failure/${tran_id}`,
+      success_url: `http://localhost:5000/payment/successful/${tran_id}`, 
+      fail_url: `http://localhost:5000/payment/failure/${tran_id}`, 
       cancel_url: "http://localhost:5173/cancel",
       ipn_url: "http://localhost:5173/ipn",
       shipping_method: "Courier",
-      product_name: datasfront.eventName,
+      product_name: datasfront.productName,
       cus_email: datasfront.cus_email,
       product_category: "Electronic",
       product_profile: "general",
@@ -116,31 +101,90 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.post("/success/:tran_id", async (req, res) => {
+router.post("/successful/:tran_id", async (req, res) => {
   try {
-    const { tran_id } = req.params; // Extract the transaction ID from req.params
-    console.log("Transaction ID:", tran_id); // Check if the transaction ID is correct
+    const { tran_id } = req.params;
+    console.log("Transaction ID:", tran_id);
 
     // Update the payment document
     const payment = await Payment.findOneAndUpdate(
-      { tran_id: tran_id, $or: [{ paidstatus: 'payment pending' }, { paidstatus: 'payment failed' }] },
+      { tran_id: tran_id },
       { $set: { paidstatus: "payment succeed" } },
       { new: true }
     );
 
-    // console.log("Updated Payment:", payment); // Check if the payment document is updated
-
     if (!payment) {
+      console.error("Payment not found for transaction ID:", tran_id);
       return res.status(404).json({ error: "Payment not found" });
     }
 
+    // Check if payment.from is 'booking'
+    if (payment.from === 'booking') {
+      // Update event data only if payment.from is 'booking'
+      const event = await eventModel.findOneAndUpdate(
+        { _id: payment.productid }, // Find the document by its _id
+        {
+          $inc: {
+            totalSeat: -payment.ticketQuantity, // Decrement totalSeat by ticketQuantity
+            ticketSold: +payment.ticketQuantity // Increment ticketSold by ticketQuantity
+          }
+        },
+        { new: true } // Return the updated document
+      );
+
+      console.log("Event updated successfully for booking:", event);
+
+      if (!event) {
+        // Rollback the payment status update if event is not found
+        await Payment.findOneAndUpdate(
+          { tran_id: tran_id },
+          { $set: { paidstatus: "payment failed" } }
+        );
+
+        return res.status(404).json({ error: "Event not found" });
+      }
+    } else if (payment.from === 'creation') {
+      // Update event data only if payment.from is 'creation'
+      const event = await eventModel.findOneAndUpdate(
+        { _id: payment.productid }, // Find the document by its _id
+        {
+          $set: { status: 'upcoming' } // Set status to 'upcoming'
+        },
+        { new: true } // Return the updated document
+      );
+
+      console.log("Event updated successfully for creation:", event);
+
+      if (!event) {
+        // Rollback the payment status update if event is not found
+        await Payment.findOneAndUpdate(
+          { tran_id: tran_id },
+          { $set: { paidstatus: "payment failed" } }
+        );
+
+        return res.status(404).json({ error: "Event not found" });
+      }
+    }
+
+    console.log("Payment status updated successfully.", payment);
+
     // Redirect to success page once payment status is updated
     res.redirect(`http://localhost:5173/payment/successful/${tran_id}`);
+
   } catch (error) {
     console.error("Error updating payment status:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
+
+
+
+
+
+
+
 router.post("/failure/:tran_id", async (req, res) => {
   try {
     const { tran_id } = req.params; // Extract the transaction ID from req.params
@@ -159,7 +203,7 @@ router.post("/failure/:tran_id", async (req, res) => {
       return res.status(404).json({ error: "Payment not found" });
     }
 
-    // Redirect to success page once payment status is updated
+    // Redirect to failure page once payment status is updated
     res.redirect(`http://localhost:5173/payment/failure/${tran_id}`);
   } catch (error) {
     console.error("Error updating payment status:", error);
@@ -185,6 +229,7 @@ router.get("/:tran_id", async (req, res) => {
     });
   }
 });
+
 router.get("/status/:ids", async (req, res) => {
   const { ids } = req.params; // Correctly extract the 'ids' parameter
   try {
@@ -202,10 +247,5 @@ router.get("/status/:ids", async (req, res) => {
     });
   }
 });
-
-
-
-
-
 
 module.exports = router;

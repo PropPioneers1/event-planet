@@ -3,7 +3,6 @@ import MainLayout from "../layouts/MainLayout";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home/Home";
 import SignUp from "../pages/SignUp/SignUp";
-import SignIn from "../pages/SignIn/SignIn";
 import UpcomingDetails from "../pages/Home/HomeComponenets/UpComingEvent/UpcomingDetails";
 import AllEvent from "../pages/AllEvent/AllEvent";
 import Dashboard from "../layouts/Dashboard";
@@ -33,6 +32,10 @@ import About from "../pages/About/About";
 import MyEvents from "../pages/Dashboard/MyEvents/MyEvents";
 import ContactUs from "../pages/Contact/ContactUs";
 import Successrout from "../components/shared/PaymentPage/Successrout";
+import SignIn from "../pages/SignIn/SignIn";
+// import LogIn from "../pages/SignIn/LogIn";
+import DashboardDemo from "./../pages/Demo/DashboardDemo/DashboardDemo";
+import MyProfile from "./../pages/Demo/DashboardDemo/MyProfile/MyProfile";
 
 const Router = createBrowserRouter([
   {
@@ -49,7 +52,7 @@ const Router = createBrowserRouter([
         element: <SignUp></SignUp>,
       },
       {
-        path: "sign-in",
+        path: "/signIn",
         element: <SignIn></SignIn>,
       },
       {
@@ -75,7 +78,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "payment/successful/:tranid",
-        element: <Successrout></Successrout>
+        element: <Successrout></Successrout>,
       },
       {
         path: "payment/failure/:tran_id",
@@ -115,11 +118,11 @@ const Router = createBrowserRouter([
 
   {
     path: "/dashboard",
-    element: <Dashboard></Dashboard>,
+    element: <DashboardDemo />,
     children: [
       {
         path: "profile",
-        element: <Profile></Profile>,
+        element: <MyProfile />,
       },
       {
         path: "add-product",

@@ -8,10 +8,12 @@ import { MdDelete } from "react-icons/md";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import { getDate } from "../../../../utils/getDate";
+import useAuth from "../../../../hooks/useAuth";
 
 const Blog = ({ blog }) => {
   const [isOpen, setIsOpen] = useState(false);
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
 
   // class
   const flexCenter =
@@ -34,7 +36,7 @@ const Blog = ({ blog }) => {
   };
 
   const date = getDate(blog?.postedTimestamp);
-
+  console.log(blog);
   return (
     <div>
       {/* admit info */}
@@ -47,9 +49,6 @@ const Blog = ({ blog }) => {
           />
           <div>
             <h2 className="font-semibold text-lg">{blog?.user?.name}</h2>
-            {/* <p className="text-[12px]">
-              {day} {month}, {years}
-            </p> */}
           </div>
         </div>
         {/* three dots */}
@@ -77,16 +76,22 @@ const Blog = ({ blog }) => {
               Save
             </li>
 
-            <Link to={`/dashboard/edit-blog/${blog?._id}`}>
-              <li className={flexCenter}>
-                <FaEdit />
-                Edit
-              </li>
-            </Link>
-            <li className={flexCenter} onClick={handleDelete}>
-              <MdDelete />
-              Delete
-            </li>
+            {user && user?.email === blog?.user?.email ? (
+              <>
+                <Link to={`/dashboard/edit-blog/${blog?._id}`}>
+                  <li className={flexCenter}>
+                    <FaEdit />
+                    Edit
+                  </li>
+                </Link>
+                <li className={flexCenter} onClick={handleDelete}>
+                  <MdDelete />
+                  Delete
+                </li>
+              </>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>

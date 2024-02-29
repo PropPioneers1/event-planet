@@ -24,10 +24,7 @@ const EventSchema = mongoose.Schema({
   eventImages: Array,
   speakersImages: Array,
   status: String,
-  ticketSold:{
-    type:Number,
-    required:false
-  }
+  ticketSold:{type: Number, default:0} 
 });
 
 module.exports = EventSchema;

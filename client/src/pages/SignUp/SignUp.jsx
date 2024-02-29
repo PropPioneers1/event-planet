@@ -4,14 +4,16 @@
 import { SiSpinrilla } from "react-icons/si";
 import "./signup.css";
 import Container from "../../components/ui/Container";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import '../Home/HomeComponenets/UpComingEvent/upcoming.scss'
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import { saveUser } from "../../api/user";
 const SignUp = () => {
   const {createUser,updateUserProfile,signInGoogle, signInFacebook,loading} = useAuth();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || '/'
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
@@ -39,7 +41,7 @@ const SignUp = () => {
 
     const dbResponse = await saveUser(result?.user)
     console.log(dbResponse)
-    navigate('/')
+    navigate(from, { replace: true })
     toast.success('Signup successful!')
    }
 
@@ -54,9 +56,9 @@ const SignUp = () => {
     try{
     const result = await signInGoogle();
      //4. save user data in database
-     await saveUser(result?.user)
-      navigate('/')
+    await saveUser(result?.user)
     toast.success('Successfully Sign Up')
+    navigate(from, { replace: true })
     }
     catch(err){
       toast.error(err?.message)
@@ -66,8 +68,8 @@ const SignUp = () => {
     try{
     const result = await signInFacebook()
     await saveUser(result?.user);
-    navigate('/')
     toast.success('Successfully Sign Up')
+    navigate(from, { replace: true })
     }
     catch(err){
       toast.error(err?.message)

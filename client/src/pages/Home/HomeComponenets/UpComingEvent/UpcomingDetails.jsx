@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {   useNavigate, useParams } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaCartPlus } from "react-icons/fa";
@@ -30,25 +30,22 @@ import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { getTime } from "../../../../utils/getTime";
 import { getDate } from "../../../../utils/getDate";
 import useAuth from "../../../../hooks/useAuth";
+import nullImage from "../../../../assets/image/user.png"
 // import UpComingBanner from "./UpComingBanner";
-import SectionHeading from "../../../../components/shared/SectionHeading/SectionHeading";
 import { BiArea } from "react-icons/bi";
+import PostFeedback from "./PostFeedback";
+import ShowFeedback from "./ShowFeedback";
 import UpComingBanner from "./UpComingBanner";
 
 const UpcomingDetails = () => {
+
   const {user}=useAuth()
   const shareUrl = "https://event-planet-9789f.web.app/";
-  const img = "https://i.ibb.co/fq6DWhd/Wedding.jpg";
-  // const { user } = useAuth();
   const params = useParams();
   const ids=params.id
-  // const [isTicketBooked, setIsTicketBooked] = useState(false);
   const [number, setNumber] = useState(0);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-  const [isRegistered, setIsRegistered] = useState(false);
-  const [paymentdata, setPaymentData] = useState(false);
-  console.log(user?.email);
   // decrement
   const decrement = () => {
     if (number === 0) {
@@ -64,94 +61,39 @@ const UpcomingDetails = () => {
 
 
 
-  const { data: eventDetails } = useQuery({
+  const { data: eventDetails, refetch } = useQuery({
     queryKey: ["event-details"],
     queryFn: async () => {
       const result = await axiosSecure.get(`/event/${ids}`);
       return result?.data;
     },
   });
-
+  console.log(eventDetails)
+  
   const date = getDate(eventDetails?.startDate);
 
   const time = getTime(eventDetails?.startDate);
 
   const totalPrice = number * eventDetails?.ticketPrice;
-  
-  useEffect(() => {
-    const checkIfRegistered = async () => {
-      try {
-        const response = await axiosSecure.get(`/ticketpay/${user?.email}/${ids}`);
-        if (response.data.result && response.data.result.paidstatus === 'TicketPayment succeed') { 
-          setIsRegistered(true);
-          setPaymentData(response.data);
-          const newTotalPrice = number * eventDetails?.ticketPrice;
-          const updateResponse = await axiosSecure.put(`/ticketpay/${user?.email}/${ids}`, {
-            ticketquantity: number,
-            total_amount: newTotalPrice,
-          });
-  console.log(updateResponse);
-          // Handle update response as needed
-        }
-      } catch (error) {
-        console.error("Error checking registration:", error.message);
-      }
-    };
-  
-    if (user && eventDetails) {
-      checkIfRegistered();
-    }
-  }, [axiosSecure, ids, number, user, eventDetails]);
-  
-  console.log(paymentdata);
 
-const handletickepay=async()=>{
-  // const eventDetails=eventDetails.map(item => item.id===ids?item:{});
+const handleNavigate=async()=>{
+  
   const datasfront={
-
-  mobileNumber: 0,
   eventName: eventDetails.eventName,
-
   cus_email: user?.email,
-  currency: 'none',
   total_amount:totalPrice,
   ticketquantity:number,
-  success_url: 'http://localhost:5000/payment/successful/${tran_id}',
-  fail_url:'http://localhost:5000/payment/failed/${tran_id}',
-  paidstatus: 'pending',
-  username:user?.displayName,
-  paymentDate:'',
-  eventid:ids,
-  from:'Booking',
-  userAddres: ''
-
+  
 };
 
-
-  
-
-const result=await axiosSecure.post("/ticketpay",datasfront);
-// if(result.success)
-
-  console.log(result);
-  if(result.status==200){
-    const ticketLeft=eventDetails.totalSeat-number
-  axiosSecure.patch(`/event/ticketleft/${ids}`, { ticketLeft: ticketLeft})
-      .then(response => {
-        console.log("Ticket left count updated successfully:", response.data);
-      })
-      .catch(error => {
-        console.error("Error updating ticket left count:", error);
-      });
- 
-  navigate(`/checkout/${'boking'}/${ids}`)
-  }
-  else(console.log('sorry'))
+navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
 
 }
   return (
     <>
-<UpComingBanner></UpComingBanner>
+      <div className="">
+      <UpComingBanner eventDetails={eventDetails}></UpComingBanner>
+      </div>
       <Container>
         <div className="py-[50px]">
           {/* heading */}
@@ -159,24 +101,18 @@ const result=await axiosSecure.post("/ticketpay",datasfront);
           <div>
             <div className="grid grid-cols-1 md:grid-cols-6 lg:gap-12 gap-5 ">
               {/* left side */}
-              <div className="md:col-span-4 col-span-1">
+              <div className="md:col-span-4 col-span-1 -mt-24 z-10">
                 <div className="left-side">
-                  <div>
-                    <h2 className=" text-5xl mb-5">
-                      
-                    <SectionHeading
-                    title="Upcoming Event"
-                    normalSubTitleWord="Book Your"
-                    boldSubTitleWord="Ticket Early"
-                  />
-                    </h2>
-                  </div>
-                  <div>
+                  
+                  <div className="relative">
                     <img
                       src={eventDetails?.eventImages[0]}
-                      className="w-full rounded"
+                      className="w-full rounded border-[15px] border-neutral"
                       alt=""
                     />
+                    <div className=" absolute top-[45px] bg-neutral  px-7 py-3 font-semibold text-lg">
+                      {eventDetails?.eventName}
+                    </div>
                   </div>
                   <div className="md:flex items-center justify-around gap-2 lg:gap-4 py-5 space-y-4 md:space-y-0">
                     <div className="lg:py-3 lg:px-10 py-2 px-5 bg-secondary shadow-lg flex items-center justify-center gap-3 text-white">
@@ -216,20 +152,19 @@ const result=await axiosSecure.post("/ticketpay",datasfront);
                   </div>
 
                   {/* Register now */}
-                  <div className="md:p-5 bg-neutral">
+                  <div className="md:p-5 bg-white">
                     <div>
                       <h2 className="font-medium text-2xl mb-4">
                         Book Your Event👍
                       </h2>
                       <div className="bg-white">
-                        <div className="grid grid-cols-3 place-content-center border bg-white">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                           <div className="bg-white">
                             <h2 className="py-4 text-center bg-secondary text-white font-medium">
                               Event Name
                             </h2>
                             <div className="bg-white overflow-hidden text-black p-3">
                               <div className="mb-4">
-                                {/* <h2 className="font-bold">VIP</h2> */}
                                 <p className="text-lg md:text-xl font-semibold">
                                   {eventDetails?.eventName}
                                 </p>
@@ -243,26 +178,27 @@ const result=await axiosSecure.post("/ticketpay",datasfront);
                             <div className="bg-white text-secondary p-3">
                               <div className="mb-8 text-center">
                                 <h2 className="mb-4 font-semibold">VIP</h2>
-                                {/* decrement */}
-                                <button
-                                  onClick={() => decrement()}
-                                  className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
-                                >
-                                  -
-                                </button>
-                                {/* increment */}
-                                <span className="border px-4 py-2 border-gray-600 mx-2 p-3 rounded">
-                                  {number}
-                                </span>
-                                <button
-                                  onClick={() => increment()}
-                                  className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
-                                >
-                                  +
-                                </button>
+                                <div className="flex justify-center items-center">
+                                  <button
+                                    onClick={() => decrement()}
+                                    className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
+                                  >
+                                    -
+                                  </button>
+                                  <span className="border px-4 py-2 border-gray-600 mx-2 p-3 rounded">
+                                    {number}
+                                  </span>
+                                  <button
+                                    onClick={() => increment()}
+                                    className="bg-secondary px-4 rounded hover:bg-black py-2 cursor-pointer font-bold text-white"
+                                  >
+                                    +
+                                  </button>
+                                </div>
                               </div>
                             </div>
                           </div>
+
                           <div className="bg-white">
                             <h2 className="py-4 text-center bg-secondary text-white font-medium">
                               Total Price
@@ -276,48 +212,38 @@ const result=await axiosSecure.post("/ticketpay",datasfront);
                             </div>
                           </div>
                         </div>
-                        <div className="bg-secondary flex items-center justify-around p-5">
-                          <div className="text-white font-medium">
+
+                        <div className="bg-secondary flex flex-col md:flex-row items-center justify-between p-5">
+                          <div className="text-white font-medium mb-3 md:mb-0">
                             <p>Quantity: {number}</p>
                           </div>
                           <div className="text-white font-medium">
                             <p>Total: {totalPrice}</p>
                           </div>
-                          <div>
-   
-
-                          <div>
-                          {number > 0 ? (
-  <>
-    {isRegistered ? (
-      <>
-        {/* Button to open the modal */}
-        <button onClick={handletickepay} className={`button flex items-center gap-3`}>
-        Register Now <FaCartPlus />
-      </button>
-      </>
-    ) : (
-      <button onClick={handletickepay} className={`button flex items-center gap-3`}>
-        Register Now <FaCartPlus />
-      </button>
-    )}
-  </>
-) : (
-  <button className={`button flex items-center gap-3 ${isRegistered ? 'disabled' : ''}`} disabled={isRegistered}>
-    <FaCartPlus />
-    Register Now
-  </button>
-)}
-
-
-      </div>
-
-                          </div>
+                          {
+                            number > 0 ?  <><button
+                            onClick={handleNavigate}
+                            className="button flex items-center gap-3 mt-3 md:mt-0"
+                          >
+                            <FaCartPlus></FaCartPlus>Register Now
+                          </button></> : <><button
+                            className="button flex items-center gap-3 mt-3 md:mt-0 disabled"
+                          >
+                            <FaCartPlus></FaCartPlus>Register Now
+                          </button></>
+                          }
+                         
                         </div>
                       </div>
                     </div>
+
+                    {/* show feed back */}
+                    <div>
+                      <ShowFeedback title={eventDetails?.eventName} id={ids}></ShowFeedback>
+                    </div>
+
                     {/* evetn FAQ */}
-                    <div className="bg-secondary p-4 mt-4 font-medium text-white text-xl">
+                    <div className="bg-secondary p-4 mt-10 font-medium text-white text-xl">
                       Event FAQ
                     </div>
                     <div className="collapse collapse-plus bg-base-200">
@@ -426,15 +352,15 @@ const result=await axiosSecure.post("/ticketpay",datasfront);
                 </div>
               </div>
               {/* right side */}
-              <div className="md:col-span-2 col-span-1 mt-16 md:mt-36">
-                <div className="bg-neutral p-3">
+              <div className="md:col-span-2 col-span-1 mt-16">
+                <div className="bg-white border p-3">
                   <div>
                     <div className="py-2">
                       <div className=" flex items-center gap-3">
-                      <BiArea className="text-2xl"></BiArea>
-                      <h2 className="my-3 text-2xl font-semibold">
-                        Show Event Area
-                      </h2>
+                        <BiArea className="text-2xl"></BiArea>
+                        <h2 className="my-3 text-2xl font-semibold">
+                          Show Event Area
+                        </h2>
                       </div>
                       <EventMap></EventMap>
                     </div>
@@ -495,8 +421,8 @@ const result=await axiosSecure.post("/ticketpay",datasfront);
                       </div>
                     </div>
                     {/* event shedule */}
-                    <div className=" border border-b-gray-300 pb-3">
-                      <h2 className=" font-semibold border border-t-gray-300 pt-3 text-lg">
+                    <div className=" pb-3">
+                      <h2 className=" font-semibold pt-3 text-lg">
                         Event Shedule Details
                       </h2>
                       <div className="p-3">
@@ -507,12 +433,12 @@ const result=await axiosSecure.post("/ticketpay",datasfront);
                       </div>
                     </div>
                     {/* Share this event */}
-                    <div className=" border border-b-gray-300 pb-3">
+                    <div className=" pb-3">
                       <h2 className=" font-semibold text-lg pt-3">
                         Social Share Event
                       </h2>
                       <div className="py-4">
-                        <div className="flex items-center gap-4 md:gap-2">
+                        <div className="flex items-center gap-4 md:gap-2 lg:gap-8">
                           <FacebookShareButton
                             url={shareUrl}
                             quote={"Share our event"}
@@ -550,18 +476,56 @@ const result=await axiosSecure.post("/ticketpay",datasfront);
                         <MdSettingsVoice></MdSettingsVoice>
                         <h2 className="font-semibold">Event Speaker</h2>
                       </div>
-                      <div className="flex items-center flex-col">
-                        <img
-                          src={img}
-                          className="rounded-full w-24 h-24"
-                          alt=""
-                        />
-                        <h2 className="font-medium mt-3">Arijit Singh</h2>
+                      <div className="">
+                        <div className="flex items-center gap-10 justify-center">
+                          {eventDetails &&
+                            eventDetails.speakersImages.map((imgs) =>
+                              imgs.speakersImages ? (
+                                <>
+                                  <img
+                                    key={imgs._id}
+                                    src={imgs}
+                                    className="rounded-full w-20 h-20"
+                                    alt="speaker"
+                                  />
+                                </>
+                              ) : (
+                                <>
+                                 <div className="">
+                                  <img src={nullImage} className="rounded-full w-[50px] h-[50px]" alt="" />
+                                 </div>
+                                </>
+                              )
+                            )}
+                        </div>
+
+                        <div className="flex items-center justify-center gap-3">
+                          {eventDetails &&
+                            eventDetails?.speakers.map((names) => (
+                              <h2
+                                key={names?._id}
+                                className="font-medium mt-3 w-20 text-center"
+                              >
+                                {" "}
+                                {names}{" "}
+                              </h2>
+                            ))}
+                        </div>
                       </div>
                     </div>
                     {/* add calander  */}
-                    <div className="button text-center mt-4  "> 
-                     <a href="https://calendar.google.com/calendar/u/0/r">Add Calender</a>
+                    <div className="button text-center mt-4  ">
+                      <a href="https://calendar.google.com/calendar/u/0/r">
+                        Add Calender
+                      </a>
+                    </div>
+                    <div>
+                      <PostFeedback
+                        title={eventDetails?.eventName}
+                        image={eventDetails?.eventImages[0]}
+                        id={ids}
+                        refetch={refetch}
+                      ></PostFeedback>
                     </div>
                   </div>
                 </div>
