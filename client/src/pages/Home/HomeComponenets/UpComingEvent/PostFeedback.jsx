@@ -57,6 +57,7 @@ const PostFeedback = ({title,image,id}) => {
       id:id,
       email: user?.email,
       name: user?.displayName,
+      image:user?.photoURL,
       product_name: title,
       product_image: image,
       user_image: data?.display_url,
@@ -84,7 +85,9 @@ const PostFeedback = ({title,image,id}) => {
                   <p>Tell others what you think.</p>
                 </div>
                 <div className="flex justify-between items-center">
-                  <div>
+                  <div onClick={() =>
+                        document.getElementById("my_modal_5").showModal()
+                      }>
                     <ReactStars
                       count={5}
                       onChange={ratingChanged}
