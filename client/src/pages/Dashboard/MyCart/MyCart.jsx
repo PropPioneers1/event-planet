@@ -4,12 +4,16 @@ import useAuth from "../../../hooks/useAuth";
 import { Link, useNavigate } from "react-router-dom";
 import SingleCart from "./SingleCart";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const MyCart = () => {
   const axiosSecure = useAxiosSecure();
   const [priceCount, setPriceCount] = useState(0);
   const navigate = useNavigate();
   const { user } = useAuth();
+  // const [productName, setProductName] = useState("");
+  const cartProduct = useSelector((state) => state.cartProduct);
+
   const { data: myCartItem = [], refetch } = useQuery({
     queryKey: ["myCartItems", user?.email],
     queryFn: async () => {
@@ -34,14 +38,14 @@ const MyCart = () => {
   };
 
   const handlepay = () => {
-    const data = {
+    const productData = {
       email: user?.email,
       total_amount: priceCount ? `Rs ${priceCount}` : 200,
-      productname: "xyz",
-      productQuantity: 1,
+      productame: "productName",
+      productQuantity: cartProduct,
       from: "shop",
     };
-    navigate(`/checkout/${"shop"}/${123}`, { state: data });
+    navigate(`/checkout/${"shop"}/${123}`, { state: productData });
   };
 
   return (
@@ -52,28 +56,30 @@ const MyCart = () => {
             Your Cart
           </h2>
           <div className="mb-10">
-            {myCartItem?.map((cart) => (
-              <SingleCart
-                refetch={refetch}
-                updatePriceCount={updatePriceCount}
-                priceCount={priceCount}
-                setPriceCount={setPriceCount}
-                key={cart._id}
-                cart={cart}
-              ></SingleCart>
-            ))}
+            {myCartItem?.map((cart) => {
+              return (
+                <SingleCart
+                  refetch={refetch}
+                  updatePriceCount={updatePriceCount}
+                  priceCount={priceCount}
+                  setPriceCount={setPriceCount}
+                  key={cart._id}
+                  cart={cart}
+                ></SingleCart>
+              );
+            })}
           </div>
           <div className="mb-10">
             <div className="px-10 py-3 bg-gray-100 rounded-md dark:bg-gray-800">
               <div className="flex justify-between dark:text-gray-400">
                 <span className="font-medium">Subtotal</span>
-                <span className="font-bold ">$ {priceCount}</span>
+                <span className="font-bold ">${priceCount.toFixed(2)}</span>
               </div>
             </div>
             <div className="px-10 py-3 rounded-md">
               <div className="flex justify-between dark:text-gray-400">
                 <span className="font-medium">Shipping</span>
-                <span className="font-bold ">$100.00</span>
+                <span className="font-bold ">${priceCount ? 25 : 0}</span>
               </div>
             </div>
 
@@ -82,7 +88,9 @@ const MyCart = () => {
                 <span className="text-base font-bold md:text-xl ">
                   Order Total
                 </span>
-                <span className="font-bold ">$680.99</span>
+                <span className="font-bold ">
+                  ${priceCount ? (priceCount + 25).toFixed(2) : 0}
+                </span>
               </div>
             </div>
           </div>

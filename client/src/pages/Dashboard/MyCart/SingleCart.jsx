@@ -2,19 +2,32 @@ import { useEffect, useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  decrementProduct,
+  incrementProduct,
+} from "../../../redux/actions/actions";
 
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
-const SingleCart = ({ cart,refetch,updatePriceCount }) => {
+const SingleCart = ({ cart, refetch, updatePriceCount }) => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const [quantity, setQuantity] = useState(cart.quantity || 1); 
+  const [quantity, setQuantity] = useState(cart?.quantity || 1);
   const [totalPrice, setTotalPrice] = useState(cart.price * quantity);
+
+  // redux
+  const cartProduct = useSelector((state) => state.cartProduct);
+  const dispatch = useDispatch();
+
+  // Update local storage when cartProduct changes
+  useEffect(() => {
+    localStorage.setItem("cartProduct", JSON.stringify(cartProduct));
+  }, [cartProduct]);
 
   useEffect(() => {
     setTotalPrice(cart.price * quantity);
   }, [cart.price, quantity]);
-
 
   const handleRemove = (cart) => {
     Swal.fire({
@@ -38,6 +51,7 @@ const SingleCart = ({ cart,refetch,updatePriceCount }) => {
                 icon: "success",
               });
             }
+            dispatch(decrementProduct(quantity));
           });
       }
     });
@@ -46,13 +60,14 @@ const SingleCart = ({ cart,refetch,updatePriceCount }) => {
   const increaseQuantity = () => {
     const increasedQuantity = quantity + 1;
     setQuantity(increasedQuantity);
+    dispatch(incrementProduct(increasedQuantity));
 
-    const priceChange = cart.price * 1; 
+    const priceChange = cart.price * 1;
     updatePriceCount((prevPriceCount) => prevPriceCount + priceChange);
 
     updateTotalPrice(increasedQuantity);
   };
-  
+
   const updateTotalPrice = (updatedQuantity) => {
     setTotalPrice((cart.price || 5) * updatedQuantity);
   };
@@ -60,8 +75,9 @@ const SingleCart = ({ cart,refetch,updatePriceCount }) => {
   const decreaseQuantity = () => {
     const increasedQuantity = quantity - 1;
     setQuantity(increasedQuantity);
+    dispatch(decrementProduct(quantity - increasedQuantity));
 
-    const priceChange = cart.price * 1; 
+    const priceChange = cart.price * 1;
     updatePriceCount((prevPriceCount) => prevPriceCount - priceChange);
 
     updateTotalPrice(increasedQuantity);
@@ -73,7 +89,10 @@ const SingleCart = ({ cart,refetch,updatePriceCount }) => {
       </div>
 
       <div className="w-full px-4 mb-6 md:w-96 xl:mb-0">
-          <p className="block mb-5 text-xl font-medium dark:text-gray-400 "> {cart?.title}</p>
+        <p className="block mb-5 text-xl font-medium dark:text-gray-400 ">
+          {" "}
+          {cart?.title}
+        </p>
       </div>
       <div className="w-full px-4 mt-6 mb-6 xl:w-auto xl:mb-0 xl:mt-0">
         <div className="flex items-center">
@@ -125,7 +144,7 @@ const SingleCart = ({ cart,refetch,updatePriceCount }) => {
         <span className="text-xl font-medium text-pink-500 dark:text-blue-400">
           <span className="text-sm">$</span>
 
-          <span>{totalPrice}</span>
+          <span>{totalPrice.toFixed(2)}</span>
         </span>
       </div>
     </div>

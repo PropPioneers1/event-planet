@@ -12,16 +12,13 @@ import Progress from "./Progress/Progress";
 import { uploadImage } from "../../../api/utlis";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  decrementProduct,
-  incrementProduct,
-} from "./../../../redux/actions/actions";
+import { incrementProduct } from "./../../../redux/actions/actions";
 
 const DetailsProduct = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const { user } = useAuth();
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [textCount, setTextCount] = useState(0);
   const [rating, setRating] = useState();
   const [userOpinion, setUserOpinion] = useState();
