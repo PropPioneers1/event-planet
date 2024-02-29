@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Container from "../../../../components/ui/Container";
-import { FaCalendar, FaHandshake, FaHatWizard, FaLocationArrow, FaLocationCrosshairs, FaPeopleArrows, FaStar, FaTeamspeak, FaWhatsapp } from "react-icons/fa6";
+import {FaHandshake, FaLocationCrosshairs, FaStar, } from "react-icons/fa6";
 import SectionHeading from "../../../../components/shared/SectionHeading/SectionHeading";
 import { FaGlassCheers } from "react-icons/fa";
 import { GiBrain, GiTeamIdea } from "react-icons/gi";

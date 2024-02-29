@@ -81,7 +81,7 @@ const About = () => {
         <div className="bg-neutral mt-10">
         <Container>
             <div className="grid py-32 w-full bg-neutral 
-            md:grid-cols-2 grid-cols-1 p-10 px-20 gap-5  justify-center
+            md:grid-cols-2 grid-cols-1 p-10 px-20 gap-5    justify-center
              align-middle items-center">
               <div className="col-span-1 md:col-span-2 ">
                 <SectionHeading
@@ -181,17 +181,9 @@ const About = () => {
         </div>
 
         <Container>
-  <div className="hero-content pl-20 flex-col gap-10 lg:flex-row mt-10 mb-10">
-    <div className="relative">
-      <img className="h-[450px] w-[500px]" src="https://i.ibb.co/w4mZvYh/pexels-dominique-barrera-20184430.jpg" />
-      <div className="absolute inset-0 flex justify-center items-center">
-        <div className="bg-white bg-opacity-80 p-4">
-          <p className="text-black text-center font-bold">Event planet<br />Working Since 2014</p>
-        </div>
-      </div>
-    </div>
-    <div className="h-full">
-      <SectionHeading
+  <div className="   gap-10 lg:flex md:grid justify-center align-middle items-center mt-10 mb-10">
+  <div className='lg:hidden block'>
+     <SectionHeading
         colortitle="text-[rgb(255 255 255 / var(--tw-text-opacity))]"
         align="lg:text-start md:text-center "
         title="EVENT AWARD"
@@ -200,23 +192,40 @@ const About = () => {
         colorboldmrsub="text-accent"
         colornormrsub="text-black"
       />
-      <ul className="">
+     </div>
+    <div className="relative">
+      <img className="h-[450px] w-[400px] mx-auto lg:w-[300px]" 
+      src="https://i.ibb.co/QNN1JfM/Dark-Blue-and-Blue-Modern-Wavy-Curve-Completion-Certificate.jpghttps://i.ibb.co/hZbNfpX/Dark-Blue-and-Blue-Modern-Wavy-Curve-Completion-Certificate-1.jpg" />
+    </div>
+    <div className="h-full">
+     <div className='hidden lg:block'>
+     <SectionHeading
+        colortitle="text-[rgb(255 255 255 / var(--tw-text-opacity))]"
+        align="lg:text-start md:text-center "
+        title="EVENT AWARD"
+        normalSubTitleWord="OUR  "
+        boldSubTitleWord="AWARDS"
+        colorboldmrsub="text-accent"
+        colornormrsub="text-black"
+      />
+     </div>
+      <ul className=" mt-5">
         <div className="h-72 lg:max-w-[500px] overflow-y-auto 
         scrollbar-hide border-l-4 -my-1 border-slate-700">
           {awards.map((award, index) => (
             <li key={index}>
               <div className="my-4">
                 <div className="flex gap-4 justify-normal relative">
-                  <h1 className="text-sm lg:pl-4 w-20 md:pl-2 lg:w-96 
+                  <h1 className="md:text-sm lg:pl-4 w-20 md:pl-2 lg:w-96 
                   font-bold h-8 border-b-secondary border-b-2
-                   text-accent relative">
+                   text-accent text-xs  relative">
                     {award.date}
                     <div className="absolute right-full w-2
                     transform translate-x-3/4 -translate-y-2/4"></div>
                   </h1>
                   <div className="pl-3">
                     <h1 className="mb-2 text-start text-sm md:text-xl  font-bold">{award.title}</h1>
-                    <p className="md:w-96 w-64 text-xs">{award.description}</p>
+                    <p className="md:w-96 w-44 text-xs">{award.description}</p>
                   </div>
                 </div>
               </div>
@@ -227,9 +236,7 @@ const About = () => {
     </div>
   </div>
 </Container>
-
-
-
+{/*why choose us */}
           <WhyChoose></WhyChoose>
 
           {/* scrooll */}
@@ -244,6 +251,7 @@ const About = () => {
           }}
         >
           <Container>
+            {/* Our team  */}
             <Ourteam></Ourteam>
           </Container>
         </div>

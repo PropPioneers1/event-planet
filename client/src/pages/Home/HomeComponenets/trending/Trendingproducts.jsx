@@ -18,7 +18,8 @@ const Trendingproducts = () => {
   const [scrollLeft, setScrollLeft] = useState(0);
 
   useEffect(() => {
-    axioSecure.get('/shop/trending/data')
+    axioSecure
+      .get("/shop/trending/data")
       .then((response) => {
         setData(response.data.result);
       })
@@ -45,14 +46,14 @@ const Trendingproducts = () => {
   };
 
   const handleNavigate = () => {
-    navigate('/shopping');
+    navigate("/shopping");
   };
 
   return (
     <div className="shadow-bg bg-neutral mt-10 pt-4">
       <Container>
         <SectionHeading
-          colortitle='text-[rgb(255 255 255 / var(--tw-text-opacity))]'
+          colortitle="text-[rgb(255 255 255 / var(--tw-text-opacity))]"
           align="text-center"
           title="Visit Our Shop"
           normalSubTitleWord="OUR "
@@ -94,9 +95,7 @@ const Trendingproducts = () => {
                   />
                 </div>
                 <div className=" h-44 w-56 my-auto">
-                  <h2
-                    className=" text-secondary text-lg text-start my-auto border-slate-300   font-bold mt-4 "
-                  >
+                  <h2 className=" text-secondary text-lg text-start my-auto border-slate-300   font-bold mt-4 ">
                     {item.title.slice(0, 20)}
                   </h2>
                   <h2 className="font-bold border-slate-300 text-slate-500 ">
@@ -112,7 +111,10 @@ const Trendingproducts = () => {
                   <div className="flex gap-2 pb-4 border-slate-300">
                     <p className="text-start text-slate-700"> Rating :</p>
                     <div className="rating rating-sm mt-1">
-                      {item.rating && typeof item.rating === 'number' && item.rating > 0 && item.rating <= 5 ? (
+                      {item.rating &&
+                      typeof item.rating === "number" &&
+                      item.rating > 0 &&
+                      item.rating <= 5 ? (
                         [...Array(Math.floor(item.rating))].map((_, i) => (
                           <FaStar className="text-primary" key={i} />
                         ))
