@@ -1,4 +1,4 @@
-import  { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./trending.css";
 import { FaShopify, FaStar } from "react-icons/fa";
@@ -9,16 +9,13 @@ import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 
 const Trendingproducts = () => {
   const [data, setData] = useState([]);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
   const sliderRef = useRef(null);
   const axioSecure = useAxiosSecure();
   const navigate = useNavigate();
 
-  const handleMouseDown = (e) => {
-    setStartX(e.pageX - sliderRef.current.offsetLeft);
-    setScrollLeft(sliderRef.current.scrollLeft);
-  };
+  const [isHovering, setIsHovering] = useState(false);
+  const [startX, setStartX] = useState(null);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   useEffect(() => {
     axioSecure.get('/shop/trending/data')
@@ -28,43 +25,23 @@ const Trendingproducts = () => {
       .catch((error) => {
         console.error(error.message);
       });
-  }, [data]);
-
-  useEffect(() => {
-    const handleScrollEnd = () => {
-      if (sliderRef.current.scrollLeft === sliderRef.current.scrollWidth - sliderRef.current.offsetWidth) {
-        // Calculate the width of a single item
-        const itemWidth = sliderRef.current.children[0].offsetWidth;
-        // Calculate the width of all items including duplicates
-        const totalWidth = sliderRef.current.scrollWidth;
-        // Set scrollLeft to the beginning of the duplicate items
-        setScrollLeft(totalWidth - itemWidth * data.length);
-      }
-    };
-  
-    sliderRef.current.addEventListener('scroll', handleScrollEnd);
-
-      sliderRef.current.removeEventListener('scroll', handleScrollEnd);
-  
-  }, [data]);
-  
+  }, [axioSecure]);
 
   const handleMouseMove = (e) => {
-    if (!startX) return;
+    if (!isHovering || startX === null) return;
     const x = e.pageX - sliderRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    sliderRef.current.scrollLeft = scrollLeft + walk;
-  
-    // Check if the slider reaches the end
-    if (sliderRef.current.scrollLeft >= sliderRef.current.scrollWidth - sliderRef.current.offsetWidth) {
-      // Scroll back to the beginning
-      sliderRef.current.scrollLeft = 0;
-      setScrollLeft(0);
-    }
+    const walk = (x - startX) * 1;
+    sliderRef.current.scrollLeft = scrollLeft - walk;
   };
-  
-  const handleMouseUp = () => {
-    setStartX(0);
+
+  const handleMouseEnter = (e) => {
+    setIsHovering(true);
+    setStartX(e.pageX - sliderRef.current.offsetLeft);
+    setScrollLeft(sliderRef.current.scrollLeft);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovering(false);
   };
 
   const handleNavigate = () => {
@@ -80,12 +57,12 @@ const Trendingproducts = () => {
           title="Visit Our Shop"
           normalSubTitleWord="OUR "
           boldSubTitleWord=" SHOP PRODUCTS"
-          colorboldmrsub='text-accent'
+          colorboldmrsub='text-black'
           colornormrsub='text-black'
         />
         <div>
           <p className="text-center mb-10 text-gray-700 text-xl px-4">
-            Hello Human! We're here to make your special moments even more
+            Hello Human! We are here to make your special moments even more
             memorable. Explore our curated collection of essential products for
             various events and find the perfect items to elevate your
             experiences.
@@ -96,12 +73,11 @@ const Trendingproducts = () => {
       <div className="flex">
         <div></div>
         <div
-          className="slider rounded-r-2xl
-          rounded-l-3xl"
+          className="slider rounded-r-2xl rounded-l-3xl"
           ref={sliderRef}
-          onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
         >
           <div className="slide-track gap-5 pb-5" style={{ display: "flex" }}>
             {data.concat(data).map((item, index) => (
@@ -110,7 +86,6 @@ const Trendingproducts = () => {
                 className="slide relative rounded-md h-auto bg-transparent shadow-xl"
                 style={{ flex: "0 0 auto" }}
               >
-
                 <div className="relative">
                   <img
                     className="h-[100px] w-full mx-auto object-cover rounded-md"
@@ -132,7 +107,7 @@ const Trendingproducts = () => {
                   </h2>
                   <h3 className="text-slate-600  border-slate-300 ">
                     {" "}
-                  Name : {item.title.slice(0, 20)}
+                    Name : {item.title.slice(0, 20)}
                   </h3>
                   <div className="flex gap-2 pb-4 border-slate-300">
                     <p className="text-start text-slate-700"> Rating :</p>

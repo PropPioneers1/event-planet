@@ -1,7 +1,7 @@
 // import UpComingEvent from "./HomeComponenets/UpComingEvent/UpComingEvent";
 import HomeBanner from "./HomeComponenets/HomeBanner/HomeBanner";
 import Trendingproducts from "./HomeComponenets/trending/Trendingproducts";
-import WhyChoose from "./HomeComponenets/WhyChooseEventPlanet/WhyChoose";
+// import WhyChoose from "./HomeComponenets/WhyChooseEventPlanet/WhyChoose";
 // import HotDeals from "./HomeComponenets/HotDeals/HotDeals";
 import Footer from "../../components/shared/Footer";
 
@@ -47,7 +47,7 @@ const Home = () => {
       </div>
       {/* why choose by arif */}
       <div>
-        <WhyChoose></WhyChoose>
+        {/* <WhyChoose></WhyChoose> */}
       </div>
       <div className="md:pt-28 pt-20">
         <OurBlog />
