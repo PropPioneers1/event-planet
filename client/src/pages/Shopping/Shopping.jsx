@@ -19,7 +19,7 @@ const Shopping = () => {
       const res = await axiosSecure.get(
         `/shop?page=${currentPage}&size=${itemsPerPage}`
       );
-      return res.data.result;
+      return res.data?.result;
     },
   });
 
