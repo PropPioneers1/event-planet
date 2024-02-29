@@ -39,10 +39,10 @@ const MyProfile = () => {
             <img
               src={currentUser?.image ? currentUser.image : userImg}
               alt=""
-              className="w-28 h-28 rounded-md border-8 border-white relative left-0 md:left-7 bottom-10 object-cover "
+              className="w-36 h-36 rounded-md border-8 border-white relative left-0 md:left-7 bottom-14 object-cover "
             />
             {/* user info */}
-            <div className=" md:pl-12 pl-auto -pt-10 md:pt-2">
+            <div className=" md:pl-12 pl-auto -mt-8 md:mt-0 md:pt-2 ">
               <h3 className="text-secondary text-xl font-semibold">
                 {currentUser && currentUser?.name}
               </h3>
