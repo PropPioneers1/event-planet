@@ -11,6 +11,7 @@ import { FaCodePullRequest } from "react-icons/fa6";
 import { IoMdCart } from "react-icons/io";
 import { FaCalendarAlt } from "react-icons/fa";
 import { IoAddCircleOutline, IoCreate } from "react-icons/io5";
+import { BsCalendar2EventFill } from "react-icons/bs";
 import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
@@ -29,17 +30,17 @@ const Dashboard = () => {
     },
   });
 
-  console.log(currentUser);
+  // console.log(currentUser);
 
 
-  useEffect(() => { 
+  useEffect(() => {
     if (currentUser?.role === "admin") {
-    setIsAdmin(true)
-  }
+      setIsAdmin(true)
+    }
   }, [currentUser?.role])
 
-  console.log(currentUser);
-  console.log(isAdmin);
+  // console.log(currentUser);
+  // console.log(isAdmin);
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isCollapse, setIsCollapse] = useState(false);
@@ -57,6 +58,7 @@ const Dashboard = () => {
       {isAdmin ? <>
         {/* admin routes */}
 
+        {/* add product */}
         <NavLink
           to="/dashboard/add-product"
           className={({ isActive, isPending }) =>
@@ -67,6 +69,7 @@ const Dashboard = () => {
           <li className={isCollapse ? "hidden" : "block"}> Add Product</li>
         </NavLink>
 
+        {/* Create Theme */}
         <NavLink
           to="/dashboard/create-theme"
           className={({ isActive, isPending }) =>
@@ -77,6 +80,7 @@ const Dashboard = () => {
           <li className={isCollapse ? "hidden" : "block"}>Create Theme</li>
         </NavLink>
 
+        {/* Create Blog */}
         <NavLink
           to="/dashboard/create-blog"
           className={({ isActive, isPending }) =>
@@ -86,6 +90,8 @@ const Dashboard = () => {
           <IoCreate className={iconStyle}></IoCreate>
           <li className={isCollapse ? "hidden" : "block"}> Create Blog</li>
         </NavLink>
+
+        {/* Event Requests */}
         <NavLink
           to="/dashboard/event-requests"
           className={({ isActive, isPending }) =>
@@ -95,6 +101,8 @@ const Dashboard = () => {
           <FaCodePullRequest className={iconStyle}></FaCodePullRequest>
           <li className={isCollapse ? "hidden" : "block"}> Event Requests</li>
         </NavLink>
+
+        {/* Admin Summary */}
         <NavLink
           to="/dashboard/admin-summary"
           className={({ isActive, isPending }) =>
@@ -104,10 +112,23 @@ const Dashboard = () => {
           <MdSummarize className={iconStyle}></MdSummarize>
           <li className={isCollapse ? "hidden" : "block"}> Admin Summary</li>
         </NavLink>
+
+        {/* Manage Events */}
+        <NavLink
+          to="/dashboard/manage-events"
+          className={({ isActive, isPending }) =>
+            isPending ? "pending" : isActive ? activeStyle : inActiveStyle
+          }
+        >
+          <BsCalendar2EventFill className={iconStyle}></BsCalendar2EventFill>
+          <li className={isCollapse ? "hidden" : "block"}> Manage Events</li>
+        </NavLink>
       </>
         :
         <>
           {/* user routes */}
+
+          {/* My Cart */}
           <NavLink
             to="/dashboard/my-cart"
             className={({ isActive, isPending }) =>
@@ -118,6 +139,7 @@ const Dashboard = () => {
             <li className={isCollapse ? "hidden" : "block"}> My Cart</li>
           </NavLink>
 
+          {/* Payment History */}
           <NavLink
             to="/dashboard/payment-history"
             className={({ isActive, isPending }) =>
@@ -128,7 +150,7 @@ const Dashboard = () => {
             <li className={isCollapse ? "hidden" : "block"}> Payment History</li>
           </NavLink>
 
-
+          {/* My Events */}
           <NavLink
             to="/dashboard/my-events"
             className={({ isActive, isPending }) =>
@@ -143,6 +165,7 @@ const Dashboard = () => {
 
       <hr />
 
+      {/* Home */}
       <NavLink
         to="/"
         className={({ isActive, isPending }) =>
@@ -153,6 +176,7 @@ const Dashboard = () => {
         <li className={isCollapse ? "hidden" : "block"}> Home</li>
       </NavLink>
 
+      {/* Profile */}
       <NavLink
         to="/dashboard/profile"
         className={({ isActive, isPending }) =>
