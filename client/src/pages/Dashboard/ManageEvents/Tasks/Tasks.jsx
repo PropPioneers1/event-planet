@@ -100,24 +100,27 @@ const Tasks = () => {
     }
 
     return (
-        <div className="bg-white min-h-screen p-4 text-[#574d4d]">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-[1280px] ">
+        <div className="bg-neutral min-h-screen p-4 text-[#574d4d]">
+            <h2 className="text-3xl md:text-5xl font-semibold text-center bg-neutral mb-8 py-4"> {board?.boardName}</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5  ">
                 {/* todo */}
                 <div
                     ref={dropTodo}
-                    className="bg-neutral p-4 rounded-md">
-                    <h2 className="text-xl font-semibold">
-                        {`${board?.boardName}: Todo`}
+                    className="bg-white p-4 rounded-md">
+                    <h2 className="text-xl font-semibold text-center">
+                        Todo
                     </h2>
                     {/* Showing toDos */}
-                    {
-                        todo?.map((item) => (
-                            <Todo
-                                key={item?._id}
-                                item={item}
-                            />
-                        ))
-                    }
+                    <div className="mt-6">
+                        {
+                            todo?.map((item) => (
+                                <Todo
+                                    key={item?._id}
+                                    item={item}
+                                />
+                            ))
+                        }
+                    </div>
 
                     {/* Adding new Todo */}
                     {isCard ? (
@@ -159,33 +162,37 @@ const Tasks = () => {
                 {/* progress */}
                 <div
                     ref={dropProgress}
-                    className="bg-neutral p-4 rounded-md">
-                    <h2 className="text-xl font-semibold">
-                        {`${board?.boardName}: Progress`}
+                    className="bg-white p-4 rounded-md">
+                    <h2 className="text-xl font-semibold text-center">
+                        Progress
                     </h2>
                     {/* Showing Progress toDos */}
-                    {
-                        progress?.map((item) => (
-                            <Todo
-                                key={item?._id}
-                                item={item}
-                            />
-                        ))
-                    }
+                    <div className="mt-6">
+                        {
+                            progress?.map((item) => (
+                                <Todo
+                                    key={item?._id}
+                                    item={item}
+                                />
+                            ))
+                        }
+                    </div>
                 </div>
                 {/* completed */}
                 <div
                     ref={dropCompleted}
-                    className="bg-neutral p-4 rounded-md">
-                    <h2 className="text-xl font-semibold">
-                        {`${board?.boardName}: Completed`}
+                    className="bg-white p-4 rounded-md">
+                    <h2 className="text-xl font-semibold text-center">
+                        Completed
                     </h2>
                     {/* Showing completed toDos */}
-                    {
-                        completed?.map((item) => (
-                            <Todo key={item?._id} item={item} />
-                        ))
-                    }
+                    <div className="mt-6">
+                        {
+                            completed?.map((item) => (
+                                <Todo key={item?._id} item={item} />
+                            ))
+                        }
+                    </div>
                 </div>
             </div>
 
