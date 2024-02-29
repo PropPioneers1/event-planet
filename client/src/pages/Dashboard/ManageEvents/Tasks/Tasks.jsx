@@ -1,147 +1,194 @@
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useParams } from "react-router-dom";
 import { GoPlus } from "react-icons/go";
 import { RxCross2 } from "react-icons/rx";
-import { useState } from "react";
-import toast from "react-hot-toast";
-
+import { useDrop } from "react-dnd";
+import Todo from "../Shared/Todo";
 
 const Tasks = () => {
-
-
     const axiosSecure = useAxiosSecure();
     const { id } = useParams();
 
     const [isCard, setIsCard] = useState(false);
 
+    const [todo, setTodo] = useState([]);
+    const [progress, setProgress] = useState([]);
+    const [completed, setCompleted] = useState([]);
+
     // fetching single board
     const { data: board = {}, isPending } = useQuery({
         queryKey: ["board"],
         queryFn: async () => {
-            const result = await axiosSecure.get(
-                `/eventTask/${id}`
-            );
+            const result = await axiosSecure.get(`/eventTask/${id}`);
             return result?.data;
         },
     });
 
-    // fetching all todo
-    const { data: todo = [], refetch } = useQuery({
-        queryKey: ["todo"],
+
+    // fetching all toDos
+    const { data: allTodo = [], refetch } = useQuery({
+        queryKey: ["AllTodo"],
         queryFn: async () => {
-            const result = await axiosSecure.get(
-                `/eventTodo/${id}`
-            );
+            const result = await axiosSecure.get(`/eventTodo/${id}`);
             return result?.data;
         },
     });
-    console.log(todo);
-    console.log(id);
 
+    // set todo based on status
+    useEffect(() => {
+        // Check if allTodo is not an empty array and has changed
+        if (allTodo?.length > 0 && JSON.stringify(allTodo) !== JSON.stringify(todo)) {
+            const filteredTodo = allTodo?.filter(item => item.status === "todo");
+            const filteredProgress = allTodo?.filter(item => item.status === "progress");
+            const filteredCompleted = allTodo?.filter(item => item.status === "completed");
+            setTodo(filteredTodo);
+            setProgress(filteredProgress);
+            setCompleted(filteredCompleted);
+        }
+    }, [allTodo]);
 
-
-    // function for creating new TODO
+    // Adding new todo
     const handleAddTodo = async (e) => {
         e.preventDefault();
         const description = e.target.todo.value;
-
-        const todo = {
+        const newTodo = {
             description,
             date: new Date(),
             boardId: id,
-            status: "todo"
-        }
-
-        // sending todo to server
-        const result = await axiosSecure.post(`/eventTodo`, todo);
+            status: "todo",
+        };
+        const result = await axiosSecure.post(`/eventTodo`, newTodo);
         if (result) {
-            toast.success("Todo Added Successfully")
+            toast.success("Todo Added Successfully");
             refetch();
-            setIsCard(false)
+            setIsCard(false);
         }
-    }
+    };
+
+    // Updating status of todo after drop
+    const handleDrop = async (item, targetStatus) => {
+        try {
+            const updatedItem = { ...item, status: targetStatus };
+            await axiosSecure.put(`/eventTodo/${item._id}`, updatedItem);
+            refetch();
+        } catch (error) {
+            console.error("Error updating todo status:", error);
+        }
+    };
+
+    // For dropping todo
+    const [, dropTodo] = useDrop({
+        accept: "todo",
+        drop: (item) => handleDrop(item, "todo"),
+    });
+
+    const [, dropProgress] = useDrop({
+        accept: "todo",
+        drop: (item) => handleDrop(item, "progress"),
+    });
+
+    const [, dropCompleted] = useDrop({
+        accept: "todo",
+        drop: (item) => handleDrop(item, "completed"),
+    });
 
     if (isPending) {
-        return <h2>Loading....</h2>
+        return <h2>Loading....</h2>;
     }
 
-
     return (
-        <div className="bg-white min-h-screen p-4 text-[#574d4d]"
-        // style={{ 
-        //     backgroundImage: `url(${board?.boardBgImg})`,
-        //     backgroundPosition: "center",
-        //     backgroundSize:"cover",
-        //     backgroundRepeat: "no-repeat",
-        //     }}
-        >
-            {/* <h2 className="text-2xl font-semibold my-6 text-center">{board?.boardName}</h2> */}
+        <div className="bg-white min-h-screen p-4 text-[#574d4d]">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-[1280px] ">
-                {/* Todo */}
-                <div className="bg-neutral p-4 rounded-md ">
-                    <h2 className="text-xl font-semibold">{board?.boardName}: Todo</h2>
-
-                    {/* Showing previous toDos */}
-                    <div className="mt-4">
-                        {
-                            todo?.map((item, idx) =>
-                                <div key={idx}
-                                    className="bg-white mt-2 py-4 px-2 rounded-md shadow"
-                                    draggable>
-                                    <h2>{item?.description}</h2>
-                                </div>)
-                        }
-                    </div>
-                    {/* add a new card */}
+                {/* todo */}
+                <div
+                    ref={dropTodo}
+                    className="bg-neutral p-4 rounded-md">
+                    <h2 className="text-xl font-semibold">
+                        {`${board?.boardName}: Todo`}
+                    </h2>
+                    {/* Showing toDos */}
                     {
-                        !isCard &&
-                        <div
-                            onClick={() => setIsCard(true)}
-                            className="flex items-center gap-2 mt-6 cursor-pointer rounded-md py-2 hover:bg-gray-300">
-                            <GoPlus size={24} />
-                            <h3 className="text-lg font-semibold">Add a card</h3>
-                        </div>
+                        todo?.map((item) => (
+                            <Todo
+                                key={item?._id}
+                                item={item}
+                            />
+                        ))
                     }
-                    {/* Input field for add new card */}
-                    {
-                        isCard &&
+
+                    {/* Adding new Todo */}
+                    {isCard ? (
                         <div className="mt-6">
-                            <form onSubmit={handleAddTodo} >
+                            <form onSubmit={handleAddTodo}>
                                 <textarea
                                     placeholder="Add Todo"
                                     name="todo"
                                     className="textarea resize-none textarea-bordered min-h-[36px]  h-auto w-full focus:outline-none"
-
                                 ></textarea>
                                 <div className="flex items-center gap-2">
-                                    {/* Add card button */}
+                                    {/* Add card button: this button will post todo */}
                                     <button
-                                        className=" px-3 py-1 rounded-md bg-accent text-white text-lg"
-                                        type="submit">
+                                        className=" px-3 py-1 rounded-md bg-accent text-white text-lg" type="submit"
+                                    >
                                         Add card
                                     </button>
-                                    {/* cancel button */}
+                                    {/* Cancel Button */}
                                     <button
                                         onClick={() => setIsCard(false)}
-                                        className="btn "
+                                        className="btn"
                                     >
                                         <RxCross2 className="text-2xl" />
                                     </button>
                                 </div>
                             </form>
                         </div>
+                    ) : (
+                        // this div for opening todo creation input
+                        <div
+                            onClick={() => setIsCard(true)}
+                            className="flex items-center gap-2 mt-6 cursor-pointer rounded-md py-2 hover:bg-gray-300"
+                        >
+                            <GoPlus size={24} />
+                            <h3 className="text-lg font-semibold">Add a card</h3>
+                        </div>
+                    )}
+                </div>
+                {/* progress */}
+                <div
+                    ref={dropProgress}
+                    className="bg-neutral p-4 rounded-md">
+                    <h2 className="text-xl font-semibold">
+                        {`${board?.boardName}: Progress`}
+                    </h2>
+                    {/* Showing Progress toDos */}
+                    {
+                        progress?.map((item) => (
+                            <Todo
+                                key={item?._id}
+                                item={item}
+                            />
+                        ))
                     }
                 </div>
-                {/* In Progress */}
-                <div className="bg-neutral p-4 rounded-md">
-                    <h2 className="text-xl font-semibold">{board?.boardName}: Progress</h2>
-                </div>
-                {/* Completed */}
-                <div className="bg-neutral p-4 rounded-md">
-                    <h2 className="text-xl font-semibold">{board?.boardName}: Completed</h2>
+                {/* completed */}
+                <div
+                    ref={dropCompleted}
+                    className="bg-neutral p-4 rounded-md">
+                    <h2 className="text-xl font-semibold">
+                        {`${board?.boardName}: Completed`}
+                    </h2>
+                    {/* Showing completed toDos */}
+                    {
+                        completed?.map((item) => (
+                            <Todo key={item?._id} item={item} />
+                        ))
+                    }
                 </div>
             </div>
+
         </div>
     );
 };
