@@ -28,7 +28,7 @@ const AddProduct = () => {
     };
 
     try {
-      const { data } = await axios.post("http://localhost:5000/shop", product);
+      const { data } = await axios.post("https://server-orpin-alpha.vercel.app/shop", product);
       toast.success(data?.message);
     } catch (error) {
       console.error(error);
