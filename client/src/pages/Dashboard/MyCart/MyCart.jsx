@@ -73,7 +73,7 @@ const MyCart = () => {
                 <span className="text-base font-bold md:text-xl ">
                   Order Total
                 </span>
-                <span className="font-bold ">$680.99</span>
+                <span className="font-bold ">$ {priceCount+100}</span>
               </div>
             </div>
           </div>

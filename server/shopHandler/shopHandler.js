@@ -22,6 +22,16 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/count", async (req, res) => {
+  try {
+    const count = await shopModel.countDocuments({});
+    res.status(200).json({ count });
+  } catch (err) {
+    res.status(500).json({
+      error: "There was a server-side error",
+    });
+  }
+});
 
 
 

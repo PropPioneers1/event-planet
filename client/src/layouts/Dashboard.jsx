@@ -127,8 +127,6 @@ const Dashboard = () => {
         :
         <>
           {/* user routes */}
-
-          {/* My Cart */}
           <NavLink
             to="/dashboard/my-cart"
             className={({ isActive, isPending }) =>
@@ -175,6 +173,7 @@ const Dashboard = () => {
         <FaHome className={iconStyle}></FaHome>
         <li className={isCollapse ? "hidden" : "block"}> Home</li>
       </NavLink>
+
 
       {/* Profile */}
       <NavLink

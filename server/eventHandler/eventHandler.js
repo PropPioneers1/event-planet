@@ -53,6 +53,18 @@ router.get("/", async (req, res) => {
   }
 });
 
+
+router.get('/eventCount',async(req,res)=>{
+  try {
+    const eventCount = await eventModel.countDocuments({});
+
+    res.status(200).send({ eventCount });
+  } catch (error) {
+    console.log("Not Fount Block");
+    res.status(500).json({ error: "internal server error" });
+  }
+})
+
 // Get a todo by ID
 router.get("/:id", async (req, res) => {
   // Implement your logic here

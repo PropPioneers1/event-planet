@@ -211,6 +211,17 @@ router.post("/failure/:tran_id", async (req, res) => {
   }
 });
 
+
+router.get('/ticketsCount',async(req,res)=>{
+  try {
+    const ticketCount = await Payment.countDocuments({});
+
+    res.status(200).send({ ticketCount });
+  } catch (error) {
+    console.log("Not Fount Block");
+    res.status(500).json({ error: "internal server error" });
+  }
+})
 // get success data
 router.get("/:tran_id", async (req, res) => {
   const tran_id = req.params.tran_id;
