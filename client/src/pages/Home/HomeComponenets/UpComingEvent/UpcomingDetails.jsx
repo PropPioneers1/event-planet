@@ -44,6 +44,7 @@ const UpcomingDetails = () => {
   const params = useParams();
   const ids=params.id
   const [number, setNumber] = useState(0);
+  const [showDescription,setShowDescription] = useState(false);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   // decrement
@@ -69,6 +70,11 @@ const UpcomingDetails = () => {
     },
   });
   console.log(eventDetails)
+  const toggleDescription = () => {
+      setShowDescription(!showDescription)
+  }
+  const fullDescription = eventDetails?.description;
+  const shortDescription = fullDescription.substring(0, 120);
   
   const date = getDate(eventDetails?.startDate);
 
@@ -114,8 +120,10 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                       {eventDetails?.eventName}
                     </div>
                   </div>
-                  <div className="md:flex items-center justify-around gap-2 lg:gap-4 py-5 space-y-4 md:space-y-0">
-                    <div className="lg:py-3 lg:px-10 py-2 px-5 bg-secondary shadow-lg flex items-center justify-center gap-3 text-white">
+                  <div className="md:flex items-center justify-between px-2 md:px-3 gap-2 lg:gap-4 py-5 space-y-4 md:space-y-0">
+                    <div className="lg:py-3 lg:px-10 py-2 px-5
+                        bg-gradient-to-tl from-[#861f42]
+                        to-primary shadow-lg flex items-center justify-center gap-3 text-white">
                       <div className="text-center">
                         <h2 className="md:text-lg font-semibold text-center pb-1">
                           Event Date
@@ -127,7 +135,8 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                         </div>
                       </div>
                     </div>
-                    <div className="lg:py-3 lg:px-10 py-2 px-4 bg-secondary shadow-lg  gap-3 text-white">
+                    <div className="lg:py-3 lg:px-10 py-2 px-4 bg-gradient-to-tl from-[#861f42]
+                        to-primary shadow-lg  gap-3 text-white">
                       <h2 className="text-lg font-semibold text-center">
                         Event Time
                       </h2>
@@ -136,7 +145,8 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                         <p className="font-semibold">{time}</p>
                       </div>
                     </div>
-                    <div className="lg:py-3 lg:px-10 py-2 px-4 bg-secondary shadow-lg  gap-3 text-white">
+                    <div className="lg:py-3 lg:px-10 py-2 px-4 bg-gradient-to-tl from-[#861f42]
+                        to-primary shadow-lg  gap-3 text-white">
                       <h2 className="text-lg font-semibold text-center">
                         Event Location
                       </h2>
@@ -147,8 +157,19 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                     </div>
                   </div>
                   {/* descriptions */}
-                  <div className="mb-5">
-                    <p>{eventDetails?.description}</p>
+                  <div className="mb-5 md:px-3 px-2">
+                      {
+                         showDescription ? (
+                          <p className="text-slate-700 inline">{fullDescription}</p>
+                         ):(
+                          <p className="text-slate-700 inline">{shortDescription} </p>
+                         )
+                      }
+                       {
+                       fullDescription.length > 120 &&(
+                        <button onClick={toggleDescription} className="text-primary font-semibold ml-2 underline">Learn More</button>
+                       )
+                        }
                   </div>
 
                   {/* Register now */}
@@ -243,7 +264,8 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                     </div>
 
                     {/* evetn FAQ */}
-                    <div className="bg-secondary p-4 mt-10 font-medium text-white text-xl">
+                  <div className="hidden md:block">
+                  <div className="bg-secondary p-4 mt-10 font-medium text-white text-xl">
                       Event FAQ
                     </div>
                     <div className="collapse collapse-plus bg-base-200">
@@ -349,10 +371,11 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                       </div>
                     </div>
                   </div>
+                  </div>
                 </div>
               </div>
               {/* right side */}
-              <div className="md:col-span-2 col-span-1 mt-16">
+              <div className="md:col-span-2 col-span-1 mt-0 md:mt-16">
                 <div className="bg-white border p-3">
                   <div>
                     <div className="py-2">
