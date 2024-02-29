@@ -26,7 +26,7 @@ const ContactHandler = require("./ContactHnadler/Contacthandler");
 const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
 const messageHandler = require("./MessageHandler/MessageHandler");
 const likeDislikeHandler = require("./FeedbackHandler/likeDislikeHandler");
-const Productpay=require("./paymentHandler/PaymentHandler")
+const Productpay = require("./paymentHandler/PaymentHandler");
 // middleware
 app.use(cors());
 app.use(bodyParser.json());
@@ -36,10 +36,11 @@ const dbURI = `mongodb+srv://EventPlanet:6oNbcueawJevcwOk
 @proppioneers.pzy67in.mongodb.net/Event-Planet`;
 // Mongodb connection
 
-mongoose.connect(
-  `mongodb+srv://EventPlanet:6oNbcueawJevcwOk
+mongoose
+  .connect(
+    `mongodb+srv://EventPlanet:6oNbcueawJevcwOk
 @proppioneers.pzy67in.mongodb.net/Event-Planet`
-)
+  )
   .then(() => {
     console.log("Connected to MongoDB");
   })
@@ -61,14 +62,14 @@ app.use("/payment", paymenthandler);
 app.use("/feedback", feedbackHandler);
 app.get("/sendEmail", sendMail);
 app.use("/token", notificationHandler);
-// app.use("/users", usersHandler);
+app.use("/users", usersHandler);
 app.use("/likesComments", LikesCommentsHandler);
 app.use("/contact", ContactHandler);
 app.get("/sendEmail", sendMail);
 app.use("/token", notificationHandler);
 app.use("/message", messageHandler);
-app.use("/likeDislike",likeDislikeHandler);
-app.use("/productpay",Productpay);
+app.use("/likeDislike", likeDislikeHandler);
+app.use("/productpay", Productpay);
 
 // Eroor handler
 

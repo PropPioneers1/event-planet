@@ -10,8 +10,9 @@ router.get("/", async (req, res) => {
   const eventCategory = req.query.category;
   const eventState = req.query.state;
   const eventCity = req.query.city;
+  const eventVenue = req.query.venue;
   const email = req.query.email;
-  const status = req.query.status
+  const status = req.query.status;
 
   const page = parseInt(req.query.page);
   const limit = 8;
@@ -19,7 +20,7 @@ router.get("/", async (req, res) => {
   let query = {};
 
   if (eventTitle) {
-    query.eventName = eventTitle;
+    query.eventName = { $regex: new RegExp(eventTitle, "i") };
   }
   if (eventCategory) {
     query.category = eventCategory;
@@ -27,16 +28,19 @@ router.get("/", async (req, res) => {
   if (eventState) {
     query.state = eventState;
   }
-  if (eventCity) { tsque
+  if (eventCity) {
     query.city = eventCity;
   }
-  if(email){
+  if (eventVenue) {
+    query.venue = eventCity;
+  }
+
+  if (email) {
     query.email = email;
   }
-  if(status){
+  if (status) {
     query.status = status;
   }
-  
 
   try {
     const eventCount = await eventModel.countDocuments(query);
@@ -62,11 +66,10 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-
 router.get("/data/:ids", async (req, res) => {
   try {
-    const {  ids } = req.params;
-    if ( !ids) {
+    const { ids } = req.params;
+    if (!ids) {
       return res.status(400).json({ error: "Missing email or ids" });
     }
     const idsArray = ids.split(",");
@@ -82,7 +85,6 @@ router.get("/data/:ids", async (req, res) => {
   }
 });
 
-
 router.post("/", async (req, res) => {
   try {
     const newEvent = await eventModel.create(req.body);
@@ -93,34 +95,53 @@ router.post("/", async (req, res) => {
   }
 });
 
-
-
 // Patch todo
 // Patch todo
 router.put("/:id", async (req, res) => {
-  const { id } = req.params; 
+  const { id } = req.params;
   const { status } = req.body;
-console.log(id,status);
+  console.log(id, status);
   try {
-      const updatedEvent = await eventModel.findByIdAndUpdate({_id:id}, // Use id instead of ids
-          { $set: { status } },
-          { new: true }
-      );
+    const updatedEvent = await eventModel.findByIdAndUpdate(
+      { _id: id }, // Use id instead of ids
+      { $set: { status } },
+      { new: true }
+    );
 
-      if (!updatedEvent) {
-          return res.status(404).json({ error: "Event not found" });
-      }
+    if (!updatedEvent) {
+      return res.status(404).json({ error: "Event not found" });
+    }
 
-      res.status(200).json({ message: "updated successfully",updatedEvent});
+    res.status(200).json({ message: "updated successfully", updatedEvent });
   } catch (error) {
-      console.error("Error updating event:", error);
-      res.status(500).json({ error: "Internal server error" });
+    console.error("Error updating event:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
+// update many todo
+// Patch ticket left for an event
+// router.patch("/ticketleft/:id", async (req, res) => {
+//   const { ids } = req.params;
+//   const { ticketLeft } = req.body;
 
+//   try {
+//     const updatedEvent = await eventModel.findByIdAndUpdate(
+//       ids ,
+//       { $set: { ticketleft: ticketLeft } },
+//       { new: true }
+//     );
 
+//     if (!updatedEvent) {
+//       return res.status(404).json({ error: "Event not found" });
+//     }
 
+//     res.status(200).json({ message: "Ticket left updated successfully", event: updatedEvent });
+//   } catch (error) {
+//     console.error("Error updating ticket left:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
 
 // Delete todo
 router.delete("/:id", async (req, res) => {

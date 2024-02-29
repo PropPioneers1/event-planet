@@ -1,4 +1,4 @@
-import  { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./trending.css";
 import { FaShopify, FaStar } from "react-icons/fa";
@@ -21,18 +21,22 @@ const Trendingproducts = () => {
   };
 
   useEffect(() => {
-    axioSecure.get('/shop/trending/data')
+    axioSecure
+      .get("/shop/trending/data")
       .then((response) => {
         setData(response.data.result);
       })
       .catch((error) => {
         console.error(error.message);
       });
-  }, [data]);
+  }, [data, axioSecure]);
 
   useEffect(() => {
     const handleScrollEnd = () => {
-      if (sliderRef.current.scrollLeft === sliderRef.current.scrollWidth - sliderRef.current.offsetWidth) {
+      if (
+        sliderRef.current.scrollLeft ===
+        sliderRef.current.scrollWidth - sliderRef.current.offsetWidth
+      ) {
         // Calculate the width of a single item
         const itemWidth = sliderRef.current.children[0].offsetWidth;
         // Calculate the width of all items including duplicates
@@ -41,51 +45,52 @@ const Trendingproducts = () => {
         setScrollLeft(totalWidth - itemWidth * data.length);
       }
     };
-  
-    sliderRef.current.addEventListener('scroll', handleScrollEnd);
 
-      sliderRef.current.removeEventListener('scroll', handleScrollEnd);
-  
+    sliderRef.current.addEventListener("scroll", handleScrollEnd);
+
+    sliderRef.current.removeEventListener("scroll", handleScrollEnd);
   }, [data]);
-  
 
   const handleMouseMove = (e) => {
     if (!startX) return;
     const x = e.pageX - sliderRef.current.offsetLeft;
     const walk = (x - startX) * 2;
     sliderRef.current.scrollLeft = scrollLeft + walk;
-  
+
     // Check if the slider reaches the end
-    if (sliderRef.current.scrollLeft >= sliderRef.current.scrollWidth - sliderRef.current.offsetWidth) {
+    if (
+      sliderRef.current.scrollLeft >=
+      sliderRef.current.scrollWidth - sliderRef.current.offsetWidth
+    ) {
       // Scroll back to the beginning
       sliderRef.current.scrollLeft = 0;
       setScrollLeft(0);
     }
   };
-  
+
   const handleMouseUp = () => {
     setStartX(0);
   };
 
   const handleNavigate = () => {
-    navigate('/shopping');
+    navigate("/shopping");
   };
 
   return (
     <div className="shadow-bg bg-neutral mt-10 pt-4">
       <Container>
         <SectionHeading
-          colortitle='text-[rgb(255 255 255 / var(--tw-text-opacity))]'
+          colortitle="text-[rgb(255 255 255 / var(--tw-text-opacity))]"
           align="text-center"
           title="Visit Our Shop"
           normalSubTitleWord="OUR "
           boldSubTitleWord=" SHOP PRODUCTS"
-          colorboldmrsub='text-accent'
-          colornormrsub='text-black'
+          colorboldmrsub="text-accent"
+          colornormrsub="text-black"
         />
         <div>
           <p className="text-center mb-10 text-gray-700 text-xl px-4">
-            Hello Human! We're here to make your special moments even more
+            Hello Human! We{`'`}re here to make your special moments even more
             memorable. Explore our curated collection of essential products for
             various events and find the perfect items to elevate your
             experiences.
@@ -110,7 +115,6 @@ const Trendingproducts = () => {
                 className="slide relative rounded-md h-auto bg-transparent shadow-xl"
                 style={{ flex: "0 0 auto" }}
               >
-
                 <div className="relative">
                   <img
                     className="h-[100px] w-full mx-auto object-cover rounded-md"
@@ -119,9 +123,7 @@ const Trendingproducts = () => {
                   />
                 </div>
                 <div className=" h-44 w-56 my-auto">
-                  <h2
-                    className=" text-secondary text-lg text-start my-auto border-slate-300   font-bold mt-4 "
-                  >
+                  <h2 className=" text-secondary text-lg text-start my-auto border-slate-300   font-bold mt-4 ">
                     {item.title.slice(0, 20)}
                   </h2>
                   <h2 className="font-bold border-slate-300 text-slate-500 ">
@@ -132,12 +134,15 @@ const Trendingproducts = () => {
                   </h2>
                   <h3 className="text-slate-600  border-slate-300 ">
                     {" "}
-                  Name : {item.title.slice(0, 20)}
+                    Name : {item.title.slice(0, 20)}
                   </h3>
                   <div className="flex gap-2 pb-4 border-slate-300">
                     <p className="text-start text-slate-700"> Rating :</p>
                     <div className="rating rating-sm mt-1">
-                      {item.rating && typeof item.rating === 'number' && item.rating > 0 && item.rating <= 5 ? (
+                      {item.rating &&
+                      typeof item.rating === "number" &&
+                      item.rating > 0 &&
+                      item.rating <= 5 ? (
                         [...Array(Math.floor(item.rating))].map((_, i) => (
                           <FaStar className="text-primary" key={i} />
                         ))

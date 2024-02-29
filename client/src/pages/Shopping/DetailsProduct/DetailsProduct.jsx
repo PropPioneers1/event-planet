@@ -11,6 +11,7 @@ import Feedback from "./Feedback/Feedback";
 import Progress from "./Progress/Progress";
 import { uploadImage } from "../../../api/utlis";
 import toast from "react-hot-toast";
+
 const DetailsProduct = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
@@ -45,19 +46,20 @@ const DetailsProduct = () => {
     },
   });
 
-  const { title, image, description, price } = productDetails ? productDetails.result || {} : {};
-
+  const { title, image, description, price } = productDetails
+    ? productDetails.result || {}
+    : {};
 
   const handleAddToCart = (productDetails) => {
     if (user) {
-      const { _id, image, title, price } =  productDetails.result;
+      const { _id, image, title, price } = productDetails.result;
 
       const cartItem = {
         email: user.email,
         image,
         title,
         price,
-        quantity: 1
+        quantity: 1,
       };
       axiosSecure.post(`/shop/shopCart/${_id}`, cartItem).then((res) => {
         if (res.data) {
@@ -100,10 +102,10 @@ const DetailsProduct = () => {
     e.preventDefault();
     const form = e.target;
     const imagebb = form.image.files[0];
-    const {data} = await uploadImage(imagebb);
-    console.log("image",data)
+    const { data } = await uploadImage(imagebb);
+    console.log("image", data);
     const usersFeedBack = {
-      id:id,
+      id: id,
       email: user?.email,
       name: user?.displayName,
       product_name: title,
@@ -112,66 +114,67 @@ const DetailsProduct = () => {
       user_opinion: userOpinion,
       rating: rating,
       date: formattedDate,
-      yes:0,
-      no:0
+      yes: 0,
+      no: 0,
     };
     // post feed back
     const result = await axiosSecure.post("/feedback", usersFeedBack);
     if (result?.status === 200) {
-      refetch()
+      refetch();
       toast.success("Thanks For Your Feedback");
     }
-    console.log("post feedback",result)
+    console.log("post feedback", result);
   };
-// get feedback
-  const { data: feedbackData,refetch } = useQuery({
-  queryKey: ["feedbackData"],
-  queryFn: async () => {
-    const res = await axiosSecure.get(`/feedback/${id}`);
-    return res?.data?.result;
-    
-  },
-});
-
-const { data: progressData } = useQuery({
-  queryKey: ["progressData"],
-  queryFn: async () => {
-    if (title) {
-      const res = await axiosSecure.get(`/feedback/${title}/${id}`);
+  // get feedback
+  const { data: feedbackData, refetch } = useQuery({
+    queryKey: ["feedbackData"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/feedback/${id}`);
       return res?.data?.result;
-      
-    }
-    // Return null or empty array if title is not defined or falsy
-    return null;
-  },
-});
+    },
+  });
 
-console.log("get data->",progressData)
-console.log("get data>",title)
+  const { data: progressData } = useQuery({
+    queryKey: ["progressData"],
+    queryFn: async () => {
+      if (title) {
+        const res = await axiosSecure.get(`/feedback/${title}/${id}`);
+        return res?.data?.result;
+      }
+      // Return null or empty array if title is not defined or falsy
+      return null;
+    },
+  });
 
-// calculate total rating the specific product 
+  console.log("get data->", progressData);
+  console.log("get data>", title);
 
-const [totalRatingStars, setTotalRatingStars] = useState(0);
-useEffect(() => {
+  // calculate total rating the specific product
+
+  const [totalRatingStars, setTotalRatingStars] = useState(0);
+  useEffect(() => {
     calculateTotalRatingStars();
-}, [feedbackData]);
+  }, [feedbackData]);
 
-const calculateTotalRatingStars = () => {
+  const calculateTotalRatingStars = () => {
     if (!feedbackData || !feedbackData.length) {
-        // If feedbackData is not available or empty, set totalRatingStars to 0
-        setTotalRatingStars(0);
-        return;
+      // If feedbackData is not available or empty, set totalRatingStars to 0
+      setTotalRatingStars(0);
+      return;
     }
 
-    const totalStars = feedbackData.reduce((sum, feedback) => sum + feedback.rating, 0);
+    const totalStars = feedbackData.reduce(
+      (sum, feedback) => sum + feedback.rating,
+      0
+    );
     setTotalRatingStars(totalStars);
-};
-const averageStar = (totalRatingStars / feedbackData?.length).toFixed(1);
+  };
+  const averageStar = (totalRatingStars / feedbackData?.length).toFixed(1);
 
- if(isLoading) return <span className="loading loading-infinity loading-lg"></span>
- if(isError) return <div>loading..</div>
+  if (isLoading)
+    return <span className="loading loading-infinity loading-lg"></span>;
+  if (isError) return <div>loading..</div>;
   return (
-    
     <section className="py-10 mt-14 font-poppins dark:bg-gray-800">
       <div className="max-w-6xl px-4 mx-auto">
         <div className="flex flex-wrap mb-24 -mx-4">
@@ -311,7 +314,10 @@ const averageStar = (totalRatingStars / feedbackData?.length).toFixed(1);
                 {/* todo: */}
                 <div className="grid grid-cols-8 gap-5">
                   <div className="col-span-2 text-center">
-                    <h2 className="text-5xl font-semibold mb-2"> {averageStar} </h2>
+                    <h2 className="text-5xl font-semibold mb-2">
+                      {" "}
+                      {averageStar}{" "}
+                    </h2>
                     <div className="flex justify-center">
                       <ReactStars
                         edit={false}
@@ -322,11 +328,10 @@ const averageStar = (totalRatingStars / feedbackData?.length).toFixed(1);
                       />
                     </div>
                     {totalRatingStars > 1000 ? (
-                    <p>{totalRatingStars / 1000}k Rating Star</p>
+                      <p>{totalRatingStars / 1000}k Rating Star</p>
                     ) : (
-                        <p>{totalRatingStars} Rating Star</p>
+                      <p>{totalRatingStars} Rating Star</p>
                     )}
-                    
                   </div>
                   <div className="col-span-1 text-center">
                     <div>1</div>
@@ -336,7 +341,10 @@ const averageStar = (totalRatingStars / feedbackData?.length).toFixed(1);
                     <div>5</div>
                   </div>
                   <div className="col-span-5">
-                    {progressData && progressData.map(rating=><Progress key={rating._id} rating={rating}></Progress>)}
+                    {progressData &&
+                      progressData.map((rating) => (
+                        <Progress key={rating._id} rating={rating}></Progress>
+                      ))}
                   </div>
                 </div>
                 {/* show all users feedback */}
