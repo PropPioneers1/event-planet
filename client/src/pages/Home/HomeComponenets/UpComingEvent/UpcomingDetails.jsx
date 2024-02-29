@@ -169,7 +169,10 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                       }
                        {
                        eventDetails?.description.length > 120 &&(
-                        <button onClick={toggleDescription} className="text-primary font-semibold ml-2 underline">Learn More</button>
+                    <button onClick={toggleDescription} className="text-primary font-semibold ml-2 underline">{
+                      showDescription ? 'Collapse !' : 'Learn More..'
+                    }
+                    </button>
                        )
                         }
                   </div>
