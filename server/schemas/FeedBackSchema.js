@@ -13,6 +13,10 @@ const FeedBackSchema = mongoose.Schema({
         type:String,
         require:true,
     },
+    image:{
+        type:String,
+        require:true,
+    },
     product_name:{
         type:String,
         require:true
@@ -32,7 +36,7 @@ const FeedBackSchema = mongoose.Schema({
     },
     rating:{
         type:Number,
-        require:true,
+        require:false,
     },
     date:{
         type:String,

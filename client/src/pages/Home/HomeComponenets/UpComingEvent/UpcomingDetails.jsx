@@ -2,11 +2,11 @@ import { useState } from "react";
 import {   useNavigate, useParams } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaCartPlus } from "react-icons/fa";
-import { FaCircleArrowRight } from "react-icons/fa6";
+// import { FaCircleArrowRight } from "react-icons/fa6";
 import { BsCalendar2DateFill } from "react-icons/bs";
 import { MdSettingsVoice } from "react-icons/md";
 import { IoMdTime } from "react-icons/io";
-import { TbSitemap } from "react-icons/tb";
+// import { TbSitemap } from "react-icons/tb";
 import { MdDateRange } from "react-icons/md";
 import Container from "../../../../components/ui/Container";
 import {
@@ -23,7 +23,7 @@ import {
 } from "react-share";
 import Footer from "../../../../components/shared/Footer";
 import "./upcoming.scss";
-import EventMap from "./EventMap";
+// import EventMap from "./EventMap";
 // import useAuth from "../../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
@@ -32,7 +32,7 @@ import { getDate } from "../../../../utils/getDate";
 import useAuth from "../../../../hooks/useAuth";
 import nullImage from "../../../../assets/image/user.png"
 // import UpComingBanner from "./UpComingBanner";
-import { BiArea } from "react-icons/bi";
+// import { BiArea } from "react-icons/bi";
 import PostFeedback from "./PostFeedback";
 import ShowFeedback from "./ShowFeedback";
 import UpComingBanner from "./UpComingBanner";
@@ -47,6 +47,7 @@ const UpcomingDetails = () => {
   const [showDescription,setShowDescription] = useState(false);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
+  const feedbackTitle = "Event"
   // decrement
   const decrement = () => {
     if (number === 0) {
@@ -69,12 +70,14 @@ const UpcomingDetails = () => {
       return result?.data;
     },
   });
-  console.log(eventDetails)
+  console.log("event detalils",eventDetails?.speakersImages?.length)
+  
+  const fullDescription = eventDetails?.description;
+  const shortDescription = fullDescription ? fullDescription.substring(0, 120) : "";
+
   const toggleDescription = () => {
       setShowDescription(!showDescription)
   }
-  const fullDescription = eventDetails?.description;
-  const shortDescription = fullDescription.substring(0, 120);
   
   const date = getDate(eventDetails?.startDate);
 
@@ -160,14 +163,17 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                   <div className="mb-5 md:px-3 px-2">
                       {
                          showDescription ? (
-                          <p className="text-slate-700 inline">{fullDescription}</p>
+                          <p className="text-slate-700 inline">{eventDetails?.description}</p>
                          ):(
                           <p className="text-slate-700 inline">{shortDescription} </p>
                          )
                       }
                        {
-                       fullDescription.length > 120 &&(
-                        <button onClick={toggleDescription} className="text-primary font-semibold ml-2 underline">Learn More</button>
+                       eventDetails?.description.length > 120 &&(
+                    <button onClick={toggleDescription} className="text-primary font-semibold ml-2 underline">{
+                      showDescription ? 'Collapse !' : 'Learn More..'
+                    }
+                    </button>
                        )
                         }
                   </div>
@@ -264,7 +270,187 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                     </div>
 
                     {/* evetn FAQ */}
-                  <div className="hidden md:block">
+                  {/* <div className="hidden md:block">
+                  <div className="bg-secondary p-4 mt-10 font-medium text-white text-xl">
+                      Event FAQ
+                    </div>
+                    <div className="collapse collapse-plus bg-base-200">
+                      <input
+                        type="radio"
+                        name="my-accordion-3"
+                        checked="checked"
+                      />
+                      <div className="collapse-title text-xl font-medium">
+                        How do I book tickets for an event?
+                      </div>
+                      <div className="collapse-content">
+                        <p>
+                          To books tickets for an event, simply navigate to the
+                          event page on our website and select the desired date
+                          and ticket type. Then, proceed to the checkout where
+                          you can review your order and complete the booking
+                          process. You will receive a confirmation email once
+                          your booking is successful.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="collapse collapse-plus bg-base-200">
+                      <input type="radio" name="my-accordion-3" />
+                      <div className="collapse-title text-xl font-medium">
+                        What payment methods are accepted?
+                      </div>
+                      <div className="collapse-content">
+                        <p>
+                          We accept a variety of payment methods to make your
+                          booking experience convenient. You can pay securely
+                          using major credit cards, including Visa, Mastercard,
+                          American Express, and Discover. Additionally, we also
+                          offer payment through Stripe for seamless online
+                          transactions.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="collapse collapse-plus bg-base-200">
+                      <input type="radio" name="my-accordion-3" />
+                      <div className="collapse-title text-xl font-medium">
+                        How will I receive my tickets after booking?
+                      </div>
+                      <div className="collapse-content">
+                        <p>
+                          After successfully completing your booking, you will
+                          receive an email confirmation containing your tickets.
+                          You can either print out the tickets or present the
+                          digital copy on your smartphone at the event venue.
+                          Please ensure to check your spam or junk folder if you{" "}
+                          {"don't"} see the confirmation email in your inbox.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="collapse collapse-plus bg-base-200">
+                      <input type="radio" name="my-accordion-3" />
+                      <div className="collapse-title text-xl font-medium">
+                        How can I contact customer support?
+                      </div>
+                      <div className="collapse-content">
+                        <p>
+                          Our customer support team is available to assist you
+                          with any questions or concerns you may have. You can
+                          reach us via email at support:proppionears1@gmail.com
+                          or by phone at +88 (880) 1634-264626 during our
+                          business hours. We strive to provide prompt and
+                          helpful assistance to ensure your event experience is
+                          smooth and enjoyable.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="collapse collapse-plus bg-base-200">
+                      <input type="radio" name="my-accordion-3" />
+                      <div className="collapse-title text-xl font-medium">
+                        Is there parking available at the venue?
+                      </div>
+                      <div className="collapse-content">
+                        <p>
+                          Yes, parking facilities are available at the event
+                          venue for your convenience. We recommend arriving
+                          early to secure a parking spot, especially during peak
+                          hours or popular events. Please follow any signage or
+                          instructions provided by the venue staff for smooth
+                          parking.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="collapse collapse-plus bg-base-200">
+                      <input type="radio" name="my-accordion-3" />
+                      <div className="collapse-title text-xl font-medium">
+                        Can I bring outside food or drinks to the event?
+                      </div>
+                      <div className="collapse-content">
+                        <p>
+                          Outside food and drinks are generally not permitted at
+                          the event venue. However, some events may have
+                          specific policies or exceptions regarding this. We
+                          kindly ask that you adhere to the {"venue's"}{" "}
+                          guidelines to ensure the safety and enjoyment of all
+                          attendees. Refreshments and concessions are typically
+                          available for purchase at the venue.
+                        </p>
+                      </div>
+                    </div>
+                  </div> */}
+                  </div>
+                </div>
+              </div>
+              {/* right side */}
+              <div className="md:col-span-2 col-span-1 mt-0 md:mt-16">
+                <div className="bg-white border p-3">
+                  <div>
+                    <div className="">
+                      {/* <div className=" flex items-center gap-3">
+                        <BiArea className="text-2xl"></BiArea>
+                        <h2 className="my-3 text-2xl font-semibold">
+                          Show Event Area
+                        </h2>
+                      </div> */}
+                      {/* <EventMap></EventMap> */}
+                    </div>
+                    {/* <h2 className="border-b border-b-gray-300 pb-2 text-xl">
+                      <span className="font-semibold">Total Seats:</span> 500{" "}
+                      <span className="font-semibold">(500 left)</span>
+                    </h2> */}
+                    {/* <div className="flex items-center gap-4 text-lg mt-3">
+                      <div>
+                        <TbSitemap></TbSitemap>
+                      </div>
+                      <div className="">
+                        <h2 className="text-lg font-semibold">Event Items</h2>
+                      </div>
+                    </div> */}
+                    {/* <div className="p-4 border-b-gray-600">
+                      <div className="flex items-center gap-3 mb-2">
+                        <div>
+                          <FaCircleArrowRight className=" text-secondary"></FaCircleArrowRight>
+                        </div>
+                        <div>Sound Ecosystems</div>
+                      </div>
+                      <div className="flex items-center gap-3 mb-2">
+                        <div>
+                          <FaCircleArrowRight className=" text-secondary"></FaCircleArrowRight>
+                        </div>
+                        <div>Wireless Bluetooth Speakers</div>
+                      </div>
+                      <div className="flex items-center gap-3 mb-2">
+                        <div>
+                          <FaCircleArrowRight className=" text-secondary"></FaCircleArrowRight>
+                        </div>
+                        <div>Audio-Visual Synthesizers</div>
+                      </div>
+                      <div className="flex items-center gap-3 mb-2">
+                        <div>
+                          <FaCircleArrowRight className=" text-secondary"></FaCircleArrowRight>
+                        </div>
+                        <div>Eco-Friendly Utensils</div>
+                      </div>
+                      <div className="flex items-center gap-3 mb-2">
+                        <div>
+                          <FaCircleArrowRight className=" text-secondary"></FaCircleArrowRight>
+                        </div>
+                        <div>Curved LED Display Walls</div>
+                      </div>
+                      <div className="flex items-center gap-3 pb-2 ">
+                        <div>
+                          <FaCircleArrowRight className=" text-secondary"></FaCircleArrowRight>
+                        </div>
+                        <div>Touchscreen LED Monitors</div>
+                      </div>
+                      <div className="flex items-center gap-3 pb-2 ">
+                        <div>
+                          <FaCircleArrowRight className=" text-secondary"></FaCircleArrowRight>
+                        </div>
+                        <div>Artistic Collaboration Canvases</div>
+                      </div>
+                    </div> */}
+                    {/* event shedule */}
+                    <div className="hidden md:block">
                   <div className="bg-secondary p-4 mt-10 font-medium text-white text-xl">
                       Event FAQ
                     </div>
@@ -371,79 +557,6 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                       </div>
                     </div>
                   </div>
-                  </div>
-                </div>
-              </div>
-              {/* right side */}
-              <div className="md:col-span-2 col-span-1 mt-0 md:mt-16">
-                <div className="bg-white border p-3">
-                  <div>
-                    <div className="py-2">
-                      <div className=" flex items-center gap-3">
-                        <BiArea className="text-2xl"></BiArea>
-                        <h2 className="my-3 text-2xl font-semibold">
-                          Show Event Area
-                        </h2>
-                      </div>
-                      <EventMap></EventMap>
-                    </div>
-                    <h2 className="border-b border-b-gray-300 pb-2 text-xl">
-                      <span className="font-semibold">Total Seats:</span> 500{" "}
-                      <span className="font-semibold">(500 left)</span>
-                    </h2>
-                    <div className="flex items-center gap-4 text-lg mt-3">
-                      <div>
-                        <TbSitemap></TbSitemap>
-                      </div>
-                      <div className="">
-                        <h2 className="text-lg font-semibold">Event Items</h2>
-                      </div>
-                    </div>
-                    <div className="p-4 border-b-gray-600">
-                      <div className="flex items-center gap-3 mb-2">
-                        <div>
-                          <FaCircleArrowRight className=" text-secondary"></FaCircleArrowRight>
-                        </div>
-                        <div>Sound Ecosystems</div>
-                      </div>
-                      <div className="flex items-center gap-3 mb-2">
-                        <div>
-                          <FaCircleArrowRight className=" text-secondary"></FaCircleArrowRight>
-                        </div>
-                        <div>Wireless Bluetooth Speakers</div>
-                      </div>
-                      <div className="flex items-center gap-3 mb-2">
-                        <div>
-                          <FaCircleArrowRight className=" text-secondary"></FaCircleArrowRight>
-                        </div>
-                        <div>Audio-Visual Synthesizers</div>
-                      </div>
-                      <div className="flex items-center gap-3 mb-2">
-                        <div>
-                          <FaCircleArrowRight className=" text-secondary"></FaCircleArrowRight>
-                        </div>
-                        <div>Eco-Friendly Utensils</div>
-                      </div>
-                      <div className="flex items-center gap-3 mb-2">
-                        <div>
-                          <FaCircleArrowRight className=" text-secondary"></FaCircleArrowRight>
-                        </div>
-                        <div>Curved LED Display Walls</div>
-                      </div>
-                      <div className="flex items-center gap-3 pb-2 ">
-                        <div>
-                          <FaCircleArrowRight className=" text-secondary"></FaCircleArrowRight>
-                        </div>
-                        <div>Touchscreen LED Monitors</div>
-                      </div>
-                      <div className="flex items-center gap-3 pb-2 ">
-                        <div>
-                          <FaCircleArrowRight className=" text-secondary"></FaCircleArrowRight>
-                        </div>
-                        <div>Artistic Collaboration Canvases</div>
-                      </div>
-                    </div>
-                    {/* event shedule */}
                     <div className=" pb-3">
                       <h2 className=" font-semibold pt-3 text-lg">
                         Event Shedule Details
@@ -500,29 +613,28 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                         <h2 className="font-semibold">Event Speaker</h2>
                       </div>
                       <div className="">
-                        <div className="flex items-center gap-10 justify-center">
-                          {eventDetails &&
-                            eventDetails.speakersImages.map((imgs) =>
-                              imgs.speakersImages ? (
-                                <>
-                                  <img
-                                    key={imgs._id}
-                                    src={imgs}
-                                    className="rounded-full w-20 h-20"
-                                    alt="speaker"
-                                  />
-                                </>
-                              ) : (
-                                <>
-                                 <div className="">
-                                  <img src={nullImage} className="rounded-full w-[50px] h-[50px]" alt="" />
-                                 </div>
-                                </>
-                              )
+                        <div className="flex gap-10 ml-4">
+                        {eventDetails && eventDetails.speakersImages.map((guestImage, index) => (
+                          <div key={index} className="">
+                            {eventDetails?.speakersImages?.length > 0 ? (
+                              <img
+                                src={guestImage}
+                                className="rounded-full w-14 h-14"
+                                alt={`Speaker ${index + 1}`}
+                              />
+                            ) : (
+                              <img
+                                src={nullImage}
+                                className="rounded-full w-20 h-20"
+                                alt="Placeholder"
+                              />
                             )}
+                          </div>
+                        ))}
+
                         </div>
 
-                        <div className="flex items-center justify-center gap-3">
+                        <div className="flex gap-3">
                           {eventDetails &&
                             eventDetails?.speakers.map((names) => (
                               <h2
@@ -548,6 +660,7 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                         image={eventDetails?.eventImages[0]}
                         id={ids}
                         refetch={refetch}
+                        feedbackTitle={feedbackTitle}
                       ></PostFeedback>
                     </div>
                   </div>

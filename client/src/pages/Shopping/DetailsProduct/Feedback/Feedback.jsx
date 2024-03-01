@@ -7,8 +7,10 @@ import { useState } from "react";
 
 // eslint-disable-next-line react/prop-types
 const Feedback = ({feedback,refetch}) => {
-    const {_id,user_name,rating,date,user_opinion,yes,user_image} = feedback;
+    const {_id,name,rating,date,user_opinion,yes,user_image,image} = feedback;
     const { user } = useAuth();
+    console.log(user)
+    console.log(name)
     const axiosSecure = useAxiosSecure();
     const [like,setDisLike] = useState();
 
@@ -29,10 +31,10 @@ const Feedback = ({feedback,refetch}) => {
         <div className="border-b pb-5 border-slate-300">
             <div className=" flex items-center gap-3 mb-5 mt-14">
                 <div className="flex  items-center gap-4">
-                    <img src={user?.photoURL} className="rounded-full w-12" alt="" />
-                    <h3 className=" font-semibold">{user?.displayName}</h3>
+                    <img src={image} className="rounded-full w-12" alt="" />
+                    <h3 className=" font-semibold">{name}</h3>
                 </div>
-                <div><h2 className="font-semibold text-lg">{user_name}</h2></div>
+               
             </div>
             <div className=" flex items-center gap-3 mb-2">
                 <div>
