@@ -7,11 +7,17 @@ import useAuth from "../../../hooks/useAuth";
 import MenuDropdown from "./MenuDropDown";
 import NotificationMessage from "../../../pages/NotificationMessage/NotificationMessage";
 import logo from "../../../assets/image/logo.png";
+import { FaShoppingCart } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
 
   const [isMenuTrue, setIsMenuTrue] = useState(false);
+
+  const cartProduct = useSelector((state) => state.cartProduct);
+
+  console.log(cartProduct);
 
   const navLinkStyles =
     "font-semibold  text-xl hover:text-white lg:text-white hover:bg-[#222831b3] py-2 px-5 rounded-[5px] w-36 lg:w-auto my-2 lg:my-auto";
@@ -45,9 +51,16 @@ const Navbar = () => {
         <li className={navLinkStyles}>Contact Us</li>
       </NavLink>
 
-       <NavLink className="grid lg:place-items-center">
+      <NavLink className="grid lg:place-items-center">
         <NotificationMessage></NotificationMessage>
       </NavLink>
+
+      <Link className="relative" to="/dashboard/my-cart">
+        <span className="absolute -right-2 -top-2 w-6 h-6 rounded-full bg-red-400 text-center flex justify-center items-center">
+          {cartProduct}
+        </span>
+        <FaShoppingCart className="text-3xl text-center" />
+      </Link>
     </>
   );
 
@@ -112,7 +125,7 @@ const Navbar = () => {
             </div>
 
             {/* navLinks for medium and large device */}
-            <ul className="lg:flex item-center gap-1 hidden text-lg">
+            <ul className="lg:flex items-center gap-1 hidden text-lg">
               {navLinks}
             </ul>
             {/* sign in && sign up ||  account for medium and large device*/}

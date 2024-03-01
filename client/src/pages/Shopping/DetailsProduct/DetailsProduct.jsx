@@ -1,17 +1,48 @@
 import { useQuery } from "@tanstack/react-query";
+import ReactStars from "react-rating-stars-component";
+import { MdOutlineInfo } from "react-icons/md";
+import { FaArrowRightLong } from "react-icons/fa6";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Link, useParams } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
-import PostFeedback from "../../Home/HomeComponenets/UpComingEvent/PostFeedback";
-import ShowFeedback from "../../Home/HomeComponenets/UpComingEvent/ShowFeedback";
+import { useEffect, useState } from "react";
+import Feedback from "./Feedback/Feedback";
+import Progress from "./Progress/Progress";
+import { uploadImage } from "../../../api/utlis";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { incrementProduct } from "./../../../redux/actions/actions";
 
 const DetailsProduct = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const { user } = useAuth();
-  const feedbackTitle = "Product"
-  const { data: productDetails, isLoading, isError,refetch } = useQuery({
+  const [quantity, setQuantity] = useState(1);
+  const [textCount, setTextCount] = useState(0);
+  const [rating, setRating] = useState();
+  const [userOpinion, setUserOpinion] = useState();
+  // const [userImage, setUSerImage] = useState();
+
+  const cartProduct = useSelector((state) => state.cartProduct);
+  const dispatch = useDispatch();
+
+  const handleIncreaseQuantity = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const handleDecreaseQuantity = () => {
+    if (quantity > 0) {
+      setQuantity(quantity - 1);
+    }
+  };
+
+  // Update local storage when cartProduct changes
+  useEffect(() => {
+    localStorage.setItem("cartProduct", JSON.stringify(cartProduct));
+  }, [cartProduct]);
+
+  const { data: productDetails, isLoading, isError } = useQuery({
     queryKey: ["productDetails"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/shop/details-shopCart/${id}`);
@@ -38,7 +69,7 @@ const DetailsProduct = () => {
         image,
         title,
         price,
-        quantity: 1,
+        quantity: quantity ? quantity : 1,
       };
       axiosSecure.post(`/shop/shopCart/${_id}`, cartItem).then((res) => {
         if (res.data) {
@@ -46,6 +77,7 @@ const DetailsProduct = () => {
             title: `${title} added to your cart`,
             icon: "success",
           });
+          dispatch(incrementProduct(quantity));
         }
       });
     } else {
@@ -56,8 +88,103 @@ const DetailsProduct = () => {
       });
     }
   };
- if(isLoading) return <span className="loading loading-infinity loading-lg"></span>
- if(isError) return <div>loading..</div>
+
+  // handle text count
+  const handleTextCount = (e) => {
+    const textValue = e.target.value;
+    setUserOpinion(textValue);
+    const count = textValue.length;
+    if (count > 500) {
+      return toast.error("Besi Latter Not Allow");
+    }
+    setTextCount(count);
+  };
+  // handle users feed back:
+  // rating change handler
+  const ratingChanged = (newRating) => {
+    setRating(newRating);
+  };
+  // gat date
+  const currentDate = new Date();
+  const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+  const formattedDate = currentDate.toLocaleDateString("en-US", options);
+
+  const handleUsersFeedBack = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const imagebb = form.image.files[0];
+    const { data } = await uploadImage(imagebb);
+    console.log("image", data);
+    const usersFeedBack = {
+      id: id,
+      email: user?.email,
+      name: user?.displayName,
+      product_name: title,
+      product_image: image,
+      user_image: data?.display_url,
+      user_opinion: userOpinion,
+      rating: rating,
+      date: formattedDate,
+      yes: 0,
+      no: 0,
+    };
+    // post feed back
+    const result = await axiosSecure.post("/feedback", usersFeedBack);
+    if (result?.status === 200) {
+      refetch();
+      toast.success("Thanks For Your Feedback");
+    }
+    console.log("post feedback", result);
+  };
+  // get feedback
+  const { data: feedbackData, refetch } = useQuery({
+    queryKey: ["feedbackData"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/feedback/${id}`);
+      return res?.data?.result;
+    },
+  });
+
+  const { data: progressData } = useQuery({
+    queryKey: ["progressData"],
+    queryFn: async () => {
+      if (title) {
+        const res = await axiosSecure.get(`/feedback/${title}/${id}`);
+        return res?.data?.result;
+      }
+      // Return null or empty array if title is not defined or falsy
+      return null;
+    },
+  });
+
+  console.log("get data->", progressData);
+  console.log("get data>", title);
+
+  // calculate total rating the specific product
+
+  const [totalRatingStars, setTotalRatingStars] = useState(0);
+  useEffect(() => {
+    calculateTotalRatingStars();
+  }, [feedbackData]);
+
+  const calculateTotalRatingStars = () => {
+    if (!feedbackData || !feedbackData.length) {
+      // If feedbackData is not available or empty, set totalRatingStars to 0
+      setTotalRatingStars(0);
+      return;
+    }
+
+    const totalStars = feedbackData.reduce(
+      (sum, feedback) => sum + feedback.rating,
+      0
+    );
+    setTotalRatingStars(totalStars);
+  };
+  const averageStar = (totalRatingStars / feedbackData?.length).toFixed(1);
+
+  if (isLoading)
+    return <span className="loading loading-infinity loading-lg"></span>;
+  if (isError) return <div>loading..</div>;
   return (
     <section className="py-10 mt-14 font-poppins dark:bg-gray-800">
       <div className="max-w-6xl px-4 mx-auto">
@@ -153,11 +280,99 @@ const DetailsProduct = () => {
               </div>
               {/* left side end  */}
               {/* Show All users feedback here */}
-              <ShowFeedback
-              title={title}
-              id={id}
-              >
-              </ShowFeedback>
+              <div>
+                <div className="flex justify-between py-6 items-center mb-2">
+                  <div className="text-lg font-semibold flex items-center gap-4">
+                    <h2>Ratings and reviews </h2>
+                    <div>
+                      <FaArrowRightLong></FaArrowRightLong>
+                    </div>
+                  </div>
+                  {/* modal-> restricted text */}
+                  <div>
+                    <button
+                      className="flex items-center btn"
+                      onClick={() =>
+                        document.getElementById("my_modal_1").showModal()
+                      }
+                    >
+                      Rating And Reviews Verified{" "}
+                      <MdOutlineInfo></MdOutlineInfo>
+                    </button>
+                    <dialog id="my_modal_1" className="modal">
+                      <div className="modal-box">
+                        <h3 className="font-bold text-lg">
+                          About ratings and reviews
+                        </h3>
+                        <p className="py-4">
+                          Ratings are based on recent reviews from people in
+                          your region who use the same type of device that you
+                          use. Reviews are provided by people with a verified
+                          Google Account based on their experience with apps
+                          they have downloaded.
+                        </p>
+                        <div className="modal-action">
+                          <form method="dialog">
+                            {/* if there is a button in form, it will close the modal */}
+                            <button className="btn mr-3">Learn More</button>
+                            <button className="btn">Got It</button>
+                          </form>
+                        </div>
+                      </div>
+                    </dialog>
+                  </div>
+                </div>
+                {/* todo: */}
+                <div className="grid grid-cols-8 gap-5">
+                  <div className="col-span-2 text-center">
+                    <h2 className="text-5xl font-semibold mb-2">
+                      {" "}
+                      {averageStar}{" "}
+                    </h2>
+                    <div className="flex justify-center">
+                      <ReactStars
+                        edit={false}
+                        count={5}
+                        onChange={ratingChanged}
+                        size={25}
+                        color="#fe019a"
+                      />
+                    </div>
+                    {totalRatingStars > 1000 ? (
+                      <p>{totalRatingStars / 1000}k Rating Star</p>
+                    ) : (
+                      <p>{totalRatingStars} Rating Star</p>
+                    )}
+                  </div>
+                  <div className="col-span-1 text-center">
+                    <div>1</div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>5</div>
+                  </div>
+                  <div className="col-span-5">
+                    {progressData &&
+                      progressData.map((rating) => (
+                        <Progress key={rating._id} rating={rating}></Progress>
+                      ))}
+                  </div>
+                </div>
+                {/* show all users feedback */}
+
+                <div>
+                  <div className=" py-7">
+                    {feedbackData &&
+                      feedbackData.map((feedback) => (
+                        <Feedback
+                          key={feedback._id}
+                          feedback={feedback}
+                          refetch={refetch}
+                        ></Feedback>
+                      ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -259,14 +474,141 @@ const DetailsProduct = () => {
               </div>
               <div className="py-6 mb-6 border-t border-b border-gray-200 dark:border-gray-700">
                 {/* modal review */}
-                <PostFeedback
-                title={title}
-                image={image}
-                id={id}
-                refetch={refetch}
-                feedbackTitle={feedbackTitle}
+                <div>
+                  <h2 className="text-2xl mb-2 font font-semibold">
+                    Rate This Product
+                  </h2>
+                  <p>Tell others what you think.</p>
+                </div>
+                <div className="flex justify-between items-center">
+                  <div>
+                    <ReactStars
+                      count={5}
+                      onChange={ratingChanged}
+                      size={36}
+                      activeColor="#e0218a"
+                    />
+                    ,
+                  </div>
+                  <button
+                    className="btn btn-outline btn-secondary"
+                    onClick={() =>
+                      document.getElementById("my_modal_5").showModal()
+                    }
+                  >
+                    Give a Review
+                  </button>
+                </div>
+
+                <dialog
+                  id="my_modal_5"
+                  className="modal modal-bottom sm:modal-middle"
                 >
-                </PostFeedback>
+                  <div className="modal-box">
+                    <div className="mb-6">
+                      <div className="py-2 px-4 mb-4 relative bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+                        {/*todo:  */}
+                        <div className="flex sticky -top-6 bg-white justify-between py-2 items-center shadow">
+                          <div className="flex items-center gap-3">
+                            <img
+                              className="w-14 h-14 rounded-full"
+                              src={image}
+                              alt=""
+                            />
+                            <div>
+                              <h2 className="font-semibold uppercase text-xl">
+                                {" "}
+                                {title}{" "}
+                              </h2>
+                              <p>Rate This Product</p>
+                            </div>
+                          </div>
+                          <div>
+                            <div className="modal-action">
+                              <form method="dialog">
+                                {/* if there is a button in form, it will close the modal */}
+                                <button className="btn btn-outline btn-secondary ">
+                                  X
+                                </button>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* feedback restictions */}
+                        <div className="flex gap-3 mt-3">
+                          <div>
+                            <img
+                              className=" w-52 rounded-full"
+                              src={user?.photoURL}
+                              alt=""
+                            />
+                          </div>
+                          <div>
+                            <h2 className="font-semibold text-lg">
+                              {" "}
+                              {user?.displayName}{" "}
+                            </h2>
+                            <p>
+                              Reviews are public and include your account and
+                              device info. Everyone can see your Google Account
+                              name and photo, and the type of device associated
+                              with your review. Developers can also see your
+                              country and device information (such as language,
+                              model, and OS version) and may use this
+                              information to respond to you. Past edits are
+                              visible to users and the app developer unless you
+                              delete your review.{" "}
+                              <Link className="text-blue-500 underline">
+                                Learn More
+                              </Link>{" "}
+                            </p>
+                          </div>
+                        </div>
+                        {/* get users ratings */}
+                        <div className="text-lg font-semibold border-b-2 my-3 text-center w-20 mx-auto">
+                          Rate star{" "}
+                        </div>
+
+                        {/* todo: */}
+                        <form onSubmit={handleUsersFeedBack}>
+                          <div className="flex justify-center my-3">
+                            <ReactStars
+                              onChange={ratingChanged}
+                              size={36}
+                              activeColor="#e0218a"
+                            />
+                            ,
+                          </div>
+                          <div>
+                            <label className="form-control w-full mb-5">
+                              <input
+                                type="file"
+                                name="image"
+                                className="file-input file-input-bordered w-full"
+                              />
+                            </label>
+                            <textarea
+                              onChange={handleTextCount}
+                              className="w-full rounded p-3 border border-slate-400"
+                              placeholder="Descrive your opinion (optional)"
+                              cols="30"
+                              rows="2"
+                            ></textarea>
+                            <p className="text-right">
+                              <span>{textCount}</span>/500
+                            </p>
+                          </div>
+                          <div className="text-right">
+                            <button className="btn btn-outline btn-secondary">
+                              Post Review
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </dialog>
 
                 {/* modal end */}
                 <br />
@@ -284,11 +626,42 @@ const DetailsProduct = () => {
               <div className="flex flex-wrap items-center mb-6">
                 <div className="mb-4 mr-4 lg:mb-0">
                   <div className="w-28">
-                    
+                    <div className="relative flex flex-row w-full h-10 bg-transparent rounded-lg">
+                      <button className="w-20 h-full text-gray-600 bg-gray-100 border-r rounded-l outline-none cursor-pointer dark:border-gray-700 dark:hover:bg-gray-700 dark:text-gray-400 hover:text-gray-700 dark:bg-gray-900 hover:bg-gray-300">
+                        <button
+                          className="m-auto text-2xl font-thin"
+                          onClick={handleDecreaseQuantity}
+                        >
+                          -
+                        </button>
+                      </button>
+                      <p className="text-center py-2 items-center w-full font-semibold bg-gray-100 dark:text-gray-400 dark:placeholder-gray-400 dark:bg-gray-900 focus:outline-none text-md hover:text-black">
+                        {quantity}
+                      </p>
+                      <button className="w-20 h-full text-gray-600 bg-gray-100 border-l rounded-r outline-none cursor-pointer dark:border-gray-700 dark:hover:bg-gray-700 dark:text-gray-400 dark:bg-gray-900 hover:text-gray-700 hover:bg-gray-300">
+                        <button
+                          className="m-auto text-2xl font-thin"
+                          onClick={handleIncreaseQuantity}
+                        >
+                          +
+                        </button>
+                      </button>
+                    </div>
                   </div>
                 </div>
                 <div className="mb-4 lg:mb-0">
-                  
+                  <button className="flex items-center justify-center w-full h-10 p-2 mr-4 text-gray-700 border border-gray-300 lg:w-11 hover:text-gray-50 dark:text-gray-200 dark:border-blue-600 hover:bg-pink-600 hover:border-blue-600 dark:bg-pink-600 dark:hover:bg-pink-600 dark:hover:border-pink-500 dark:hover:text-gray-100">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      className=" bi bi-heart"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"></path>
+                    </svg>
+                  </button>
                 </div>
                 <button
                   onClick={() => handleAddToCart(productDetails)}

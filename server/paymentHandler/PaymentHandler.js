@@ -8,6 +8,8 @@ const eventModel = mongoose.model("Event", eventSchema);
 const store_id = "event65c08b7004f38";
 const store_passwd = "event65c08b7004f38@ssl";
 const is_live = false;
+const shopCartSchema = require("../schemas/shopCartSchema");
+const shopCartModel = mongoose.model("shopcart", shopCartSchema);
 
 const router = express.Router();
 
@@ -58,8 +60,8 @@ router.post("/", async (req, res) => {
       total_amount: datasfront.totalAmount,
       currency: datasfront.currency,
       tran_id: tran_id,
-      success_url: `https://server-orpin-alpha.vercel.app/payment/successful/${tran_id}`, 
-      fail_url: `https://server-orpin-alpha.vercel.app/payment/failure/${tran_id}`, 
+      success_url: `https://server-orpin-alpha.vercel.app/payment/successful/${tran_id}`,
+      fail_url: `https://server-orpin-alpha.vercel.app/payment/failure/${tran_id}`,
       cancel_url: "http://localhost:5173/cancel",
       ipn_url: "http://localhost:5173/ipn",
       shipping_method: "Courier",
@@ -119,15 +121,15 @@ router.post("/successful/:tran_id", async (req, res) => {
     }
 
     // Check if payment.from is 'booking'
-    if (payment.from === 'booking') {
+    if (payment.from === "booking") {
       // Update event data only if payment.from is 'booking'
       const event = await eventModel.findOneAndUpdate(
         { _id: payment.productid }, // Find the document by its _id
         {
           $inc: {
             totalSeat: -payment.ticketQuantity, // Decrement totalSeat by ticketQuantity
-            ticketSold: +payment.ticketQuantity // Increment ticketSold by ticketQuantity
-          }
+            ticketSold: +payment.ticketQuantity, // Increment ticketSold by ticketQuantity
+          },
         },
         { new: true } // Return the updated document
       );
@@ -143,12 +145,12 @@ router.post("/successful/:tran_id", async (req, res) => {
 
         return res.status(404).json({ error: "Event not found" });
       }
-    } else if (payment.from === 'creation') {
+    } else if (payment.from === "creation") {
       // Update event data only if payment.from is 'creation'
       const event = await eventModel.findOneAndUpdate(
         { _id: payment.productid }, // Find the document by its _id
         {
-          $set: { status: 'upcoming' } // Set status to 'upcoming'
+          $set: { status: "upcoming" }, // Set status to 'upcoming'
         },
         { new: true } // Return the updated document
       );
@@ -165,25 +167,25 @@ router.post("/successful/:tran_id", async (req, res) => {
         return res.status(404).json({ error: "Event not found" });
       }
     }
+    if (payment.from === "shop") {
+      const cart = await shopCartModel.findOneAndDelete({
+        email: payment.cus_email,
+      });
+
+      console.log("Deleted shopCart:", cart);
+
+      return res.status(200).json({ message: "Sabbash beta", cart });
+    }
 
     console.log("Payment status updated successfully.", payment);
 
     // Redirect to success page once payment status is updated
     res.redirect(`http://localhost:5173/payment/successful/${tran_id}`);
-
   } catch (error) {
     console.error("Error updating payment status:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
-
-
-
-
-
-
-
 
 router.post("/failure/:tran_id", async (req, res) => {
   try {
@@ -204,15 +206,16 @@ router.post("/failure/:tran_id", async (req, res) => {
     }
 
     // Redirect to failure page once payment status is updated
-    res.redirect(`https://event-planet-9789f.web.app/payment/failure/${tran_id}`);
+    res.redirect(
+      `https://event-planet-9789f.web.app/payment/failure/${tran_id}`
+    );
   } catch (error) {
     console.error("Error updating payment status:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-
-router.get('/ticketsCount',async(req,res)=>{
+router.get("/ticketsCount", async (req, res) => {
   try {
     const ticketCount = await Payment.countDocuments({});
 
@@ -221,7 +224,7 @@ router.get('/ticketsCount',async(req,res)=>{
     console.log("Not Fount Block");
     res.status(500).json({ error: "internal server error" });
   }
-})
+});
 // get success data
 router.get("/:tran_id", async (req, res) => {
   const tran_id = req.params.tran_id;
@@ -244,13 +247,18 @@ router.get("/:tran_id", async (req, res) => {
 router.get("/status/:ids", async (req, res) => {
   const { ids } = req.params; // Correctly extract the 'ids' parameter
   try {
-    const result = await Payment.findOne({ eventid: ids }, 'eventid paidstatus');
+    const result = await Payment.findOne(
+      { eventid: ids },
+      "eventid paidstatus"
+    );
     if (!result) {
       return res.status(404).json({
         error: "Event not found",
       });
     }
-    res.status(200).json({ eventid: result.eventid, paidstatus: result.paidstatus });
+    res
+      .status(200)
+      .json({ eventid: result.eventid, paidstatus: result.paidstatus });
   } catch (err) {
     console.error(err);
     res.status(500).json({
