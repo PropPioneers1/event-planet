@@ -50,9 +50,11 @@ const Navbar = () => {
       <NavLink onClick={() => setIsMenuTrue(false)} to="/contact">
         <li className={navLinkStyles}>Contact Us</li>
       </NavLink>
-      <Link className="">
+
+      <NavLink className="grid lg:place-items-center">
         <NotificationMessage></NotificationMessage>
-      </Link>
+      </NavLink>
+
       <Link className="relative" to="/dashboard/my-cart">
         <span className="absolute -right-2 -top-2 w-6 h-6 rounded-full bg-red-400 text-center flex justify-center items-center">
           {cartProduct}
