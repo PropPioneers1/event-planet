@@ -58,12 +58,12 @@ router.post("/", async (req, res) => {
       total_amount: datasfront.totalAmount,
       currency: datasfront.currency,
       tran_id: tran_id,
-      success_url: `http://localhost:5000/payment/successful/${tran_id}`, 
-      fail_url: `http://localhost:5000/payment/failure/${tran_id}`, 
+      success_url: `https://server-orpin-alpha.vercel.app/payment/successful/${tran_id}`, 
+      fail_url: `https://server-orpin-alpha.vercel.app/payment/failure/${tran_id}`, 
       cancel_url: "http://localhost:5173/cancel",
       ipn_url: "http://localhost:5173/ipn",
       shipping_method: "Courier",
-      product_name: datasfront.eventName,
+      product_name: datasfront.productName,
       cus_email: datasfront.cus_email,
       product_category: "Electronic",
       product_profile: "general",
@@ -118,31 +118,57 @@ router.post("/successful/:tran_id", async (req, res) => {
       return res.status(404).json({ error: "Payment not found" });
     }
 
-    // Update event data
-    // const event = await eventModel.findOneAndUpdate(
-    //   { _id: payment.eventid },
-    //   {
-    //     $set: {
-    //       totalSeat:-2,
-    //       ticketSold: +payment.ticketquantity
-    //     }},
-    //   { new: true }
-    // );
+    // Check if payment.from is 'booking'
+    if (payment.from === 'booking') {
+      // Update event data only if payment.from is 'booking'
+      const event = await eventModel.findOneAndUpdate(
+        { _id: payment.productid }, // Find the document by its _id
+        {
+          $inc: {
+            totalSeat: -payment.ticketQuantity, // Decrement totalSeat by ticketQuantity
+            ticketSold: +payment.ticketQuantity // Increment ticketSold by ticketQuantity
+          }
+        },
+        { new: true } // Return the updated document
+      );
 
-    // console.log("Payment status updated successfully.", payment);
-    // console.log("Event updated successfully.", event);
+      console.log("Event updated successfully for booking:", event);
 
-    // if (!event) {
-    //   // Rollback the payment status update if event is not found
-    //   await Payment.findOneAndUpdate(
-    //     { tran_id: tran_id },
-    //     { $set: { paidstatus: "payment failed" } }
-    //   );
+      if (!event) {
+        // Rollback the payment status update if event is not found
+        await Payment.findOneAndUpdate(
+          { tran_id: tran_id },
+          { $set: { paidstatus: "payment failed" } }
+        );
 
-      // return res.status(404).json({ error: "Event not found" });
-    // }
+        return res.status(404).json({ error: "Event not found" });
+      }
+    } else if (payment.from === 'creation') {
+      // Update event data only if payment.from is 'creation'
+      const event = await eventModel.findOneAndUpdate(
+        { _id: payment.productid }, // Find the document by its _id
+        {
+          $set: { status: 'upcoming' } // Set status to 'upcoming'
+        },
+        { new: true } // Return the updated document
+      );
 
-    // Redirect to success page once payment status is updated and event data is updated
+      console.log("Event updated successfully for creation:", event);
+
+      if (!event) {
+        // Rollback the payment status update if event is not found
+        await Payment.findOneAndUpdate(
+          { tran_id: tran_id },
+          { $set: { paidstatus: "payment failed" } }
+        );
+
+        return res.status(404).json({ error: "Event not found" });
+      }
+    }
+
+    console.log("Payment status updated successfully.", payment);
+
+    // Redirect to success page once payment status is updated
     res.redirect(`http://localhost:5173/payment/successful/${tran_id}`);
 
   } catch (error) {
@@ -150,6 +176,8 @@ router.post("/successful/:tran_id", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
 
 
 
@@ -176,13 +204,24 @@ router.post("/failure/:tran_id", async (req, res) => {
     }
 
     // Redirect to failure page once payment status is updated
-    res.redirect(`http://localhost:5173/payment/failure/${tran_id}`);
+    res.redirect(`https://event-planet-9789f.web.app/payment/failure/${tran_id}`);
   } catch (error) {
     console.error("Error updating payment status:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
+
+router.get('/ticketsCount',async(req,res)=>{
+  try {
+    const ticketCount = await Payment.countDocuments({});
+
+    res.status(200).send({ ticketCount });
+  } catch (error) {
+    console.log("Not Fount Block");
+    res.status(500).json({ error: "internal server error" });
+  }
+})
 // get success data
 router.get("/:tran_id", async (req, res) => {
   const tran_id = req.params.tran_id;

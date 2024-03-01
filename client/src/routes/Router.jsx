@@ -5,8 +5,6 @@ import Home from "../pages/Home/Home";
 import SignUp from "../pages/SignUp/SignUp";
 import UpcomingDetails from "../pages/Home/HomeComponenets/UpComingEvent/UpcomingDetails";
 import AllEvent from "../pages/AllEvent/AllEvent";
-import Dashboard from "../layouts/Dashboard";
-import Profile from "../pages/Dashboard/Profile/Profile";
 import PaymentHistory from "../pages/Dashboard/Payment/PaymentHistory";
 import AddProduct from "../pages/Dashboard/AddProduct/AddProduct";
 import CreateBlog from "../pages/Dashboard/CreateBlog/CreateBlog";
@@ -32,8 +30,14 @@ import About from "../pages/About/About";
 import MyEvents from "../pages/Dashboard/MyEvents/MyEvents";
 import ContactUs from "../pages/Contact/ContactUs";
 import Successrout from "../components/shared/PaymentPage/Successrout";
+import ManageEvents from "../pages/Dashboard/ManageEvents/ManageEvents";
+import Tasks from "../pages/Dashboard/ManageEvents/Tasks/Tasks";
 import SignIn from "../pages/SignIn/SignIn";
+import DashboardDemo from "../pages/Demo/DashboardDemo/DashboardDemo";
+import MyProfile from "../pages/Demo/DashboardDemo/MyProfile/MyProfile"
+import Summary from "../pages/Dashboard/Summary/Summary";
 // import LogIn from "../pages/SignIn/LogIn";
+
 
 const Router = createBrowserRouter([
   {
@@ -55,7 +59,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "blogs",
-        element:<OurBlogs />,
+        element: <OurBlogs />,
       },
       {
         path: "/blog-details/:id",
@@ -76,7 +80,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "payment/successful/:tranid",
-        element: <Successrout></Successrout>
+        element: <Successrout></Successrout>,
       },
       {
         path: "payment/failure/:tran_id",
@@ -116,11 +120,11 @@ const Router = createBrowserRouter([
 
   {
     path: "/dashboard",
-    element: <Dashboard></Dashboard>,
+    element: <DashboardDemo />,
     children: [
       {
         path: "profile",
-        element: <Profile></Profile>,
+        element: <MyProfile />,
       },
       {
         path: "add-product",
@@ -144,6 +148,10 @@ const Router = createBrowserRouter([
         element: <AdminSummary></AdminSummary>,
       },
       {
+        path:"summary",
+        element:<Summary></Summary>
+      },
+      {
         path: "event-requests",
         element: <EventRequests></EventRequests>,
       },
@@ -159,6 +167,14 @@ const Router = createBrowserRouter([
         path: "my-events",
         element: <MyEvents></MyEvents>,
       },
+      {
+        path:"manage-events",
+        element:<ManageEvents></ManageEvents>
+      },
+      {
+        path:"tasks/:id",
+        element:<Tasks></Tasks>
+      }
     ],
   },
 ]);

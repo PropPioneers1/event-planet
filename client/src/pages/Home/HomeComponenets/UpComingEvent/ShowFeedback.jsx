@@ -40,6 +40,7 @@ const { data: progressData} = useQuery({
 const [totalRatingStars, setTotalRatingStars] = useState(0);
 useEffect(() => {
     calculateTotalRatingStars();
+// eslint-disable-next-line react-hooks/exhaustive-deps
 }, [feedbackData]);
 
 const calculateTotalRatingStars = () => {
