@@ -43,7 +43,6 @@ const PostFeedback = ({title,image,id}) => {
       return null;
     },
   });
-  console.log(progressData)
 
   // gat date
   const currentDate = new Date();

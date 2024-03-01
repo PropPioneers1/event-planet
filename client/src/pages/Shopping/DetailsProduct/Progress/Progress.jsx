@@ -2,7 +2,6 @@
 
 
 const Progress = ({rating}) => {
-    console.log(rating.rating)
     return (
         <progress
         className="progress progress-secondary"

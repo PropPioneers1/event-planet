@@ -39,6 +39,7 @@ const { data: progressData} = useQuery({
 const [totalRatingStars, setTotalRatingStars] = useState(0);
 useEffect(() => {
     calculateTotalRatingStars();
+// eslint-disable-next-line react-hooks/exhaustive-deps
 }, [feedbackData]);
 
 const calculateTotalRatingStars = () => {
@@ -52,13 +53,14 @@ const calculateTotalRatingStars = () => {
     setTotalRatingStars(totalStars);
 };
 const averageStar = (totalRatingStars / feedbackData?.length).toFixed(1);
+console.log(averageStar.length)
     return (
         <>
             {/* Show All users feedback here */}
             <div>
                 <div className="flex justify-between py-6 items-center mb-2">
-                  <div className="text-lg font-semibold flex items-center gap-4">
-                    <h2>Ratings and reviews </h2>
+                  <div className="text-lg font-semibold flex items-center md:gap-4">
+                    <h2>Ratings & reviews </h2>
                     <div>
                       <FaArrowRightLong></FaArrowRightLong>
                     </div>
@@ -71,7 +73,7 @@ const averageStar = (totalRatingStars / feedbackData?.length).toFixed(1);
                         document.getElementById("my_modal_1").showModal()
                       }
                     >
-                      Rating And Reviews Verified{" "}
+                      Rating & Reviews Verified{" "}
                       <MdOutlineInfo></MdOutlineInfo>
                     </button>
                     <dialog id="my_modal_1" className="modal">
@@ -99,12 +101,18 @@ const averageStar = (totalRatingStars / feedbackData?.length).toFixed(1);
                 </div>
                 {/* todo: */}
                 <div className="grid grid-cols-8 gap-5">
-                  <div className="col-span-2 text-center">
-                    <h2 className="text-5xl font-semibold mb-2"> {averageStar} </h2>
+                  <div className="md:col-span-2 col-span-3 text-center">
+                  <div>
+                    {averageStar && averageStar.length > 0 ? (
+                      <h2 className="text-5xl font-semibold mb-2">{averageStar}</h2>
+                    ) : (
+                      <h2 className="text-5xl font-semibold mb-2">0.0</h2>
+                    )}
+                  </div>
                     <div className="flex justify-center">
                       <ReactStars
                         edit={false}
-                        count={5}
+                        count={4}
                         // onChange={ratingChanged}
                         size={25}
                         color="#fe019a"
@@ -117,7 +125,7 @@ const averageStar = (totalRatingStars / feedbackData?.length).toFixed(1);
                     )}
                     
                   </div>
-                  <div className="col-span-1 text-center">
+                  <div className="md:block col-span-1 hidden text-center">
                     <div>1</div>
                     <div>2</div>
                     <div>3</div>

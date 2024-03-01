@@ -28,7 +28,7 @@ export default app;
 //     if (currentToken) {
 //       console.log('Current token for client:', currentToken);
 //       const notificationToken = { token: currentToken };
-//       await axios.post(`http://localhost:5000/token`, notificationToken);
+//       await axios.post(`https://server-orpin-alpha.vercel.app/token`, notificationToken);
 //     } else {
 //       console.log('No registration token available. Request permission to generate one.');
 //     }

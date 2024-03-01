@@ -30,22 +30,23 @@ import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { getTime } from "../../../../utils/getTime";
 import { getDate } from "../../../../utils/getDate";
 import useAuth from "../../../../hooks/useAuth";
+import nullImage from "../../../../assets/image/user.png"
 // import UpComingBanner from "./UpComingBanner";
-import SectionHeading from "../../../../components/shared/SectionHeading/SectionHeading";
 import { BiArea } from "react-icons/bi";
 import PostFeedback from "./PostFeedback";
 import ShowFeedback from "./ShowFeedback";
 import UpComingBanner from "./UpComingBanner";
 
 const UpcomingDetails = () => {
+
   const {user}=useAuth()
   const shareUrl = "https://event-planet-9789f.web.app/";
   const params = useParams();
   const ids=params.id
   const [number, setNumber] = useState(0);
+  const [showDescription,setShowDescription] = useState(false);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-  console.log(user?.email);
   // decrement
   const decrement = () => {
     if (number === 0) {
@@ -68,7 +69,12 @@ const UpcomingDetails = () => {
       return result?.data;
     },
   });
-  console.log("event details",eventDetails);
+  console.log(eventDetails)
+  const toggleDescription = () => {
+      setShowDescription(!showDescription)
+  }
+  const fullDescription = eventDetails?.description;
+  const shortDescription = fullDescription.substring(0, 120);
   
   const date = getDate(eventDetails?.startDate);
 
@@ -91,7 +97,9 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
 }
   return (
     <>
+      <div className="">
       <UpComingBanner eventDetails={eventDetails}></UpComingBanner>
+      </div>
       <Container>
         <div className="py-[50px]">
           {/* heading */}
@@ -99,26 +107,23 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
           <div>
             <div className="grid grid-cols-1 md:grid-cols-6 lg:gap-12 gap-5 ">
               {/* left side */}
-              <div className="md:col-span-4 col-span-1">
+              <div className="md:col-span-4 col-span-1 -mt-24 z-10">
                 <div className="left-side">
-                  <div>
-                    <h2 className=" text-5xl mb-5">
-                      <SectionHeading
-                        title="Upcoming Event"
-                        normalSubTitleWord="Book Your"
-                        boldSubTitleWord="Ticket Early"
-                      />
-                    </h2>
-                  </div>
-                  <div>
+                  
+                  <div className="relative">
                     <img
                       src={eventDetails?.eventImages[0]}
-                      className="w-full rounded"
+                      className="w-full rounded border-[15px] border-neutral"
                       alt=""
                     />
+                    <div className=" absolute top-[45px] bg-neutral  px-7 py-3 font-semibold text-lg">
+                      {eventDetails?.eventName}
+                    </div>
                   </div>
-                  <div className="md:flex items-center justify-around gap-2 lg:gap-4 py-5 space-y-4 md:space-y-0">
-                    <div className="lg:py-3 lg:px-10 py-2 px-5 bg-secondary shadow-lg flex items-center justify-center gap-3 text-white">
+                  <div className="md:flex items-center justify-between px-2 md:px-3 gap-2 lg:gap-4 py-5 space-y-4 md:space-y-0">
+                    <div className="lg:py-3 lg:px-10 py-2 px-5
+                        bg-gradient-to-tl from-[#861f42]
+                        to-primary shadow-lg flex items-center justify-center gap-3 text-white">
                       <div className="text-center">
                         <h2 className="md:text-lg font-semibold text-center pb-1">
                           Event Date
@@ -130,7 +135,8 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                         </div>
                       </div>
                     </div>
-                    <div className="lg:py-3 lg:px-10 py-2 px-4 bg-secondary shadow-lg  gap-3 text-white">
+                    <div className="lg:py-3 lg:px-10 py-2 px-4 bg-gradient-to-tl from-[#861f42]
+                        to-primary shadow-lg  gap-3 text-white">
                       <h2 className="text-lg font-semibold text-center">
                         Event Time
                       </h2>
@@ -139,7 +145,8 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                         <p className="font-semibold">{time}</p>
                       </div>
                     </div>
-                    <div className="lg:py-3 lg:px-10 py-2 px-4 bg-secondary shadow-lg  gap-3 text-white">
+                    <div className="lg:py-3 lg:px-10 py-2 px-4 bg-gradient-to-tl from-[#861f42]
+                        to-primary shadow-lg  gap-3 text-white">
                       <h2 className="text-lg font-semibold text-center">
                         Event Location
                       </h2>
@@ -150,12 +157,23 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                     </div>
                   </div>
                   {/* descriptions */}
-                  <div className="mb-5">
-                    <p>{eventDetails?.description}</p>
+                  <div className="mb-5 md:px-3 px-2">
+                      {
+                         showDescription ? (
+                          <p className="text-slate-700 inline">{fullDescription}</p>
+                         ):(
+                          <p className="text-slate-700 inline">{shortDescription} </p>
+                         )
+                      }
+                       {
+                       fullDescription.length > 120 &&(
+                        <button onClick={toggleDescription} className="text-primary font-semibold ml-2 underline">Learn More</button>
+                       )
+                        }
                   </div>
 
                   {/* Register now */}
-                  <div className="md:p-5 bg-neutral">
+                  <div className="md:p-5 bg-white">
                     <div>
                       <h2 className="font-medium text-2xl mb-4">
                         Book Your Event👍
@@ -246,7 +264,8 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                     </div>
 
                     {/* evetn FAQ */}
-                    <div className="bg-secondary p-4 mt-10 font-medium text-white text-xl">
+                  <div className="hidden md:block">
+                  <div className="bg-secondary p-4 mt-10 font-medium text-white text-xl">
                       Event FAQ
                     </div>
                     <div className="collapse collapse-plus bg-base-200">
@@ -352,11 +371,12 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                       </div>
                     </div>
                   </div>
+                  </div>
                 </div>
               </div>
               {/* right side */}
-              <div className="md:col-span-2 col-span-1 mt-16 md:mt-36">
-                <div className="bg-neutral p-3">
+              <div className="md:col-span-2 col-span-1 mt-0 md:mt-16">
+                <div className="bg-white border p-3">
                   <div>
                     <div className="py-2">
                       <div className=" flex items-center gap-3">
@@ -424,8 +444,8 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                       </div>
                     </div>
                     {/* event shedule */}
-                    <div className=" border border-b-gray-300 pb-3">
-                      <h2 className=" font-semibold border border-t-gray-300 pt-3 text-lg">
+                    <div className=" pb-3">
+                      <h2 className=" font-semibold pt-3 text-lg">
                         Event Shedule Details
                       </h2>
                       <div className="p-3">
@@ -436,12 +456,12 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                       </div>
                     </div>
                     {/* Share this event */}
-                    <div className=" border border-b-gray-300 pb-3">
+                    <div className=" pb-3">
                       <h2 className=" font-semibold text-lg pt-3">
                         Social Share Event
                       </h2>
                       <div className="py-4">
-                        <div className="flex items-center gap-4 md:gap-2">
+                        <div className="flex items-center gap-4 md:gap-2 lg:gap-8">
                           <FacebookShareButton
                             url={shareUrl}
                             quote={"Share our event"}
@@ -480,12 +500,11 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                         <h2 className="font-semibold">Event Speaker</h2>
                       </div>
                       <div className="">
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-10 justify-center">
                           {eventDetails &&
                             eventDetails.speakersImages.map((imgs) =>
-                              imgs ? (
+                              imgs.speakersImages ? (
                                 <>
-                                  {" "}
                                   <img
                                     key={imgs._id}
                                     src={imgs}
@@ -495,18 +514,15 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                                 </>
                               ) : (
                                 <>
-                                  <img
-                                    key={imgs._id}
-                                    src={imgs}
-                                    className="rounded-full w-20 h-20 hidden"
-                                    alt="speaker"
-                                  />
+                                 <div className="">
+                                  <img src={nullImage} className="rounded-full w-[50px] h-[50px]" alt="" />
+                                 </div>
                                 </>
                               )
                             )}
                         </div>
 
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center justify-center gap-3">
                           {eventDetails &&
                             eventDetails?.speakers.map((names) => (
                               <h2

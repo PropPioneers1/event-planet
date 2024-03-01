@@ -40,6 +40,10 @@ const Successrout = () => {
                         <p>Event Name: {allData?.
                             eventName
                         }</p>
+                        {
+                            allData?.from==='boking'? <button className='btn'>
+                                download</button>:''
+                        }
                     </div>
                 </div>
             </div>

@@ -48,7 +48,7 @@ const OurBlog = () => {
               </div>
 
               {/* content */}
-              <div className="py-2 pr-2">
+              <div className="p-2">
                 <h3 className="text-lg font-semibold ">
                   {blog?.title?.slice(0, 30)}...
                 </h3>
