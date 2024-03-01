@@ -7,8 +7,6 @@ import rokect from "../../../../../src/assets/payment-methods-logo/rocket.png";
 import paypal from "../../../../../src/assets/payment-methods-logo/paypal.png";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useAuth from "../../../../hooks/useAuth";
-import { useDispatch, useSelector } from "react-redux";
-import { RESET_CART } from "../../../../redux/constants/constants";
 
 const CheckOut = () => {
   const { from, ids } = useParams();
@@ -17,13 +15,6 @@ const CheckOut = () => {
   const [datasfront, setDatasfront] = useState(null);
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-
-  const cart = useSelector((state) => state?.cartProduct);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    localStorage.setItem("cartProduct", JSON.stringify(cart));
-  }, [cart]);
 
   useEffect(() => {
     if (location.state) {
@@ -78,8 +69,6 @@ const CheckOut = () => {
     } else if (from === "shop") {
       data.productQuantity = datasfront.productQuantity;
     }
-
-    dispatch(RESET_CART);
 
     console.log(data);
     axiosSecure
