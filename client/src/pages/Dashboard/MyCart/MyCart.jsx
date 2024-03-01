@@ -11,7 +11,7 @@ const MyCart = () => {
   const [priceCount, setPriceCount] = useState(0);
   const navigate = useNavigate();
   const { user } = useAuth();
-  // const [productName, setProductName] = useState("");
+  // const [productId, setProductId] = useState(0);
   const cartProduct = useSelector((state) => state.cartProduct);
   // const [theProductName, setTheProductName] = useState([]);
 
@@ -42,6 +42,7 @@ const MyCart = () => {
 
   const handlepay = () => {
     const productData = {
+      // id: productId,
       email: user?.email,
       total_amount: priceCount + 25,
       productName: "Cart Products",
@@ -68,7 +69,7 @@ const MyCart = () => {
                   setPriceCount={setPriceCount}
                   key={cart._id}
                   cart={cart}
-                  // setTheProductName={setTheProductName}
+                  // setProductId={setProductId}
                 ></SingleCart>
               );
             })}

@@ -10,13 +10,7 @@ import {
 
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
-const SingleCart = ({
-  cart,
-  refetch,
-  updatePriceCount,
-  // setTheProductName,
-  // productName,
-}) => {
+const SingleCart = ({ cart, refetch, updatePriceCount }) => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const [quantity, setQuantity] = useState(cart?.quantity || 1);
@@ -36,8 +30,8 @@ const SingleCart = ({
   }, [cart.price, quantity]);
 
   // useEffect(() => {
-  //   setTheProductName(...productName, cart?.title);
-  // }, [cart?.title, setTheProductName, productName]);
+  //   setProductId(cart?._id);
+  // }, [cart?.title, setProductId]);
 
   const handleRemove = (cart) => {
     Swal.fire({
