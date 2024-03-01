@@ -13,6 +13,7 @@ const MyCart = () => {
   const { user } = useAuth();
   // const [productName, setProductName] = useState("");
   const cartProduct = useSelector((state) => state.cartProduct);
+  // const [theProductName, setTheProductName] = useState([]);
 
   const { data: myCartItem = [], refetch } = useQuery({
     queryKey: ["myCartItems", user?.email],
@@ -32,6 +33,8 @@ const MyCart = () => {
     }
   }, [myCartItem]);
 
+  // console.log(theProductName);
+
   const updatePriceCount = (amount) => {
     // Implement logic to update the priceCount in the parent component
     setPriceCount(amount);
@@ -40,8 +43,8 @@ const MyCart = () => {
   const handlepay = () => {
     const productData = {
       email: user?.email,
-      total_amount: priceCount ? `Rs ${priceCount}` : 200,
-      productame: "productName",
+      total_amount: priceCount + 25,
+      productName: "Cart Products",
       productQuantity: cartProduct,
       from: "shop",
     };
@@ -65,6 +68,7 @@ const MyCart = () => {
                   setPriceCount={setPriceCount}
                   key={cart._id}
                   cart={cart}
+                  // setTheProductName={setTheProductName}
                 ></SingleCart>
               );
             })}

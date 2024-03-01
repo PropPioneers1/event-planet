@@ -6,6 +6,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import useAuth from "../../../hooks/useAuth";
 import { FaCodePullRequest } from "react-icons/fa6";
 import { FiShoppingCart } from "react-icons/fi";
+import { AiOutlineMenuFold } from "react-icons/ai";
 import { IoCreate } from "react-icons/io5";
 import logo from "../../../assets/image/logo.png";
 import { useState } from "react";
@@ -37,6 +38,7 @@ const DashboardDemo = () => {
         <IoCreate></IoCreate>
         <li> Create Blog</li>
       </NavLink>
+    
 
       {role && role === "admin" ? (
         <>
@@ -61,6 +63,12 @@ const DashboardDemo = () => {
       ) : (
         <>
           {/* user Routes */}
+
+          <NavLink to="/dashboard/summary" className={iconStyle}>
+            <AiOutlineMenuFold></AiOutlineMenuFold>
+            <li>Summary</li>
+          </NavLink>
+
           <NavLink to="/dashboard/my-events" className={iconStyle}>
             <FaCalendarAlt></FaCalendarAlt>
             <li>My Events</li>
@@ -76,9 +84,13 @@ const DashboardDemo = () => {
             <li> Payment History</li>
           </NavLink>
         </>
+        
       )}
+    
     </>
   );
+  
+  
 
   return (
     <div className="flex">

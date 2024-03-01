@@ -3,6 +3,7 @@
 import {
   DECREMENT_CART_PRODUCT,
   INCREMENT_CART_PRODUCT,
+  RESET_CART,
 } from "../constants/constants";
 
 const productQuantity = JSON.parse(localStorage.getItem("cartProduct"));
@@ -23,6 +24,11 @@ const cartProductReducer = (state = initialCartProduct, action) => {
       return {
         ...state,
         cartProduct: state.cartProduct - action.payload,
+      };
+    case RESET_CART:
+      return {
+        ...state,
+        cartProduct: 0,
       };
 
     default:
