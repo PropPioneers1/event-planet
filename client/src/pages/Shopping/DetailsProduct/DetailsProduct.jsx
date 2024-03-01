@@ -1,29 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
-import ReactStars from "react-rating-stars-component";
-import { MdOutlineInfo } from "react-icons/md";
-import { FaArrowRightLong } from "react-icons/fa6";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { Link, useParams } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
-import { useState } from "react";
-import Feedback from "./Feedback/Feedback";
-// import Progress from "./Progress/Progress";
-import { uploadImage } from "../../../api/utlis";
-import toast from "react-hot-toast";
+import PostFeedback from "../../Home/HomeComponenets/UpComingEvent/PostFeedback";
+import ShowFeedback from "../../Home/HomeComponenets/UpComingEvent/ShowFeedback";
 
 const DetailsProduct = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const { user } = useAuth();
-  const [textCount, setTextCount] = useState(0);
-  const [rating, setRating] = useState();
-  const [userOpinion, setUserOpinion] = useState();
-  // const [userImage, setUSerImage] = useState();
-
- 
-
-  const { data: productDetails, isLoading, isError } = useQuery({
+  const feedbackTitle = "Product"
+  const { data: productDetails, isLoading, isError,refetch } = useQuery({
     queryKey: ["productDetails"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/shop/details-shopCart/${id}`);
@@ -68,66 +56,6 @@ const DetailsProduct = () => {
       });
     }
   };
-
-  // handle text count
-  const handleTextCount = (e) => {
-    const textValue = e.target.value;
-    setUserOpinion(textValue);
-    const count = textValue.length;
-    if (count > 500) {
-      return toast.error("Besi Latter Not Allow");
-    }
-    setTextCount(count);
-  };
-  // handle users feed back:
-  // rating change handler
-  const ratingChanged = (newRating) => {
-    setRating(newRating);
-  };
-  // gat date
-  const currentDate = new Date();
-  const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-  const formattedDate = currentDate.toLocaleDateString("en-US", options);
-
-  const handleUsersFeedBack = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const imagebb = form.image.files[0];
-    const { data } = await uploadImage(imagebb);
-    console.log("image", data);
-    const usersFeedBack = {
-      id: id,
-      email: user?.email,
-      name: user?.displayName,
-      product_name: title,
-      product_image: image,
-      user_image: data?.display_url,
-      user_opinion: userOpinion,
-      rating: rating,
-      date: formattedDate,
-      yes: 0,
-      no: 0,
-    };
-    // post feed back
-    const result = await axiosSecure.post("/feedback", usersFeedBack);
-    if (result?.status === 200) {
-      refetch();
-      toast.success("Thanks For Your Feedback");
-    }
-    console.log(result)
-  };
-
-  
-
-const { data: feedbackData,refetch } = useQuery({
-  queryKey: ["feedbackData"],
-  queryFn: async () => {
-    const res = await axiosSecure.get(`/feedback/${id}`);
-    return res?.data?.result;
-    
-  },
-});
-
  if(isLoading) return <span className="loading loading-infinity loading-lg"></span>
  if(isError) return <div>loading..</div>
   return (
@@ -225,96 +153,11 @@ const { data: feedbackData,refetch } = useQuery({
               </div>
               {/* left side end  */}
               {/* Show All users feedback here */}
-              <div>
-                <div className="flex justify-between py-6 items-center mb-2">
-                  <div className="text-lg font-semibold flex items-center gap-4">
-                    <h2>Ratings and reviews </h2>
-                    <div>
-                      <FaArrowRightLong></FaArrowRightLong>
-                    </div>
-                  </div>
-                  {/* modal-> restricted text */}
-                  <div>
-                    <button
-                      className="flex items-center btn"
-                      onClick={() =>
-                        document.getElementById("my_modal_1").showModal()
-                      }
-                    >
-                      Rating And Reviews Verified{" "}
-                      <MdOutlineInfo></MdOutlineInfo>
-                    </button>
-                    <dialog id="my_modal_1" className="modal">
-                      <div className="modal-box">
-                        <h3 className="font-bold text-lg">
-                          About ratings and reviews
-                        </h3>
-                        <p className="py-4">
-                          Ratings are based on recent reviews from people in
-                          your region who use the same type of device that you
-                          use. Reviews are provided by people with a verified
-                          Google Account based on their experience with apps
-                          they have downloaded.
-                        </p>
-                        <div className="modal-action">
-                          <form method="dialog">
-                            {/* if there is a button in form, it will close the modal */}
-                            <button className="btn mr-3">Learn More</button>
-                            <button className="btn">Got It</button>
-                          </form>
-                        </div>
-                      </div>
-                    </dialog>
-                  </div>
-                </div>
-                {/* todo: */}
-                {/* <div className="grid grid-cols-8 gap-5">
-                  <div className="col-span-2 text-center">
-                    <h2 className="text-5xl font-semibold mb-2">
-                      {" "}
-                      {averageStar}{" "}
-                    </h2>
-                    <div className="flex justify-center">
-                      <ReactStars
-                        edit={false}
-                        count={5}
-                        onChange={ratingChanged}
-                        size={25}
-                        color="#fe019a"
-                      />
-                    </div>
-                    {totalRatingStars > 1000 ? (
-                      <p>{totalRatingStars / 1000}k Rating Star</p>
-                    ) : (
-                      <p>{totalRatingStars} Rating Star</p>
-                    )}
-                  </div>
-                  <div className="col-span-1 text-center">
-                    <div>1</div>
-                    <div>2</div>
-                    <div>3</div>
-                    <div>4</div>
-                    <div>5</div>
-                  </div>
-                  <div className="col-span-5 border">
-                    {feedbackData && feedbackData.map(rating=><Progress key={rating._id} rating={rating}></Progress>)}
-                  </div>
-                </div> */}
-                {/* show all users feedback */}
-
-                <div>
-                  <div className=" py-7">
-                    {feedbackData &&
-                      feedbackData.map((feedback) => (
-                        <Feedback
-                          key={feedback._id}
-                          feedback={feedback}
-                          refetch={refetch}
-                        ></Feedback>
-                      ))}
-                  </div>
-                </div>
-              </div>
+              <ShowFeedback
+              title={title}
+              id={id}
+              >
+              </ShowFeedback>
             </div>
           </div>
 
@@ -416,141 +259,14 @@ const { data: feedbackData,refetch } = useQuery({
               </div>
               <div className="py-6 mb-6 border-t border-b border-gray-200 dark:border-gray-700">
                 {/* modal review */}
-                <div>
-                  <h2 className="text-2xl mb-2 font font-semibold">
-                    Rate This Product
-                  </h2>
-                  <p>Tell others what you think.</p>
-                </div>
-                <div className="flex justify-between items-center">
-                  <div>
-                    <ReactStars
-                      count={5}
-                      onChange={ratingChanged}
-                      size={36}
-                      activeColor="#e0218a"
-                    />
-                    ,
-                  </div>
-                  <button
-                    className="btn btn-outline btn-secondary"
-                    onClick={() =>
-                      document.getElementById("my_modal_5").showModal()
-                    }
-                  >
-                    Give a Review
-                  </button>
-                </div>
-
-                <dialog
-                  id="my_modal_5"
-                  className="modal modal-bottom sm:modal-middle"
+                <PostFeedback
+                title={title}
+                image={image}
+                id={id}
+                refetch={refetch}
+                feedbackTitle={feedbackTitle}
                 >
-                  <div className="modal-box">
-                    <div className="mb-6">
-                      <div className="py-2 px-4 mb-4 relative bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-                        {/*todo:  */}
-                        <div className="flex sticky -top-6 bg-white justify-between py-2 items-center shadow">
-                          <div className="flex items-center gap-3">
-                            <img
-                              className="w-14 h-14 rounded-full"
-                              src={image}
-                              alt=""
-                            />
-                            <div>
-                              <h2 className="font-semibold uppercase text-xl">
-                                {" "}
-                                {title}{" "}
-                              </h2>
-                              <p>Rate This Product</p>
-                            </div>
-                          </div>
-                          <div>
-                            <div className="modal-action">
-                              <form method="dialog">
-                                {/* if there is a button in form, it will close the modal */}
-                                <button className="btn btn-outline btn-secondary ">
-                                  X
-                                </button>
-                              </form>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* feedback restictions */}
-                        <div className="flex gap-3 mt-3">
-                          <div>
-                            <img
-                              className=" w-52 rounded-full"
-                              src={user?.photoURL}
-                              alt=""
-                            />
-                          </div>
-                          <div>
-                            <h2 className="font-semibold text-lg">
-                              {" "}
-                              {user?.displayName}{" "}
-                            </h2>
-                            <p>
-                              Reviews are public and include your account and
-                              device info. Everyone can see your Google Account
-                              name and photo, and the type of device associated
-                              with your review. Developers can also see your
-                              country and device information (such as language,
-                              model, and OS version) and may use this
-                              information to respond to you. Past edits are
-                              visible to users and the app developer unless you
-                              delete your review.{" "}
-                              <Link className="text-blue-500 underline">
-                                Learn More
-                              </Link>{" "}
-                            </p>
-                          </div>
-                        </div>
-                        {/* get users ratings */}
-                        <div className="text-lg font-semibold border-b-2 my-3 text-center w-20 mx-auto">
-                          Rate star{" "}
-                        </div>
-
-                        {/* todo: */}
-                        <form onSubmit={handleUsersFeedBack}>
-                          <div className="flex justify-center my-3">
-                            <ReactStars
-                              onChange={ratingChanged}
-                              size={36}
-                              activeColor="#e0218a"
-                            />
-                            ,
-                          </div>
-                          <div>
-                            <label className="form-control w-full mb-5">
-                              <input
-                                type="file"
-                                name="image"
-                                className="file-input file-input-bordered w-full"
-                              />
-                            </label>
-                            <textarea
-                              onChange={handleTextCount}
-                              className="w-full rounded p-3 border border-slate-400"
-                              placeholder="Descrive your opinion (optional)"
-                              cols="30"
-                              rows="2"
-                            ></textarea>
-                            <p className="text-right">
-                              <span>{textCount}</span>/500
-                            </p>
-                          </div>
-                          <div className="text-right">
-                            <button className="btn btn-outline btn-secondary">
-                              Post Review
-                            </button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </dialog>
+                </PostFeedback>
 
                 {/* modal end */}
                 <br />

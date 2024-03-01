@@ -8,7 +8,7 @@ import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { uploadImage } from "../../../../api/utlis";
 import { useQuery } from "@tanstack/react-query";
 
-const PostFeedback = ({title,image,id}) => {
+const PostFeedback = ({title,image,id,feedbackTitle}) => {
     const {user} = useAuth();
     const axiosSecure = useAxiosSecure();
     const [textCount, setTextCount] = useState(0);
@@ -30,19 +30,6 @@ const PostFeedback = ({title,image,id}) => {
   const ratingChanged = (newRating) => {
     setRating(newRating);
   };
-
-  const { data: progressData,refetch} = useQuery({
-    queryKey: ["progressData"],
-    queryFn: async () => {
-      if (title) {
-        const res = await axiosSecure.get(`/feedback/${title}/${id}`);
-        return res?.data?.result;
-        
-      }
-      // Return null or empty array if title is not defined or falsy
-      return null;
-    },
-  });
 
   // gat date
   const currentDate = new Date();
@@ -74,13 +61,27 @@ const PostFeedback = ({title,image,id}) => {
       toast.success("Thanks For Your Feedback");
     }
   };
+
+  const { data: progressData,refetch} = useQuery({
+    queryKey: ["progressData"],
+    queryFn: async () => {
+      if (title) {
+        const res = await axiosSecure.get(`/feedback/${title}/${id}`);
+        return res?.data?.result;
+        
+      }
+      // Return null or empty array if title is not defined or falsy
+      return null;
+    },
+  });
+console.log(progressData)
   
     return (
         <div className="py-6 mb-6 border-t border-b border-gray-200 dark:border-gray-700">
                 {/* modal review */}
                 <div>
                   <h2 className="text-2xl mb-2 font font-semibold">
-                    Rate This Product
+                    {feedbackTitle}
                   </h2>
                   <p>Tell others what you think.</p>
                 </div>
@@ -113,7 +114,7 @@ const PostFeedback = ({title,image,id}) => {
                     <div className="mb-6">
                       <div className="py-2 px-4 mb-4 relative bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                         {/*todo:  */}
-                        <div className="flex sticky -top-6 bg-white justify-between py-2 items-center shadow z-10">
+                        <div className="flex sticky -top-6 bg-white justify-between py-2 items-center shadow z-20">
                           <div className="flex items-center gap-3">
                             <img
                               className="w-14 h-14 rounded-full"
@@ -125,7 +126,7 @@ const PostFeedback = ({title,image,id}) => {
                                 {" "}
                                 {title}{" "}
                               </h2>
-                              <p>Rate This Product</p>
+                              <p>Rate This {feedbackTitle}</p>
                             </div>
                           </div>
                           <div>
@@ -177,7 +178,7 @@ const PostFeedback = ({title,image,id}) => {
 
                         {/* todo: */}
                         <form onSubmit={handleUsersFeedBack}>
-                          <div className="flex justify-center my-3">
+                          <div className="flex justify-center my-3 -z-0">
                             <ReactStars
                               onChange={ratingChanged}
                               size={36}

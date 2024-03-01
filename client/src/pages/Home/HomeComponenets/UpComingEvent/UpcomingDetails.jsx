@@ -47,6 +47,7 @@ const UpcomingDetails = () => {
   const [showDescription,setShowDescription] = useState(false);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
+  const feedbackTitle = "Event"
   // decrement
   const decrement = () => {
     if (number === 0) {
@@ -69,7 +70,7 @@ const UpcomingDetails = () => {
       return result?.data;
     },
   });
-  console.log(eventDetails)
+  console.log("event detalils",eventDetails?.speakersImages?.length)
   
   const fullDescription = eventDetails?.description;
   const shortDescription = fullDescription ? fullDescription.substring(0, 120) : "";
@@ -613,25 +614,24 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                       </div>
                       <div className="">
                         <div className="flex gap-10 ml-4">
-                          {eventDetails &&
-                            eventDetails.speakersImages.map((imgs) =>
-                              imgs.speakersImages ? (
-                                <>
-                                  <img
-                                    key={imgs._id}
-                                    src={imgs}
-                                    className="rounded-full w-20 h-20"
-                                    alt="speaker"
-                                  />
-                                </>
-                              ) : (
-                                <>
-                                 <div className="">
-                                  <img src={nullImage} className="rounded-full w-[50px] h-[50px]" alt="" />
-                                 </div>
-                                </>
-                              )
+                        {eventDetails && eventDetails.speakersImages.map((guestImage, index) => (
+                          <div key={index} className="">
+                            {eventDetails?.speakersImages?.length > 0 ? (
+                              <img
+                                src={guestImage}
+                                className="rounded-full w-14 h-14"
+                                alt={`Speaker ${index + 1}`}
+                              />
+                            ) : (
+                              <img
+                                src={nullImage}
+                                className="rounded-full w-20 h-20"
+                                alt="Placeholder"
+                              />
                             )}
+                          </div>
+                        ))}
+
                         </div>
 
                         <div className="flex gap-3">
@@ -660,6 +660,7 @@ navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
                         image={eventDetails?.eventImages[0]}
                         id={ids}
                         refetch={refetch}
+                        feedbackTitle={feedbackTitle}
                       ></PostFeedback>
                     </div>
                   </div>
