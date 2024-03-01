@@ -44,9 +44,10 @@ const Navbar = () => {
       <NavLink onClick={() => setIsMenuTrue(false)} to="/contact">
         <li className={navLinkStyles}>Contact Us</li>
       </NavLink>
-      <Link className="">
+
+       <NavLink className="grid lg:place-items-center">
         <NotificationMessage></NotificationMessage>
-      </Link>
+      </NavLink>
     </>
   );
 

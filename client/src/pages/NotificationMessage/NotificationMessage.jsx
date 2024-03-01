@@ -20,6 +20,7 @@ const NotificationMessage = () => {
     }
   }, [message]);
 
+
   const handleNotificationClick = () => {
     // Hide the notification icon when clicked
     setShowNotification(false);
@@ -40,6 +41,7 @@ const NotificationMessage = () => {
               <span className="bg-red-400 text-white  flex justify-center items-center h-6 w-6 rounded-2xl ml-1 absolute -top-1 -right-2 shadow-xl">
                 {unreadCount}
               </span>
+
             </div>
           ) : (
             <RiNotification4Fill className="h-9 w-8" />
