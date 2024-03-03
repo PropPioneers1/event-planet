@@ -62,20 +62,14 @@ const PostFeedback = ({title,image,id,feedbackTitle}) => {
     }
   };
 
-  const { data: progressData,refetch} = useQuery({
-    queryKey: ["progressData"],
+  const { data: feedbackData,refetch } = useQuery({
+    queryKey: ["feedbackData"],
     queryFn: async () => {
-      if (title) {
-        const res = await axiosSecure.get(`/feedback/${title}/${id}`);
-        return res?.data?.result;
-        
-      }
-      // Return null or empty array if title is not defined or falsy
-      return null;
+      const res = await axiosSecure.get(`/feedback/${id}`);
+      return res?.data?.result;
     },
   });
-console.log(progressData)
-  
+  console.log(feedbackData)
     return (
         <div className="py-6 mb-6 border-t border-b border-gray-200 dark:border-gray-700">
                 {/* modal review */}
@@ -97,7 +91,8 @@ console.log(progressData)
                     />
                   </div>
                   <button
-                    className="btn btn-outline btn-secondary"
+                    className=" bg-gradient-to-tl from-[#861f42]
+                    to-primary text-white lg:px-4 lg:py-3 px-4 py-3 rounded font-semibold hover:bg-gradient-to-tr transition-all duration-300 ease-in"
                     onClick={() =>
                       document.getElementById("my_modal_5").showModal()
                     }
@@ -133,7 +128,8 @@ console.log(progressData)
                             <div className="modal-action">
                               <form method="dialog">
                                 {/* if there is a button in form, it will close the modal */}
-                                <button className="btn btn-outline btn-secondary ">
+                                <button className="bg-gradient-to-tl from-[#861f42]
+                                 to-primary text-white rounded-full font-semibold px-4 py-2 mr-3 hover:bg-gradient-to-tr transition-all duration-300 ease-in">
                                   X
                                 </button>
                               </form>
@@ -205,8 +201,9 @@ console.log(progressData)
                             </p>
                           </div>
                           <div className="text-right">
-                            <button className="btn btn-outline btn-secondary">
-                              Post Review
+                            <button className="bg-gradient-to-tl from-[#861f42]
+                      to-primary text-white lg:px-4 lg:py-3 px-4 py-3 rounded font-semibold hover:bg-gradient-to-tr transition-all duration-300 ease-in">
+                            Post Review
                             </button>
                           </div>
                         </form>

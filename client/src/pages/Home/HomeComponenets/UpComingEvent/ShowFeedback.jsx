@@ -17,7 +17,6 @@ const ShowFeedback = ({title,id}) => {
     queryFn: async () => {
       const res = await axiosSecure.get(`/feedback/${id}`);
       return res?.data?.result;
-      
     },
   });
 //   get progress data
@@ -26,7 +25,6 @@ const { data: progressData} = useQuery({
     queryFn: async () => {
       if (title) {
         const res = await axiosSecure.get(`/feedback/${title}/${id}`);
-        refetch()
         return res?.data?.result;
         
       }
@@ -61,7 +59,7 @@ console.log(" star",totalStr)
             {/* Show All users feedback here */}
             <div>
                 <div className="flex justify-between py-6 items-center mb-2">
-                  <div className="text-lg font-semibold flex items-center md:gap-4">
+                  <div className="text-lg font-semibold flex items-center md:gap-4 gap-2">
                     <h2>Ratings & reviews </h2>
                     <div>
                       <FaArrowRightLong></FaArrowRightLong>
@@ -70,7 +68,7 @@ console.log(" star",totalStr)
                   {/* modal-> restricted text */}
                   <div>
                     <button
-                      className="flex items-center btn"
+                      className="flex items-center gap-2 py-2 px-3 font-medium bg-neutral"
                       onClick={() =>
                         document.getElementById("my_modal_1").showModal()
                       }
@@ -141,7 +139,8 @@ console.log(" star",totalStr)
                 {/* show all users feedback */}
 
                 <div>
-                  <div className=" py-7">
+                  {
+                    feedbackData.length > 4 ? <><div className=" py-7">
                     {feedbackData &&
                       feedbackData.map((feedback) => (
                         <Feedback
@@ -151,6 +150,19 @@ console.log(" star",totalStr)
                         ></Feedback>
                       ))}
                   </div>
+                  <button className="text-primary underline">More Feedback</button>
+                  </>:<><div className=" py-7">
+                    {feedbackData &&
+                      feedbackData.map((feedback) => (
+                        <Feedback
+                          key={feedback._id}
+                          feedback={feedback}
+                          refetch={refetch}
+                        ></Feedback>
+                      ))}
+                  </div></>
+                  }
+                  
                 </div>
             </div>
         </>

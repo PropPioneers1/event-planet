@@ -3,7 +3,7 @@ import useAuth from "../../../../hooks/useAuth";
 import ReactStars from "react-rating-stars-component";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useState } from "react";
-
+import nullImage from '../../../../assets/image/user.png'
 
 // eslint-disable-next-line react/prop-types
 const Feedback = ({feedback,refetch}) => {
@@ -31,7 +31,9 @@ const Feedback = ({feedback,refetch}) => {
         <div className="border-b pb-5 border-slate-300">
             <div className=" flex items-center gap-3 mb-5 mt-14">
                 <div className="flex  items-center gap-4">
-                    <img src={image} className="rounded-full w-12" alt="" />
+                    {
+                        image ? <><img src={image} className="rounded-full w-12" alt="" /></> : <><img src={nullImage} className="rounded-full w-12" alt="" /></>
+                    }
                     <h3 className=" font-semibold">{name}</h3>
                 </div>
                
