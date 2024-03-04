@@ -64,6 +64,9 @@ const Shopping = () => {
                       <h2 className="text-blue-gray font-semibold mb-2">
                         {cart?.title}
                       </h2>
+                      <h2 className="text-blue-gray font-semibold">
+                        {cart?.brand}
+                      </h2>
                       <div className="flex gap-2">
                         <p className="text-pink-500 text-lg font-bold">
                           ${cart?.price}
