@@ -66,9 +66,9 @@ const SignIn = () => {
           <div className="grid grid-cols-1 md:grid-cols-5 ld:gap-20 gap-12 min-h-screen place-items-center">
             {/* Left Section */}
             <div className="mb-8 text-center md:text-start md:col-span-3 col-span-1">
-              <h1 className="my-3 text-4xl md:text-3xl lg:text-6xl font-bold text-white">
-                WELLCOME <br />
-                BACK TO OUR EVENT PLANET
+              <h1 className="my-3 text-4xl md:text-3xl lg:text-5xl font-bold text-white">
+                WELLCOME
+                BACK  <br /> TO OUR EVENT PLANET
               </h1>
               <p className="text-sm text-gray-400">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -94,7 +94,7 @@ const SignIn = () => {
             {/* Right Section */}
             <div className="border-4 rounded border-opacity-50 border-[#eeeeee] p-5 md:p-8 lg:p-10 col-span-1 md:col-span-2 md:w-full glass">
               <div className="pb-6 text-white font-medium text-2xl">
-                Please Log In Now
+                Log In Now
               </div>
               <form
                 onSubmit={handleSubmit}
@@ -125,20 +125,19 @@ const SignIn = () => {
                       className="w-full px-3 py-2 input-style  transition-all duration-300"
                     />
                   </div>
-                  <div className="flex items-center">
+                  <div className="flex items-start gap-2">
                     <input
                       type="checkbox"
                       name="termsAndCondition"
                       className="text-xl hover:cursor-pointer"
                     />
-                    <span className="ml-2 text-white">
+                    <span className=" text-white -mt-[5px]">
                       I have read and agree to the website
-                      <a
-                        href=""
+                      <Link
                         className="font-semibold text-primary ml-2 hover:underline"
                       >
                         terms and conditions
-                      </a>
+                      </Link>
                     </span>
                   </div>
                 </div>

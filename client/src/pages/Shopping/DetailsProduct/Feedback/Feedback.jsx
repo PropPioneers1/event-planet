@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import useAuth from "../../../../hooks/useAuth";
+// import useAuth from "../../../../hooks/useAuth";
 import ReactStars from "react-rating-stars-component";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useState } from "react";
@@ -8,9 +8,7 @@ import nullImage from '../../../../assets/image/user.png'
 // eslint-disable-next-line react/prop-types
 const Feedback = ({feedback,refetch}) => {
     const {_id,name,rating,date,user_opinion,yes,user_image,image} = feedback;
-    const { user } = useAuth();
-    console.log(user)
-    console.log(name)
+    // const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const [like,setDisLike] = useState();
 

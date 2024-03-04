@@ -61,14 +61,14 @@ const UpcomingDetails = () => {
     setNumber(number + 1);
   };
 
-  const { data: eventDetails, refetch } = useQuery({
+  const { data: eventDetails,isPending,refetch } = useQuery({
     queryKey: ["event-details"],
     queryFn: async () => {
       const result = await axiosSecure.get(`/event/${ids}`);
       return result?.data;
     },
   });
-  console.log("event detalils",eventDetails?.speakersImages?.length)
+  console.log("event detalils",eventDetails)
   
   const fullDescription = eventDetails?.description;
   const shortDescription = fullDescription ? fullDescription.substring(0, 120) : "";
@@ -96,6 +96,7 @@ const handleNavigate=async()=>{
 navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
 
 }
+if(isPending) return <div>loading ...</div>
   return (
     <>
       <div className="">

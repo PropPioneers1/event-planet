@@ -69,7 +69,7 @@ const PostFeedback = ({title,image,id,feedbackTitle}) => {
       return res?.data?.result;
     },
   });
-  console.log(feedbackData)
+  // console.log(feedbackData)
     return (
         <div className="py-6 mb-6 border-t border-b border-gray-200 dark:border-gray-700">
                 {/* modal review */}

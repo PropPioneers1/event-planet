@@ -10,15 +10,20 @@ import Feedback from "../../../Shopping/DetailsProduct/Feedback/Feedback";
 
 const ShowFeedback = ({title,id}) => {
     const axiosSecure = useAxiosSecure();
-
+    const [showFeedBack,setShowFeedback] = useState(false)
+    console.log(showFeedBack)
     // get feedback
-  const { data: feedbackData,refetch } = useQuery({
+  const { data: feedbackData,isPending,refetch } = useQuery({
     queryKey: ["feedbackData"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/feedback/${id}`);
       return res?.data?.result;
     },
   });
+  const toggleShowAllFeedback = () => {
+    setShowFeedback(!showFeedBack)
+    
+  }
 //   get progress data
 const { data: progressData} = useQuery({
     queryKey: ["progressData"],
@@ -54,6 +59,7 @@ const calculateTotalRatingStars = () => {
 const averageStar = (totalRatingStars / feedbackData?.length).toFixed(1);
 const totalStr = (totalRatingStars / feedbackData?.length);
 console.log(" star",totalStr)
+if(isPending) return <div>loading ...</div>
     return (
         <>
             {/* Show All users feedback here */}
@@ -139,30 +145,36 @@ console.log(" star",totalStr)
                 {/* show all users feedback */}
 
                 <div>
-                  {
-                    feedbackData.length > 4 ? <><div className=" py-7">
-                    {feedbackData &&
-                      feedbackData.map((feedback) => (
-                        <Feedback
-                          key={feedback._id}
-                          feedback={feedback}
-                          refetch={refetch}
-                        ></Feedback>
-                      ))}
+                <div className=" py-7">
+                {feedbackData &&
+                    (showFeedBack ? (
+                      <>
+                        {feedbackData.map((feedback) => (
+                          <Feedback
+                            key={feedback._id}
+                            feedback={feedback}
+                            refetch={refetch}
+                          ></Feedback>
+                        ))}
+                        <button className="text-primary hover:underline mt-4 font-semibold" onClick={toggleShowAllFeedback}>
+                          Less Feedback
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        {feedbackData.slice(0, 3).map((feedback) => (
+                          <Feedback
+                            key={feedback._id}
+                            feedback={feedback}
+                            refetch={refetch}
+                          ></Feedback>
+                        ))}
+                        {feedbackData.length > 3 && (
+                          <button className="text-primary hover:underline mt-4 font-semibold" onClick={toggleShowAllFeedback}>More Feedback</button>
+                        )}
+                      </>
+                    ))}
                   </div>
-                  <button className="text-primary underline">More Feedback</button>
-                  </>:<><div className=" py-7">
-                    {feedbackData &&
-                      feedbackData.map((feedback) => (
-                        <Feedback
-                          key={feedback._id}
-                          feedback={feedback}
-                          refetch={refetch}
-                        ></Feedback>
-                      ))}
-                  </div></>
-                  }
-                  
                 </div>
             </div>
         </>
