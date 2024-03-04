@@ -10,7 +10,7 @@ import { Autoplay, Pagination } from "swiper/modules";
 const ShoppingBanner = () => {
     
       return (
-        <Swiper
+        <Swiper style={{ height: '600px' }}
         spaceBetween={30}
         centeredSlides={true}
         autoplay={{
@@ -22,33 +22,30 @@ const ShoppingBanner = () => {
         }}
         // navigation={true}
         modules={[Autoplay, Pagination]}
-        className="mySwiper mySwiper2 swiper-container h-[1200px]"
+        className="mySwiper mySwiper2 swiper-container"
       >
         <SwiperSlide>
           <img
             className="bg-cover"
-            src="https://i.ibb.co/p34c6K4/shopping-bag-cart.jpg"
+            src="https://i.ibb.co/4ZFPPmB/5092541.jpg"
+            alt=""
+          />
+        </SwiperSlide>
+
+        <SwiperSlide>
+          <img
+            src="https://i.ibb.co/njF7v8c/5655678.jpg"
             alt=""
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
-            src="https://i.ibb.co/bPdYtg3/fsdfdsf.jpg"
+            src="https://i.ibb.co/XsLfD0w/Optimized-9167.jpg"
             alt=""
           />
         </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://i.ibb.co/6vTPyRX/black-friday-elements-assortment.jpg"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://i.ibb.co/230pkLN/shopping-concept-close-up-portrait-young-beautiful-attractive-redhair-girl-smiling-looking-camera.jpg"
-            alt=""
-          />
-        </SwiperSlide>
+    
+        
         
       </Swiper>
       );

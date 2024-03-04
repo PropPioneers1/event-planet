@@ -15,7 +15,7 @@ const OurNextEvents = () => {
 
   useEffect(() => {
     axios
-      .get("https://server-orpin-alpha.vercel.app/event")
+      .get("http://localhost:5000/event")
       .then((res) => setNextEvents(res?.data?.events?.slice(0, 6)));
   }, []);
 
