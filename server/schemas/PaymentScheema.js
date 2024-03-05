@@ -3,6 +3,11 @@
 const mongoose = require('mongoose');
 
 const PaymentSchema = new mongoose.Schema({
+      userName: String,
+      eventImage: String,
+      eventTime:String,
+      eventDate:String,
+      eventLocation:String,
   mobileNumber: {
     type: String,
     // required: true
@@ -19,7 +24,7 @@ const PaymentSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  total_amount: {
+  totalAmount: {
     type: Number,
     required: true
   },

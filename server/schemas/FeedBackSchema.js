@@ -19,7 +19,7 @@ const FeedBackSchema = mongoose.Schema({
     },
     product_name:{
         type:String,
-        require:true
+        require:false
     },
    product_image: {
         type:String,
