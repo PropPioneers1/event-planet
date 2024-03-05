@@ -59,7 +59,16 @@ const calculateTotalRatingStars = () => {
 const averageStar = (totalRatingStars / feedbackData?.length).toFixed(1);
 const totalStr = (totalRatingStars / feedbackData?.length);
 console.log(" star",totalStr)
-if(isPending) return <div>loading ...</div>
+if(isPending) return <div className="flex flex-col gap-4 w-52 mt-5">
+<div className="flex gap-4 items-center">
+  <div className="skeleton w-16 h-16 rounded-full shrink-0"></div>
+  <div className="flex flex-col gap-4">
+    <div className="skeleton h-4 w-20"></div>
+    <div className="skeleton h-4 w-28"></div>
+  </div>
+</div>
+<div className="skeleton h-32 w-full"></div>
+</div>
     return (
         <>
             {/* Show All users feedback here */}
@@ -156,9 +165,10 @@ if(isPending) return <div>loading ...</div>
                             refetch={refetch}
                           ></Feedback>
                         ))}
-                        <button className="text-primary hover:underline mt-4 font-semibold" onClick={toggleShowAllFeedback}>
-                          Less Feedback
-                        </button>
+                        <div className="flex text-primary hover:underline font-semibold hover:bg-neutral w-full py-3 items-center justify-center gap-3">
+                            <button className="" onClick={toggleShowAllFeedback}>Less Feedback</button>
+                          <FaArrowRightLong className="animate-pulse"></FaArrowRightLong>
+                          </div>
                       </>
                     ) : (
                       <>
@@ -167,10 +177,14 @@ if(isPending) return <div>loading ...</div>
                             key={feedback._id}
                             feedback={feedback}
                             refetch={refetch}
+                            isPanding={isPending}
                           ></Feedback>
                         ))}
                         {feedbackData.length > 3 && (
-                          <button className="text-primary hover:underline mt-4 font-semibold" onClick={toggleShowAllFeedback}>More Feedback</button>
+                          <div className="flex text-primary hover:underline font-semibold hover:bg-neutral w-full py-3 items-center justify-center gap-3">
+                            <button className="" onClick={toggleShowAllFeedback}>More Feedback</button>
+                          <FaArrowRightLong className="animate-pulse"></FaArrowRightLong>
+                          </div>
                         )}
                       </>
                     ))}

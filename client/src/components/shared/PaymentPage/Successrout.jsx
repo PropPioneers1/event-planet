@@ -25,8 +25,6 @@ const Successrout = () => {
                 <div className="card-body">
                     <p className="text-base font-title">Congratulations your payment is approved !   <br /> Bellow The Summary Of Your Payment !</p>
                     <h1 className="font-bold font-title">Payment Amount History: </h1>
-
-
                     <div className="text-lg font-title">
                         <p>Transaction Id: {allData?.total_amount} {allData?.tranid
                         }</p>

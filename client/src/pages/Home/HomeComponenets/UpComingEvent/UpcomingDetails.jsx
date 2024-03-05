@@ -96,7 +96,12 @@ const handleNavigate=async()=>{
 navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
 
 }
-if(isPending) return <div>loading ...</div>
+if(isPending) return <div className="flex flex-col gap-4 m-16">
+<div className="skeleton h-32 w-full"></div>
+<div className="skeleton h-4 w-28 md:w-40"></div>
+<div className="skeleton h-4 w-full"></div>
+<div className="skeleton h-4 w-full"></div>
+</div>
   return (
     <>
       <div className="">

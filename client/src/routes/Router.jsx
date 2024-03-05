@@ -36,6 +36,7 @@ import SignIn from "../pages/SignIn/SignIn";
 import DashboardDemo from "../pages/Demo/DashboardDemo/DashboardDemo";
 import MyProfile from "../pages/Demo/DashboardDemo/MyProfile/MyProfile"
 import Summary from "../pages/Dashboard/Summary/Summary";
+import TermsAndCondition from "../pages/SignIn/TermsAndCondition";
 // import LogIn from "../pages/SignIn/LogIn";
 
 
@@ -56,6 +57,10 @@ const Router = createBrowserRouter([
       {
         path: "/signIn",
         element: <SignIn></SignIn>,
+      },
+      {
+        path:"termCondition",
+        element:<TermsAndCondition></TermsAndCondition>
       },
       {
         path: "blogs",
