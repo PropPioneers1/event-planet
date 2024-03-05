@@ -26,10 +26,6 @@ const Notification = () => {
 
   requestForToken();
 
-  console.log(requestForToken);
-
-  console.log(notification?.body);
-
   if (notification?.body) {
     const body = notification?.body;
     axios.post(`https://event-planet-server.vercel.app/message`, { body });

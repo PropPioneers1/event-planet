@@ -27,7 +27,7 @@ const OurGallery = () => {
       >
         {/* image-1 */}
         <div
-          className="lg:col-span-3 lg:row-span-2 col-span-1
+          className="lg:col-span-3 lg:row-span-2 col-span-1 
            group relative hover:bg-[#000000b3] bg-[#0000004e] bg-blend-overlay
             bg-cover bg-no-repeat cursor-pointer transition-all duration-300 ease-out"
           style={{ backgroundImage: `url(${gallery[0]?.image})` }}
@@ -118,7 +118,7 @@ const OurGallery = () => {
         {/* image-7 */}
         <div
           className="lg:col-span-6 lg:row-span-1 col-span-1  bg-center
-          group relative hover:bg-[#000000b3] bg-[#0000004e] bg-blend-overlay 
+          group relative hover:bg-[#000000b3] bg-[#0000004e] bg-blend-overlay
           bg-cover bg-no-repeat cursor-pointer transition-all duration-300 ease-out"
           style={{ backgroundImage: `url(${gallery[6]?.image})` }}
         >
@@ -132,8 +132,8 @@ const OurGallery = () => {
 
         {/* image-8 */}
         <div
-          className="lg:col-span-3 lg:row-span-1 col-span-1  bg-center
-          group relative hover:bg-[#000000b3] bg-[#0000004e] bg-blend-overlay 
+          className="lg:col-span-3 lg:row-span-1 col-span-1  bg-center 
+          group relative hover:bg-[#000000b3] bg-[#0000004e] bg-blend-overlay
           bg-cover bg-no-repeat cursor-pointer transition-all duration-300 ease-out"
           style={{ backgroundImage: `url(${gallery[7]?.image})` }}
         >

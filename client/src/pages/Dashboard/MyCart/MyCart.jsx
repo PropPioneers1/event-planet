@@ -105,12 +105,18 @@ const MyCart = () => {
                 Continue Shopping
               </button>
             </Link>
-            <button
-              onClick={handlepay}
-              className="btn  rounded-md bg-primary text-white text-lg"
-            >
-              Go To checkout
-            </button>
+            {user?.email ? (
+              <button
+                onClick={handlepay}
+                className="btn  rounded-md bg-primary text-white text-lg"
+              >
+                Go To checkout
+              </button>
+            ) : (
+              <button disabled className="btn  rounded-md  text-white text-lg">
+                Go To checkout
+              </button>
+            )}
           </div>
         </div>
       </section>

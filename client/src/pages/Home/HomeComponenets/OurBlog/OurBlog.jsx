@@ -18,7 +18,7 @@ const OurBlog = () => {
   });
 
   return (
-    <div>
+    <div className="bg-neutral py-10">
       <Container>
         {/* title */}
         <div>
