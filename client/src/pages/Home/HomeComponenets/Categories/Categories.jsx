@@ -4,7 +4,7 @@ import CategoryCard from "./CategoryCard/CategoryCard";
 
 const Categories = () => {
   return (
-    <div className="my-20">
+    <div className="my-10">
       <Container>
         <h2 className="text-5xl font-heading font-semibold text-center my-10">
           Event Categories

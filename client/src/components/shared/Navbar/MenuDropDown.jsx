@@ -82,7 +82,7 @@ const MenuDropdown = () => {
                 {roles === "admin" && (
                   <Link
                     // to="/dashboard/profile"
-                    to="/dashboard"
+                    to="/dashboard/profile"
                     className="px-4 py-3 hover:bg-primary hover:text-white transition font-semibold flex items-center"
                   >
                     <MdOutlineDashboardCustomize className="w-5 h-5 mr-2" />{" "}

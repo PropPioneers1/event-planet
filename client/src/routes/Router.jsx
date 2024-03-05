@@ -33,12 +33,12 @@ import ManageEvents from "../pages/Dashboard/ManageEvents/ManageEvents";
 import Tasks from "../pages/Dashboard/ManageEvents/Tasks/Tasks";
 import SignIn from "../pages/SignIn/SignIn";
 import DashboardDemo from "../pages/Demo/DashboardDemo/DashboardDemo";
-import MyProfile from "../pages/Demo/DashboardDemo/MyProfile/MyProfile"
+import MyProfile from "../pages/Demo/DashboardDemo/MyProfile/MyProfile";
 import Summary from "../pages/Dashboard/Summary/Summary";
 import TermsAndCondition from "../pages/SignIn/TermsAndCondition";
 import SuccessPayment from "../components/shared/PaymentPage/SuccessPayment";
 // import LogIn from "../pages/SignIn/LogIn";
-
+import PrivetRoute from "./PrivetRoute";
 
 const Router = createBrowserRouter([
   {
@@ -81,7 +81,11 @@ const Router = createBrowserRouter([
       },
       {
         path: "checkout/:from/:ids",
-        element: <CheckOut></CheckOut>,
+        element: (
+          <PrivetRoute>
+            <CheckOut></CheckOut>
+          </PrivetRoute>
+        ),
       },
       {
         path: "payment/successful/:tranid",
@@ -153,8 +157,8 @@ const Router = createBrowserRouter([
         element: <AdminSummary></AdminSummary>,
       },
       {
-        path:"summary",
-        element:<Summary></Summary>
+        path: "summary",
+        element: <Summary></Summary>,
       },
       {
         path: "event-requests",
@@ -173,13 +177,13 @@ const Router = createBrowserRouter([
         element: <MyEvents></MyEvents>,
       },
       {
-        path:"manage-events",
-        element:<ManageEvents></ManageEvents>
+        path: "manage-events",
+        element: <ManageEvents></ManageEvents>,
       },
       {
-        path:"tasks/:id",
-        element:<Tasks></Tasks>
-      }
+        path: "tasks/:id",
+        element: <Tasks></Tasks>,
+      },
     ],
   },
 ]);

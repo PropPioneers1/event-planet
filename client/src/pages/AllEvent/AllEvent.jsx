@@ -72,8 +72,6 @@ const AllEvent = () => {
     return <div>Loading...</div>;
   }
 
-  console.log(eventTitle, category, state, city, venues);
-
   return (
     <div>
       {/* Slider */}

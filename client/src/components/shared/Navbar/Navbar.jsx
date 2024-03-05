@@ -6,15 +6,19 @@ import { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import MenuDropdown from "./MenuDropDown";
 import NotificationMessage from "../../../pages/NotificationMessage/NotificationMessage";
-import logo from "../../../assets/image/logo.png";
+import logo from "../../../assets/image/logo-1.png";
+import { FaShoppingCart } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
 
   const [isMenuTrue, setIsMenuTrue] = useState(false);
 
+  const cartProduct = useSelector((state) => state.cartProduct);
+
   const navLinkStyles =
-    "font-semibold  text-xl hover:text-white lg:text-white hover:bg-[#222831b3] py-2 px-5 rounded-[5px] w-36 lg:w-auto my-2 lg:my-auto";
+    "font-semibold hover:text-white lg:text-white hover:bg-[#222831b3] py-2 px-5 rounded-[5px] w-36 lg:w-auto my-2 lg:my-auto";
 
   const navLinks = (
     <>
@@ -44,10 +48,6 @@ const Navbar = () => {
       <NavLink onClick={() => setIsMenuTrue(false)} to="/contact">
         <li className={navLinkStyles}>Contact Us</li>
       </NavLink>
-
-       <NavLink className="grid lg:place-items-center">
-        <NotificationMessage></NotificationMessage>
-      </NavLink>
     </>
   );
 
@@ -56,6 +56,23 @@ const Navbar = () => {
       {user ? (
         <>
           <hr className="block lg:hidden" />
+          {user?.email && (
+            <>
+              <NavLink className="grid lg:place-items-center">
+                <NotificationMessage></NotificationMessage>
+              </NavLink>
+              <Link className="relative" to="/dashboard/my-cart">
+                <span
+                  className="absolute lg:-right-2 left-5 text-white -top-2 w-6 h-6 rounded-full
+                 bg-red-400 text-center
+                 flex justify-center items-center"
+                >
+                  {cartProduct}
+                </span>
+                <FaShoppingCart className="text-3xl text-center" />
+              </Link>
+            </>
+          )}
           <button className="hidden lg:block">
             <MenuDropdown></MenuDropdown>
           </button>
@@ -96,9 +113,9 @@ const Navbar = () => {
   return (
     <div className="">
       <div
-        className=" bg-[#16181c] bg-opacity-100 
+        className="absolute bg-[#0000007d] bg-opacity-100 
        top-0 z-50  w-full 
-      shadow-2xl
+      shadow-2xl py-3
       "
       >
         {/* Container */}
@@ -112,7 +129,7 @@ const Navbar = () => {
             </div>
 
             {/* navLinks for medium and large device */}
-            <ul className="lg:flex item-center gap-1 hidden text-lg">
+            <ul className="lg:flex items-center gap-1 hidden text-lg">
               {navLinks}
             </ul>
             {/* sign in && sign up ||  account for medium and large device*/}
