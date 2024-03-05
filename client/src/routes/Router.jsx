@@ -29,7 +29,6 @@ import About from "../pages/About/About";
 
 import MyEvents from "../pages/Dashboard/MyEvents/MyEvents";
 import ContactUs from "../pages/Contact/ContactUs";
-import Successrout from "../components/shared/PaymentPage/Successrout";
 import ManageEvents from "../pages/Dashboard/ManageEvents/ManageEvents";
 import Tasks from "../pages/Dashboard/ManageEvents/Tasks/Tasks";
 import SignIn from "../pages/SignIn/SignIn";
@@ -37,6 +36,7 @@ import DashboardDemo from "../pages/Demo/DashboardDemo/DashboardDemo";
 import MyProfile from "../pages/Demo/DashboardDemo/MyProfile/MyProfile"
 import Summary from "../pages/Dashboard/Summary/Summary";
 import TermsAndCondition from "../pages/SignIn/TermsAndCondition";
+import SuccessPayment from "../components/shared/PaymentPage/SuccessPayment";
 // import LogIn from "../pages/SignIn/LogIn";
 
 
@@ -85,7 +85,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "payment/successful/:tranid",
-        element: <Successrout></Successrout>,
+        element: <SuccessPayment></SuccessPayment>,
       },
       {
         path: "payment/failure/:tran_id",

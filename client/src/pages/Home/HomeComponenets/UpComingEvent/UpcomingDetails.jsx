@@ -86,10 +86,16 @@ const UpcomingDetails = () => {
 const handleNavigate=async()=>{
   
   const datasfront={
-  eventName: eventDetails.eventName,
+  userName: user?.displayName,
+  eventImage:eventDetails?.eventImages[0],
+  eventTime:time,
+  eventDate:date,
+  eventLocation:eventDetails?.city,
+  eventName: eventDetails?.eventName,
   cus_email: user?.email,
   total_amount:totalPrice,
   ticketquantity:number,
+  
   
 };
 
