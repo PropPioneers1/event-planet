@@ -46,7 +46,6 @@ const CreateBlog = () => {
         "https://server-orpin-alpha.vercel.app/blog",
         blog
       );
-      console.log(data);
       toast.success(data?.message);
     } catch (error) {
       console.error(error);

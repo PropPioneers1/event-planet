@@ -50,7 +50,7 @@ mongoose
 
 // routes
 app.get("/", (req, res) => {
-  res.send("Your are in Event Planet serversite");
+  res.send("Your are in Event Planet server site");
 });
 app.use("/shop", shopHandler);
 app.use("/qna", QnaHandler);
@@ -74,7 +74,7 @@ app.use("/productpay", Productpay);
 app.use("/eventTask", EventTaskHandler);
 app.use("/eventTodo", eventTodoHandler);
 
-// Eroor handler
+// Error handler
 
 // _________________________________________________
 // incorrect url error
