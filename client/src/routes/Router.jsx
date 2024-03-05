@@ -37,6 +37,7 @@ import DashboardDemo from "../pages/Demo/DashboardDemo/DashboardDemo";
 import MyProfile from "../pages/Demo/DashboardDemo/MyProfile/MyProfile";
 import Summary from "../pages/Dashboard/Summary/Summary";
 // import LogIn from "../pages/SignIn/LogIn";
+import PrivetRoute from "./PrivetRoute";
 
 const Router = createBrowserRouter([
   {
@@ -75,7 +76,11 @@ const Router = createBrowserRouter([
       },
       {
         path: "checkout/:from/:ids",
-        element: <CheckOut></CheckOut>,
+        element: (
+          <PrivetRoute>
+            <CheckOut></CheckOut>
+          </PrivetRoute>
+        ),
       },
       {
         path: "payment/successful/:tranid",

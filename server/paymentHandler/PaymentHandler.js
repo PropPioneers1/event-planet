@@ -114,7 +114,7 @@ router.post("/successful/:tran_id", async (req, res) => {
       { $set: { paidstatus: "payment succeed" } },
       { new: true }
     );
-
+    console.log("Payment Formmmmmm", payment.from);
     if (!payment) {
       console.error("Payment not found for transaction ID:", tran_id);
       return res.status(404).json({ error: "Payment not found" });
@@ -154,8 +154,6 @@ router.post("/successful/:tran_id", async (req, res) => {
         },
         { new: true } // Return the updated document
       );
-
-      console.log("Event updated successfully for creation:", event);
 
       if (!event) {
         // Rollback the payment status update if event is not found

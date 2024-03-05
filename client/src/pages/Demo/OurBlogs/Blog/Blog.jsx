@@ -26,9 +26,7 @@ const Blog = ({ blog }) => {
   // delete
   const handleDelete = async () => {
     const id = blog?._id;
-    console.log(id);
     const { data } = await axiosSecure.delete(`/blog/${id}`);
-    console.log(data);
     if (data.deletedCount) {
       toast.success("Successfully deleted blog");
       // refetch();
@@ -36,7 +34,6 @@ const Blog = ({ blog }) => {
   };
 
   const date = getDate(blog?.postedTimestamp);
-  console.log(blog);
   return (
     <div>
       {/* admit info */}

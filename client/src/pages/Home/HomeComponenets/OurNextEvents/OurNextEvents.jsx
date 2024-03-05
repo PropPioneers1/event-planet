@@ -45,12 +45,9 @@ const OurNextEvents = () => {
     ],
   };
 
-  
-
   return (
-    <div className="">
+    <div>
       <Container>
-        
         <div>
           <SectionHeading
             title="Upcoming Event"
@@ -58,17 +55,18 @@ const OurNextEvents = () => {
             boldSubTitleWord="awesome events"
           />
         </div>
-        <Slider {...settings}>
-          
-          {nextEvents?.map((event, idx) => (
-            <OurNextEventCard
-              key={idx}
-              event={event}
-              activeSlide={activeSlide}
-              idx={idx}
-            />
-          ))}
-        </Slider>
+        <div className="max-w-[95%] mx-auto">
+          <Slider {...settings}>
+            {nextEvents?.map((event, idx) => (
+              <OurNextEventCard
+                key={idx}
+                event={event}
+                activeSlide={activeSlide}
+                idx={idx}
+              />
+            ))}
+          </Slider>
+        </div>
         {/* </div> */}
       </Container>
     </div>
