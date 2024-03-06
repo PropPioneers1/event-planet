@@ -77,15 +77,11 @@ const Router = createBrowserRouter([
 
       {
         path: "event/upcomingDetails/:id",
-        element: <UpcomingDetails></UpcomingDetails>,
+        element: <PrivetRoute><UpcomingDetails></UpcomingDetails></PrivetRoute>,
       },
       {
         path: "checkout/:from/:ids",
-        element: (
-          <PrivetRoute>
-            <CheckOut></CheckOut>
-          </PrivetRoute>
-        ),
+        element: <CheckOut></CheckOut>,
       },
       {
         path: "payment/successful/:tranid",
@@ -98,7 +94,7 @@ const Router = createBrowserRouter([
 
       {
         path: "shopping",
-        element: <Shopping></Shopping>,
+        element: <PrivetRoute><Shopping></Shopping></PrivetRoute>,
       },
       {
         path: "details-shopCart/:id",

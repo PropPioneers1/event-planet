@@ -65,10 +65,12 @@ const SignIn = () => {
           <div className="grid grid-cols-1 md:grid-cols-5 ld:gap-20 gap-12 min-h-screen place-items-center">
             {/* Left Section */}
             <div className="mb-8 text-center md:text-start md:col-span-3 col-span-1">
-              <h1 className="my-3 text-4xl md:text-3xl lg:text-5xl font-bold text-white">
-              <span className="text-primary">WELLCOME </span>
-                BACK<br />TO OUR EVENT PLANET
-              </h1>
+            <h1 className="my-3 text-4xl md:text-3xl lg:text-5xl font-bold text-white">
+                WELLCOME 
+                BACK </h1> 
+                <h1 className="my-4 text-4xl md:text-3xl lg:text-5xl font-bold text-white">
+                TO OUR EVENT PLANET
+                </h1>
               <p className="text-sm text-gray-400">
               Welcome back to Our Event Planet! Sign in now to explore upcoming events and manage your account. Your seamless event experience awaits.
               </p>
