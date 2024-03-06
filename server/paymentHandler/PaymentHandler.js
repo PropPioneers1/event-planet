@@ -166,13 +166,18 @@ router.post("/successful/:tran_id", async (req, res) => {
       }
     }
     if (payment.from === "shop") {
-      const cart = await shopCartModel.findOneAndDelete({
-        email: payment.cus_email,
-      });
+      try {
+        const result = await shopCartModel.deleteMany({
+          email: payment.cus_email,
+        });
 
-      console.log("Deleted shopCart:", cart);
+        console.log(`Deleted ${result.deletedCount} shopCart items`);
 
-      return res.status(200).json({ message: "Sabbash beta", cart });
+        return res.status(200).json({ message: "Sabbash beta", result });
+      } catch (error) {
+        console.error("Error deleting shopCart items:", error);
+        return res.status(500).json({ message: "Internal server error" });
+      }
     }
 
     console.log("Payment status updated successfully.", payment);
@@ -204,9 +209,7 @@ router.post("/failure/:tran_id", async (req, res) => {
     }
 
     // Redirect to failure page once payment status is updated
-    res.redirect(
-      `https://event-planet-9789f.web.app/payment/failure/${tran_id}`
-    );
+    res.redirect(`http://localhost:5173/payment/failure/${tran_id}`);
   } catch (error) {
     console.error("Error updating payment status:", error);
     res.status(500).json({ error: "Internal Server Error" });

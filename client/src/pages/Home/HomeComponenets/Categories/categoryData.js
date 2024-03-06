@@ -7,28 +7,27 @@ import { MdOutlineFoodBank } from "react-icons/md";
 
 export const categories = [
   {
-    label: 'Education',
+    label: "Education",
     icon: IoBookOutline,
   },
   {
-    label: 'Business',
+    label: "Business",
     icon: BsBagDash,
   },
   {
-    label: 'Sport',
+    label: "Sport",
     icon: MdSportsEsports,
   },
   {
-    label: 'Fasion',
+    label: "Fashion",
     icon: GiAmpleDress,
   },
   {
-    label: 'Food Festival',
-    icon: MdOutlineFoodBank ,
+    label: "Food festival",
+    icon: MdOutlineFoodBank,
   },
   {
-    label: 'Innovation Showcase',
+    label: "Innovation Showcase",
     icon: GiThink,
   },
-  
-]
+];

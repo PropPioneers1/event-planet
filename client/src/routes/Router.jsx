@@ -112,6 +112,10 @@ const Router = createBrowserRouter([
         element: <AllEvent></AllEvent>,
       },
       {
+        path: "categoryEvent/:category",
+        element: <AllEvent></AllEvent>,
+      },
+      {
         path: "about",
         element: <About></About>,
       },
