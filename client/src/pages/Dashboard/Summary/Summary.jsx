@@ -4,11 +4,12 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import ProductSellLineChart from "./ProductSellLineChart/ProductSellLineChart";
 import TotalCount from "./TotalCount/TotalCount";
 import UsersCountChart from "./UsersCountChart/UsersCountChart";
+import Loader from "../../../components/Loader/Loader";
 
 
 const Summary = () => {
     const axiosSecure = useAxiosSecure();
-    const { data: eventData,isPending,refetch } = useQuery({
+    const { data: eventData,isPending } = useQuery({
         queryKey: ["feedbackData"],
         queryFn: async () => {
           const res = await axiosSecure.get("/event/allevents");
@@ -16,9 +17,11 @@ const Summary = () => {
         },
       });
       console.log(eventData)
+      if(isPending) {
+        return <Loader></Loader>
+      }
     return (
-        <div>
-        
+    <div> 
 <div className="mx-auto mb-6 lg:w-[75%] xl:w-[80%] 2xl:w-[85%]">
     <div className="sticky z-10 top-0 h-16 border-b bg-white lg:py-2.5">
         <div className="px-6 flex items-center justify-between space-x-4 2xl:container">
