@@ -25,7 +25,7 @@ body {
     height: 15px;
     background: #F53F7B;
     position: absolute;
-    animation: load .7s infinite alternate ease-in-out;
+    animation: load .8s infinite alternate ease-in-out;
   }
   
   .loader::before {

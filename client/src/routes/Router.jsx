@@ -94,7 +94,7 @@ const Router = createBrowserRouter([
 
       {
         path: "shopping",
-        element: <PrivetRoute><Shopping></Shopping></PrivetRoute>,
+        element:<Shopping></Shopping>,
       },
       {
         path: "details-shopCart/:id",

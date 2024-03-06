@@ -1,14 +1,21 @@
 
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import ProductSellLineChart from "./ProductSellLineChart/ProductSellLineChart";
 import TotalCount from "./TotalCount/TotalCount";
 import UsersCountChart from "./UsersCountChart/UsersCountChart";
 
 
 const Summary = () => {
-
-
-
-    
+    const axiosSecure = useAxiosSecure();
+    const { data: eventData,isPending,refetch } = useQuery({
+        queryKey: ["feedbackData"],
+        queryFn: async () => {
+          const res = await axiosSecure.get("/event/allevents");
+          return res?.data?.result;
+        },
+      });
+      console.log(eventData)
     return (
         <div>
         
