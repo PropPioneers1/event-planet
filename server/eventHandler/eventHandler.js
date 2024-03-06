@@ -160,4 +160,36 @@ router.delete("/:id", async (req, res) => {
   // Implement your logic here
 });
 
+
+// Assuming you have a categoryModel to work with
+
+
+router.get("/category", async (req, res) => {
+  try {
+    const category = req.query.category;
+
+    // Assuming you have a method findByCategory in your categoryModel
+    const result = await categoryModel.findOne(category);
+
+    res.status(200).send(result);
+  } catch (error) {
+    console.error('Error fetching category:', error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+router.get("/allevents", async (req, res) => {
+  try {
+    const result = await eventModel.find({});
+    res.status(200).json({ result });
+  } catch (err) {
+    res.status(500).json({
+      error: "There was a server-side error",
+    });
+  }
+});
+
+
+
 module.exports = router;
