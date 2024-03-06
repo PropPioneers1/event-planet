@@ -11,6 +11,7 @@ import useAuth from "../../../../hooks/useAuth";
 const CheckOut = () => {
   const { from, ids } = useParams();
   const location = useLocation();
+  console.log(location)
   const [isLoading, setIsLoading] = useState(true);
   const [datasfront, setDatasfront] = useState(null);
   const axiosSecure = useAxiosSecure();
@@ -43,14 +44,18 @@ const CheckOut = () => {
     console.log(useraddress);
 
     const data = {
+      userName: location?.state?.userName,
+      eventImage:location?.state?.eventImage,
+      eventTime:location?.state?.eventTime,
+      eventDate:location?.state?.eventDate,
+      eventLocation:location?.eventLocation,
       mobileNumber: mobile,
       Name: user?.displayName,
       productid: ids,
       cus_email: user.email,
       currency: paymentMethod,
-      // productName: location?.state.productName,
-      totalAmount: datasfront.total_amount,
-      paidstatus: "payment pending",
+      totalAmount: location?.state?.total_amount,
+      paidstatus: 'payment pending',
       paymentdate: formattedDate,
       from: from,
     };

@@ -60,15 +60,15 @@ const UpcomingDetails = () => {
     setNumber(number + 1);
   };
 
-  const { data: eventDetails, refetch } = useQuery({
+  const { data: eventDetails,isPending,refetch } = useQuery({
     queryKey: ["event-details"],
     queryFn: async () => {
       const result = await axiosSecure.get(`/event/${ids}`);
       return result?.data;
     },
   });
-  console.log("event detalils", eventDetails?.speakersImages?.length);
-
+  console.log("event detalils",eventDetails)
+  
   const fullDescription = eventDetails?.description;
   const shortDescription = fullDescription
     ? fullDescription.substring(0, 120)
@@ -84,16 +84,31 @@ const UpcomingDetails = () => {
 
   const totalPrice = number * eventDetails?.ticketPrice;
 
-  const handleNavigate = async () => {
-    const datasfront = {
-      eventName: eventDetails.eventName,
-      cus_email: user?.email,
-      total_amount: totalPrice,
-      ticketquantity: number,
-    };
+const handleNavigate=async()=>{
+  
+  const datasfront={
+  userName: user?.displayName,
+  eventImage:eventDetails?.eventImages[0],
+  eventTime:time,
+  eventDate:date,
+  eventLocation:eventDetails?.city,
+  eventName: eventDetails?.eventName,
+  cus_email: user?.email,
+  total_amount:totalPrice,
+  ticketquantity:number,
+  
+  
+};
 
-    navigate(`/checkout/${"boking"}/${ids}`, { state: datasfront });
-  };
+navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
+
+}
+if(isPending) return <div className="flex flex-col gap-4 m-16">
+<div className="skeleton h-32 w-full"></div>
+<div className="skeleton h-4 w-28 md:w-40"></div>
+<div className="skeleton h-4 w-full"></div>
+<div className="skeleton h-4 w-full"></div>
+</div>
   return (
     <>
       <div className="">
@@ -114,7 +129,7 @@ const UpcomingDetails = () => {
                       className="w-full rounded border-[15px] border-neutral"
                       alt=""
                     />
-                    <div className=" absolute top-[45px] bg-neutral  px-7 py-3 font-semibold text-lg">
+                    <div className=" absolute top-[45px] bg-neutral  md:px-7 md:py-3 px-5 py-3 font-semibold text-lg">
                       {eventDetails?.eventName}
                     </div>
                   </div>
@@ -190,7 +205,7 @@ const UpcomingDetails = () => {
                       <div className="bg-white">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                           <div className="bg-white">
-                            <h2 className="py-4 text-center bg-secondary text-white font-medium">
+                            <h2 className="py-3 text-center bg-secondary text-white font-medium text-lg">
                               Event Name
                             </h2>
                             <div className="bg-white overflow-hidden text-black p-3">
@@ -202,7 +217,7 @@ const UpcomingDetails = () => {
                             </div>
                           </div>
                           <div className="bg-white border-l border-r">
-                            <h2 className="py-4 text-center bg-secondary text-white font-medium">
+                            <h2 className="py-3 text-center bg-secondary text-white font-medium text-lg">
                               Event Ticket
                             </h2>
                             <div className="bg-white text-secondary p-3">
@@ -230,7 +245,7 @@ const UpcomingDetails = () => {
                           </div>
 
                           <div className="bg-white">
-                            <h2 className="py-4 text-center bg-secondary text-white font-medium">
+                            <h2 className="py-3 text-center bg-secondary text-white font-medium text-lg">
                               Total Price
                             </h2>
                             <div className="bg-white flex-col items-center text-center text-black p-3">
@@ -244,28 +259,27 @@ const UpcomingDetails = () => {
                         </div>
 
                         <div className="bg-secondary flex flex-col md:flex-row items-center justify-between p-5">
-                          <div className="text-white font-medium mb-3 md:mb-0">
-                            <p>Quantity: {number}</p>
+                          <div className="text-white text-lg font-medium mb-3 md:mb-0">
+                            <p>Quantity : {number}</p>
                           </div>
-                          <div className="text-white font-medium">
-                            <p>Total: {totalPrice}</p>
+                          <div className="text-white font-medium text-lg">
+                            <p>Total : {totalPrice}</p>
                           </div>
-                          {number > 0 ? (
-                            <>
-                              <button
-                                onClick={handleNavigate}
-                                className="button flex items-center gap-3 mt-3 md:mt-0"
-                              >
-                                <FaCartPlus></FaCartPlus>Register Now
-                              </button>
-                            </>
-                          ) : (
-                            <>
-                              <button className="button flex items-center gap-3 mt-3 md:mt-0 disabled">
-                                <FaCartPlus></FaCartPlus>Register Now
-                              </button>
-                            </>
-                          )}
+                          {
+                            number > 0 ?  <><button
+                            onClick={handleNavigate}
+                            className="bg-gradient-to-tl from-[#861f42]
+                            to-primary text-white lg:px-4 lg:py-3 px-4 py-3 rounded font-semibold flex items-center gap-3 mt-3 md:mt-0 hover:bg-gradient-to-tr transition-all duration-300 ease-in"
+                          >
+                            <FaCartPlus></FaCartPlus>Register Now
+                          </button></> : <><button
+                            className="bg-gradient-to-tl from-[#861f42]
+                            to-primary text-white lg:px-4 lg:py-3 px-4 py-3 rounded font-semibold flex items-center gap-3 mt-3 md:mt-0 disabled hover:bg-gradient-to-tr transition-all duration-300 ease-in"
+                          >
+                            <FaCartPlus></FaCartPlus>Register Now
+                          </button></>
+                          }
+                         
                         </div>
                       </div>
                     </div>
@@ -460,7 +474,8 @@ const UpcomingDetails = () => {
                     </div> */}
                     {/* event shedule */}
                     <div className="hidden md:block">
-                      <div className="bg-secondary p-4 mt-10 font-medium text-white text-xl">
+                      <div className="bg-gradient-to-tl from-[#861f42]
+                    to-primary p-4 mt-10 font-medium text-white text-xl">
                         Event FAQ
                       </div>
                       <div className="collapse collapse-plus bg-base-200">
@@ -662,7 +677,8 @@ const UpcomingDetails = () => {
                       </div>
                     </div>
                     {/* add calander  */}
-                    <div className="button text-center mt-4  ">
+                    <div className="bg-gradient-to-tl from-[#861f42]
+                    to-primary text-white lg:px-4 lg:py-3 px-4 py-3 rounded font-semibold mt-4 text-center uppercase hover:bg-gradient-to-tr transition-all duration-300 ease-in">
                       <a href="https://calendar.google.com/calendar/u/0/r">
                         Add Calender
                       </a>
