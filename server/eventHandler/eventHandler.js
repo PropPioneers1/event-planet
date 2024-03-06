@@ -52,6 +52,16 @@ router.get("/", async (req, res) => {
     res.status(500).json({ error: "internal server error" });
   }
 });
+router.get("/allevents", async (req, res) => {
+  try {
+    const result = await eventModel.find({});
+    res.status(200).json({ result });
+  } catch (err) {
+    res.status(500).json({
+      error: "There was a server-side error",
+    });
+  }
+});
 
 
 router.get('/eventCount',async(req,res)=>{

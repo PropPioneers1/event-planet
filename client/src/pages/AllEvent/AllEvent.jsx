@@ -16,6 +16,7 @@ import EventCard from "./EventCard";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import SearchInputs from "./SearchInputs";
+import Loader from "../../components/Loader/Loader";
 import { useParams } from "react-router-dom";
 
 const AllEvent = () => {
@@ -71,11 +72,9 @@ const AllEvent = () => {
   const totalPages = Math.ceil(events?.eventCount / 8);
 
   const pages = [...new Array(totalPages).fill(0)];
-
   if (isPending) {
-    return <div>Loading...</div>;
+    return <Loader></Loader>;
   }
-
   return (
     <div>
       {/* Slider */}
