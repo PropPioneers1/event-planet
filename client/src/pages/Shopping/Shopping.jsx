@@ -42,8 +42,8 @@ const Shopping = () => {
       </div>
 
       <Container>
-        <div>
-          <div className="grid mt-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+        <div className="py-20">
+          <div className="grid mt-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {shopItem?.map((cart, idx) => (
               <div
                 key={idx}
@@ -92,6 +92,7 @@ const Shopping = () => {
               </div>
             ))}
           </div>
+          <div className="border-t-2 border-pink-200 mt-8 pt-4">
           <div className="flex justify-center gap-2">
             {currentPage !== 0 && (
               <div className="flex flex-row-reverse items-center">
@@ -131,6 +132,7 @@ const Shopping = () => {
                 <IoIosArrowForward className="text-2xl font-semibold text-[#878787]" />
               </div>
             )}
+          </div>
           </div>
         </div>
       </Container>

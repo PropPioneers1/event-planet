@@ -1,4 +1,7 @@
+import { Link } from "react-router-dom";
 import logo from "../../assets/image/logo.png";
+import { categories } from "../../pages/Home/HomeComponenets/Categories/categoryData";
+
 
 const Footer = () => {
   return (
@@ -9,38 +12,50 @@ const Footer = () => {
             <a href="" className="flex items-center">
               <img src={logo} className="h-24 rounded-lg mr-3" alt="" />
             </a>
+            <div className="md:w-[400px] lg:w-[600px] md:mr-10"><p className="text-justify">Welcome to Event plannet, where event planning is made simple. Browse and book venues, vendors, and services effortlessly. From corporate conferences to weddings, {"we've"} got you covered. Join our community today and let us help you bring your vision to life!</p></div>
           </div>
-          <div className="grid grid-cols-2 gap-8 text-white sm:gap-6 sm:grid-cols-3">
+          <div className="grid grid-cols-2 gap-12 text-white sm:gap-6 sm:grid-cols-3">
             <div>
               <h2 className="mb-6 text-sm font-semibold  uppercase dark:text-white">
                 Event Management
               </h2>
               <ul className="text-white dark:text-gray-400 font-medium">
-                <li className="mb-4">
-                  <a href="" className="hover:underline">
-                    Birthday
-                  </a>
-                </li>
-                <li>
-                  <a href="" className="hover:underline">
-                    Marriage
-                  </a>
-                </li>
+
+                {
+                  categories.map((categorie,index)=><li key={index} className="mb-4">
+                    <Link className="hover:underline">{categorie.label}</Link>
+                </li>)
+                }
               </ul>
             </div>
-            <div>
+            <div className="ml-5">
               <h2 className="mb-6 text-sm font-semibold  uppercase dark:text-white">
                 Follow us
               </h2>
-              <ul className="text-white dark:text-gray-400 font-medium">
-                <li className="mb-4">
+              <ul className="text-white dark:text-gray-400 font-medium space-y-4">
+                <li className="">
                   <a href="" className="hover:underline ">
-                    Github
+                    Facebook
                   </a>
                 </li>
                 <li>
                   <a href="" className="hover:underline">
-                    Discord
+                    Instagram
+                  </a>
+                </li>
+                <li>
+                  <a href="" className="hover:underline">
+                    Linkedin
+                  </a>
+                </li>
+                <li>
+                  <a href="" className="hover:underline">
+                    Twitter
+                  </a>
+                </li>
+                <li>
+                  <a href="" className="hover:underline">
+                    WhatsApp
                   </a>
                 </li>
               </ul>
@@ -56,9 +71,9 @@ const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
+                  <Link to="termCondition" className="hover:underline">
                     Terms &amp; Conditions
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

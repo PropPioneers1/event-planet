@@ -13,7 +13,7 @@ const SignUp = () => {
   const {createUser,updateUserProfile,signInGoogle, signInFacebook,loading} = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location?.state?.from?.pathname || '/'
+  const from = location?.state?.from?.pathname || '/';
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
@@ -93,9 +93,11 @@ const SignUp = () => {
             {/* Left Section */}
             <div className="mb-8 text-center md:text-start md:col-span-3 col-span-1">
               <h1 className="my-3 text-4xl md:text-3xl lg:text-5xl font-bold text-white">
-                <span className="text-primary">WELLCOME </span>
-                TO <br />OUR EVENT PLANET
-              </h1>
+                WELLCOME 
+                TO OUR</h1> 
+                <h1 className="my-4 text-4xl md:text-3xl lg:text-5xl font-bold text-white">
+                EVENT PLANET
+                </h1>
               <p className="text-sm text-gray-400">
               Join Our Event Planet today! Sign up to create your account and unlock a world of event planning possibilities. From booking tickets to managing events, we have got you covered. Let make your events extraordinary together!
               </p>

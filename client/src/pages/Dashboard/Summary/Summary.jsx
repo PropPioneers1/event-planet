@@ -1,8 +1,23 @@
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import ProductSellLineChart from "./ProductSellLineChart/ProductSellLineChart";
 import TotalCount from "./TotalCount/TotalCount";
 import UsersCountChart from "./UsersCountChart/UsersCountChart";
+import Loader from "../../../components/Loader/Loader";
 
 const Summary = () => {
+  const axiosSecure = useAxiosSecure();
+  const { data: eventData, isPending } = useQuery({
+    queryKey: ["feedbackData"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/event/allevents");
+      return res?.data?.result;
+    },
+  });
+  console.log(eventData);
+  if (isPending) {
+    return <Loader></Loader>;
+  }
   return (
     <div>
       <div className="mx-auto mb-6 lg:w-[75%] xl:w-[80%] 2xl:w-[85%]">
