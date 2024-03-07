@@ -18,7 +18,6 @@ const DashboardDemo = () => {
   const [isMenuTrue, setIsMenuTrue] = useState(false);
   const { role } = useRole();
 
-  console.log(role, "rouleeeee");
 
   const iconStyle = `text-[19px] flex items-center  gap-2.5  py-2 px-4 rounded-md  hover:shadow-md hover:shadow-accent text-white transition-all duration-300`;
 

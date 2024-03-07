@@ -76,7 +76,8 @@ const AllEvent = () => {
   return (
     <div>
       {/* Slider */}
-      <Swiper
+      <Swiper 
+      style={{ height: '600px' }}
         spaceBetween={30}
         centeredSlides={true}
         autoplay={{
@@ -99,25 +100,25 @@ const AllEvent = () => {
         </SwiperSlide>
         <SwiperSlide>
           <img
-            src="https://ovatheme.com/em4u/wp-content/uploads/2017/09/bg_4_new.jpg"
+            src="https://i.ibb.co/7G0RG8N/4163020.jpg"
             alt=""
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
-            src="https://ovatheme.com/em4u/wp-content/uploads/2017/09/bg_3_new.jpg"
+            src="https://i.ibb.co/b7wKbSy/6864856.jpg"
             alt=""
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
-            src="https://demos.codexcoder.com/eventterm/wp-content/uploads/2016/10/Bg_0001.jpg"
+            src="https://i.ibb.co/5KmLCFj/7939756.jpg"
             alt=""
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
-            src="https://demos.codexcoder.com/eventterm/wp-content/uploads/2018/04/news-bg.jpg"
+            src="https://i.ibb.co/chrmvjQ/10007604.jpg"
             alt=""
           />
         </SwiperSlide>
