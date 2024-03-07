@@ -38,7 +38,6 @@ import Summary from "../pages/Dashboard/Summary/Summary";
 import TermsAndCondition from "../pages/SignIn/TermsAndCondition";
 import SuccessPayment from "../components/shared/PaymentPage/SuccessPayment";
 // import LogIn from "../pages/SignIn/LogIn";
-import PrivetRoute from "./PrivetRoute";
 
 const Router = createBrowserRouter([
   {
@@ -49,14 +48,6 @@ const Router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-      },
-      {
-        path: "sign-up",
-        element: <SignUp></SignUp>,
-      },
-      {
-        path: "/signIn",
-        element: <SignIn></SignIn>,
       },
       {
         path:"termCondition",
@@ -77,7 +68,7 @@ const Router = createBrowserRouter([
 
       {
         path: "event/upcomingDetails/:id",
-        element: <PrivetRoute><UpcomingDetails></UpcomingDetails></PrivetRoute>,
+        element: <UpcomingDetails></UpcomingDetails>,
       },
       {
         path: "checkout/:from/:ids",
@@ -125,6 +116,15 @@ const Router = createBrowserRouter([
         element: <ContactUs></ContactUs>,
       },
     ],
+  },
+
+  {
+    path: "sign-up",
+    element: <SignUp></SignUp>,
+  },
+  {
+    path: "/signIn",
+    element: <SignIn></SignIn>,
   },
 
   {

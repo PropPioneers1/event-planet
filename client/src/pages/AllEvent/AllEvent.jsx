@@ -19,6 +19,7 @@ import SearchInputs from "./SearchInputs";
 import Loader from "../../components/Loader/Loader";
 import { useParams } from "react-router-dom";
 
+
 const AllEvent = () => {
   const axiosSecure = useAxiosSecure();
   const { category: eventCategory } = useParams();

@@ -5,7 +5,7 @@ import { categories } from "../../pages/Home/HomeComponenets/Categories/category
 
 const Footer = () => {
   return (
-    <footer className="bg-[#141414] text-white ">
+    <footer className="bg-[#141414] text-white">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
@@ -23,7 +23,7 @@ const Footer = () => {
 
                 {
                   categories.map((categorie,index)=><li key={index} className="mb-4">
-                    <Link className="hover:underline">{categorie.label}</Link>
+                    <Link to={`/categoryEvent/${categorie.label}`} className="hover:underline">{categorie.label}</Link>
                 </li>)
                 }
               </ul>
