@@ -1,5 +1,4 @@
 import  { useState, useEffect } from 'react';
-import Footer from "../../components/shared/Footer";
 import SectionHeading from "../../components/shared/SectionHeading/SectionHeading";
 import Container from "../../components/ui/Container";
 import "slick-carousel/slick/slick.css";
@@ -284,7 +283,7 @@ const About = () => {
 
       
         </Container>
-        <Footer></Footer>
+        
       </div>
    
   );
