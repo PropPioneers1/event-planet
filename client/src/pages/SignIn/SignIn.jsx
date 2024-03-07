@@ -5,10 +5,8 @@ import toast from "react-hot-toast";
 import { TbLoaderQuarter } from "react-icons/tb";
 
 const SignIn = () => {
-
     const navigate = useNavigate();
     const {loading,signIn,signInGoogle,signInFacebook} = useAuth();
-
 
     // Handle submit function
     const handleSubmit = async (event) => {
@@ -21,7 +19,6 @@ const SignIn = () => {
         if(!termsAndConditionCheck){
           return toast.error('Please agree to the terms and conditions.');
         }
-        
         try{
           await signIn(email,password)
           toast.success('Successfully Sign In')
@@ -57,8 +54,6 @@ const SignIn = () => {
       toast.error("SigIn Faild Please Try Again ☹")
     }
   }
-
-
     return (
         <div className="signUp-bg">
         <Container>

@@ -31,7 +31,6 @@ const PostFeedback = ({title,image,id,feedbackTitle}) => {
   const ratingChanged = (newRating) => {
     setRating(newRating);
   };
-console.log(rating)
   // gat date
   const currentDate = new Date();
   const options = { year: "numeric", month: "2-digit", day: "2-digit" };

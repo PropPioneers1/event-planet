@@ -1,6 +1,4 @@
-// import { Link } from "react-router-dom";
 
-// import { FcGoogle } from "react-icons/fc";
 import { SiSpinrilla } from "react-icons/si";
 import "./signup.css";
 import Container from "../../components/ui/Container";
@@ -49,9 +47,7 @@ const SignUp = () => {
 
     //  save user in database
    if(result?.user?.email){
-
     const dbResponse = await saveUser(result?.user)
-    console.log(dbResponse)
     navigate(from, { replace: true })
     toast.success('Signup successful!')
    }
@@ -64,6 +60,7 @@ const SignUp = () => {
 
   // handle google sign up
   const handleGoogleSignUp = async() => {
+
     try{
     const result = await signInGoogle();
      //4. save user data in database
@@ -71,10 +68,13 @@ const SignUp = () => {
     toast.success('Successfully Sign Up')
     navigate(from, { replace: true })
     }
+
     catch(err){
       toast.error("SigIn Faild Please Try Again ☹")
     }
+
   }
+
   const handleFacebookSignUp = async() => {
     try{
     const result = await signInFacebook()
@@ -82,10 +82,12 @@ const SignUp = () => {
     toast.success('Successfully Sign Up')
     navigate(from, { replace: true })
     }
+
     catch(err){
       toast.error("SigIn Faild Please Try Again ☹")
     }
   }
+  
   return (
     <div className="signUp-bg py-[80px] md:pt-[50px] lg:pt-[68px]">
         <Container>
