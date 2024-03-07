@@ -62,6 +62,7 @@ router.post("/", async (req, res) => {
       tran_id: tran_id,
       success_url: `http://localhost:5000/payment/successful/${tran_id}`,
       fail_url: `http://localhost:5000/payment/failure/${tran_id}`,
+
       cancel_url: "http://localhost:5173/cancel",
       ipn_url: "http://localhost:5173/ipn",
       shipping_method: "Courier",
