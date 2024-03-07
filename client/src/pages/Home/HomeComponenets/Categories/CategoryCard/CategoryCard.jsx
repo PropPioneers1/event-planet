@@ -45,7 +45,7 @@ const CategoryCard = ({ label, icon: Icon, idx }) => {
                 Create Event
               </button>
             </Link>
-            <Link to="/event">
+            <Link to={`/categoryEvent/${label}`}>
               <button className="btn ml-5 font-title modal-button">
                 Book Now Event
               </button>

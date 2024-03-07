@@ -4,7 +4,7 @@ import emailjs from '@emailjs/browser';
 import SectionHeading from "../../components/shared/SectionHeading/SectionHeading";
 import { FaLocationDot, FaPhone } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
-import Footer from "../../components/shared/Footer";
+
 import toast from 'react-hot-toast';
 
 const ContactUs = () => {
@@ -255,7 +255,7 @@ const ContactUs = () => {
                     </div>
                 </div>
             </section>
-            <Footer></Footer>
+           
         </div>
     );
 };

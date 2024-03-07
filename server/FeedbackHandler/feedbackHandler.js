@@ -88,5 +88,17 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+
+router.get("/", async (req, res) => {
+  try {
+    const result = await feedBackModal.find({});
+    res.status(200).json({ result });
+  } catch (err) {
+    res.status(500).json({
+      error: "There was a server-side error",
+    });
+  }
+});
+
   module.exports = router;
   

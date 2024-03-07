@@ -3,6 +3,7 @@ import { getTime } from "../../../../../utils/getTime";
 import { useEffect, useState } from "react";
 import { PropTypes } from "prop-types";
 import { Link } from "react-router-dom";
+import { allMonths } from "../../../../../utils/months";
 
 const OurNextEventCard = ({ event, activeSlide, idx }) => {
   const [countdown, setCountdown] = useState({
@@ -13,20 +14,7 @@ const OurNextEventCard = ({ event, activeSlide, idx }) => {
   });
 
   // months array
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
+  const months = allMonths;
 
   const date = new Date(event?.startDate).getDate();
   const month = months[new Date(event?.startDate).getMonth()];
@@ -177,7 +165,7 @@ const OurNextEventCard = ({ event, activeSlide, idx }) => {
               </p>
             </div>
           </div>
-          <Link to={`/upcomingDetails/${event?._id}`}>
+          <Link to={`event/upcomingDetails/${event?._id}`}>
             <button
               className=" w-full font-semibold py-3 rounded-full transition-all duration-300 ease-in
                     bg-gradient-to-tl from-[#861f42]

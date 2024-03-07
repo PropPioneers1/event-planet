@@ -42,7 +42,6 @@ const DashboardDemo = () => {
 
       {role && role === "admin" ? (
         <>
-          {" "}
           {/* admin routes */}
           <NavLink to="/dashboard/add-product" className={iconStyle}>
             <FiShoppingCart></FiShoppingCart>
@@ -60,7 +59,6 @@ const DashboardDemo = () => {
             <MdSummarize></MdSummarize>
             <li> Admin Summary</li>
           </NavLink>
-         
         </>
       ) : (
         <>

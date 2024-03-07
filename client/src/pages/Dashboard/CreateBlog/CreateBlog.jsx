@@ -42,8 +42,10 @@ const CreateBlog = () => {
     console.log(blog);
 
     try {
-      const { data } = await axios.post("https://server-orpin-alpha.vercel.app/blog", blog);
-      console.log(data);
+      const { data } = await axios.post(
+        "https://server-orpin-alpha.vercel.app/blog",
+        blog
+      );
       toast.success(data?.message);
     } catch (error) {
       console.error(error);
@@ -60,15 +62,15 @@ const CreateBlog = () => {
         {/* User logo and name */}
         <div className="avatar flex items-center gap-2 py-2">
           <div className="w-12 rounded-full">
-            <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+            <img src={user?.photoURL} />
           </div>
-          <p className="text-xl">John Smith</p>
+          <p className="text-xl">{user?.displayName}</p>
         </div>
         <form onSubmit={handleBlog}>
           {/* Post area */}
           <textarea
             name="post"
-            placeholder="What's on your mind, John?"
+            placeholder={`What's on your mind, ${user?.displayName}?`}
             className="input px-0 w-full mb-6 focus:outline-none focus:border-none"
             required
           ></textarea>

@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import bannerBg from "../../../../assets/banner/banner-bg-1.jpg";
 import Container from "../../../../components/ui/Container";
+import useAuth from "../../../../hooks/useAuth";
 
 const HomeBanner = () => {
+  const { user } = useAuth();
   return (
     <div
       className="h-[400px] md:min-h-screen grid place-items-center
@@ -35,14 +37,16 @@ const HomeBanner = () => {
                 Explore Events
               </button>
             </Link>
-            <Link to="sign-up">
-              <button
-                className="text-base md:text-xl font-semibold bg-gradient-to-tl hover:bg-gradient-to-tr text-white py-3 px-5 rounded-md from-[#121e2d]
+            {!user?.email && (
+              <Link to="sign-up">
+                <button
+                  className="text-base md:text-xl font-semibold bg-gradient-to-tl hover:bg-gradient-to-tr text-white py-3 px-5 rounded-md from-[#121e2d]
               to-accent"
-              >
-                Register Now
-              </button>
-            </Link>
+                >
+                  Register Now
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       </Container>

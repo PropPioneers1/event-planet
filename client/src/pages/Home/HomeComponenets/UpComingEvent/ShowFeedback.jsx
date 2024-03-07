@@ -10,16 +10,20 @@ import Feedback from "../../../Shopping/DetailsProduct/Feedback/Feedback";
 
 const ShowFeedback = ({title,id}) => {
     const axiosSecure = useAxiosSecure();
-
+    const [showFeedBack,setShowFeedback] = useState(false)
+    console.log(showFeedBack)
     // get feedback
-  const { data: feedbackData,refetch } = useQuery({
+  const { data: feedbackData,isPending,refetch } = useQuery({
     queryKey: ["feedbackData"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/feedback/${id}`);
       return res?.data?.result;
-      
     },
   });
+  const toggleShowAllFeedback = () => {
+    setShowFeedback(!showFeedBack)
+    
+  }
 //   get progress data
 const { data: progressData} = useQuery({
     queryKey: ["progressData"],
@@ -53,13 +57,24 @@ const calculateTotalRatingStars = () => {
     setTotalRatingStars(totalStars);
 };
 const averageStar = (totalRatingStars / feedbackData?.length).toFixed(1);
-console.log(averageStar.length)
+const totalStr = (totalRatingStars / feedbackData?.length);
+console.log(" star",totalStr)
+if(isPending) return <div className="flex flex-col gap-4 w-52 mt-5">
+<div className="flex gap-4 items-center">
+  <div className="skeleton w-16 h-16 rounded-full shrink-0"></div>
+  <div className="flex flex-col gap-4">
+    <div className="skeleton h-4 w-20"></div>
+    <div className="skeleton h-4 w-28"></div>
+  </div>
+</div>
+<div className="skeleton h-32 w-full"></div>
+</div>
     return (
         <>
             {/* Show All users feedback here */}
             <div>
                 <div className="flex justify-between py-6 items-center mb-2">
-                  <div className="text-lg font-semibold flex items-center md:gap-4">
+                  <div className="text-lg font-semibold flex items-center md:gap-4 gap-2">
                     <h2>Ratings & reviews </h2>
                     <div>
                       <FaArrowRightLong></FaArrowRightLong>
@@ -68,7 +83,7 @@ console.log(averageStar.length)
                   {/* modal-> restricted text */}
                   <div>
                     <button
-                      className="flex items-center btn"
+                      className="flex items-center gap-2 py-2 px-3 font-medium bg-neutral"
                       onClick={() =>
                         document.getElementById("my_modal_1").showModal()
                       }
@@ -103,7 +118,7 @@ console.log(averageStar.length)
                 <div className="grid grid-cols-8 gap-5">
                   <div className="md:col-span-2 col-span-3 text-center">
                   <div>
-                    {averageStar && averageStar.length > 0 ? (
+                    {feedbackData?.length > 0 ? (
                       <h2 className="text-5xl font-semibold mb-2">{averageStar}</h2>
                     ) : (
                       <h2 className="text-5xl font-semibold mb-2">0.0</h2>
@@ -139,15 +154,40 @@ console.log(averageStar.length)
                 {/* show all users feedback */}
 
                 <div>
-                  <div className=" py-7">
-                    {feedbackData &&
-                      feedbackData.map((feedback) => (
-                        <Feedback
-                          key={feedback._id}
-                          feedback={feedback}
-                          refetch={refetch}
-                        ></Feedback>
-                      ))}
+                <div className=" py-7">
+                {feedbackData &&
+                    (showFeedBack ? (
+                      <>
+                        {feedbackData.map((feedback) => (
+                          <Feedback
+                            key={feedback._id}
+                            feedback={feedback}
+                            refetch={refetch}
+                          ></Feedback>
+                        ))}
+                        <div className="flex text-primary hover:underline font-semibold hover:bg-neutral w-full py-3 items-center justify-center gap-3">
+                            <button className="" onClick={toggleShowAllFeedback}>Less Feedback</button>
+                          <FaArrowRightLong className="animate-pulse"></FaArrowRightLong>
+                          </div>
+                      </>
+                    ) : (
+                      <>
+                        {feedbackData.slice(0, 3).map((feedback) => (
+                          <Feedback
+                            key={feedback._id}
+                            feedback={feedback}
+                            refetch={refetch}
+                            isPanding={isPending}
+                          ></Feedback>
+                        ))}
+                        {feedbackData.length > 3 && (
+                          <div className="flex text-primary hover:underline font-semibold hover:bg-neutral w-full py-3 items-center justify-center gap-3">
+                            <button className="" onClick={toggleShowAllFeedback}>More Feedback</button>
+                          <FaArrowRightLong className="animate-pulse"></FaArrowRightLong>
+                          </div>
+                        )}
+                      </>
+                    ))}
                   </div>
                 </div>
             </div>

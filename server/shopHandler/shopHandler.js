@@ -117,6 +117,7 @@ router.get("/details-shopCart/:id", async (req, res) => {
 // Post a shopItem
 router.post("/", async (req, res) => {
   try {
+    console.log("Request Body:", req.body);
     const newShopItem = new shopModel(req.body);
     await newShopItem.save();
     res.status(200).json({

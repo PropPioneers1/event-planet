@@ -16,14 +16,17 @@ import EventCard from "./EventCard";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import SearchInputs from "./SearchInputs";
+import Loader from "../../components/Loader/Loader";
+import { useParams } from "react-router-dom";
 
 const AllEvent = () => {
   const axiosSecure = useAxiosSecure();
+  const { category: eventCategory } = useParams();
 
   //   const [events, setEvents] = useState({ eventCount: 0, data: [] });
   const [page, setPage] = useState(0);
 
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(eventCategory ? eventCategory : "");
   const [state, setState] = useState("");
 
   const [eventTitle, setEventTitle] = useState("");
@@ -31,6 +34,8 @@ const AllEvent = () => {
   const [city, setCity] = useState("");
   const [venues, setVenues] = useState("");
   // const [setDivision] = useState("");
+
+  console.log(category);
 
   // handle state change
   const handleStateChange = (selectedState) => {
@@ -67,13 +72,9 @@ const AllEvent = () => {
   const totalPages = Math.ceil(events?.eventCount / 8);
 
   const pages = [...new Array(totalPages).fill(0)];
-
   if (isPending) {
-    return <div>Loading...</div>;
+    return <Loader></Loader>;
   }
-
-  console.log(eventTitle, category, state, city, venues);
-
   return (
     <div>
       {/* Slider */}
