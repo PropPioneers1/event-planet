@@ -1,50 +1,51 @@
-
-import { TbLoaderQuarter } from "react-icons/tb";
-import "../SignUp/signup.css";
-import Container from "../../components/ui/Container";
 import { Link, useNavigate } from "react-router-dom";
-import '../../pages/Home/HomeComponenets/UpComingEvent/upcoming.scss'
+import Container from "../../components/ui/Container";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
+import { TbLoaderQuarter } from "react-icons/tb";
+
+const SignIn = () => {
+
+    const navigate = useNavigate();
+    const {loading,signIn,signInGoogle,signInFacebook} = useAuth();
 
 
-const SignIn = async() => {
-
-  const navigate = useNavigate();
-  const {loading,signIn,signInGoogle,signInFacebook} = useAuth();
-  
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const form = event.target;
-    const email = form.email.value;
-    const password = form.password.value;
-    const termsAndConditionCheck = form.termsAndCondition.checked;
-
-    if(!termsAndConditionCheck){
-      return toast.error('Please agree to the terms and conditions.');
-    }
+    // Handle submit function
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        const termsAndConditionCheck = form.termsAndCondition.checked;
     
-    try{
-      await signIn(email,password)
-      toast.success('Successfully Sign In')
-    }
-    catch(err){
-      toast.error(err?.message)
-    }
+        if(!termsAndConditionCheck){
+          return toast.error('Please agree to the terms and conditions.');
+        }
+        
+        try{
+          await signIn(email,password)
+          toast.success('Successfully Sign In')
+          navigate('/');
+        }
+        catch(err){
+          toast.error("Something went Wrong try again ☹")
+        }
+    
+      };
 
-  };
-  // sign in with google
-  const handleSignInWithGoogle = async () => {
-    try{
-      await signInGoogle()
-      navigate("/")
-      toast.success('Sign In Successfully')
-    }
-    catch(err){
-      toast.error(err?.message)
-    }
-  }
-  // sign in facebook
+    // Google sign in 
+    const handleSignInWithGoogle = async () => {
+        try{
+          await signInGoogle()
+          navigate("/")
+          toast.success('Sign In Successfully')
+        }
+        catch(err){
+          toast.error("SigIn Faild Please Try Again ☹")
+        }
+      }
+
+       // sign in facebook
   const handleSignInWithFacebook = async() => {
     try{
      const result = await signInFacebook();
@@ -53,28 +54,29 @@ const SignIn = async() => {
       toast.success("Login Successfully")
     }
     catch(error){
-      toast.error(error?.message)
+      toast.error("SigIn Faild Please Try Again ☹")
     }
   }
-  return (
-    <div className="signUp-bg">
+
+
+    return (
+        <div className="signUp-bg">
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-5 ld:gap-20 gap-12 min-h-screen place-items-center">
             {/* Left Section */}
             <div className="mb-8 text-center md:text-start md:col-span-3 col-span-1">
-              <h1 className="my-3 text-4xl md:text-3xl lg:text-6xl font-bold text-white">
-                WELLCOME <br />
-                BACK TO OUR EVENT PLANET
-              </h1>
+            <h1 className="my-3 text-4xl md:text-3xl lg:text-5xl font-bold text-white">
+                WELLCOME 
+                BACK </h1> 
+                <h1 className="my-4 text-4xl md:text-3xl lg:text-5xl font-bold text-white">
+                TO OUR EVENT PLANET
+                </h1>
               <p className="text-sm text-gray-400">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Corrupti id voluptatum cupiditate autem, omnis, inventore neque
-                iure ipsum aspernatur odio similique hic. Iste veritatis aliquid
-                fugiat nihil eius. Eaque, eius?
+              Welcome back to Our Event Planet! Sign in now to explore upcoming events and manage your account. Your seamless event experience awaits.
               </p>
               <div className="flex flex-col md:flex-row gap-6 pt-5">
                 <Link to='/sign-up'>
-                <button className="button">
+                <button className="button w-full">
                   SIGN UP
                 </button>
                 </Link>
@@ -88,9 +90,9 @@ const SignIn = async() => {
             </div>
 
             {/* Right Section */}
-            <div className="border-4 rounded border-opacity-50 border-[#eeeeee] p-5 md:p-8 lg:p-10 col-span-1 md:col-span-2 md:w-full glass">
-              <div className="pb-6 text-white font-medium text-2xl">
-                Please Log In Now
+            <div className="border-4 rounded border-opacity-50 border-[#eeeeee] p-5 md:p-8 lg:p-10 col-span-1 md:col-span-2 md:w-full glass shadow-md shadow-slate-600">
+              <div className="pb-6 text-white font-medium text-2xl uppercase text-center">
+                Log In Now
               </div>
               <form
                 onSubmit={handleSubmit}
@@ -121,20 +123,19 @@ const SignIn = async() => {
                       className="w-full px-3 py-2 input-style  transition-all duration-300"
                     />
                   </div>
-                  <div className="flex items-center">
+                  <div className="flex items-start gap-2">
                     <input
                       type="checkbox"
                       name="termsAndCondition"
                       className="text-xl hover:cursor-pointer"
                     />
-                    <span className="ml-2 text-white">
+                    <span className=" text-white -mt-[5px]">
                       I have read and agree to the website
-                      <a
-                        href=""
+                      <Link to="/termCondition"
                         className="font-semibold text-primary ml-2 hover:underline"
                       >
                         terms and conditions
-                      </a>
+                      </Link>
                     </span>
                   </div>
                 </div>
@@ -157,7 +158,7 @@ const SignIn = async() => {
           </div>
         </Container>
     </div>
-  );
+    );
 };
 
 export default SignIn;

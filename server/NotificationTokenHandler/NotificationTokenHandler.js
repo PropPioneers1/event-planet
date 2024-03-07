@@ -12,16 +12,23 @@ router.get("/", async (req, res) => {
 });
 
 // Post a token
-router.post("/", async (req, res) => {
-    const { token } = req.body;
+router.put("/", async (req, res) => {
+  const { token } = req.body;
 
-    try {
-      const newToken = await NotificationTokenModel.insertMany({ token });
-      res.status(201).json({ message: "Token posted successfully", newToken });
-    } catch (error) {
-      console.error("Error posting token:", error);
+  try {
+      
+      const existingToken = await NotificationTokenModel.findOneAndUpdate(
+        
+          { token }, 
+          { new: true, upsert: true } 
+      );
+      
+      res.status(200).json({ message: "Token updated successfully", existingToken });
+  } catch (error) {
+      console.error("Error updating token:", error);
       res.status(500).json({ error: "Internal Server Error" });
-    }
+  }
 });
+
 
 module.exports = router;

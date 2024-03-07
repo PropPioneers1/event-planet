@@ -1,30 +1,53 @@
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+
+import { Autoplay, Pagination } from "swiper/modules";
 
 const ShoppingBanner = () => {
-    var settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1
-      };
+    
       return (
-        <Slider {...settings}>
-          <div>
-            <img src="https://i.ibb.co/PM0dKMj/front-view-woman-with-shopping-bag-concept.jpg" alt="" />
-          </div>
-          <div>
-            <img src="https://i.ibb.co/wYCb8K3/sdsad.jpg" alt="" />
-          </div>
-          <div>
-            <img src="https://i.ibb.co/SRxQRY9/dsd.jpg" alt="" />
-          </div>
-          
-          
-          
-        </Slider>
+        <Swiper style={{ height: '600px' }}
+        spaceBetween={30}
+        centeredSlides={true}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        pagination={{
+          clickable: true,
+        }}
+        // navigation={true}
+        modules={[Autoplay, Pagination]}
+        className="mySwiper mySwiper2 swiper-container"
+      >
+        <SwiperSlide>
+          <img
+            className="bg-cover"
+            src="https://i.ibb.co/4ZFPPmB/5092541.jpg"
+            alt=""
+          />
+        </SwiperSlide>
+
+        <SwiperSlide>
+          <img
+            src="https://i.ibb.co/njF7v8c/5655678.jpg"
+            alt=""
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img
+            src="https://i.ibb.co/XsLfD0w/Optimized-9167.jpg"
+            alt=""
+          />
+        </SwiperSlide>
+    
+        
+        
+      </Swiper>
       );
 };
 

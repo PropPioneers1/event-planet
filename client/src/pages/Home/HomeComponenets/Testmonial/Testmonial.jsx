@@ -8,6 +8,7 @@ import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 
 const TestMonial = () => {
 	const [testmonial, setTestmonial] = useState([]);
+
 	useEffect(() => {
 		fetch("Testmonial.json")
 			.then((res) => res.json())

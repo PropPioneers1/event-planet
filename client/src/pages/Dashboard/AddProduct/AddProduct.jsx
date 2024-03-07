@@ -8,6 +8,7 @@ const AddProduct = () => {
     e.preventDefault();
     const form = e.target;
     const title = form.title.value;
+    const brand = form.brand.value;
     const quantity = form.quantity.value;
     const price = form.price.value;
     const rating = form.rating.value;
@@ -20,13 +21,14 @@ const AddProduct = () => {
 
     const product = {
       title,
+      brand,
       quantity,
       price,
       rating,
       image: imageUpload?.data?.display_url,
       description,
     };
-
+    console.log(product)
     try {
       const { data } = await axios.post("http://localhost:5000/shop", product);
       toast.success(data?.message);
@@ -35,6 +37,8 @@ const AddProduct = () => {
       toast.error(error.message);
     }
   };
+
+  
 
   return (
     <div className=" bg-neutral h-screen">
@@ -57,6 +61,22 @@ const AddProduct = () => {
             </div>
             <div className="form-control flex-1">
               <label className="label">
+                <span className="label-text text-lg font-medium">Brand Name</span>
+              </label>
+              <input
+                type="text"
+                name="brand"
+                placeholder="Please Enter Brand Name"
+                className="input input-bordered focus:outline-none"
+                required
+              />
+            </div>
+            
+          </div>
+          {/* Raw-2 */}
+          <div className="lg:flex w-full gap-4 mb-4">
+          <div className="form-control flex-1">
+              <label className="label">
                 <span className="label-text text-lg font-medium">Quantity</span>
               </label>
               <input
@@ -67,9 +87,6 @@ const AddProduct = () => {
                 required
               />
             </div>
-          </div>
-          {/* Raw-2 */}
-          <div className="lg:flex w-full gap-4 mb-4">
             <div className="form-control flex-1">
               <label className="label">
                 <span className="label-text text-lg font-medium">Price</span>
@@ -82,7 +99,11 @@ const AddProduct = () => {
                 required
               />
             </div>
-            <div className="form-control flex-1">
+            
+          </div>
+          {/* Raw-3 */}
+          <div className="lg:flex w-full gap-4 mb-4">
+          <div className="form-control flex-1">
               <label className="label">
                 <span className="label-text text-lg font-medium">Rating</span>
               </label>
@@ -94,9 +115,6 @@ const AddProduct = () => {
                 required
               />
             </div>
-          </div>
-          {/* Raw-3 */}
-          <div className="lg:flex w-full gap-4 mb-4">
             <div className="form-control flex-1">
               <label className="label">
                 <span className="label-text text-lg font-medium">
@@ -109,7 +127,9 @@ const AddProduct = () => {
                 placeholder="Please Enter Description"
               ></textarea>
             </div>
-            <div className="form-control flex-1">
+            
+          </div>
+          <div className="form-control flex-1">
               <label className="label">
                 <span className="label-text text-lg font-medium">
                   Choose A Product Image
@@ -122,7 +142,6 @@ const AddProduct = () => {
                 required
               />
             </div>
-          </div>
           <button
             type="submit"
             className="btn bg-primary text-white w-full my-4"

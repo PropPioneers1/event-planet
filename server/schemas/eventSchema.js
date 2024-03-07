@@ -11,6 +11,7 @@ const EventSchema = mongoose.Schema({
   category: String,
   eventName: String,
   totalSeat: Number,
+  eventId:String,
   state: String,
   city: String,
   venue: String,
@@ -23,7 +24,8 @@ const EventSchema = mongoose.Schema({
   eventImages: Array,
   speakersImages: Array,
   status: String,
-  ticketSold:Number
+  ticketSold:{type: Number, default:0} 
 });
 
 module.exports = EventSchema;
+

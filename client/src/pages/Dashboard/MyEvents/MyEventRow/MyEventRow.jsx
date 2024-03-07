@@ -1,14 +1,22 @@
-
 import PropTypes from 'prop-types';
-
-const MyEventRow = ({ item, idx }) => {
-
+import {  useNavigate } from 'react-router-dom';
+const MyEventRow = ({ item, idx, ids }) => {
     const date = new Date(item?.startDate).toDateString();
-    const time = new Date(item?.startDate).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+    const time = new Date(item?.startDate).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+console.log(ids,idx);
 
+const navigate = useNavigate();   
+const handlenavigate=()=>{
+    const datascreate={
+        eventid: ids,
+      eventName: item.eventName,
+      total_amount:item.eventPrice
+    }
+    navigate(`/checkout/${'creation'}/${ids}`,{state:datascreate})
+   }
     return (
         <>
-            <tr>
+              <tr>
                 <th>{idx + 1}</th>
                 <td>
                     <p className="hover:text-primary">{item?.eventName}</p>
@@ -43,9 +51,14 @@ const MyEventRow = ({ item, idx }) => {
                 <td>{item?.venue}</td>
                 <td>{item?.status}</td>
                 <td>
-                    <button className={`btn text-white text-base bg-primary ${item?.status !== "unpaid" ? "btn-disabled" : "block"}`} > 
-                    Pay to Proceed
-                    </button>
+                    
+                        <button onClick={handlenavigate}
+                            className={`btn text-white text-base bg-primary ${item?.status !== "unpaid" ? "btn-disabled" : "block"}`}
+                            disabled={item?.status !== "unpaid"} // Disable button based on status
+                        >
+                            Pay to Proceed
+                        </button>
+                    
                 </td>
             </tr>
         </>
@@ -54,7 +67,8 @@ const MyEventRow = ({ item, idx }) => {
 
 MyEventRow.propTypes = {
     item: PropTypes.object,
-    idx: PropTypes.number
+    idx: PropTypes.number,
+    ids: PropTypes.string
 };
 
 export default MyEventRow;

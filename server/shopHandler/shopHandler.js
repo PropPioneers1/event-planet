@@ -22,9 +22,29 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/count", async (req, res) => {
+  try {
+    const count = await shopModel.countDocuments({});
+    res.status(200).json({ count });
+  } catch (err) {
+    res.status(500).json({
+      error: "There was a server-side error",
+    });
+  }
+});
 
-// get all cart items
 
+
+router.get("/trending/data", async (req, res) => {
+  try {
+    const result = await shopModel.find({ rating: { $gt: 4.5 } }).limit(12);
+    res.status(200).json({ result });
+  } catch (err) {
+    res.status(500).json({
+      error: "There was a server-side error",
+    });
+  }
+});
 router.get("/my-cart", async (req, res) => {
   try {
     const result = await shopCartModel.find({});
@@ -97,6 +117,7 @@ router.get("/details-shopCart/:id", async (req, res) => {
 // Post a shopItem
 router.post("/", async (req, res) => {
   try {
+    console.log("Request Body:", req.body);
     const newShopItem = new shopModel(req.body);
     await newShopItem.save();
     res.status(200).json({

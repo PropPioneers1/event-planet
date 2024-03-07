@@ -6,39 +6,47 @@ import { useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import MenuDropdown from "./MenuDropDown";
 import NotificationMessage from "../../../pages/NotificationMessage/NotificationMessage";
+import logo from "../../../assets/image/logo-1.png";
+import { FaShoppingCart } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
-  const { user } = useAuth();
+  const { user, logOut } = useAuth();
 
   const [isMenuTrue, setIsMenuTrue] = useState(false);
+
+  const cartProduct = useSelector((state) => state.cartProduct);
+
+  const navLinkStyles =
+    "font-semibold hover:text-white lg:text-white hover:bg-[#222831b3] py-2 px-5 rounded-[5px] w-36 lg:w-auto my-2 lg:my-auto";
 
   const navLinks = (
     <>
       <NavLink onClick={() => setIsMenuTrue(false)} to="/">
-        <li className="font-semibold hover:text-accent py-2 lg:py-5">Home</li>
+        <li className={navLinkStyles}>Home</li>
+      </NavLink>
+      <NavLink
+        onClick={() => setIsMenuTrue(false)}
+        to="/dashboard/profile"
+        className="block lg:hidden"
+      >
+        <li className={navLinkStyles}>Dashboard</li>
       </NavLink>
       <NavLink onClick={() => setIsMenuTrue(false)} to="/event">
-        <li className="font-semibold hover:text-accent py-2 lg:py-5">
-          All Event
-        </li>
+        <li className={navLinkStyles}>All Event</li>
       </NavLink>
 
       <NavLink onClick={() => setIsMenuTrue(false)} to="/blogs">
-        <li className="font-semibold hover:text-accent py-2 lg:py-5">Blog</li>
+        <li className={navLinkStyles}>Blog</li>
       </NavLink>
       <NavLink onClick={() => setIsMenuTrue(false)} to="/shopping">
-        <li className="font-semibold hover:text-accent py-2 lg:py-5">Shop</li>
+        <li className={navLinkStyles}>Shop</li>
       </NavLink>
       <NavLink onClick={() => setIsMenuTrue(false)} to="/about">
-        <li className="font-semibold hover:text-accent py-2 lg:py-5">About</li>
+        <li className={navLinkStyles}>About</li>
       </NavLink>
       <NavLink onClick={() => setIsMenuTrue(false)} to="/contact">
-        <li className="font-semibold hover:text-accent py-2 lg:py-5">
-          Contact Us
-        </li>
-      </NavLink>
-      <NavLink className="grid place-items-center">
-        <NotificationMessage></NotificationMessage>
+        <li className={navLinkStyles}>Contact Us</li>
       </NavLink>
     </>
   );
@@ -47,16 +55,43 @@ const Navbar = () => {
     <>
       {user ? (
         <>
-          <button>
+          <hr className="block lg:hidden" />
+          {user?.email && (
+            <>
+              <NavLink className="grid lg:place-items-center">
+                <NotificationMessage></NotificationMessage>
+              </NavLink>
+              <Link className="relative" to="/dashboard/my-cart">
+                <span
+                  className="absolute lg:-right-2 left-5 text-white -top-2 w-6 h-6 rounded-full
+                 bg-red-400 text-center
+                 flex justify-center items-center"
+                >
+                  {cartProduct}
+                </span>
+                <FaShoppingCart className="text-3xl text-center" />
+              </Link>
+            </>
+          )}
+          <button className="hidden lg:block">
             <MenuDropdown></MenuDropdown>
           </button>
+          <NavLink onClick={() => setIsMenuTrue(false)} to="signIn">
+            <button
+              className="font-semibold border-2 border-accent
+         rounded-md py-2 px-4 transition-all duration-500 ease-out hover:text-white hover:bg-accent block lg:hidden"
+              onClick={() => logOut()}
+            >
+              Logout
+            </button>
+          </NavLink>
         </>
       ) : (
         <>
-          <NavLink onClick={() => setIsMenuTrue(false)} to="/sign-in">
+          <NavLink onClick={() => setIsMenuTrue(false)} to="signIn">
             <button
               className="font-semibold border-2 border-accent
-         rounded-md py-2 px-4 transition-all duration-500 ease-out hover:bg-accent"
+         rounded-md py-2 px-4 transition-all duration-500 ease-out hover:bg-accent "
             >
               Sign in
             </button>
@@ -78,9 +113,9 @@ const Navbar = () => {
   return (
     <div className="">
       <div
-        className="bg-neutral lg:bg-secondary bg-opacity-100 
-       top-0 z-50  w-full py-4 lg:py-0
-      shadow-2xl
+        className="absolute bg-[#0000007d] bg-opacity-100 
+       top-0 z-50  w-full 
+      shadow-2xl py-3
       "
       >
         {/* Container */}
@@ -89,12 +124,12 @@ const Navbar = () => {
             {/* Logo */}
             <div>
               <Link to="/" className="text-2xl font-bold  ">
-                Event Planet
+                <img src={logo} className="w-40" alt="Event Planet" />
               </Link>
             </div>
 
             {/* navLinks for medium and large device */}
-            <ul className="lg:flex item-center gap-5 hidden text-lg">
+            <ul className="lg:flex items-center gap-1 hidden text-lg">
               {navLinks}
             </ul>
             {/* sign in && sign up ||  account for medium and large device*/}
@@ -103,12 +138,12 @@ const Navbar = () => {
             <div className="block lg:hidden">
               <SlMenu
                 onClick={() => setIsMenuTrue(true)}
-                className={`text-2xl font-bold cursor-pointer hover:text-accent 
+                className={`text-2xl text-white font-bold cursor-pointer hover:text-accent 
                 transition-all duration-300 ${isMenuTrue ? "hidden" : "block"}`}
               />
               <IoCloseOutline
                 onClick={() => setIsMenuTrue(false)}
-                className={`text-3xl  cursor-pointer hover:text-accent 
+                className={`text-3xl text-white  cursor-pointer hover:text-accent 
                 transition-all duration-300 ${isMenuTrue ? "block" : "hidden"}`}
               />
             </div>
@@ -123,7 +158,7 @@ const Navbar = () => {
         >
           {/* navLinks for mobile devices */}
           <ul className="pt-5">{navLinks}</ul>
-          <ul className="pb-5 flex flex-col gap-3">{authLinks}</ul>
+          <ul className="pb-0 lg:pb-5 flex flex-col gap-3">{authLinks}</ul>
         </div>
       </div>
     </div>

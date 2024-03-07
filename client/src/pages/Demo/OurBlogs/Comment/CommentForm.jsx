@@ -50,7 +50,7 @@ const CommentForm = ({ blogId, refetch }) => {
     >
       <textarea
         type="text"
-        placeholder="Search blogs..."
+        placeholder="Write a comment..."
         name="comment"
         className="max-h-14 min-h-14 border bg-neutral font-semibold outline-none py-3 px-4 flex-1 border-r-0"
       />

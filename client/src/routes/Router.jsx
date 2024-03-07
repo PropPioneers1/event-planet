@@ -3,11 +3,8 @@ import MainLayout from "../layouts/MainLayout";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Home from "../pages/Home/Home";
 import SignUp from "../pages/SignUp/SignUp";
-import SignIn from "../pages/SignIn/SignIn";
 import UpcomingDetails from "../pages/Home/HomeComponenets/UpComingEvent/UpcomingDetails";
 import AllEvent from "../pages/AllEvent/AllEvent";
-import Dashboard from "../layouts/Dashboard";
-import Profile from "../pages/Dashboard/Profile/Profile";
 import PaymentHistory from "../pages/Dashboard/Payment/PaymentHistory";
 import AddProduct from "../pages/Dashboard/AddProduct/AddProduct";
 import CreateBlog from "../pages/Dashboard/CreateBlog/CreateBlog";
@@ -23,7 +20,7 @@ import AdminSummary from "../pages/Dashboard/AdminSummary/AdminSummary";
 import CheckOut from "../pages/Home/HomeComponenets/UpComingEvent/CheckOut";
 import DetailsProduct from "../pages/Shopping/DetailsProduct/DetailsProduct";
 import EventRequests from "../pages/Dashboard/EventRequests/EventRequests";
-import PaymentSuccess from "../components/shared/PaymentPage/PaymentSuccess";
+
 import PaymentFaild from "../components/shared/PaymentPage/PaymentFaild";
 import OurBlogs from "../pages/Demo/OurBlogs/OurBlogs";
 import BlogDetails from "../pages/Demo/OurBlogs/BlogDetails/BlogDetails";
@@ -32,6 +29,16 @@ import About from "../pages/About/About";
 
 import MyEvents from "../pages/Dashboard/MyEvents/MyEvents";
 import ContactUs from "../pages/Contact/ContactUs";
+import ManageEvents from "../pages/Dashboard/ManageEvents/ManageEvents";
+import Tasks from "../pages/Dashboard/ManageEvents/Tasks/Tasks";
+import SignIn from "../pages/SignIn/SignIn";
+import DashboardDemo from "../pages/Demo/DashboardDemo/DashboardDemo";
+import MyProfile from "../pages/Demo/DashboardDemo/MyProfile/MyProfile";
+import Summary from "../pages/Dashboard/Summary/Summary";
+import TermsAndCondition from "../pages/SignIn/TermsAndCondition";
+import SuccessPayment from "../components/shared/PaymentPage/SuccessPayment";
+// import LogIn from "../pages/SignIn/LogIn";
+import PrivetRoute from "./PrivetRoute";
 
 const Router = createBrowserRouter([
   {
@@ -48,8 +55,12 @@ const Router = createBrowserRouter([
         element: <SignUp></SignUp>,
       },
       {
-        path: "sign-in",
+        path: "/signIn",
         element: <SignIn></SignIn>,
+      },
+      {
+        path:"termCondition",
+        element:<TermsAndCondition></TermsAndCondition>
       },
       {
         path: "blogs",
@@ -65,16 +76,16 @@ const Router = createBrowserRouter([
       },
 
       {
-        path: "/upcomingDetails/:id",
-        element: <UpcomingDetails></UpcomingDetails>,
+        path: "event/upcomingDetails/:id",
+        element: <PrivetRoute><UpcomingDetails></UpcomingDetails></PrivetRoute>,
       },
       {
-        path: "checkout",
+        path: "checkout/:from/:ids",
         element: <CheckOut></CheckOut>,
       },
       {
-        path: "payment/success/:tran_id",
-        element: <PaymentSuccess></PaymentSuccess>,
+        path: "payment/successful/:tranid",
+        element: <SuccessPayment></SuccessPayment>,
       },
       {
         path: "payment/failure/:tran_id",
@@ -83,7 +94,7 @@ const Router = createBrowserRouter([
 
       {
         path: "shopping",
-        element: <Shopping></Shopping>,
+        element:<Shopping></Shopping>,
       },
       {
         path: "details-shopCart/:id",
@@ -102,6 +113,10 @@ const Router = createBrowserRouter([
         element: <AllEvent></AllEvent>,
       },
       {
+        path: "categoryEvent/:category",
+        element: <AllEvent></AllEvent>,
+      },
+      {
         path: "about",
         element: <About></About>,
       },
@@ -114,11 +129,11 @@ const Router = createBrowserRouter([
 
   {
     path: "/dashboard",
-    element: <Dashboard></Dashboard>,
+    element: <DashboardDemo />,
     children: [
       {
         path: "profile",
-        element: <Profile></Profile>,
+        element: <MyProfile />,
       },
       {
         path: "add-product",
@@ -142,6 +157,10 @@ const Router = createBrowserRouter([
         element: <AdminSummary></AdminSummary>,
       },
       {
+        path: "summary",
+        element: <Summary></Summary>,
+      },
+      {
         path: "event-requests",
         element: <EventRequests></EventRequests>,
       },
@@ -156,6 +175,14 @@ const Router = createBrowserRouter([
       {
         path: "my-events",
         element: <MyEvents></MyEvents>,
+      },
+      {
+        path: "manage-events",
+        element: <ManageEvents></ManageEvents>,
+      },
+      {
+        path: "tasks/:id",
+        element: <Tasks></Tasks>,
       },
     ],
   },
