@@ -1,8 +1,9 @@
 import toast from "react-hot-toast";
-import useAuth from "../../../../hooks/useAuth";
-import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+
 import { PropTypes } from "prop-types";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const CommentForm = ({ blogId, refetch }) => {
   const { user } = useAuth();

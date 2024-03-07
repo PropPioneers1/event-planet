@@ -1,8 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "./../../../../hooks/useAxiosSecure";
-import Container from "../../../../components/ui/Container";
-import bannerImg from "../../../../assets/banner/banner-bg-6.jpg";
+import bannerImg from "../../../assets/banner/banner-bg-6.jpg";
 import { useState } from "react";
 import Comment from "../Comment/Comment";
 import CommentForm from "../Comment/CommentForm";
@@ -10,8 +8,10 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaEdit, FaRegBookmark } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import toast from "react-hot-toast";
-import { getDate } from "../../../../utils/getDate";
-import useAuth from "../../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAuth from "../../../hooks/useAuth";
+import { getDate } from "../../../utils/getDate";
+import Container from "../../../components/ui/Container";
 
 const BlogDetails = () => {
   const { id } = useParams();

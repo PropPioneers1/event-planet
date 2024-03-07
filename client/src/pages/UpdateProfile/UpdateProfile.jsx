@@ -26,8 +26,6 @@ const UpdateProfile = () => {
     },
   });
 
-  console.log(userData);
-
   const localImageUpload = (event) => {
     let imageLink = URL.createObjectURL(event.target.files[0]);
     setImagePreview(imageLink);
@@ -46,7 +44,6 @@ const UpdateProfile = () => {
     const address = form.address.value;
     const about = form.about.value;
 
-    console.log(about);
     // uploading image in imageBb
     const userImage = await uploadImage(image);
 
@@ -63,7 +60,7 @@ const UpdateProfile = () => {
 
     // saving user to database
     const result = await saveUser(userInfo);
-    console.log(result);
+
     if (result) {
       toast.success("Profile Updated");
       navigate("/dashboard/profile");

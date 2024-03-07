@@ -1,10 +1,10 @@
-import bannerImg from "../../../assets/banner/banner-bg-6.jpg";
-import Container from "../../../components/ui/Container";
+import bannerImg from "../../assets/banner/banner-bg-6.jpg";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "./../../../hooks/useAxiosSecure";
-import Blog from "./Blog/Blog";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Blog from "./Blog/Blog";
+import Container from "./../../components/ui/Container";
 
 const OurBlogs = () => {
   const axiosSecure = useAxiosSecure();

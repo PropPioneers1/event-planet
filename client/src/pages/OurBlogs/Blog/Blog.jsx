@@ -5,10 +5,10 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
-import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
-import { getDate } from "../../../../utils/getDate";
-import useAuth from "../../../../hooks/useAuth";
+import useAxiosSecure from "./../../../hooks/useAxiosSecure";
+import useAuth from "./../../../hooks/useAuth";
+import { getDate } from "./../../../utils/getDate";
 
 const Blog = ({ blog }) => {
   const [isOpen, setIsOpen] = useState(false);

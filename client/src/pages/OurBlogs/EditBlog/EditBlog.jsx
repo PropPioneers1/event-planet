@@ -3,11 +3,26 @@ import { uploadImage } from "../../../api/utlis";
 import axios from "axios";
 import toast from "react-hot-toast";
 import useAuth from "../../../hooks/useAuth";
+import { useParams } from "react-router-dom";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
-const CreateBlog = () => {
+const EditBlog = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [category, setCategory] = useState("");
   const { user } = useAuth();
+  const { id } = useParams();
+  const axiosSecure = useAxiosSecure();
+
+  const { data: myBlog } = useQuery({
+    queryKey: ["my-blogs"],
+    queryFn: async () => {
+      const res = await axiosSecure(`/blog/${id}`);
+      return res?.data;
+    },
+  });
+
+  console.log(myBlog);
 
   const getImageUrl = (event) => {
     console.log("working");
@@ -42,7 +57,10 @@ const CreateBlog = () => {
     console.log(blog);
 
     try {
-      const { data } = await axios.post("http://localhost:5000/blog", blog);
+      const { data } = await axios.put(
+        `http://localhost:5000/blog/${id}`,
+        blog
+      );
       toast.success(data?.message);
     } catch (error) {
       console.error(error);
@@ -137,7 +155,7 @@ const CreateBlog = () => {
               type="submit"
               className="btn w-full bg-primary text-white my-6"
             >
-              Post
+              Updated Blog
             </button>
           </div>
         </form>
@@ -146,4 +164,4 @@ const CreateBlog = () => {
   );
 };
 
-export default CreateBlog;
+export default EditBlog;

@@ -63,8 +63,7 @@ router.get("/allevents", async (req, res) => {
   }
 });
 
-
-router.get('/eventCount',async(req,res)=>{
+router.get("/eventCount", async (req, res) => {
   try {
     const eventCount = await eventModel.countDocuments({});
 
@@ -73,7 +72,7 @@ router.get('/eventCount',async(req,res)=>{
     console.log("Not Fount Block");
     res.status(500).json({ error: "internal server error" });
   }
-})
+});
 
 // Get a todo by ID
 router.get("/:id", async (req, res) => {
@@ -123,6 +122,7 @@ router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
   console.log(id, status);
+
   try {
     const updatedEvent = await eventModel.findByIdAndUpdate(
       { _id: id }, // Use id instead of ids

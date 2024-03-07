@@ -22,8 +22,6 @@ import DetailsProduct from "../pages/Shopping/DetailsProduct/DetailsProduct";
 import EventRequests from "../pages/Dashboard/EventRequests/EventRequests";
 
 import PaymentFaild from "../components/shared/PaymentPage/PaymentFaild";
-import OurBlogs from "../pages/Demo/OurBlogs/OurBlogs";
-import BlogDetails from "../pages/Demo/OurBlogs/BlogDetails/BlogDetails";
 import MyCart from "../pages/Dashboard/MyCart/MyCart";
 import About from "../pages/About/About";
 
@@ -32,13 +30,15 @@ import ContactUs from "../pages/Contact/ContactUs";
 import ManageEvents from "../pages/Dashboard/ManageEvents/ManageEvents";
 import Tasks from "../pages/Dashboard/ManageEvents/Tasks/Tasks";
 import SignIn from "../pages/SignIn/SignIn";
-import DashboardDemo from "../pages/Demo/DashboardDemo/DashboardDemo";
-import MyProfile from "../pages/Demo/DashboardDemo/MyProfile/MyProfile";
+import Dashboard from "../layouts/Dashboard";
 import Summary from "../pages/Dashboard/Summary/Summary";
 import TermsAndCondition from "../pages/SignIn/TermsAndCondition";
 import SuccessPayment from "../components/shared/PaymentPage/SuccessPayment";
-// import LogIn from "../pages/SignIn/LogIn";
 import PrivetRoute from "./PrivetRoute";
+import OurBlogs from "./../pages/OurBlogs/OurBlogs";
+import BlogDetails from "./../pages/OurBlogs/BlogDetails/BlogDetails";
+import MyProfile from "./../pages/Dashboard/Profile/Profile";
+import EditBlog from "../pages/OurBlogs/EditBlog/EditBlog";
 
 const Router = createBrowserRouter([
   {
@@ -51,16 +51,8 @@ const Router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "sign-up",
-        element: <SignUp></SignUp>,
-      },
-      {
-        path: "/signIn",
-        element: <SignIn></SignIn>,
-      },
-      {
-        path:"termCondition",
-        element:<TermsAndCondition></TermsAndCondition>
+        path: "termCondition",
+        element: <TermsAndCondition></TermsAndCondition>,
       },
       {
         path: "blogs",
@@ -77,7 +69,11 @@ const Router = createBrowserRouter([
 
       {
         path: "event/upcomingDetails/:id",
-        element: <PrivetRoute><UpcomingDetails></UpcomingDetails></PrivetRoute>,
+        element: (
+          <PrivetRoute>
+            <UpcomingDetails></UpcomingDetails>
+          </PrivetRoute>
+        ),
       },
       {
         path: "checkout/:from/:ids",
@@ -94,7 +90,7 @@ const Router = createBrowserRouter([
 
       {
         path: "shopping",
-        element:<Shopping></Shopping>,
+        element: <Shopping></Shopping>,
       },
       {
         path: "details-shopCart/:id",
@@ -129,7 +125,7 @@ const Router = createBrowserRouter([
 
   {
     path: "/dashboard",
-    element: <DashboardDemo />,
+    element: <Dashboard />,
     children: [
       {
         path: "profile",
@@ -169,6 +165,10 @@ const Router = createBrowserRouter([
         element: <UpdateProfile></UpdateProfile>,
       },
       {
+        path: "edit-blog/:id",
+        element: <EditBlog />,
+      },
+      {
         path: "my-cart",
         element: <MyCart></MyCart>,
       },
@@ -185,6 +185,14 @@ const Router = createBrowserRouter([
         element: <Tasks></Tasks>,
       },
     ],
+  },
+  {
+    path: "/signIn",
+    element: <SignIn />,
+  },
+  {
+    path: "sign-up",
+    element: <SignUp />,
   },
 ]);
 
