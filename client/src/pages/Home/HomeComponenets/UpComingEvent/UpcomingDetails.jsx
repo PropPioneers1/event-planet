@@ -19,7 +19,6 @@ import {
   LinkedinShareButton,
   LinkedinIcon,
 } from "react-share";
-import Footer from "../../../../components/shared/Footer";
 import "./upcoming.scss";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
@@ -30,6 +29,7 @@ import nullImage from "../../../../assets/image/user.png";
 import PostFeedback from "./PostFeedback";
 import ShowFeedback from "./ShowFeedback";
 import UpComingBanner from "./UpComingBanner";
+import Loader from "../../../../components/Loader/Loader";
 
 const UpcomingDetails = () => {
   const { user } = useAuth();
@@ -95,12 +95,7 @@ const handleNavigate=async()=>{
 navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
 }
 
-if(isPending) return <div className="flex flex-col gap-4 m-16">
-<div className="skeleton h-32 w-full"></div>
-<div className="skeleton h-4 w-28 md:w-40"></div>
-<div className="skeleton h-4 w-full"></div>
-<div className="skeleton h-4 w-full"></div>
-</div>
+if(isPending) return <Loader></Loader>
 
   return (
     <>
@@ -182,9 +177,9 @@ if(isPending) return <div className="flex flex-col gap-4 m-16">
                     {eventDetails?.description.length > 120 && (
                       <button
                         onClick={toggleDescription}
-                        className="text-primary font-semibold ml-2 underline"
+                        className="text-primary font-semibold ml-2 hover:underline"
                       >
-                        {showDescription ? "Collapse !" : "Learn More.."}
+                        {showDescription ? "Collapse !" : "Learn More..."}
                       </button>
                     )}
                   </div>
@@ -192,9 +187,11 @@ if(isPending) return <div className="flex flex-col gap-4 m-16">
                   {/* Register now */}
                   <div className="md:p-5 bg-white">
                     <div>
-                      <h2 className="font-medium text-2xl mb-4">
-                        Book Your Event👍
+                      <div>
+                      <h2 className="font-medium md:text-3xl text-2xl mb-4">
+                        Book Your Event
                       </h2>
+                      </div>
                       <div className="bg-white">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                           <div className="bg-white">
@@ -515,8 +512,6 @@ if(isPending) return <div className="flex flex-col gap-4 m-16">
           </div>
         </div>
       </Container>
-      {/* footer */}
-      <Footer></Footer>
     </>
   );
 };

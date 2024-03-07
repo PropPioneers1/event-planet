@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { uploadImage } from "../../../../api/utlis";
 import { useQuery } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 
 const PostFeedback = ({title,image,id,feedbackTitle}) => {
     const {user} = useAuth();
@@ -30,7 +31,6 @@ const PostFeedback = ({title,image,id,feedbackTitle}) => {
   const ratingChanged = (newRating) => {
     setRating(newRating);
   };
-
   // gat date
   const currentDate = new Date();
   const options = { year: "numeric", month: "2-digit", day: "2-digit" };
@@ -58,7 +58,11 @@ const PostFeedback = ({title,image,id,feedbackTitle}) => {
     const result = await axiosSecure.post("/feedback", usersFeedBack);
     if (result?.status === 200) {
       refetch();
-      toast.success("Thanks For Your Feedback");
+      Swal.fire({
+        title: `Thanks For Your Feedback`,
+        icon: "success",
+      });
+    
     }
   };
 
@@ -69,7 +73,6 @@ const PostFeedback = ({title,image,id,feedbackTitle}) => {
       return res?.data?.result;
     },
   });
-  // console.log(feedbackData)
     return (
         <div className="py-6 mb-6 border-t border-b border-gray-200 dark:border-gray-700">
                 {/* modal review */}
@@ -175,11 +178,15 @@ const PostFeedback = ({title,image,id,feedbackTitle}) => {
                         {/* todo: */}
                         <form onSubmit={handleUsersFeedBack}>
                           <div className="flex justify-center my-3 -z-0">
-                            <ReactStars
-                              onChange={ratingChanged}
+                            {
+                              rating ? <ReactStars
+                              // onChange={ratingChanged}
+                              edit={false}
                               size={36}
-                              activeColor="#e0218a"
-                            />
+                              count={rating}
+                              color="#fe019a"
+                            />: "Loading.."
+                            }
                           </div>
                           <div>
                             <label className="form-control w-full mb-5">

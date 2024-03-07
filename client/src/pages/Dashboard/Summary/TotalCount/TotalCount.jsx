@@ -65,7 +65,6 @@ const { data: totalTicket, isError: ticketError, isLoading: ticketLoading } = us
       }]
     },
   
-  
   });
 
 

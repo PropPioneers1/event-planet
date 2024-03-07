@@ -11,7 +11,6 @@ import Feedback from "../../../Shopping/DetailsProduct/Feedback/Feedback";
 const ShowFeedback = ({title,id}) => {
     const axiosSecure = useAxiosSecure();
     const [showFeedBack,setShowFeedback] = useState(false)
-    console.log(showFeedBack)
     // get feedback
   const { data: feedbackData,isPending,refetch } = useQuery({
     queryKey: ["feedbackData"],
@@ -33,11 +32,9 @@ const { data: progressData} = useQuery({
         return res?.data?.result;
         
       }
-      // Return null or empty array if title is not defined or falsy
       return null;
     },
   });
-//   console.log("get data->",progressData)
   // calculate total rating the specific product 
 
 const [totalRatingStars, setTotalRatingStars] = useState(0);
@@ -52,13 +49,10 @@ const calculateTotalRatingStars = () => {
         setTotalRatingStars(0);
         return;
     }
-
     const totalStars = feedbackData.reduce((sum, feedback) => sum + feedback.rating, 0);
     setTotalRatingStars(totalStars);
 };
 const averageStar = (totalRatingStars / feedbackData?.length).toFixed(1);
-const totalStr = (totalRatingStars / feedbackData?.length);
-console.log(" star",totalStr)
 if(isPending) return <div className="flex flex-col gap-4 w-52 mt-5">
 <div className="flex gap-4 items-center">
   <div className="skeleton w-16 h-16 rounded-full shrink-0"></div>
