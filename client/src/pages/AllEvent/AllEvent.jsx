@@ -35,8 +35,6 @@ const AllEvent = () => {
   const [venues, setVenues] = useState("");
   // const [setDivision] = useState("");
 
-  console.log(category);
-
   // handle state change
   const handleStateChange = (selectedState) => {
     setState(selectedState);

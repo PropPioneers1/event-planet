@@ -10,27 +10,6 @@ import UsersCountChart from "./UsersCountChart/UsersCountChart";
 
 const Summary = () => {
 
-    // const axiosSecure = useAxiosSecure(); 
-
-    // const {user} = useAuth();
-
-    // const { data: eventData, isPending } = useQuery({
-    //     queryKey: ["feedbackData"],
-    //     queryFn: async () => {
-    //         const res = await axiosSecure.get("/event/allevents");
-    //         return res?.data?.result;
-    //     },
-    // });
-    // // console.log(eventData)
-
-    // if (isPending) {
-    //     return <Loader></Loader>
-    // }
-
-    // const filteredEventData = eventData?.filter(item => item?.email === user?.email);
-    // console.log(filteredEventData);
-
-
     return (
 
         <div className="mx-auto mb-6 lg:w-[75%] xl:w-[80%] 2xl:w-[85%]">
