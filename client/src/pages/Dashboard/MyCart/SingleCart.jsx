@@ -1,24 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  decrementProduct,
+  incrementProduct,
+} from "../../../redux/actions/actions";
 
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
-const SingleCart = ({ cart, setPriceCount, priceCount }) => {
-  const [quantity, setQuantity] = useState(0);
+const SingleCart = ({ cart, refetch, updatePriceCount }) => {
   const axiosSecure = useAxiosSecure();
-  const {user}=useAuth();
+  const { user } = useAuth();
+  const [quantity, setQuantity] = useState(cart?.quantity || 1);
+  const [totalPrice, setTotalPrice] = useState(cart.price * quantity);
 
-  // eslint-disable-next-line no-unused-vars
-  const { data: singleCart = [], refetch } = useQuery({
-    queryKey: ["singleCarts"],
-    queryFn: async () => {
-      const res = await axiosSecure.get(`/shop/my-cart/${user?.email}`);
-      return res.data.result;
-    },
-  });
+  // redux
+  const cartProduct = useSelector((state) => state.cartProduct);
+  const dispatch = useDispatch();
+
+  // Update local storage when cartProduct changes
+  useEffect(() => {
+    localStorage.setItem("cartProduct", JSON.stringify(cartProduct));
+  }, [cartProduct]);
+
+  useEffect(() => {
+    setTotalPrice(cart.price * quantity);
+  }, [cart.price, quantity]);
+
+  // useEffect(() => {
+  //   setProductId(cart?._id);
+  // }, [cart?.title, setProductId]);
 
   const handleRemove = (cart) => {
     Swal.fire({
@@ -31,28 +44,47 @@ const SingleCart = ({ cart, setPriceCount, priceCount }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/shop/my-cart/${user?.email}/${cart._id}`)
-        .then((res) => {
-          if (res.data.deletedCount > 0) {
+        axiosSecure
+          .delete(`/shop/my-cart/${user?.email}/${cart._id}`)
+          .then((res) => {
             refetch();
-            Swal.fire({
-              title: "Deleted!",
-              text: "Product is delete",
-              icon: "success",
-            });
-          }
-        });
+            if (res.data.deletedCount > 0) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Product is delete",
+                icon: "success",
+              });
+            }
+            dispatch(decrementProduct(quantity));
+          });
       }
     });
   };
 
-
   const increaseQuantity = () => {
-    setQuantity(quantity + 1);
-    setPriceCount((prevPriceCount) => prevPriceCount + quantity * cart?.price);
+    const increasedQuantity = quantity + 1;
+    setQuantity(increasedQuantity);
+    dispatch(incrementProduct(increasedQuantity));
+
+    const priceChange = cart.price * 1;
+    updatePriceCount((prevPriceCount) => prevPriceCount + priceChange);
+
+    updateTotalPrice(increasedQuantity);
   };
+
+  const updateTotalPrice = (updatedQuantity) => {
+    setTotalPrice((cart.price || 5) * updatedQuantity);
+  };
+
   const decreaseQuantity = () => {
-    if (quantity > 0) setQuantity(quantity - 1);
+    const increasedQuantity = quantity - 1;
+    setQuantity(increasedQuantity);
+    dispatch(decrementProduct(quantity - increasedQuantity));
+
+    const priceChange = cart.price * 1;
+    updatePriceCount((prevPriceCount) => prevPriceCount - priceChange);
+
+    updateTotalPrice(increasedQuantity);
   };
   return (
     <div className="relative flex flex-wrap items-center pb-8 mb-8 -mx-4 border-b border-gray-200 dark:border-gray-500 xl:justify-between border-opacity-40">
@@ -61,12 +93,10 @@ const SingleCart = ({ cart, setPriceCount, priceCount }) => {
       </div>
 
       <div className="w-full px-4 mb-6 md:w-96 xl:mb-0">
-        <a
-          className="block mb-5 text-xl font-medium dark:text-gray-400 hover:underline"
-          href="#"
-        >
+        <p className="block mb-5 text-xl font-medium dark:text-gray-400 ">
+          {" "}
           {cart?.title}
-        </a>
+        </p>
       </div>
       <div className="w-full px-4 mt-6 mb-6 xl:w-auto xl:mb-0 xl:mt-0">
         <div className="flex items-center">
@@ -118,12 +148,11 @@ const SingleCart = ({ cart, setPriceCount, priceCount }) => {
         <span className="text-xl font-medium text-pink-500 dark:text-blue-400">
           <span className="text-sm">$</span>
 
-          <span>{cart?.price * quantity}</span>
+          <span>{totalPrice.toFixed(2)}</span>
         </span>
       </div>
     </div>
   );
 };
-
 
 export default SingleCart;

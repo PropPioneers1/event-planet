@@ -20,41 +20,46 @@ const paymenthandler = require("./paymentHandler/PaymentHandler");
 // const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
 
 // const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
-// const usersHandler = require("./usersHandler/usersHandler");
+const usersHandler = require("./usersHandler/usersHandler");
 const LikesCommentsHandler = require("./LikesCommentsHandler/LikesCommentsHandler");
 const ContactHandler = require("./ContactHnadler/Contacthandler");
 const notificationHandler = require("./NotificationTokenHandler/NotificationTokenHandler");
-const usersHandler = require("./usersHandler/usersHandler");
 const messageHandler = require("./MessageHandler/MessageHandler");
 const likeDislikeHandler = require("./FeedbackHandler/likeDislikeHandler");
+const Pymentticket = require("./Pymentticket/Paymentticket.js");
+const Productpay = require("./Productpayment/Productpay.js");
+const EventTaskHandler = require("./EventTaskHandler/EventTaskHandler.js");
+const eventTodoHandler = require("./EventToDoHandler/EventToDoHandler");
 // middleware
 app.use(cors());
 app.use(bodyParser.json());
 
 // console.log(object);
-const dbURI = `mongodb+srv://EventPlanet:6oNbcueawJevcwOk
+const dbURI = `mongodb+srv://${process.env.USER_NAME}:${process.env.USER_PASS}
 @proppioneers.pzy67in.mongodb.net/Event-Planet`;
 // Mongodb connection
+
 mongoose
   .connect(dbURI)
-  .then(() => console.log("MongoDB connected..."))
-  .catch((err) => console.error("Error connecting to MongoDB:", err));
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((error) => {
+    console.error("Error connecting to MongoDB:", error);
+  });
 
 // routes
 app.get("/", (req, res) => {
-  res.send("Your are in Event Planet serversite");
+  res.send("Your are in Event Planet server site");
 });
 app.use("/shop", shopHandler);
 app.use("/qna", QnaHandler);
 app.use("/selectedthm", selecthemeHandler);
 app.use("/blog", blogHandler);
-
 app.use("/event", eventHandler);
 app.use("/upcomingDetails", upComingDetailHandler);
 app.use("/payment", paymenthandler);
 app.use("/feedback", feedbackHandler);
-// send confirmation mail if the user successfully booking a event
-
 app.get("/sendEmail", sendMail);
 app.use("/token", notificationHandler);
 app.use("/users", usersHandler);
@@ -63,9 +68,13 @@ app.use("/contact", ContactHandler);
 app.get("/sendEmail", sendMail);
 app.use("/token", notificationHandler);
 app.use("/message", messageHandler);
-app.use("/likeDislike",likeDislikeHandler);
+app.use("/likeDislike", likeDislikeHandler);
+app.use("/ticketpay", Pymentticket);
+app.use("/productpay", Productpay);
+app.use("/eventTask", EventTaskHandler);
+app.use("/eventTodo", eventTodoHandler);
 
-// Eroor handler
+// Error handler
 
 // _________________________________________________
 // incorrect url error

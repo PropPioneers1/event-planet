@@ -10,8 +10,9 @@ router.get("/", async (req, res) => {
   const eventCategory = req.query.category;
   const eventState = req.query.state;
   const eventCity = req.query.city;
+  const eventVenue = req.query.venue;
   const email = req.query.email;
-  const status = req.query.status
+  const status = req.query.status;
 
   const page = parseInt(req.query.page);
   const limit = 8;
@@ -19,7 +20,7 @@ router.get("/", async (req, res) => {
   let query = {};
 
   if (eventTitle) {
-    query.eventName = eventTitle;
+    query.eventName = { $regex: new RegExp(eventTitle, "i") };
   }
   if (eventCategory) {
     query.category = eventCategory;
@@ -30,19 +31,43 @@ router.get("/", async (req, res) => {
   if (eventCity) {
     query.city = eventCity;
   }
-  if(email){
+  if (eventVenue) {
+    query.venue = eventCity;
+  }
+
+  if (email) {
     query.email = email;
   }
-  if(status){
+  if (status) {
     query.status = status;
   }
-  
 
   try {
     const eventCount = await eventModel.countDocuments(query);
     const result = await eventModel.find(query).skip(skip).limit(limit);
 
     res.status(200).send({ eventCount, events: result });
+  } catch (error) {
+    console.log("Not Fount Block");
+    res.status(500).json({ error: "internal server error" });
+  }
+});
+router.get("/allevents", async (req, res) => {
+  try {
+    const result = await eventModel.find({});
+    res.status(200).json({ result });
+  } catch (err) {
+    res.status(500).json({
+      error: "There was a server-side error",
+    });
+  }
+});
+
+router.get("/eventCount", async (req, res) => {
+  try {
+    const eventCount = await eventModel.countDocuments({});
+
+    res.status(200).send({ eventCount });
   } catch (error) {
     console.log("Not Fount Block");
     res.status(500).json({ error: "internal server error" });
@@ -62,16 +87,25 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// Post a todo
-// router.post("/", async (req, res) => {
-//   const newevent = new Event(req.body);
-//   try {
-//     await  newevent.save();
-//     res.status(201).json({ message: "inserted successfully" });
-//   } catch (error) {
-//     res.status(500).json({ error: " Server Error" });
-//   }
-// });
+router.get("/data/:ids", async (req, res) => {
+  try {
+    const { ids } = req.params;
+    if (!ids) {
+      return res.status(400).json({ error: "Missing email or ids" });
+    }
+    const idsArray = ids.split(",");
+
+    const result = await eventModel.find({ _id: { $in: idsArray } });
+
+    // Send the result
+    res.status(200).send(result);
+  } catch (error) {
+    // Handle errors
+    console.error("Error fetching events:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 router.post("/", async (req, res) => {
   try {
     const newEvent = await eventModel.create(req.body);
@@ -82,30 +116,24 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Post multiple todos
-router.post("/all", async (req, res) => {});
-
-// Put todo
-router.put("/:id", (req, res) => {});
-
 // Patch todo
-router.patch("/:id", async (req, res) => {
+// Patch todo
+router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const updateStatus = req.body;
+  const { status } = req.body;
 
   try {
-    // Find the document by ID and update the specified property
     const updatedEvent = await eventModel.findByIdAndUpdate(
-      id,
-      { $set: { status: updateStatus.status } }, // Use $set operator to update a specific property
-      { new: true } // Return the updated document
+      { _id: id }, // Use id instead of ids
+      { $set: { status } },
+      { new: true }
     );
 
     if (!updatedEvent) {
       return res.status(404).json({ error: "Event not found" });
     }
 
-    res.status(200).json(updatedEvent);
+    res.status(200).json({ message: "updated successfully", updatedEvent });
   } catch (error) {
     console.error("Error updating event:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -113,7 +141,28 @@ router.patch("/:id", async (req, res) => {
 });
 
 // update many todo
-router.put("/new/:title", (req, res) => {});
+// Patch ticket left for an event
+// router.patch("/ticketleft/:id", async (req, res) => {
+//   const { ids } = req.params;
+//   const { ticketLeft } = req.body;
+
+//   try {
+//     const updatedEvent = await eventModel.findByIdAndUpdate(
+//       ids ,
+//       { $set: { ticketleft: ticketLeft } },
+//       { new: true }
+//     );
+
+//     if (!updatedEvent) {
+//       return res.status(404).json({ error: "Event not found" });
+//     }
+
+//     res.status(200).json({ message: "Ticket left updated successfully", event: updatedEvent });
+//   } catch (error) {
+//     console.error("Error updating ticket left:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
 
 // Delete todo
 router.delete("/:id", async (req, res) => {

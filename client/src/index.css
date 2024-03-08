@@ -4,3 +4,18 @@
 @tailwind components;
 @tailwind utilities;
 
+ul a.active li {
+    background-image: linear-gradient(30deg, #2b4d77 , #121e2d);
+    color: white;
+}
+
+.dashboard-route a.active {
+    background-image: linear-gradient(30deg, #3F72AF , #1c324e);
+    box-shadow: 3px 2px 3px 0px #3F72AF;
+}
+
+.dashboard-route a.active li {
+    background-image: none
+    
+}
+

@@ -1,14 +1,15 @@
 /* eslint-disable react/prop-types */
-import useAuth from "../../../../hooks/useAuth";
+// import useAuth from "../../../../hooks/useAuth";
 import ReactStars from "react-rating-stars-component";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useState } from "react";
-
+import nullImage from '../../../../assets/image/user.png'
 
 // eslint-disable-next-line react/prop-types
-const Feedback = ({feedback,refetch}) => {
-    const {_id,user_name,rating,date,user_opinion,yes,user_image} = feedback;
-    const { user } = useAuth();
+const Feedback = ({feedback,refetch,isPanding}) => {
+    const {_id,name,rating,date,user_opinion,yes,user_image,image} = feedback;
+    console.log(user_image)
+    // const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const [like,setDisLike] = useState();
 
@@ -26,13 +27,15 @@ const Feedback = ({feedback,refetch}) => {
         }
     };
     return (
-        <div className="">
+        <div className="border-b pb-5 border-slate-300">
             <div className=" flex items-center gap-3 mb-5 mt-14">
                 <div className="flex  items-center gap-4">
-                    <img src={user?.photoURL} className="rounded-full w-12" alt="" />
-                    <h3 className=" font-semibold">{user?.displayName}</h3>
+                    {
+                        image ? <><img src={image} className="rounded-full w-12" alt="" /></> : <><img src={nullImage} className="rounded-full w-12" alt="" /></>
+                    }
+                    <h3 className=" font-semibold">{name}</h3>
                 </div>
-                <div><h2 className="font-semibold text-lg">{user_name}</h2></div>
+               
             </div>
             <div className=" flex items-center gap-3 mb-2">
                 <div>
@@ -51,12 +54,14 @@ const Feedback = ({feedback,refetch}) => {
             </div>
                 {
                 user_image ? (
-                    <div className="mt-2 py-2">
+                    <>
+                    {isPanding ? "loading..":<div className="mt-2 py-2">
                         <img src={user_image} alt="" className="w-28 rounded" />
-                    </div>
+                    </div>}
+                    </>
                 ) : (
-                    <div className="hidden">
-                        <img src={user_image} alt="" className="" />
+                    <div className="">
+                        Product Image Not Available ☹ 
                     </div>
                 )
                 }

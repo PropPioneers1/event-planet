@@ -3,13 +3,11 @@ import HomeBanner from "./HomeComponenets/HomeBanner/HomeBanner";
 import Trendingproducts from "./HomeComponenets/trending/Trendingproducts";
 import WhyChoose from "./HomeComponenets/WhyChooseEventPlanet/WhyChoose";
 // import HotDeals from "./HomeComponenets/HotDeals/HotDeals";
-import Footer from "../../components/shared/Footer";
 
-import TestMonial from "./HomeComponenets/Testmonial/Testmonial";
+// import TestMonial from "./HomeComponenets/Testmonial/Testmonial";
 // import TestPlaner from "./HomeComponenets/Event-Planer/TestPlaner";
 import Categories from "./HomeComponenets/Categories/Categories";
 // import Chat from "./HomeComponenets/ChatBot/ChatBot";
-
 
 import Notification from "../Notification/Notification";
 
@@ -19,10 +17,9 @@ import OurEventPlaners from "./HomeComponenets/OurEventPlaner/OurEventPlaner";
 import OurGallery from "./HomeComponenets/OurGallery/OurGallery";
 import OurBlog from "./HomeComponenets/OurBlog/OurBlog";
 import MessangerChat from "./HomeComponenets/ChatBot/MessangerChat";
-
+import TestMonial from "./HomeComponenets/Testmonial/Testmonial";
 
 const Home = () => {
-
   return (
     <div>
       {/* made by BRCShakil */}
@@ -57,15 +54,11 @@ const Home = () => {
       <div className="md:py-28 py-20">
         <TestMonial></TestMonial>
       </div>
-      {/* <HotDeals></HotDeals> */}
       {/* Our Event Planer */}
-      <div className="md:pb-28 pb:20">
-        {/* <TestPlaner></TestPlaner> */}
+      <div className="md:pb-28 pb-20">
         <OurEventPlaners />
       </div>
       {/* made by Rifat */}
-      <Footer></Footer>
-      {/* <Chat></Chat> */}
       <MessangerChat></MessangerChat>
       <Notification></Notification>
     </div>

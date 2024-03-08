@@ -76,22 +76,22 @@ function Ourteam() {
   <img src={teamData[activeSlide].image} className="  md:hidden block 
   w-44 h-44 mx-auto mb-4 object-cover" alt="" />
 </div>
-              <div className="member-details">
-                <div className="flex">
+              <div className="member-details mx-auto text-center md:text-left">
+                <div className="">
                   <div>
-                    <h2><span className="font-bold">{teamData[activeSlide].name} </span>
+                    <h2><span className="font-bold mx-auto text-center md:text-left">{teamData[activeSlide].name} </span>
                     <span className="text-primary">||  {teamData[activeSlide].professional}</span> </h2>
                   </div>
                 </div>
                 <p>Category: <span className="text-accent">{teamData[activeSlide].category}</span></p>
                 <p>Speciality: <span className="text-accent">{teamData[activeSlide].speciality}</span></p>
-               <div className="flex gap-3 p-2">
+               <div className="flex justify-center align-middle md:justify-start items-center gap-3 p-2">
                 <FaFacebook></FaFacebook>
                 <FaInstagram></FaInstagram>
                 <FaWhatsapp></FaWhatsapp>
                </div>
                
-                 <div className="w-[300px] pl-5 lg:w-[600px]  pt-4">
+               <div className="w-[300px] pl-5 lg:w-[600px]   pt-4">
             <Slider {...settings}>
               {teamData.map((member, index) => (
                 <div key={index} onClick={() => handleImageClick(index)} className="">
@@ -110,9 +110,9 @@ function Ourteam() {
               </div>
             </div>
 
- <div className="">
-  <img src={teamData[activeSlide].image} className="hidden md:block 
-  md:h-64 lg:h-96 md:w-44 md:mt-44 lg:mt-[4.9rem] lg:w-72 mb-0 object-cover" alt="" />
+ <div className=" ">
+  <img src={teamData[activeSlide].image} className="hidden md:flex 
+  md:h-64 lg:h-96 md:w-44 md:mt-44 lg:mt-[4.7rem] lg:w-full mb-0 object-cover" alt="" />
 </div>
 
             

@@ -11,15 +11,22 @@ import Feedback from "./Feedback/Feedback";
 import Progress from "./Progress/Progress";
 import { uploadImage } from "../../../api/utlis";
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { incrementProduct } from "./../../../redux/actions/actions";
+import Loader from "../../../components/Loader/Loader";
+
 const DetailsProduct = () => {
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const { user } = useAuth();
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [textCount, setTextCount] = useState(0);
   const [rating, setRating] = useState();
   const [userOpinion, setUserOpinion] = useState();
   // const [userImage, setUSerImage] = useState();
+
+  const cartProduct = useSelector((state) => state.cartProduct);
+  const dispatch = useDispatch();
 
   const handleIncreaseQuantity = () => {
     setQuantity(quantity + 1);
@@ -31,7 +38,12 @@ const DetailsProduct = () => {
     }
   };
 
-  const { data: productDetails, isLoading, isError } = useQuery({
+  // Update local storage when cartProduct changes
+  useEffect(() => {
+    localStorage.setItem("cartProduct", JSON.stringify(cartProduct));
+  }, [cartProduct]);
+
+  const { data: productDetails, isPending } = useQuery({
     queryKey: ["productDetails"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/shop/details-shopCart/${id}`);
@@ -45,18 +57,20 @@ const DetailsProduct = () => {
     },
   });
 
-  const { title, image, description, price } = productDetails ? productDetails.result || {} : {};
-
+  const { title, image, description, price } = productDetails
+    ? productDetails.result || {}
+    : {};
 
   const handleAddToCart = (productDetails) => {
     if (user) {
-      const { _id, image, title, price } =  productDetails.result;
+      const { _id, image, title, price } = productDetails.result;
 
       const cartItem = {
         email: user.email,
         image,
         title,
         price,
+        quantity: quantity ? quantity : 1,
       };
       axiosSecure.post(`/shop/shopCart/${_id}`, cartItem).then((res) => {
         if (res.data) {
@@ -64,6 +78,7 @@ const DetailsProduct = () => {
             title: `${title} added to your cart`,
             icon: "success",
           });
+          dispatch(incrementProduct(quantity));
         }
       });
     } else {
@@ -74,8 +89,6 @@ const DetailsProduct = () => {
       });
     }
   };
-
- 
 
   // handle text count
   const handleTextCount = (e) => {
@@ -101,10 +114,10 @@ const DetailsProduct = () => {
     e.preventDefault();
     const form = e.target;
     const imagebb = form.image.files[0];
-    const {data} = await uploadImage(imagebb);
-    console.log("image",data)
+    const { data } = await uploadImage(imagebb);
+    console.log("image", data);
     const usersFeedBack = {
-      id:id,
+      id: id,
       email: user?.email,
       name: user?.displayName,
       product_name: title,
@@ -113,158 +126,78 @@ const DetailsProduct = () => {
       user_opinion: userOpinion,
       rating: rating,
       date: formattedDate,
-      yes:0,
-      no:0
+      yes: 0,
+      no: 0,
     };
     // post feed back
     const result = await axiosSecure.post("/feedback", usersFeedBack);
     if (result?.status === 200) {
-      refetch()
+      refetch();
       toast.success("Thanks For Your Feedback");
     }
-    console.log("post feedback",result)
+    console.log("post feedback", result);
   };
-// get feedback
-  const { data: feedbackData,refetch } = useQuery({
-  queryKey: ["feedbackData"],
-  queryFn: async () => {
-    const res = await axiosSecure.get(`/feedback/${id}`);
-    return res?.data?.result;
-    
-  },
-});
-
-const { data: progressData } = useQuery({
-  queryKey: ["progressData"],
-  queryFn: async () => {
-    if (title) {
-      const res = await axiosSecure.get(`/feedback/${title}/${id}`);
+  // get feedback
+  const { data: feedbackData, refetch } = useQuery({
+    queryKey: ["feedbackData"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/feedback/${id}`);
       return res?.data?.result;
-      
-    }
-    // Return null or empty array if title is not defined or falsy
-    return null;
-  },
-});
+    },
+  });
 
-console.log("get data->",progressData)
-console.log("get data>",title)
+  const { data: progressData } = useQuery({
+    queryKey: ["progressData"],
+    queryFn: async () => {
+      if (title) {
+        const res = await axiosSecure.get(`/feedback/${title}/${id}`);
+        return res?.data?.result;
+      }
+      // Return null or empty array if title is not defined or falsy
+      return null;
+    },
+  });
 
-// calculate total rating the specific product 
+  console.log("get data->", progressData);
+  console.log("get data>", title);
 
-const [totalRatingStars, setTotalRatingStars] = useState(0);
-useEffect(() => {
+  // calculate total rating the specific product
+
+  const [totalRatingStars, setTotalRatingStars] = useState(0);
+  useEffect(() => {
     calculateTotalRatingStars();
-}, [feedbackData]);
+  }, [feedbackData]);
 
-const calculateTotalRatingStars = () => {
+  const calculateTotalRatingStars = () => {
     if (!feedbackData || !feedbackData.length) {
-        // If feedbackData is not available or empty, set totalRatingStars to 0
-        setTotalRatingStars(0);
-        return;
+      // If feedbackData is not available or empty, set totalRatingStars to 0
+      setTotalRatingStars(0);
+      return;
     }
 
-    const totalStars = feedbackData.reduce((sum, feedback) => sum + feedback.rating, 0);
+    const totalStars = feedbackData.reduce(
+      (sum, feedback) => sum + feedback.rating,
+      0
+    );
     setTotalRatingStars(totalStars);
-};
-const averageStar = (totalRatingStars / feedbackData?.length).toFixed(1);
+  };
+  const averageStar = (totalRatingStars / feedbackData?.length).toFixed(1);
 
- if(isLoading) return <span className="loading loading-infinity loading-lg"></span>
- if(isError) return <div>loading..</div>
+  if (isPending) return <Loader />;
   return (
-    
     <section className="py-10 mt-14 font-poppins dark:bg-gray-800">
       <div className="max-w-6xl px-4 mx-auto">
         <div className="flex flex-wrap mb-24 -mx-4">
           <div className="w-full px-4 mb-8 md:w-1/2 md:mb-0">
             <div className="sticky top-0 overflow-hidden ">
               <div className="relative mb-6 lg:mb-10 lg:h-96">
-                <a
-                  className="absolute left-0 transform lg:ml-2 top-1/2 translate-1/2"
-                  href="#"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    className="w-5 h-5 text-blue-500 bi bi-chevron-left dark:text-blue-200"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"></path>
-                  </svg>
-                </a>
                 <img
                   className="object-contain w-full lg:h-full"
                   src={image}
                   alt=""
                 />
-                <a
-                  className="absolute right-0 transform lg:mr-2 top-1/2 translate-1/2"
-                  href="#"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    className="w-5 h-5 text-blue-500 bi bi-chevron-right dark:text-blue-200"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
-                  </svg>
-                </a>
               </div>
-              <div className="flex-wrap hidden -mx-2 md:flex">
-                <div className="w-1/2 p-2 sm:w-1/4">
-                  <a
-                    className="block border border-gray-200 hover:border-pink-400 dark:border-gray-700 dark:hover:border-blue-300"
-                    href="#"
-                  >
-                    <img
-                      className="object-contain w-full lg:h-28"
-                      src={image}
-                      alt=""
-                    />
-                  </a>
-                </div>
-                <div className="w-1/2 p-2 sm:w-1/4">
-                  <a
-                    className="block border border-gray-200 hover:border-pink-400 dark:border-gray-700 dark:hover:border-blue-300"
-                    href="#"
-                  >
-                    <img
-                      className="object-contain w-full lg:h-28"
-                      src={image}
-                      alt=""
-                    />
-                  </a>
-                </div>
-                <div className="w-1/2 p-2 sm:w-1/4">
-                  <a
-                    className="block border border-gray-200 hover:border-pink-400 dark:border-gray-700 dark:hover:border-blue-300"
-                    href="#"
-                  >
-                    <img
-                      className="object-contain w-full lg:h-28"
-                      src={image}
-                      alt=""
-                    />
-                  </a>
-                </div>
-                <div className="w-1/2 p-2 sm:w-1/4">
-                  <a
-                    className="block border border-gray-200 hover:border-pink-400 dark:border-gray-700 dark:hover:border-blue-300"
-                    href="#"
-                  >
-                    <img
-                      className="object-contain w-full lg:h-28"
-                      src={image}
-                      alt=""
-                    />
-                  </a>
-                </div>
-              </div>
+
               {/* left side end  */}
               {/* Show All users feedback here */}
               <div>
@@ -312,7 +245,10 @@ const averageStar = (totalRatingStars / feedbackData?.length).toFixed(1);
                 {/* todo: */}
                 <div className="grid grid-cols-8 gap-5">
                   <div className="col-span-2 text-center">
-                    <h2 className="text-5xl font-semibold mb-2"> {averageStar} </h2>
+                    <h2 className="text-5xl font-semibold mb-2">
+                      {" "}
+                      {averageStar}{" "}
+                    </h2>
                     <div className="flex justify-center">
                       <ReactStars
                         edit={false}
@@ -323,11 +259,10 @@ const averageStar = (totalRatingStars / feedbackData?.length).toFixed(1);
                       />
                     </div>
                     {totalRatingStars > 1000 ? (
-                    <p>{totalRatingStars / 1000}k Rating Star</p>
+                      <p>{totalRatingStars / 1000}k Rating Star</p>
                     ) : (
-                        <p>{totalRatingStars} Rating Star</p>
+                      <p>{totalRatingStars} Rating Star</p>
                     )}
-                    
                   </div>
                   <div className="col-span-1 text-center">
                     <div>1</div>
@@ -337,7 +272,10 @@ const averageStar = (totalRatingStars / feedbackData?.length).toFixed(1);
                     <div>5</div>
                   </div>
                   <div className="col-span-5">
-                    {progressData && progressData.map(rating=><Progress key={rating._id} rating={rating}></Progress>)}
+                    {progressData &&
+                      progressData.map((rating) => (
+                        <Progress key={rating._id} rating={rating}></Progress>
+                      ))}
                   </div>
                 </div>
                 {/* show all users feedback */}

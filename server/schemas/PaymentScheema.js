@@ -1,41 +1,52 @@
 // PaymentSchema.js
 
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const PaymentSchema = new mongoose.Schema({
+  userName: String,
+  eventImage: String,
+  eventTime: String,
+  eventDate: String,
+  eventLocation: String,
   mobileNumber: {
     type: String,
-    required: true
+    // required: true
   },
-  eventName: {
+  productName: {
     type: String,
-    required: true
+    required: true,
   },
   cus_email: {
     type: String,
-    required: true
+    required: true,
   },
   currency: {
     type: String,
-    required: true
+    required: true,
   },
-  total_amount: {
+  totalAmount: {
     type: Number,
-    required: true
-  },
-  success_url: {
-    type: String,
-    required: true
-  },
-  fail_url: {
-    type: String,
-    required: true
+    required: true,
   },
   paidstatus: {
     type: String,
-    default: 'payment pending'
+    default: "payment pending",
   },
-  tran_id: String
+  tran_id: String,
+  from: String,
+  productid: String,
+  total_amount: {
+    type: Number,
+  },
+  paymentDate: {
+    type: String,
+  },
+  ticketQuantity: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  productQuantity: String,
 });
 
 module.exports = PaymentSchema;
