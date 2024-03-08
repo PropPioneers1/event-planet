@@ -33,12 +33,11 @@ import SignIn from "../pages/SignIn/SignIn";
 import Dashboard from "../layouts/Dashboard";
 import Summary from "../pages/Dashboard/Summary/Summary";
 import TermsAndCondition from "../pages/SignIn/TermsAndCondition";
-import SuccessPayment from "../components/shared/PaymentPage/SuccessPayment";
-import PrivetRoute from "./PrivetRoute";
 import OurBlogs from "./../pages/OurBlogs/OurBlogs";
 import BlogDetails from "./../pages/OurBlogs/BlogDetails/BlogDetails";
 import MyProfile from "./../pages/Dashboard/Profile/Profile";
 import EditBlog from "../pages/OurBlogs/EditBlog/EditBlog";
+import Successrout from "../components/shared/PaymentPage/Successrout";
 
 const Router = createBrowserRouter([
   {
@@ -69,11 +68,7 @@ const Router = createBrowserRouter([
 
       {
         path: "event/upcomingDetails/:id",
-        element: (
-          <PrivetRoute>
-            <UpcomingDetails></UpcomingDetails>
-          </PrivetRoute>
-        ),
+        element: <UpcomingDetails></UpcomingDetails>,
       },
       {
         path: "checkout/:from/:ids",
@@ -81,7 +76,7 @@ const Router = createBrowserRouter([
       },
       {
         path: "payment/successful/:tranid",
-        element: <SuccessPayment></SuccessPayment>,
+        element: <Successrout />,
       },
       {
         path: "payment/failure/:tran_id",

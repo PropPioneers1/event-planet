@@ -19,7 +19,6 @@ import {
   LinkedinShareButton,
   LinkedinIcon,
 } from "react-share";
-import Footer from "../../../../components/shared/Footer";
 import "./upcoming.scss";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
@@ -30,6 +29,7 @@ import nullImage from "../../../../assets/image/user.png";
 import PostFeedback from "./PostFeedback";
 import ShowFeedback from "./ShowFeedback";
 import UpComingBanner from "./UpComingBanner";
+import Loader from "../../../../components/Loader/Loader";
 
 const UpcomingDetails = () => {
   const { user } = useAuth();
@@ -54,15 +54,15 @@ const UpcomingDetails = () => {
     setNumber(number + 1);
   };
 
-  const { data: eventDetails,isPending,refetch } = useQuery({
+  const { data: eventDetails, isPending, refetch } = useQuery({
     queryKey: ["event-details"],
     queryFn: async () => {
       const result = await axiosSecure.get(`/event/${ids}`);
       return result?.data;
     },
   });
-  console.log("event detalils",eventDetails)
-  
+  console.log("event detalils", eventDetails);
+
   const fullDescription = eventDetails?.description;
   const shortDescription = fullDescription
     ? fullDescription.substring(0, 120)
@@ -78,29 +78,23 @@ const UpcomingDetails = () => {
 
   const totalPrice = number * eventDetails?.ticketPrice;
 
-const handleNavigate=async()=>{
-  
-  const datasfront={
-  userName: user?.displayName,
-  eventImage:eventDetails?.eventImages[0],
-  eventTime:time,
-  eventDate:date,
-  eventLocation:eventDetails?.city,
-  eventName: eventDetails?.eventName,
-  cus_email: user?.email,
-  total_amount:totalPrice,
-  ticketquantity:number,
-};
+  const handleNavigate = async () => {
+    const datasfront = {
+      userName: user?.displayName,
+      eventImage: eventDetails?.eventImages[0],
+      eventTime: time,
+      eventDate: date,
+      eventLocation: eventDetails?.city,
+      eventName: eventDetails?.eventName,
+      cus_email: user?.email,
+      total_amount: totalPrice,
+      ticketquantity: number,
+    };
 
-navigate(`/checkout/${'boking'}/${ids}`,{state:datasfront});
-}
+    navigate(`/checkout/${"boking"}/${ids}`, { state: datasfront });
+  };
 
-if(isPending) return <div className="flex flex-col gap-4 m-16">
-<div className="skeleton h-32 w-full"></div>
-<div className="skeleton h-4 w-28 md:w-40"></div>
-<div className="skeleton h-4 w-full"></div>
-<div className="skeleton h-4 w-full"></div>
-</div>
+  if (isPending) return <Loader />;
 
   return (
     <>
@@ -257,20 +251,26 @@ if(isPending) return <div className="flex flex-col gap-4 m-16">
                           <div className="text-white font-medium text-lg">
                             <p>Total : {totalPrice}</p>
                           </div>
-                          {
-                            number > 0 ?  <><button
-                            onClick={handleNavigate}
-                            className="bg-gradient-to-tl from-[#861f42]
+                          {number > 0 ? (
+                            <>
+                              <button
+                                onClick={handleNavigate}
+                                className="bg-gradient-to-tl from-[#861f42]
                             to-primary text-white lg:px-4 lg:py-3 px-4 py-3 rounded font-semibold flex items-center gap-3 mt-3 md:mt-0 hover:bg-gradient-to-tr transition-all duration-300 ease-in"
-                          >
-                            <FaCartPlus></FaCartPlus>Register Now
-                          </button></> : <><button
-                            className="bg-gradient-to-tl from-[#861f42]
+                              >
+                                <FaCartPlus></FaCartPlus>Register Now
+                              </button>
+                            </>
+                          ) : (
+                            <>
+                              <button
+                                className="bg-gradient-to-tl from-[#861f42]
                             to-primary text-white lg:px-4 lg:py-3 px-4 py-3 rounded font-semibold flex items-center gap-3 mt-3 md:mt-0 disabled hover:bg-gradient-to-tr transition-all duration-300 ease-in"
-                          >
-                            <FaCartPlus></FaCartPlus>Register Now
-                          </button></>
-                          }
+                              >
+                                <FaCartPlus></FaCartPlus>Register Now
+                              </button>
+                            </>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -290,8 +290,10 @@ if(isPending) return <div className="flex flex-col gap-4 m-16">
                 <div className="bg-white border p-3">
                   <div>
                     <div className="hidden md:block">
-                      <div className="bg-gradient-to-tl from-[#861f42]
-                    to-primary p-4 mt-10 font-medium text-white text-xl">
+                      <div
+                        className="bg-gradient-to-tl from-[#861f42]
+                    to-primary p-4 mt-10 font-medium text-white text-xl"
+                      >
                         Event FAQ
                       </div>
                       <div className="collapse collapse-plus bg-base-200">
@@ -493,8 +495,10 @@ if(isPending) return <div className="flex flex-col gap-4 m-16">
                       </div>
                     </div>
                     {/* add calander  */}
-                    <div className="bg-gradient-to-tl from-[#861f42]
-                    to-primary text-white lg:px-4 lg:py-3 px-4 py-3 rounded font-semibold mt-4 text-center uppercase hover:bg-gradient-to-tr transition-all duration-300 ease-in">
+                    <div
+                      className="bg-gradient-to-tl from-[#861f42]
+                    to-primary text-white lg:px-4 lg:py-3 px-4 py-3 rounded font-semibold mt-4 text-center uppercase hover:bg-gradient-to-tr transition-all duration-300 ease-in"
+                    >
                       <a href="https://calendar.google.com/calendar/u/0/r">
                         Add Calender
                       </a>
@@ -515,8 +519,6 @@ if(isPending) return <div className="flex flex-col gap-4 m-16">
           </div>
         </div>
       </Container>
-      {/* footer */}
-      <Footer></Footer>
     </>
   );
 };

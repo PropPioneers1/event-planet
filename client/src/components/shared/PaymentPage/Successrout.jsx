@@ -2,12 +2,16 @@
 import { useParams } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import Loader from "../../Loader/Loader";
+import { useDispatch } from "react-redux";
+import { resetCart } from "./../../../redux/actions/actions";
 const Successrout = () => {
   const { tranid } = useParams();
 
   const axiosSecure = useAxiosSecure();
+  const dispatch = useDispatch();
 
-  const { data: paymentData = [], isPending: loading, refetch } = useQuery({
+  const { data: paymentData = [], isPending: loading } = useQuery({
     queryKey: ["paymentData"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/payment/${tranid}`);
@@ -16,7 +20,16 @@ const Successrout = () => {
   });
 
   const allData = paymentData?.result;
-  console.log(tranid, paymentData, allData);
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (allData?.from === "shop") {
+    localStorage.removeItem("cartProduct");
+    dispatch(resetCart());
+  }
+
   return (
     <div className="h-[80vh] max-w-full flex justify-center items-center mt-24">
       <div className="card w-96 bg-base-100 shadow-2xl">
@@ -35,20 +48,13 @@ const Successrout = () => {
           <h1 className="font-bold font-title">Payment Amount History: </h1>
 
           <div className="text-lg font-title">
-            <p>
-              Transaction Id: {allData?.total_amount} {allData?.tranid}
-            </p>
+            <p>Event Name: {allData?.productName}</p>
+            <p>Transaction Id: {tranid}</p>
             <p>
               Total Amount: {allData?.total_amount} {allData?.currency}
             </p>
             <p>Your Email : {allData?.cus_email}</p>
             <p>Mobile Number: {allData?.mobileNumber}</p>
-            <p>Event Name: {allData?.eventName}</p>
-            {allData?.from === "boking" ? (
-              <button className="btn">download</button>
-            ) : (
-              ""
-            )}
           </div>
         </div>
       </div>

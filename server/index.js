@@ -35,7 +35,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // console.log(object);
-const dbURI = `mongodb+srv://EventPlanet:6oNbcueawJevcwOk
+const dbURI = `mongodb+srv://${process.env.USER_NAME}:${process.env.USER_PASS}
 @proppioneers.pzy67in.mongodb.net/Event-Planet`;
 // Mongodb connection
 

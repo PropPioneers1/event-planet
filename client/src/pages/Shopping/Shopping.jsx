@@ -7,13 +7,14 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useState } from "react";
 import "./Shop.css";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import Loader from "../../components/Loader/Loader";
 const Shopping = () => {
   const axiosSecure = useAxiosSecure();
   // eslint-disable-next-line no-unused-vars
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const { data: shopItem = [] } = useQuery({
+  const { data: shopItem = [], isPending } = useQuery({
     queryKey: ["shopItems", { currentPage, itemsPerPage }],
     queryFn: async () => {
       const res = await axiosSecure.get(
@@ -35,6 +36,10 @@ const Shopping = () => {
   const numberOfPages = Math.ceil(totalProductsCount / itemsPerPage);
   const pages = [...Array(numberOfPages).keys()];
 
+  if (isPending) {
+    return <Loader />;
+  }
+
   return (
     <div>
       <div>
@@ -54,7 +59,7 @@ const Shopping = () => {
                     {/* Assuming 'Card' is a div or a container */}
                     <div className=" h-56">
                       <img
-                        src={cart.image}
+                        src={cart?.image}
                         alt="card-image"
                         className="object-cover w-full h-full"
                       />
@@ -93,46 +98,46 @@ const Shopping = () => {
             ))}
           </div>
           <div className="border-t-2 border-pink-200 mt-8 pt-4">
-          <div className="flex justify-center gap-2">
-            {currentPage !== 0 && (
-              <div className="flex flex-row-reverse items-center">
+            <div className="flex justify-center gap-2">
+              {currentPage !== 0 && (
+                <div className="flex flex-row-reverse items-center">
+                  <button
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                    className="text-2xl font-semibold text-[#878787] mr-4"
+                  >
+                    Prev
+                  </button>
+
+                  <IoIosArrowBack className="text-2xl font-semibold text-[#878787]" />
+                </div>
+              )}
+
+              {pages?.map((item, index) => (
                 <button
-                  onClick={() => setCurrentPage(currentPage - 1)}
-                  className="text-2xl font-semibold text-[#878787] mr-4"
+                  key={index}
+                  onClick={() => setCurrentPage(index)}
+                  className={`w-10 py-0 font-semibold ${
+                    currentPage == index
+                      ? "text-2xl font-bold border-b-4 border-primary	"
+                      : "text-xl text-[#878787] "
+                  }`}
                 >
-                  Prev
+                  {`${index + 1 <= 9 ? "0" : ""}${index + 1}`}
                 </button>
+              ))}
 
-                <IoIosArrowBack className="text-2xl font-semibold text-[#878787]" />
-              </div>
-            )}
-
-            {pages?.map((item, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentPage(index)}
-                className={`w-10 py-0 font-semibold ${
-                  currentPage == index
-                    ? "text-2xl font-bold border-b-4 border-primary	"
-                    : "text-xl text-[#878787] "
-                }`}
-              >
-                {`${index + 1 <= 9 ? "0" : ""}${index + 1}`}
-              </button>
-            ))}
-
-            {currentPage !== pages?.length - 1 && (
-              <div className="flex items-center">
-                <button
-                  onClick={() => setCurrentPage(currentPage + 1)}
-                  className="text-2xl font-semibold text-[#878787] ml-4"
-                >
-                  Next
-                </button>
-                <IoIosArrowForward className="text-2xl font-semibold text-[#878787]" />
-              </div>
-            )}
-          </div>
+              {currentPage !== pages?.length - 1 && (
+                <div className="flex items-center">
+                  <button
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                    className="text-2xl font-semibold text-[#878787] ml-4"
+                  >
+                    Next
+                  </button>
+                  <IoIosArrowForward className="text-2xl font-semibold text-[#878787]" />
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </Container>

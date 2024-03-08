@@ -2,17 +2,26 @@ import { Link } from "react-router-dom";
 import logo from "../../assets/image/logo.png";
 import { categories } from "../../pages/Home/HomeComponenets/Categories/categoryData";
 
-
 const Footer = () => {
+  console.log(categories);
+
   return (
-    <footer className="bg-[#141414] text-white ">
+    <footer className="bg-[#141414] text-white">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
             <a href="" className="flex items-center">
               <img src={logo} className="h-24 rounded-lg mr-3" alt="" />
             </a>
-            <div className="md:w-[400px] lg:w-[600px] md:mr-10"><p className="text-justify">Welcome to Event plannet, where event planning is made simple. Browse and book venues, vendors, and services effortlessly. From corporate conferences to weddings, {"we've"} got you covered. Join our community today and let us help you bring your vision to life!</p></div>
+            <div className="md:w-[400px] lg:w-[600px] md:mr-10">
+              <p className="text-justify">
+                Welcome to Event plannet, where event planning is made simple.
+                Browse and book venues, vendors, and services effortlessly. From
+                corporate conferences to weddings, {"we've"} got you covered.
+                Join our community today and let us help you bring your vision
+                to life!
+              </p>
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-12 text-white sm:gap-6 sm:grid-cols-3">
             <div>
@@ -20,12 +29,16 @@ const Footer = () => {
                 Event Management
               </h2>
               <ul className="text-white dark:text-gray-400 font-medium">
-
-                {
-                  categories.map((categorie,index)=><li key={index} className="mb-4">
-                    <Link className="hover:underline">{categorie.label}</Link>
-                </li>)
-                }
+                {categories.map((category, index) => (
+                  <li key={index} className="mb-4">
+                    <Link
+                      to={`/categoryEvent/${category?.label}`}
+                      className="hover:underline"
+                    >
+                      {category.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="ml-5">

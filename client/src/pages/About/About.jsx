@@ -1,4 +1,4 @@
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import Footer from "../../components/shared/Footer";
 import SectionHeading from "../../components/shared/SectionHeading/SectionHeading";
 import Container from "../../components/ui/Container";
@@ -8,7 +8,8 @@ import { GoGoal } from "react-icons/go";
 import Ourteam from "./Ourteam";
 import WhyChoose from "../Home/HomeComponenets/WhyChooseEventPlanet/WhyChoose";
 import { GiStairsGoal } from "react-icons/gi";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import Loader from "../../components/Loader/Loader";
 
 const About = () => {
   const [showMission, setShowMission] = useState(false);
@@ -18,10 +19,10 @@ const About = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('/Award.json')
+    fetch("/Award.json")
       .then((res) => {
         if (!res.ok) {
-          throw new Error('Failed to fetch awards data');
+          throw new Error("Failed to fetch awards data");
         }
         return res.json();
       })
@@ -44,7 +45,7 @@ const About = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   if (error) {
@@ -52,37 +53,38 @@ const About = () => {
   }
 
   return (
-   
-      <div className="">
-        <div
-          id="my-id"
-          className="min-h-[60vh] hero py-8 bg-cover bg-no-repeat bg-[#0c0835cd] bg-blend-overlay items-center bg-fixed"
-          style={{
-            backgroundImage:
-              "url(https://i.ibb.co/MRRKzRC/landscape-1328858-1280.jpg)",
-          }}
-        >
-          <div className=" text-2xl  bg-transparent font-bold">
-            <SectionHeading
-              // className='text-white'
-              colortitle="text-white"
-              align="text-center"
-              title="ALL YOU NEED TO KNOW"
-              normalSubTitleWord="ABOUT"
-              boldSubTitleWord="EVENT PLANET"
-              colorboldmrsub="text-accent"
-              colornormrsub="text-white"
-            />
-          </div>
+    <div className="">
+      <div
+        id="my-id"
+        className="min-h-[60vh] hero py-8 bg-cover bg-no-repeat bg-[#0c0835cd] bg-blend-overlay items-center bg-fixed"
+        style={{
+          backgroundImage:
+            "url(https://i.ibb.co/MRRKzRC/landscape-1328858-1280.jpg)",
+        }}
+      >
+        <div className=" text-2xl  bg-transparent font-bold">
+          <SectionHeading
+            // className='text-white'
+            colortitle="text-white"
+            align="text-center"
+            title="ALL YOU NEED TO KNOW"
+            normalSubTitleWord="ABOUT"
+            boldSubTitleWord="EVENT PLANET"
+            colorboldmrsub="text-accent"
+            colornormrsub="text-white"
+          />
         </div>
+      </div>
 
-        {/* misson and vission */}
-        <Container >       
+      {/* misson and vission */}
+      <Container>
         <div className="bg-neutral mt-10">
-        <Container>
-            <div className="grid py-32 w-full bg-neutral 
+          <Container>
+            <div
+              className="grid py-32 w-full bg-neutral 
             md:grid-cols-2 grid-cols-1 p-10 px-20 gap-5    justify-center
-             align-middle items-center">
+             align-middle items-center"
+            >
               <div className="col-span-1 md:col-span-2 ">
                 <SectionHeading
                   colortitle="text-black "
@@ -95,14 +97,17 @@ const About = () => {
                 />
               </div>
               <div className="grid">
-            
-                  <h1 className="font-bold text-xl flex justify-start
-                  align-middle items-center gap-1  tracking-[0.2rem] ">
-                    Our Mission <GoGoal />
-                  </h1>
-            
-                <div className="w-full  text-start
-                 rounded-lg ">
+                <h1
+                  className="font-bold text-xl flex justify-start
+                  align-middle items-center gap-1  tracking-[0.2rem] "
+                >
+                  Our Mission <GoGoal />
+                </h1>
+
+                <div
+                  className="w-full  text-start
+                 rounded-lg "
+                >
                   {showMission ? (
                     <>
                       <p>
@@ -137,20 +142,21 @@ const About = () => {
                 </div>
               </div>
               <div className="grid ">
-               
-                  <h1 className="font-bold text-xl flex justify-start 
-                  align-middle items-center gap-1 tracking-[0.2rem]  ">
-                    Our Vision <GiStairsGoal />
-                  </h1>
-              
+                <h1
+                  className="font-bold text-xl flex justify-start 
+                  align-middle items-center gap-1 tracking-[0.2rem]  "
+                >
+                  Our Vision <GiStairsGoal />
+                </h1>
+
                 <div className="w-full  text-start rounded-lg overflow-auto">
                   {showVision ? (
                     <>
                       <p>
                         Our vision at Event Planet is to become the go-to
-                        destination for all things related to event planning
-                        and management. We envision a future where organizing
-                        events is not only stress-free but also enjoyable and
+                        destination for all things related to event planning and
+                        management. We envision a future where organizing events
+                        is not only stress-free but also enjoyable and
                         excellence in the industry and inspire creativity and
                         Ultimately, we aspire to be the catalyst for memorable
                         moments and successful events that leave a lasting
@@ -162,9 +168,9 @@ const About = () => {
                     <>
                       <p>
                         Our vision at Event Planet is to become the go-to
-                        destination for all things related to event planning
-                        and management. We envision a future where organizing
-                        events is not only
+                        destination for all things related to event planning and
+                        management. We envision a future where organizing events
+                        is not only
                       </p>
                       <button
                         className="text-blue-500 underline"
@@ -181,66 +187,78 @@ const About = () => {
         </div>
 
         <Container>
-  <div className="   gap-10 lg:flex md:grid justify-center align-middle items-center mt-10 mb-10">
-  <div className='lg:hidden block'>
-     <SectionHeading
-        colortitle="text-[rgb(255 255 255 / var(--tw-text-opacity))]"
-        align="lg:text-start md:text-center "
-        title="EVENT AWARD"
-        normalSubTitleWord="OUR  "
-        boldSubTitleWord="AWARDS"
-        colorboldmrsub="text-accent"
-        colornormrsub="text-black"
-      />
-     </div>
-    <div className="relative">
-      <img className="h-[450px] w-[400px] mx-auto lg:w-[300px]" 
-      src="https://i.ibb.co/QNN1JfM/Dark-Blue-and-Blue-Modern-Wavy-Curve-Completion-Certificate.jpghttps://i.ibb.co/hZbNfpX/Dark-Blue-and-Blue-Modern-Wavy-Curve-Completion-Certificate-1.jpg" />
-    </div>
-    <div className="h-full">
-     <div className='hidden lg:block'>
-     <SectionHeading
-        colortitle="text-[rgb(255 255 255 / var(--tw-text-opacity))]"
-        align="lg:text-start md:text-center "
-        title="EVENT AWARD"
-        normalSubTitleWord="OUR  "
-        boldSubTitleWord="AWARDS"
-        colorboldmrsub="text-accent"
-        colornormrsub="text-black"
-      />
-     </div>
-      <ul className=" mt-5">
-        <div className="h-72 lg:max-w-[500px] overflow-y-auto 
-        scrollbar-hide border-l-4 -my-1 border-slate-700">
-          {awards.map((award, index) => (
-            <li key={index}>
-              <div className="my-4">
-                <div className="flex gap-4 justify-normal relative">
-                  <h1 className="md:text-sm lg:pl-4 w-20 md:pl-2 lg:w-96 
-                  font-bold h-8 border-b-secondary border-b-2
-                   text-accent text-xs  relative">
-                    {award.date}
-                    <div className="absolute right-full w-2
-                    transform translate-x-3/4 -translate-y-2/4"></div>
-                  </h1>
-                  <div className="pl-3">
-                    <h1 className="mb-2 text-start text-sm md:text-xl  font-bold">{award.title}</h1>
-                    <p className="md:w-96 w-44 text-xs">{award.description}</p>
-                  </div>
-                </div>
+          <div className="   gap-10 lg:flex md:grid justify-center align-middle items-center mt-10 mb-10">
+            <div className="lg:hidden block">
+              <SectionHeading
+                colortitle="text-[rgb(255 255 255 / var(--tw-text-opacity))]"
+                align="lg:text-start md:text-center "
+                title="EVENT AWARD"
+                normalSubTitleWord="OUR  "
+                boldSubTitleWord="AWARDS"
+                colorboldmrsub="text-accent"
+                colornormrsub="text-black"
+              />
+            </div>
+            <div className="relative">
+              <img
+                className="h-[450px] w-[400px] mx-auto lg:w-[300px]"
+                src="https://i.ibb.co/QNN1JfM/Dark-Blue-and-Blue-Modern-Wavy-Curve-Completion-Certificate.jpghttps://i.ibb.co/hZbNfpX/Dark-Blue-and-Blue-Modern-Wavy-Curve-Completion-Certificate-1.jpg"
+              />
+            </div>
+            <div className="h-full">
+              <div className="hidden lg:block">
+                <SectionHeading
+                  colortitle="text-[rgb(255 255 255 / var(--tw-text-opacity))]"
+                  align="lg:text-start md:text-center "
+                  title="EVENT AWARD"
+                  normalSubTitleWord="OUR  "
+                  boldSubTitleWord="AWARDS"
+                  colorboldmrsub="text-accent"
+                  colornormrsub="text-black"
+                />
               </div>
-            </li>
-          ))}
-        </div>
-      </ul>
-    </div>
-  </div>
-</Container>
-{/*why choose us */}
-          <WhyChoose></WhyChoose>
+              <ul className=" mt-5">
+                <div
+                  className="h-72 lg:max-w-[500px] overflow-y-auto 
+        scrollbar-hide border-l-4 -my-1 border-slate-700"
+                >
+                  {awards.map((award, index) => (
+                    <li key={index}>
+                      <div className="my-4">
+                        <div className="flex gap-4 justify-normal relative">
+                          <h1
+                            className="md:text-sm lg:pl-4 w-20 md:pl-2 lg:w-96 
+                  font-bold h-8 border-b-secondary border-b-2
+                   text-accent text-xs  relative"
+                          >
+                            {award.date}
+                            <div
+                              className="absolute right-full w-2
+                    transform translate-x-3/4 -translate-y-2/4"
+                            ></div>
+                          </h1>
+                          <div className="pl-3">
+                            <h1 className="mb-2 text-start text-sm md:text-xl  font-bold">
+                              {award.title}
+                            </h1>
+                            <p className="md:w-96 w-44 text-xs">
+                              {award.description}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </div>
+              </ul>
+            </div>
+          </div>
+        </Container>
+        {/*why choose us */}
+        <WhyChoose></WhyChoose>
 
-          {/* scrooll */}
-      
+        {/* scrooll */}
+
         <div></div>
         <div
           className=" mx-auto lg:h-[500px] md:h-[580px]  h-[610px] pt-10 bg-cover bg-no-repeat
@@ -270,23 +288,20 @@ const About = () => {
             </p>
           </div>
           <div>
-           <Link to='/contact'>
-           <button
-              className="btn btn-ghost rounded-3xl w-24 md:w-44
+            <Link to="/contact">
+              <button
+                className="btn btn-ghost rounded-3xl w-24 md:w-44
                bg-white
    hover:text-white hover:bg-primary text-xs md:text-lg"
-            >
-              Contact us
-            </button>
-           </Link>
+              >
+                Contact us
+              </button>
+            </Link>
           </div>
         </div>
-
-      
-        </Container>
-        <Footer></Footer>
-      </div>
-   
+      </Container>
+      <Footer></Footer>
+    </div>
   );
 };
 

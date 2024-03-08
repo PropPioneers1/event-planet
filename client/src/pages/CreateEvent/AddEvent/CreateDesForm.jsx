@@ -48,7 +48,6 @@ const CreateDesForm = () => {
       setVenues(res.data);
     });
   }, []);
-  console.log(venues);
   const handleInputChange = (field, value) => {
     if (field === "state") {
       // When the state changes, update the selected state in the form data
@@ -149,10 +148,10 @@ const CreateDesForm = () => {
           email: user.email,
           category: label,
           eventPrice: totalPrice,
-          status: "unpaid",
+          status: "pending",
           ticketSold: 0,
         };
-        console.log(data, "her");
+
         await axios.post("http://localhost:5000/event", data);
         toast.success("Your response has been submitted successfully");
         navigate("/");

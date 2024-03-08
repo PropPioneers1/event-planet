@@ -21,9 +21,6 @@ const SearchInputs = ({
 
     setEventTitle(title);
     setCategory(eventCategory);
-    console.log(state);
-    console.log(city);
-    console.log(venues);
     refetch();
   };
 

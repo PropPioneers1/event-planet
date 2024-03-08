@@ -5,13 +5,14 @@ import { Link } from "react-router-dom";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Blog from "./Blog/Blog";
 import Container from "./../../components/ui/Container";
+import Loader from "../../components/Loader/Loader";
 
 const OurBlogs = () => {
   const axiosSecure = useAxiosSecure();
   const [blogCategory, setBlogCategory] = useState("");
   const [searchBlog, setSearchBlog] = useState("");
 
-  const { data: blogs } = useQuery({
+  const { data: blogs, isPending } = useQuery({
     queryKey: ["allBlogs", blogCategory, searchBlog],
     queryFn: async () => {
       const result = await axiosSecure.get(`/blog?category=${blogCategory}`);
@@ -39,6 +40,10 @@ const OurBlogs = () => {
     setSearchBlog(blogTitle);
   };
 
+  if (isPending) {
+    return <Loader />;
+  }
+
   return (
     <div>
       {/* banner */}
@@ -62,7 +67,7 @@ const OurBlogs = () => {
           <div className="col-span-1 md:col-span-8">
             {blogs?.map((blog) => (
               <div key={blog?._id} className="mb-10">
-                <Blog blog={blog} />
+                <Blog blog={blog} isPending={isPending} />
                 <hr />
               </div>
             ))}

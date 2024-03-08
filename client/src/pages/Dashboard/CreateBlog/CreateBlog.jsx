@@ -101,7 +101,7 @@ const CreateBlog = () => {
                   />
                 )}
                 <p className={imagePreview ? "hidden" : "block"}>
-                  Drag and Drop or click here to upload image
+                  Click here to upload image
                 </p>
               </div>
             </label>

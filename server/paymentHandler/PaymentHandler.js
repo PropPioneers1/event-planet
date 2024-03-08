@@ -166,19 +166,12 @@ router.post("/successful/:tran_id", async (req, res) => {
         return res.status(404).json({ error: "Event not found" });
       }
     }
+
     if (payment.from === "shop") {
-      try {
-        const result = await shopCartModel.deleteMany({
-          email: payment.cus_email,
-        });
-
-        console.log(`Deleted ${result.deletedCount} shopCart items`);
-
-        return res.status(200).json({ message: "Sabbash beta", result });
-      } catch (error) {
-        console.error("Error deleting shopCart items:", error);
-        return res.status(500).json({ message: "Internal server error" });
-      }
+      const result = await shopCartModel.deleteMany({
+        email: payment.cus_email,
+      });
+      console.log(`Deleted ${result.deletedCount} shopCart items`);
     }
 
     console.log("Payment status updated successfully.", payment);

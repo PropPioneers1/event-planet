@@ -6,6 +6,7 @@ import useAuth from "../../../hooks/useAuth";
 import { useParams } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import Loader from "../../../components/Loader/Loader";
 
 const EditBlog = () => {
   const [imagePreview, setImagePreview] = useState(null);
@@ -14,15 +15,13 @@ const EditBlog = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
 
-  const { data: myBlog } = useQuery({
+  const { data: myBlog, isPending } = useQuery({
     queryKey: ["my-blogs"],
     queryFn: async () => {
       const res = await axiosSecure(`/blog/${id}`);
       return res?.data;
     },
   });
-
-  console.log(myBlog);
 
   const getImageUrl = (event) => {
     console.log("working");
@@ -54,8 +53,6 @@ const EditBlog = () => {
       },
     };
 
-    console.log(blog);
-
     try {
       const { data } = await axios.put(
         `http://localhost:5000/blog/${id}`,
@@ -67,6 +64,10 @@ const EditBlog = () => {
       toast.error(error.message);
     }
   };
+
+  if (isPending) {
+    return <Loader />;
+  }
 
   return (
     <div className=" min-h-screen flex justify-center  bg-neutral">
@@ -87,6 +88,7 @@ const EditBlog = () => {
             name="post"
             placeholder={`What's on your mind, ${user?.displayName}?`}
             className="input px-0 w-full mb-6 focus:outline-none focus:border-none"
+            defaultValue={myBlog?.post}
             required
           ></textarea>
           {/* Select image and preview */}
@@ -119,7 +121,7 @@ const EditBlog = () => {
                   />
                 )}
                 <p className={imagePreview ? "hidden" : "block"}>
-                  Drag and Drop or click here to upload image
+                  Click here to upload image
                 </p>
               </div>
             </label>
@@ -130,13 +132,13 @@ const EditBlog = () => {
             name="title"
             placeholder="Write A Title For Your Blog"
             className="input input-bordered w-full focus:outline-none mt-6 mb-2"
-            required
+            defaultValue={myBlog?.title}
           />
           {/* Category */}
           <select
             className="select select-bordered w-full my-4 focus:border-none"
             onChange={(e) => setCategory(e.target.value)}
-            defaultValue={category}
+            defaultValue={myBlog?.category}
             required
           >
             <option disabled value="">

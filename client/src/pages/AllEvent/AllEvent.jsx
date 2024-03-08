@@ -23,7 +23,6 @@ const AllEvent = () => {
   const axiosSecure = useAxiosSecure();
   const { category: eventCategory } = useParams();
 
-  //   const [events, setEvents] = useState({ eventCount: 0, data: [] });
   const [page, setPage] = useState(0);
 
   const [category, setCategory] = useState(eventCategory ? eventCategory : "");
@@ -33,7 +32,6 @@ const AllEvent = () => {
 
   const [city, setCity] = useState("");
   const [venues, setVenues] = useState("");
-  // const [setDivision] = useState("");
 
   // handle state change
   const handleStateChange = (selectedState) => {
@@ -77,6 +75,7 @@ const AllEvent = () => {
     <div>
       {/* Slider */}
       <Swiper
+        style={{ height: "600px" }}
         spaceBetween={30}
         centeredSlides={true}
         autoplay={{
@@ -92,32 +91,20 @@ const AllEvent = () => {
       >
         <SwiperSlide>
           <img
+            src="https://i.ibb.co/nQTy1Gh/results-activation-event-management-cover.jpg"
+            alt=""
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img
             className="bg-cover"
-            src="https://demos.codexcoder.com/eventterm/wp-content/uploads/2016/10/Event-00BG.jpg"
+            src="https://i.ibb.co/qL84t17/Under-a-Starry-Night-Formal-Theme-ezgif-com-webp-to-jpg-converter.jpg"
             alt=""
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
-            src="https://ovatheme.com/em4u/wp-content/uploads/2017/09/bg_4_new.jpg"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://ovatheme.com/em4u/wp-content/uploads/2017/09/bg_3_new.jpg"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://demos.codexcoder.com/eventterm/wp-content/uploads/2016/10/Bg_0001.jpg"
-            alt=""
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            src="https://demos.codexcoder.com/eventterm/wp-content/uploads/2018/04/news-bg.jpg"
+            src="https://i.ibb.co/qCC9frR/asia-culturecenter-y-ZOk-MEQou-GU-unsplash-1.jpg"
             alt=""
           />
         </SwiperSlide>
