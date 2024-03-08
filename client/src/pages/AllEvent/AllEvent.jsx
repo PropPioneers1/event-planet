@@ -59,7 +59,7 @@ const AllEvent = () => {
     queryKey: ["all-events", page, category, eventTitle],
     queryFn: async () => {
       const result = await axiosSecure.get(
-        `/event?page=${page}&&title=${eventTitle}&&category=${category}&&state=${state}&&city=${city}&&venue=${venues}`
+        `/event?status=upcoming&&page=${page}&&title=${eventTitle}&&category=${category}&&state=${state}&&city=${city}&&venue=${venues}`
       );
       return result?.data;
     },
@@ -164,7 +164,10 @@ const AllEvent = () => {
             {page !== pages?.length - 1 && (
               <div className="flex items-center">
                 <button
-                  onClick={() => setPage(page + 1)}
+                  onClick={() => {
+                    setPage(page + 1);
+                    refetch();
+                  }}
                   className="text-2xl font-semibold text-[#878787] ml-4"
                 >
                   Next

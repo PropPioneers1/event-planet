@@ -9,7 +9,6 @@ router.post("/", async (req, res) => {
   try {
     const data = new feedBackModal(req.body);
     // const data = new feedBackModal.create(req.body);
-    console.log("feedback data", data);
     const result = await data.save();
     res.status(200).json({
       message: "feedback data succefully inserted",
@@ -65,7 +64,6 @@ router.get("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const { vote } = req.body;
-  console.log(vote);
 
   try {
     let updateQuery = {};

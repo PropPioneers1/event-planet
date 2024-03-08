@@ -5,7 +5,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import { AiOutlineMenu } from "react-icons/ai";
 import { FaCodePullRequest } from "react-icons/fa6";
 import { FiShoppingCart } from "react-icons/fi";
-import { AiOutlineMenuFold } from "react-icons/ai";
+// import { AiOutlineMenuFold } from "react-icons/ai";
 import { IoCreate } from "react-icons/io5";
 import logo from "../assets/image/logo.png";
 import { useState } from "react";
@@ -61,10 +61,10 @@ const Dashboard = () => {
         <>
           {/* user Routes */}
 
-          <NavLink to="/dashboard/summary" className={iconStyle}>
+          {/* <NavLink to="/dashboard/summary" className={iconStyle}>
             <AiOutlineMenuFold></AiOutlineMenuFold>
             <li>Summary</li>
-          </NavLink>
+          </NavLink> */}
 
           <NavLink to="/dashboard/my-events" className={iconStyle}>
             <FaCalendarAlt></FaCalendarAlt>

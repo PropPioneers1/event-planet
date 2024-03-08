@@ -1,8 +1,6 @@
-
-
 const express = require("express");
 const SSLCommerzPayment = require("sslcommerz-lts");
-const Productsheema=require('../schemas/ProductpayScheema')
+const Productsheema = require("../schemas/ProductpayScheema");
 const mongoose = require("mongoose");
 const Productpay = mongoose.model("Productpay", Productsheema);
 
@@ -51,7 +49,6 @@ router.post("/", async (req, res) => {
   try {
     const datasfront = req.body;
     const tran_id = new mongoose.Types.ObjectId().toString();
-console.log(datasfront);
     const paymentData = {
       mobileNumber: datasfront.phone,
       product_name: datasfront.name,
@@ -59,33 +56,31 @@ console.log(datasfront);
       cus_email: datasfront.email,
       currency: datasfront.currency,
       total_amount: datasfront.totalAmount,
-      from:datasfront.from,
+      from: datasfront.from,
       success_url: `http://localhost:5000/payment/successful/${tran_id}`,
       fail_url: "http://localhost:5173/fail",
       paidstatus: "payment pending",
       tran_id: tran_id,
-      
-      
     };
 
-    const payment = new Productpay(datasfront );
+    const payment = new Productpay(datasfront);
     await payment.save();
 
     const sslczData = {
-      total_amount:paymentData.total_amount,
-      currency:paymentData.currency,
+      total_amount: paymentData.total_amount,
+      currency: paymentData.currency,
       tran_id: tran_id,
       success_url: `http://localhost:5000/payment/success/${tran_id}`,
       fail_url: `http://localhost:5000/payment/failure/${tran_id}`,
       cancel_url: "http://localhost:5173/cancel",
       ipn_url: "http://localhost:5173/ipn",
       shipping_method: "Courier",
-      product_name:paymentData. product_name,
-      cus_email:paymentData.cus_email,
+      product_name: paymentData.product_name,
+      cus_email: paymentData.cus_email,
       product_category: "Electronic",
       product_profile: "general",
       cus_name: "Customer Name",
-      cus_email:paymentData.cus_email,
+      cus_email: paymentData.cus_email,
       cus_add1: "Dhaka",
       cus_add2: "Dhaka",
       cus_city: "Dhaka",
@@ -106,7 +101,6 @@ console.log(datasfront);
     try {
       const sslcz = new SSLCommerzPayment(store_id, store_passwd, is_live);
       const apiResponse = await sslcz.init(sslczData);
-      console.log(apiResponse);
       let GatewayPageURL = apiResponse.GatewayPageURL;
       res.status(200).json({ url: GatewayPageURL });
     } catch (error) {
@@ -122,16 +116,19 @@ console.log(datasfront);
 router.post("/success/:tran_id", async (req, res) => {
   try {
     const { tran_id } = req.params; // Extract the transaction ID from req.params
-    console.log("Transaction ID:", tran_id); // Check if the transaction ID is correct
 
     // Update the payment document
     const payment = await Productpay.findOneAndUpdate(
-      { tran_id: tran_id, $or: [{ paidstatus: 'payment pending' }, { paidstatus: 'payment failed' }] },
+      {
+        tran_id: tran_id,
+        $or: [
+          { paidstatus: "payment pending" },
+          { paidstatus: "payment failed" },
+        ],
+      },
       { $set: { paidstatus: "payment succeed" } },
       { new: true }
     );
-
-    // console.log("Updated Payment:", payment); // Check if the payment document is updated
 
     if (!payment) {
       return res.status(404).json({ error: "Payment not found" });
@@ -147,7 +144,6 @@ router.post("/success/:tran_id", async (req, res) => {
 router.post("/failure/:tran_id", async (req, res) => {
   try {
     const { tran_id } = req.params; // Extract the transaction ID from req.params
-    console.log("Transaction ID:", tran_id); // Check if the transaction ID is correct
 
     // Update the payment document
     const payment = await Payment.findOneAndUpdate(
@@ -205,10 +201,5 @@ router.post("/failure/:tran_id", async (req, res) => {
 //     });
 //   }
 // });
-
-
-
-
-
 
 module.exports = router;

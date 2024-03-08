@@ -121,7 +121,6 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
-  console.log(id, status);
 
   try {
     const updatedEvent = await eventModel.findByIdAndUpdate(

@@ -21,6 +21,8 @@ const EventRequests = () => {
     },
   });
 
+  console.log(events);
+
   // This function will reject the event
   const handleReject = (item) => {
     Swal.fire({

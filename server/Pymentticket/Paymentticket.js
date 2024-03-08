@@ -1,9 +1,8 @@
-
 const express = require("express");
 const SSLCommerzPayment = require("sslcommerz-lts");
 const TicketpayShceema = require("../schemas/TicketScheemapay");
 const mongoose = require("mongoose");
-const TicketPayment= mongoose.model("Ticketpay", TicketpayShceema);
+const TicketPayment = mongoose.model("Ticketpay", TicketpayShceema);
 const eventSchema = require("../schemas/eventSchema");
 const eventModel = mongoose.model("Event", eventSchema);
 
@@ -50,9 +49,9 @@ router.post("/", async (req, res) => {
     const datasfront = req.body;
     const existingTicketPayment = await TicketPayment.findOne({
       eventid: datasfront.eventid,
-      cus_email: datasfront.cus_email
+      cus_email: datasfront.cus_email,
     });
-console.log(datasfront);
+    console.log(datasfront);
     if (existingTicketPayment) {
       // If the user has previously booked a ticket, update the ticket quantity and total
       const updatedTicketQuantity = datasfront.ticketquantity;
@@ -60,17 +59,19 @@ console.log(datasfront);
 
       // Update the existing ticket payment record
       await TicketPayment.findOneAndUpdate(
-        { eventid: datasfront.eventid},
+        { eventid: datasfront.eventid },
         {
           $set: {
             ticketquantity: updatedTicketQuantity,
-            total_amount: updatedTotalAmount
-          }
+            total_amount: updatedTotalAmount,
+          },
         }
       );
 
       // Send success response
-      return res.status(200).json({ message: "Ticket quantity and total updated successfully" });
+      return res
+        .status(200)
+        .json({ message: "Ticket quantity and total updated successfully" });
     } else {
       // If the user is booking a ticket for the first time, return an error
       return res.status(400).json({ error: "Ticket not found for updating" });
@@ -80,7 +81,6 @@ console.log(datasfront);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
 
 router.post("/paymentticket", async (req, res) => {
   const datasfront = req.body;
@@ -116,9 +116,9 @@ router.post("/paymentticket", async (req, res) => {
     ship_state: "Dhaka",
     ship_postcode: 1000,
     ship_country: "Bangladesh",
-  };console.log(datasfront);
+  };
   const payment = await TicketPayment.findOneAndUpdate(
-    { tran_id: datasfront.tran_id},
+    { tran_id: datasfront.tran_id },
     {
       $set: {
         currency: datasfront.currency,
@@ -144,16 +144,11 @@ router.post("/paymentticket", async (req, res) => {
     res.status(200).json({ url: GatewayPageURL });
 
     // Update the payment document
-
   } catch (error) {
     console.error("Error initializing SSLCommerzPayment:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
-
-
-
 
 router.post("/success/:tran_id", async (req, res) => {
   try {
@@ -176,17 +171,16 @@ router.post("/success/:tran_id", async (req, res) => {
     // Update the event's total seat by subtracting ticketquantity
     const event = await eventModel.findOneAndUpdate(
       { _id: eventid },
-      { 
-        $inc: { 
-          totalSeat: -ticketquantity
+      {
+        $inc: {
+          totalSeat: -ticketquantity,
         },
         $set: {
-          ticketsSold: ticketquantity
-        }
+          ticketsSold: ticketquantity,
+        },
       },
       { new: true }
     );
-    
 
     if (!event) {
       // Rollback the payment status update if event is not found
@@ -194,7 +188,7 @@ router.post("/success/:tran_id", async (req, res) => {
         { tran_id: tran_id },
         { $set: { paidstatus: "payment failed" } }
       );
-      
+
       return res.status(404).json({ error: "Event not found" });
     }
 
@@ -206,12 +200,10 @@ router.post("/success/:tran_id", async (req, res) => {
   }
 });
 
-
-
 router.post("/failure/:tran_id", async (req, res) => {
   try {
-    const { tran_id } = req.params; 
-    // console.log("Transaction ID:", tran_id); 
+    const { tran_id } = req.params;
+    // console.log("Transaction ID:", tran_id);
 
     // Update the payment document
     const payment = await TicketPayment.findOneAndUpdate(
@@ -220,7 +212,7 @@ router.post("/failure/:tran_id", async (req, res) => {
       { new: true }
     );
 
-    // console.log("Updated Payment:", payment); 
+    // console.log("Updated Payment:", payment);
     if (!payment) {
       return res.status(404).json({ error: "Payment not found" });
     }
@@ -233,22 +225,12 @@ router.post("/failure/:tran_id", async (req, res) => {
   }
 });
 
-
-
-
-
-
-
-
-
-
 router.get("/:ids", async (req, res) => {
   const { ids } = req.params;
 
   try {
-   
-    const result = await TicketPayment.findOne({ eventid: ids});
-    
+    const result = await TicketPayment.findOne({ eventid: ids });
+
     if (!result) {
       return res.status(404).json({ error: "Data not found" });
     }
@@ -259,11 +241,14 @@ router.get("/:ids", async (req, res) => {
   }
 });
 router.get("/:email/:ids", async (req, res) => {
-  const { ids, email } = req.params; 
+  const { ids, email } = req.params;
 
   try {
-    const result = await TicketPayment.findOne({ eventid: ids, cus_email: email });
-    
+    const result = await TicketPayment.findOne({
+      eventid: ids,
+      cus_email: email,
+    });
+
     if (!result) {
       return res.status(404).json({ error: "Data not found" });
     }
@@ -273,10 +258,5 @@ router.get("/:email/:ids", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
-
-
-
-
 
 module.exports = router;

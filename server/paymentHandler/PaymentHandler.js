@@ -107,7 +107,6 @@ router.post("/", async (req, res) => {
 router.post("/successful/:tran_id", async (req, res) => {
   try {
     const { tran_id } = req.params;
-    console.log("Transaction ID:", tran_id);
 
     // Update the payment document
     const payment = await Payment.findOneAndUpdate(
@@ -115,7 +114,6 @@ router.post("/successful/:tran_id", async (req, res) => {
       { $set: { paidstatus: "payment succeed" } },
       { new: true }
     );
-    console.log("Payment Formmmmmm", payment.from);
     if (!payment) {
       console.error("Payment not found for transaction ID:", tran_id);
       return res.status(404).json({ error: "Payment not found" });
@@ -134,8 +132,6 @@ router.post("/successful/:tran_id", async (req, res) => {
         },
         { new: true } // Return the updated document
       );
-
-      console.log("Event updated successfully for booking:", event);
 
       if (!event) {
         // Rollback the payment status update if event is not found
@@ -171,10 +167,7 @@ router.post("/successful/:tran_id", async (req, res) => {
       const result = await shopCartModel.deleteMany({
         email: payment.cus_email,
       });
-      console.log(`Deleted ${result.deletedCount} shopCart items`);
     }
-
-    console.log("Payment status updated successfully.", payment);
 
     // Redirect to success page once payment status is updated
     res.redirect(`http://localhost:5173/payment/successful/${tran_id}`);
@@ -187,7 +180,6 @@ router.post("/successful/:tran_id", async (req, res) => {
 router.post("/failure/:tran_id", async (req, res) => {
   try {
     const { tran_id } = req.params; // Extract the transaction ID from req.params
-    console.log("Transaction ID:", tran_id); // Check if the transaction ID is correct
 
     // Update the payment document
     const payment = await Payment.findOneAndUpdate(
@@ -195,8 +187,6 @@ router.post("/failure/:tran_id", async (req, res) => {
       { $set: { paidstatus: "payment failed" } },
       { new: true }
     );
-
-    console.log("Updated Payment:", payment); // Check if the payment document is updated
 
     if (!payment) {
       return res.status(404).json({ error: "Payment not found" });
@@ -216,7 +206,6 @@ router.get("/ticketsCount", async (req, res) => {
 
     res.status(200).send({ ticketCount });
   } catch (error) {
-    console.log("Not Fount Block");
     res.status(500).json({ error: "internal server error" });
   }
 });
@@ -254,6 +243,23 @@ router.get("/status/:ids", async (req, res) => {
     res
       .status(200)
       .json({ eventid: result.eventid, paidstatus: result.paidstatus });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: "There was a server-side error",
+    });
+  }
+});
+
+router.get("/", async (req, res) => {
+  try {
+    const { email } = req.query;
+    let query = {};
+    if (email) {
+      query.cus_email = email;
+    }
+    const result = await Payment.find(query);
+    res.status(200).json(result);
   } catch (err) {
     console.error(err);
     res.status(500).json({

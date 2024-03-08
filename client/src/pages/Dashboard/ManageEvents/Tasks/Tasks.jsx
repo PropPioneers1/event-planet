@@ -56,8 +56,6 @@ const Tasks = () => {
     }
   }, [allTodo]);
 
-  console.log(id, "<==============");
-
   // Adding new todo
   const handleAddTodo = async (e) => {
     e.preventDefault();

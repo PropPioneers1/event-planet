@@ -9,7 +9,6 @@ const eventToDoModel = mongoose.model("EventTodo", EventToDoSchema);
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   const query = { boardId: id };
-  console.log(query, "<===============");
   try {
     const result = await eventToDoModel.find(query);
     res.status(200).send(result);
