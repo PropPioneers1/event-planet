@@ -3,6 +3,8 @@ import { RxCross2 } from "react-icons/rx";
 import { TiTick } from "react-icons/ti";
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
+import Loader from "./../../../components/Loader/Loader";
+import { toast } from "react-hot-toast";
 
 const EventRequests = () => {
   // const [events, setEvents] = useState([]);
@@ -12,13 +14,12 @@ const EventRequests = () => {
     queryKey: ["all-pendingEvents"],
     queryFn: async () => {
       const result = await axiosSecure.get("/event/allevents");
-      const events = result?.data?.events;
-      const pendingEvents = events;
-      return pendingEvents;
+      const pendingEvent = result?.data?.result?.filter(
+        (event) => event.status === "pending"
+      );
+      return pendingEvent;
     },
   });
-
-  console.log(events);
 
   // This function will reject the event
   const handleReject = (item) => {
@@ -37,7 +38,7 @@ const EventRequests = () => {
           status: "rejected",
         };
 
-        axiosSecure.patch(`/event/${item?._id}`, updateStatus).then((res) => {
+        axiosSecure.put(`/event/${item?._id}`, updateStatus).then((res) => {
           console.log(res.data);
           Swal.fire({
             title: "Rejected",
@@ -67,22 +68,26 @@ const EventRequests = () => {
           status: "unpaid",
         };
 
-        axiosSecure.patch(`/event/${item?._id}`, updateStatus).then((res) => {
-          console.log(res.data);
-        });
-
-        Swal.fire({
-          title: "Accepted!",
-          text: `${item?.eventName} has been Accepted`,
-          icon: "success",
-        });
-        refetch();
+        axiosSecure
+          .put(`/event/${item?._id}`, updateStatus)
+          .then((res) => {
+            console.log(res.data);
+            if (res?.data?.message === "updated successfully") {
+              Swal.fire({
+                title: "Accepted!",
+                text: `${item?.eventName} has been Accepted`,
+                icon: "success",
+              });
+              refetch();
+            }
+          })
+          .catch((err) => toast.error(err.message));
       }
     });
   };
 
   if (isPending) {
-    return <h2>Loading....</h2>;
+    return <Loader />;
   }
 
   return (
@@ -115,26 +120,13 @@ const EventRequests = () => {
                 </td>
                 <td>
                   <div className="avatar-group -space-x-6 rtl:space-x-reverse">
-                    <div className="avatar">
-                      <div className="w-12">
-                        <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                    {item?.speakersImages?.map((image, idx) => (
+                      <div key={idx} className="avatar">
+                        <div className="w-12">
+                          <img src={image} />
+                        </div>
                       </div>
-                    </div>
-                    <div className="avatar">
-                      <div className="w-12">
-                        <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                      </div>
-                    </div>
-                    <div className="avatar">
-                      <div className="w-12">
-                        <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                      </div>
-                    </div>
-                    <div className="avatar placeholder">
-                      <div className="w-12 bg-secondary text-neutral-content">
-                        <span>+99</span>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </td>
                 <td>{item?.startDate}</td>

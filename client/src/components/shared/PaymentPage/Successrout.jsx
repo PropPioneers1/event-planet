@@ -31,7 +31,7 @@ const Successrout = () => {
   }
 
   return (
-    <div className="h-[80vh] max-w-full flex justify-center items-center mt-24">
+    <div className="min-h-screen max-w-full flex justify-center items-center lg:pt-20 pt-10">
       <div className="card w-96 bg-base-100 shadow-2xl">
         <figure>
           <img
